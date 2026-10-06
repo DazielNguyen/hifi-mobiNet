@@ -9,8 +9,11 @@ license: mit
 models:
 - DazielNguyen/hifi-mobiNet-inference
 short_description: Play the same English sentence from four speech systems
+thumbnail: https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet/resolve/04125976a67938eb96d6ddfe144a7721eb2819fb/branding/cover.png
 ---
 # HiFi-MobiNet Listening Room
+
+![HiFi-MobiNet — Listen. Compare. Explore.](https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet/resolve/04125976a67938eb96d6ddfe144a7721eb2819fb/branding/cover.png)
 
 Choose one of three sentences and listen to four fixed model recordings.
 This static page does not run live inference or require a paid compute plan.
@@ -28,3 +31,5 @@ Piper remains an external model reference. DazielNguyen does not claim ownership
 
 Code and download instructions: https://github.com/DazielNguyen/hifi-mobiNet
 Public ONNX weights: https://huggingface.co/DazielNguyen/hifi-mobiNet-inference
+
+Brand artwork was supplied by the project author. The MIT frontend license does not assign a new license to these images.

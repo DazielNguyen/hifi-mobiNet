@@ -1,5 +1,7 @@
 # hifi-mobiNet
 
+![HiFi-MobiNet — Listen. Compare. Explore.](https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet/resolve/04125976a67938eb96d6ddfe144a7721eb2819fb/branding/banner.png)
+
 An independent local repository organizing the **HiFi-GAN ResBlock2 baseline,
 Parallel-IR and Sequential-IR** speech systems developed in BanhmiTTS, with an
 external Piper LJSpeech checkpoint. It includes model components, historical
