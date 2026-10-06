@@ -13,6 +13,8 @@ Usage: recompute_B_stats.py <package_root>
 import json
 import os
 import sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 import jiwer
 import numpy as np
@@ -34,7 +36,7 @@ for name in ("harvard_stats_recomputed.json", "harvard_stats_recomputed.md"):
 os.makedirs(OUT, exist_ok=True)
 MODELS = ["baseline", "mrf", "seq", "piper"]
 LABEL = {"baseline": "HiFi-GAN ResBlock2", "mrf": "Parallel-IR", "seq": "Sequential-IR", "piper": "Piper (published)"}
-R = {m: json.load(open(os.path.join(RAW, f"harvard_{m}_results.json"))) for m in MODELS}
+R = {m: json.load(open(os.path.join(RAW, f"harvard_{m}_results.json"), encoding="utf-8")) for m in MODELS}
 A = {m: {k: np.array([r[k] for r in R[m]], float) for k in ("rtf", "utmosv2", "wer", "synth_time_s", "audio_duration_s")} for m in MODELS}
 
 tf = jiwer.Compose([jiwer.ToLowerCase(), jiwer.RemovePunctuation(), jiwer.RemoveMultipleSpaces(),
@@ -111,7 +113,7 @@ out["notes"] = {
     "rtf": "per-sentence synth_time_s / audio_duration_s, then arithmetic mean over sentences",
     "equivalence": "no margin was pre-specified; non-significant or borderline p-values do not establish equivalence",
 }
-json.dump(out, open(os.path.join(OUT, "harvard_stats_recomputed.json"), "w"), indent=1, default=float)
+json.dump(out, open(os.path.join(OUT, "harvard_stats_recomputed.json"), "w", encoding="utf-8"), indent=1, default=float)
 
 lines = ["| Model | mean RTF | ratio-of-sums RTF | mean UTMOSv2 | macro WER | corpus WER (expl.) | WER=0 sentences |", "|---|---:|---:|---:|---:|---:|---:|"]
 for m in MODELS:
@@ -125,5 +127,5 @@ for p in ("seq_vs_mrf_rtf", "seq_vs_piper_rtf", "seq_vs_baseline_rtf"):
     lines.append(f"\n{p}: RTF reduction (1 − mean_x/mean_y) = {t['rtf_reduction_1_minus_meanX_over_meanY']*100:.2f}%; "
                  f"throughput gain (mean_y/mean_x − 1) = {t['throughput_gain_meanY_over_meanX_minus_1']*100:.2f}%; "
                  f"ratio-of-sums reduction = {t['rtf_reduction_ratio_of_sums']*100:.2f}%; median per-sentence ratio = {t['median_per_sentence_rtf_ratio_x_over_y']:.4f}")
-open(os.path.join(OUT, "harvard_stats_recomputed.md"), "w").write("\n".join(lines) + "\n")
+open(os.path.join(OUT, "harvard_stats_recomputed.md"), "w", encoding="utf-8").write("\n".join(lines) + "\n")
 print("\n".join(lines))

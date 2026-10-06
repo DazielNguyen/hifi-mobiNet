@@ -38,6 +38,11 @@
       "status": "passed",
       "command": "python -m pytest tests/test_evaluation.py -q",
       "detail": "4 passed: known word counts, macro versus ratio-of-sums RTF, paired-ID/text/order rejection, missing observations and exact Wilcoxon example. Both evaluation CLI help commands passed."
+    },
+    {
+      "name": "historical_results_and_statistics",
+      "status": "passed",
+      "detail": "20 result tables preserved byte-for-byte. Portable Harvard prior-audit reproduction matches all 279 numeric values (rtol 1e-10, atol 1e-12). No new synthesis/ASR/UTMOS. Explicit UTF-8 fixed Windows output encoding; original script unchanged."
     }
   ]
 }
