@@ -84,3 +84,29 @@ The public repository `DazielNguyen/hifi-mobiNet` was created on 2026-10-06. The
 authorized origin is recorded in release-decisions.json. Publication includes
 audited code, documentation, manifests and existing result tables; it excludes
 model files, WAVs, environments, native binaries and private artifact locations.
+
+## Local Mac transfer preparation (2026-10-06)
+
+The subsequent author request prohibits any new push, upload, tag, release or
+deployment in this preparation. The earlier public code repository remains at its
+previous commit; the new preparation commits are local only.
+
+Four exact selected full checkpoints, four Q05 FP32 graphs, 2,880 original Harvard
+WAVs, eight original text logs and nine training-written hparams files were copied
+from WSL into an external staging directory outside OneDrive/Git. Source and copy
+hashes/sizes were verified. Original logs/configs and exact host locators remain
+private. Separate redacted copies and later recovered config metadata are labelled.
+Seven transfer ZIPs were created and every member reverified; each is below 2 GiB.
+
+The portable importer passed 35 tests on Windows and additional source/destination
+symlink fixtures on WSL. Real ONNX/audio/metadata ZIPs were imported into a fresh
+directory. All 2,880 WAVs verified through the runtime reader, four model IDs passed
+CLI verification, 720 sentence choices appeared in Streamlit, and SEQ synthesized
+one short utterance through the UI. No timing or quality metric was collected.
+All 121 original source mappings still matched their recorded hashes.
+
+Use docs/mac-setup.md and docs/mac-transfer-preparation.md to resume. Transfer the
+prepared code Git bundle as well as ZIPs/checksums so the Mac receives local
+unpushed commits. macOS native frontend build, synthesis, human playback and host
+resource checks remain NOT CHECKED. License, third-party rights and public artifact
+storage remain pending. The preparation is not a published v0.1.0 release.

@@ -129,6 +129,13 @@ licenses/          Supplied notices; no blanket project license
 
 ## Validation and release status
 
+For the local, unpublished Mac handoff, use [Mac setup](docs/mac-setup.md).
+The checksum-verified importer accepts staging directories or ZIP packages and
+uses `HIFIMOBINET_ASSET_DIR` for both CLI models and the complete 720-sentence
+comparison catalog. See [transfer preparation](docs/mac-transfer-preparation.md)
+for archive identities and Windows/WSL validation limits. Mac runtime validation
+has not yet been performed.
+
 ```sh
 python -m pytest -q
 python scripts/validation/audit_repository.py

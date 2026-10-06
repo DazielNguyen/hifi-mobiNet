@@ -1,5 +1,8 @@
 # Setup and runtime boundaries
 
+For the local Mac artifact transfer, start with [mac-setup.md](mac-setup.md).
+It includes the portable ZIP/directory importer and a shared external asset root.
+
 Use a dedicated virtual environment. Do not install legacy training requirements
 into system Python. Editable installation from a checkout is supported; standalone
 wheels do not bundle external results/vendor directories.

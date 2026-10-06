@@ -28,3 +28,9 @@
 - The current package exposes inference, component inspection and stored-result
   audits. It does not provide a validated training launcher, ASR/UTMOS rescoring
   installation, export or quantization workflow.
+- Local Mac transfer ZIPs and manifests are prepared and integrity-checked.
+  This does not resolve distribution rights or imply manuscript acceptance of Q05.
+  Mac execution has not been tested. See mac-setup.md and mac-transfer-preparation.md.
+- Raw logs/hparams are kept privately; publication-intended copies have separate
+  redaction records. The redaction scan is heuristic. Full unchanged training
+  checkpoints can embed host paths/state and need distribution review before upload.
