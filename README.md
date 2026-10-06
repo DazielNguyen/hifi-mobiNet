@@ -165,7 +165,7 @@ binary distribution needs a separate review. See
 ## Hugging Face model storage
 
 Four unchanged Q05 FP32 ONNX graphs are public at [DazielNguyen/hifi-mobiNet-inference](https://huggingface.co/DazielNguyen/hifi-mobiNet-inference).
-Use commit `8561554ae2ad1936262153ed195a2bc04c747235` for pinned downloads.
+Use commit `f760e85a45b84c217091acf963837ffc817bad8d` for pinned downloads.
 See [the inference release](docs/huggingface-inference-release.md) for download commands, checksums and scope.
 Original training checkpoints remain private at `DazielNguyen/hifi-mobiNet`.
 The dataset and Docker Space candidates remain local. Demo hosting is deferred; historical audio remains off by default.

@@ -3,7 +3,7 @@
 ## Current inference source
 
 The public inference source is https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.
-Use `8561554ae2ad1936262153ed195a2bc04c747235` as `HIFIMOBINET_MODEL_REVISION` with the current source targets.
+Use `f760e85a45b84c217091acf963837ffc817bad8d` as `HIFIMOBINET_MODEL_REVISION` with the current source targets.
 No token is needed to download these public ONNX files. Original checkpoints remain private in the separate archive.
 See [the public download guide](huggingface-inference-release.md) for verified commands and scope.
 The dataset and Space remain local. Hosting is deferred.

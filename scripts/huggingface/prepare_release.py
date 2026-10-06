@@ -11,6 +11,13 @@ from hifimobinet.registry import sha256
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def private_checkpoint_repository(targets):
+    archive = targets.get("private_checkpoint_repo")
+    if not archive or archive == targets.get("model_repo"):
+        raise ValueError("Full checkpoint candidates require a separate private checkpoint repository")
+    return archive
+
+
 def copy_verified(source: Path, destination: Path, expected: dict | None = None):
     if source.is_symlink() or not source.is_file():
         raise ValueError("Only regular source files are accepted")
@@ -58,6 +65,7 @@ def prepare(assets: Path, destination: Path):
     if len(catalog["samples"]) != 2880:
         raise ValueError("Expected 2,880 catalogued audio files")
     targets = json.loads((ROOT/"deploy/huggingface/targets.json").read_text())
+    archive_repo = private_checkpoint_repository(targets)
     source_files = []
     for model in models:
         key = next((name for name in lookup if name.startswith("checkpoints/") and name.endswith("/"+model["checkpoint"]["filename"])), None)
@@ -113,7 +121,7 @@ def prepare(assets: Path, destination: Path):
     for source,target in [("space-card.md","README.md"),("Dockerfile","Dockerfile"),("dockerignore",".dockerignore")]:
         copy_verified(ROOT/"deploy/huggingface"/source,destination/"space"/target)
     reports={}
-    for target,repo in [("model",targets["model_repo"]),("dataset",targets["dataset_repo"]),("space",targets["space_repo"])]:
+    for target,repo in [("model",archive_repo),("dataset",targets["dataset_repo"]),("space",targets["space_repo"])]:
         rows=inventory(destination/target)
         report={"schema_version":1,"repo_id":repo,"status":"local_candidate_not_uploaded","required_initial_visibility":"private","harvard_rights":"pending_confirmation","source_code_basis":"Git-listed working files, including staged changes; HEAD is the preparation base, not a claim of a clean committed snapshot.","source_code_head":subprocess.check_output(["git","-C",str(ROOT),"rev-parse","HEAD"]).decode().strip(),"files":rows,"scope":"This manifest excludes itself. Original source manifests and asset bytes remain unchanged."}
         (destination/target/"release-manifest.json").write_text(json.dumps(report,indent=2)+"\n")

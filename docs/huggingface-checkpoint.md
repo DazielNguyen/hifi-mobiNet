@@ -3,12 +3,13 @@
 ## Current state: public inference, private checkpoints
 
 Date: 2026-10-06. Public inference URL: https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.
-Public model revision: `8561554ae2ad1936262153ed195a2bc04c747235`.
+Public model revision: `f760e85a45b84c217091acf963837ffc817bad8d`.
 Four existing ONNX graphs passed anonymous pinned downloads and original SHA-256 checks.
 The checkpoint archive `DazielNguyen/hifi-mobiNet` remains private. Original path-bearing checkpoint bytes were not rewritten.
 See huggingface-inference-release.md/json and model-publication-review.md for completed checks and scope.
 The source runtime target now points to the public inference repository. The older prepared Space snapshot keeps its original target.
 Regenerate a Space candidate from current committed code before future deployment.
+Full model candidates now target the separate private archive. A configuration that points them at the inference repository is rejected.
 Dataset upload and demo hosting remain deferred. No GitHub push or paid compute occurred.
 
 Next: use the public download guide, then choose demo hosting.

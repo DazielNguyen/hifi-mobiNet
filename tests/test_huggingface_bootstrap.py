@@ -117,3 +117,14 @@ def test_release_preparer_refuses_a_symlink_source(tmp_path):
     with pytest.raises(ValueError,match="regular"):
         prepare.copy_verified(link,tmp_path/"new-copy")
     assert not (tmp_path/"new-copy").exists()
+
+
+def test_checkpoint_candidate_cannot_target_public_inference_repository():
+    spec = importlib.util.spec_from_file_location("hf_prepare_scope", ROOT / "scripts/huggingface/prepare_release.py")
+    prepare = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(prepare)
+    public = "DazielNguyen/hifi-mobiNet-inference"
+    for targets in ({"model_repo": public}, {"model_repo": public, "private_checkpoint_repo": public}):
+        with pytest.raises(ValueError, match="separate private checkpoint"):
+            prepare.private_checkpoint_repository(targets)
+    assert prepare.private_checkpoint_repository({"model_repo": public, "private_checkpoint_repo": "DazielNguyen/hifi-mobiNet"}) == "DazielNguyen/hifi-mobiNet"

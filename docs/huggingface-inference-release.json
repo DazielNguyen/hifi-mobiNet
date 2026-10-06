@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "repo_id": "DazielNguyen/hifi-mobiNet-inference",
-  "model_revision": "8561554ae2ad1936262153ed195a2bc04c747235",
+  "model_revision": "f760e85a45b84c217091acf963837ffc817bad8d",
   "url": "https://huggingface.co/DazielNguyen/hifi-mobiNet-inference",
   "prepared_code_commit": "d7180a2",
   "scope": "Four existing FP32 ONNX graphs, selected configs, license notices and identities only.",
@@ -25,8 +25,8 @@
     },
     {
       "relative_path": "README.md",
-      "bytes": 2886,
-      "sha256": "47d3d9cfd08d8f4c283ecefa372351aa1bcd7a14fa2e9f3aa9144ddec69ad203"
+      "bytes": 2833,
+      "sha256": "27e2ffb5febd5e745fb67f58bf2450291e94f222f5da8fc25d284b327997a692"
     },
     {
       "relative_path": "SHA256SUMS",
@@ -85,8 +85,8 @@
     },
     {
       "relative_path": "release-manifest.json",
-      "bytes": 2618,
-      "sha256": "ffd2f7ac736963df5bc21f7e8498a7d89bc61798b6fa4c48cf89fcdd72716f8c"
+      "bytes": 2710,
+      "sha256": "c77da78c863384e7d8384b968efac5c618f05db4b4b23d23e1249b90ea06f174"
     }
   ],
   "stage": "public_anonymous_downloads_verified",
@@ -173,7 +173,83 @@
   },
   "bootstrap_regression_tests": {
     "test_file": "tests/test_huggingface_bootstrap.py",
-    "passed": 8,
-    "command": "python -m pytest tests/test_huggingface_bootstrap.py -q"
+    "passed": 9,
+    "command": "python -m pytest tests/test_huggingface_bootstrap.py -q",
+    "added_boundary": "Full-checkpoint candidates must name a repository distinct from the public inference repository."
+  },
+  "artifact_release_revision": "8561554ae2ad1936262153ed195a2bc04c747235",
+  "metadata_fix_commit": "f760e85a45b84c217091acf963837ffc817bad8d",
+  "anonymous_download_basis": "Four ONNX were downloaded and checked at artifact_release_revision; subsequent metadata-only commit leaves their bytes unchanged.",
+  "documented_cli_check": {
+    "command": "hf download <repo> --revision <full_commit> --local-dir <destination> --dry-run --json",
+    "implicit_token_disabled": true,
+    "exit_code": 0,
+    "files": [
+      {
+        "file": ".gitattributes",
+        "size": "1.5K"
+      },
+      {
+        "file": "INFERENCE-NOTICES.md",
+        "size": "1.8K"
+      },
+      {
+        "file": "LICENSE",
+        "size": "1.1K"
+      },
+      {
+        "file": "README.md",
+        "size": "2.8K"
+      },
+      {
+        "file": "SHA256SUMS",
+        "size": "363.0"
+      },
+      {
+        "file": "artifacts.json",
+        "size": "1.8K"
+      },
+      {
+        "file": "configs/baseline-resblock2.json",
+        "size": "1.7K"
+      },
+      {
+        "file": "configs/parallel-ir.json",
+        "size": "1.7K"
+      },
+      {
+        "file": "configs/piper-original.json",
+        "size": "1.3K"
+      },
+      {
+        "file": "configs/sequential-ir.json",
+        "size": "1.7K"
+      },
+      {
+        "file": "licenses/Piper-MIT.txt",
+        "size": "1.1K"
+      },
+      {
+        "file": "onnx-q05/baseline_fp32.onnx",
+        "size": "68.5M"
+      },
+      {
+        "file": "onnx-q05/mrf_fp32.onnx",
+        "size": "66.5M"
+      },
+      {
+        "file": "onnx-q05/piper_fp32.onnx",
+        "size": "63.5M"
+      },
+      {
+        "file": "onnx-q05/seq_fp32.onnx",
+        "size": "66.3M"
+      },
+      {
+        "file": "release-manifest.json",
+        "size": "2.7K"
+      }
+    ],
+    "expected_inventory_matches": true
   }
 }

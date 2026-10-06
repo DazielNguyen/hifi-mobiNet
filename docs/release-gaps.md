@@ -41,7 +41,7 @@
 
 ## Current inference release status (2026-10-06)
 
-Public inference URLs are now verified at https://huggingface.co/DazielNguyen/hifi-mobiNet-inference, commit `8561554ae2ad1936262153ed195a2bc04c747235`.
+Public inference URLs are now verified at https://huggingface.co/DazielNguyen/hifi-mobiNet-inference, commit `f760e85a45b84c217091acf963837ffc817bad8d`.
 All four anonymous downloads passed size and SHA-256 checks. The original checkpoint archive remains private.
 Local Linux amd64 emulation checks appear in huggingface-validation.json. They do not establish target-host performance.
 Earlier unverified platform and storage statements describe historical preparation states.

@@ -4,7 +4,7 @@ Date: 2026-10-06. Account: DazielNguyen.
 
 The author chose a separate inference repository and kept original checkpoints private.
 The public repository is [hifi-mobiNet-inference](https://huggingface.co/DazielNguyen/hifi-mobiNet-inference).
-Its verified commit is `8561554ae2ad1936262153ed195a2bc04c747235`.
+Its verified commit is `f760e85a45b84c217091acf963837ffc817bad8d`.
 The private checkpoint archive remains `DazielNguyen/hifi-mobiNet`.
 
 The release contains 15 inventoried files: four existing Q05 FP32 ONNX graphs, four selected configs, notices and metadata.
@@ -17,10 +17,12 @@ The repository was created privately. Its uploaded inventory passed checks befor
 All uploaded files matched their expected sizes and identities.
 Remote large files matched server-reported original-file SHA-256 values. Small metadata matched pinned downloaded bytes.
 All four ONNX graphs were then downloaded anonymously at the exact public commit.
-Each downloaded graph matched its original size and SHA-256. The checkpoint archive remained private after publication.
+Each downloaded graph matched its original size and SHA-256 at artifact commit `8561554ae2ad1936262153ed195a2bc04c747235`.
+A subsequent metadata commit corrects the complete-package download command. The graph and config bytes remain unchanged.
+The corrected CLI command passed an anonymous dry-run. Its 16 planned files match the inventory plus service-generated metadata. The checkpoint archive remained private after publication.
 All four downloaded graphs synthesized a new demonstration sentence in the existing Linux amd64 image.
 Each output was nonempty mono PCM16 at 22,050 Hz. This was a local functional check under Docker emulation.
-Eight bootstrap regression tests passed. Neither check measured latency, quality or hosted capacity.
+Nine bootstrap regression tests passed, including the separate checkpoint archive boundary. Neither check measured latency, quality or hosted capacity.
 The [machine-readable receipt](huggingface-inference-release.json) records the inventory and observations.
 The [artifact review](model-publication-review.md) records why original checkpoints remain private.
 
@@ -29,8 +31,8 @@ The [artifact review](model-publication-review.md) records why original checkpoi
 ```sh
 python -m pip install huggingface_hub==2.1.1
 hf download DazielNguyen/hifi-mobiNet-inference \
-  --revision 8561554ae2ad1936262153ed195a2bc04c747235 \
-  --include 'onnx-q05/*' 'artifacts.json' 'SHA256SUMS' \
+  --revision f760e85a45b84c217091acf963837ffc817bad8d \
+  \
   --local-dir "$HOME/hifi-mobiNet-inference-assets"
 cd "$HOME/hifi-mobiNet-inference-assets"
 shasum -a 256 -c SHA256SUMS

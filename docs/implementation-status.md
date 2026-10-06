@@ -140,7 +140,7 @@ Earlier sections describe historical preparation states. Remaining rights and ta
 ## Separate public inference release (2026-10-06)
 
 Four Q05 ONNX graphs, selected configs and notices are public at https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.
-Their pinned revision is `8561554ae2ad1936262153ed195a2bc04c747235`. All four anonymous downloads matched original hashes.
+Their pinned revision is `f760e85a45b84c217091acf963837ffc817bad8d`. All four anonymous downloads matched original hashes.
 The original checkpoint archive remains private. No training log, checkpoint or Harvard material is in the new inference repository.
 Source runtime targets now use the public inference repo. Previously prepared Space snapshots remain unchanged and need regeneration before deployment.
 See huggingface-inference-release.md/json and model-publication-review.md for observations and limits.
