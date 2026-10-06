@@ -19,6 +19,7 @@ import argparse
 import datetime
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
@@ -100,7 +101,12 @@ def main(argv: Optional[List[str]] = None) -> None:
         raise SystemExit(f"--model-id {args.model_id!r} does not match config model_id {config.model_id!r}")
 
     run_dir = args.run_dir.resolve()
-    if args.resume is None and run_dir.exists() and any(run_dir.iterdir()):
+    # Lightning 1.7's DDP launcher re-runs this script for ranks >= 1 with
+    # LOCAL_RANK set. Those processes must not repeat launcher-only work: by
+    # then rank 0 has already populated run_dir, and an early exit on one rank
+    # leaves the others waiting forever in process-group initialisation.
+    launcher = os.environ.get("LOCAL_RANK", "0") == "0" and os.environ.get("NODE_RANK", "0") == "0"
+    if launcher and args.resume is None and run_dir.exists() and any(run_dir.iterdir()):
         raise SystemExit(f"{run_dir} is not empty; use a new --run-dir or --resume")
     try:
         run_dir.relative_to(repository_root().resolve())
@@ -143,8 +149,9 @@ def main(argv: Optional[List[str]] = None) -> None:
         "resume": str(args.resume) if args.resume else None,
         "environment": environment_record(),
     }
-    name = "run_record.json" if args.resume is None else f"resume_record_{datetime.datetime.now():%Y%m%dT%H%M%S}.json"
-    (run_dir / name).write_text(json.dumps(record, indent=2), encoding="utf-8")
+    if launcher:
+        name = "run_record.json" if args.resume is None else f"resume_record_{datetime.datetime.now():%Y%m%dT%H%M%S}.json"
+        (run_dir / name).write_text(json.dumps(record, indent=2), encoding="utf-8")
     trainer.fit(module, ckpt_path=str(args.resume) if args.resume else None)
 
 

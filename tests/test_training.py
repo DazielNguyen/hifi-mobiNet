@@ -202,6 +202,24 @@ def test_lr_scheduler_hook_matches_lightning_default():
     assert opt.param_groups[0]["lr"] == 0.5
 
 
+@needs_lightning
+def test_train_non_empty_run_dir_guard_only_in_launcher(tmp_path, monkeypatch):
+    from hifimobinet.training.train import main
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "run_record.json").write_text("{}")
+    argv = ["--model-id", "Piper_no_VITS2_cpn", "--config", str(CONFIGS / "piper-no-vits2-cpn.yaml"),
+            "--dataset-dir", str(tmp_path / "missing"), "--data-root", str(tmp_path),
+            "--split", str(tmp_path / "missing.json"), "--run-dir", str(run_dir)]
+    monkeypatch.delenv("LOCAL_RANK", raising=False)
+    with pytest.raises(SystemExit, match="not empty"):
+        main(argv)
+    # A DDP child (rank >= 1) finds run_dir populated by rank 0 and must continue.
+    monkeypatch.setenv("LOCAL_RANK", "1")
+    with pytest.raises(FileNotFoundError):
+        main(argv)
+
+
 def test_train_cli_rejects_config_only_flags():
     pytest.importorskip("pytorch_lightning")
     from hifimobinet.training.train import main
