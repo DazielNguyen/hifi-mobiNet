@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Listen to the same English sentences from four HiFi-MobiNet speech systems.">
+  <title>HiFi-MobiNet · Listen & compare</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="HiFi-MobiNet home"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>HiFi-MobiNet</a>
+      <nav aria-label="Project links"><a href="https://github.com/DazielNguyen/hifi-mobiNet">Source code ↗</a><a href="https://huggingface.co/DazielNguyen/hifi-mobiNet-inference">Models ↗</a></nav>
+    </header>
+    <main>
+      <section class="intro">
+        <span class="eyebrow">THE LISTENING ROOM</span>
+        <h1>One sentence.<br>Four speech systems.</h1>
+        <p class="intro-copy">Choose an example, press play, and listen to each model read the same words.</p>
+        <div class="intro-meta"><span><b aria-hidden="true">●</b> Ready to listen</span><span>English</span><span>Fixed audio examples</span></div>
+      </section>
+      <section class="comparison" aria-labelledby="sample-heading">
+        <div class="section-heading"><h2 id="sample-heading">Pick a sentence</h2><span id="sample-count"></span></div>
+        <div id="sentence-tabs" class="sentence-tabs" role="group" aria-label="Example sentences"></div>
+        <div class="sentence-panel"><span class="sentence-label">THE SAME TEXT FOR EVERY MODEL</span><p id="sentence-text" aria-live="polite">Loading examples…</p></div>
+        <p id="page-status" class="status" role="status"></p>
+        <div id="players" class="players" aria-label="Four model recordings"></div>
+        <noscript><p>Enable JavaScript to choose a sentence and play the recordings.</p></noscript>
+      </section>
+      <section class="about" aria-labelledby="about-heading"><h2 id="about-heading">About these examples</h2><p>These recordings use new demonstration sentences and the published FP32 ONNX models. They are fixed listening examples, not the historical research samples or a listening test.</p><p>The text is fixed on this page. To generate your own sentences, use the <a href="https://github.com/DazielNguyen/hifi-mobiNet">project code</a>.</p></section>
+    </main>
+    <footer><span>HiFi-MobiNet · 2026</span><span>Generated audio: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> for rights held by the project team.<br>Models and source code retain their separate terms.</span></footer>
+  </div>
+</body>
+</html>
