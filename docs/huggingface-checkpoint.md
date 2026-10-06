@@ -1,5 +1,18 @@
 # Hugging Face checkpoint
 
+## Current state: fixed listening demo
+
+Date: 2026-10-06. The separate Static Space is public at
+https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet.
+It contains twelve new demo WAVs, three sentences and four models.
+Audio URLs are pinned to the verified asset revision.
+GitHub Pages deployment and browser checks are recorded in listening-publication.json.
+Original checkpoints remain private; Harvard audio and sentence text are excluded.
+No paid plan, compute instance or live inference host was requested.
+See listening-demo.md for provenance, scoped audio terms and maintenance.
+
+Earlier sections preserve prior preparation states.
+
 ## Current state: public inference, private checkpoints
 
 Date: 2026-10-06. Public inference URL: https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.

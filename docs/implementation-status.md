@@ -145,3 +145,15 @@ The original checkpoint archive remains private. No training log, checkpoint or 
 Source runtime targets now use the public inference repo. Previously prepared Space snapshots remain unchanged and need regeneration before deployment.
 See huggingface-inference-release.md/json and model-publication-review.md for observations and limits.
 Dataset/Space publication remains deferred. Earlier sections record preparation states.
+
+## Static listening publication (2026-10-06)
+
+The author selected fixed audio playback on Hugging Face and GitHub.
+The new listening page contains twelve WAVs from three new sentences and four models.
+Hugging Face Static Spaces hosts the audio and frontend; GitHub Pages publishes the frontend.
+The catalog pins every audio URL to the verified HF asset commit.
+See listening-publication.json for actual remote revisions and deployment checks.
+See listening-samples.json for sample hashes, source graphs and generation versions.
+Original checkpoints remain private. Harvard text and historical WAVs were not deployed.
+Generation was functional demonstration synthesis, not a new benchmark or listening assessment.
+Earlier preparation states above remain historical records.

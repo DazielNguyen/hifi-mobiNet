@@ -30,6 +30,19 @@ Exact configurations, sizes, SHA-256 values, source and sharing status are in
 and local functional validation are separate records. Passes were recorded on
 2026-10-06 in the prepared local installation; a fresh checkout needs the assets.
 
+## Listen in your browser
+
+Choose a sentence and compare four fixed recordings in the
+[Hugging Face listening room](https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet)
+or the [GitHub Pages listening page](https://dazielnguyen.github.io/hifi-mobiNet/).
+The page contains three new English sentences and 12 WAV samples.
+It does not synthesize user-entered text or require a model download.
+
+These samples are demonstrations, not historical Harvard audio or a listening test.
+They use CC BY 4.0 only for rights held by the project team.
+See [demo provenance and hosting](docs/listening-demo.md) and the
+[publication receipt](docs/listening-publication.json) for identities and actual deployment checks.
+
 ## Checkout and setup
 
 Clone the public repository into a new directory:
@@ -55,9 +68,9 @@ weights. Windows Python 3.13 is the local validation platform. See
 
 ## Models and inference
 
-Team download URLs are **pending**. The original Piper training checkpoint has
-a recorded real URL; it is not the ONNX required by the demo. See
-[model access](models/README.md). No checkpoint pickle is loaded or model exported.
+Four identified FP32 ONNX graphs are public. Follow the pinned download instructions in
+[the inference release guide](docs/huggingface-inference-release.md). Original training checkpoints remain private.
+See [model access](models/README.md). No checkpoint pickle is loaded or model exported.
 
 After installing the existing identified artifacts, building the original frontend
 and passing the functional smoke check described in the setup guide:
@@ -168,5 +181,6 @@ Four unchanged Q05 FP32 ONNX graphs are public at [DazielNguyen/hifi-mobiNet-inf
 Use commit `f760e85a45b84c217091acf963837ffc817bad8d` for pinned downloads.
 See [the inference release](docs/huggingface-inference-release.md) for download commands, checksums and scope.
 Original training checkpoints remain private at `DazielNguyen/hifi-mobiNet`.
-The dataset and Docker Space candidates remain local. Demo hosting is deferred; historical audio remains off by default.
+The historical dataset and Docker Space candidates remain local.
+A separate Static Space hosts the fixed listening demo; historical audio remains off by default.
 See [the artifact review](docs/model-publication-review.md) for metadata findings and limits.
