@@ -37,6 +37,9 @@ MODEL_KEYS = {
         "flow_kernel_size", "flow_dilation_rate", "flow_n_flows",
         "mas_noise_scale_initial", "mas_noise_scale_decay",
     },
+    # Upstream Piper hard-codes posterior-encoder/flow sizes inside SynthesizerTrn;
+    # only the knobs its VitsModel actually exposes are accepted here.
+    "Piper_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp"},
 }
 OPTIM_KEYS = {"learning_rate", "betas", "eps", "lr_decay", "c_mel", "c_kl"}
 TRAINER_KEYS = {"precision", "gradient_clip_val", "seed"}

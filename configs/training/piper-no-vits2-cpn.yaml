@@ -1,0 +1,66 @@
+# Piper_no_VITS2_cpn: upstream Piper VITS graph (rhasspy/piper 73c04d8) trained
+# from scratch, with the training harness matched to the baseline recipe
+# (configs/training/baseline-resblock2-vits2.yaml) wherever upstream allows.
+#
+# Architecture values equal configs/piper-original.json (published Piper
+# lj-medium checkpoint metadata) and the upstream VitsModel defaults; posterior
+# encoder (16 WN layers) and flow (4 couplings, 4 WN layers) are hard-coded
+# upstream and are not configurable here.
+#
+# Differences from the baseline recipe that remain (see
+# docs/training/piper-no-vits2-protocol.md):
+#   - precision 32: upstream computes the generator-output STFT without
+#     forcing float32, so bf16 autocast is unsupported without modifying the
+#     upstream training step (published Piper checkpoint metadata: precision 32);
+#   - no VITS2 components and no numerical guards inside the upstream model.
+model_id: Piper_no_VITS2_cpn
+
+model:
+  inter_channels: 192
+  hidden_channels: 192
+  filter_channels: 768
+  n_heads: 2
+  n_layers: 6
+  kernel_size: 3
+  p_dropout: 0.1
+  resblock: "2"
+  resblock_kernel_sizes: [3, 5, 7]
+  resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+  upsample_rates: [8, 8, 4]
+  upsample_initial_channel: 256
+  upsample_kernel_sizes: [16, 16, 8]
+  filter_length: 1024
+  hop_length: 256
+  win_length: 1024
+  mel_channels: 80
+  sample_rate: 22050
+  mel_fmin: 0.0
+  mel_fmax: null
+  segment_size: 8192
+  use_spectral_norm: false
+  use_sdp: true
+
+optim:
+  learning_rate: 0.0002
+  betas: [0.8, 0.99]
+  eps: 1.0e-9
+  lr_decay: 0.999875
+  c_mel: 45
+  c_kl: 1.0
+
+trainer:
+  precision: "32"
+  gradient_clip_val: 1.0
+  seed: 1234
+
+data:
+  batch_size: 16
+  sampler: length_bucket
+  num_workers: 8
+  max_phoneme_ids: null
+  num_audio_samples: 5
+
+harness:
+  skip_nonfinite_updates: true
+  dp_health_gate: true
+  save_rng_state: true

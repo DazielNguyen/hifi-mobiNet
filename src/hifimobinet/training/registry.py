@@ -23,12 +23,23 @@ def _baseline():
     return BaselineVits2Module
 
 
+def _piper():
+    from .piper_module import PiperNoVits2Module
+    return PiperNoVits2Module
+
+
 TRAINING_MODELS: Dict[str, TrainingModel] = {
     "baseline-resblock2-vits2": TrainingModel(
         "baseline-resblock2-vits2", "banhmi",
         "Internal baseline recipe: HiFi-GAN ResBlock2 decoder with the project's VITS2 components "
         "(Transformer-conditioned flow, duration discriminator, noise-scaled MAS)",
         _baseline,
+    ),
+    "Piper_no_VITS2_cpn": TrainingModel(
+        "Piper_no_VITS2_cpn", "piper",
+        "Upstream Piper (rhasspy/piper 73c04d8) VITS training graph without VITS2 components, "
+        "trained from scratch in the project harness",
+        _piper,
     ),
 }
 
