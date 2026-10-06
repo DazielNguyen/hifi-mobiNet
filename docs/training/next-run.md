@@ -78,4 +78,6 @@ RNG state is not restored (rank 0's state only), which the record notes.
 
 ## Multi-GPU check status
 
-See the clean-clone section of [handoff-training-2026-10-06.md](handoff-training-2026-10-06.md).
+A one-batch two-GPU DDP run through this entry point passed for both models from
+a clean clone (handoff section 6). DDP resume and long-run stability are not
+yet checked; consider a short supervised start before leaving a long run.

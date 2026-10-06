@@ -56,13 +56,17 @@ generator and one discriminator forward/backward:
 | smoke-baseline-1 | `MisconfigurationException: The provided lr scheduler ExponentialLR doesn't follow PyTorch's LRScheduler API` (before any update) | Lightning 1.7.7 validates schedulers with `isinstance(s, torch.optim.lr_scheduler._LRScheduler)`; since torch 2.0 `ExponentialLR` derives from `LRScheduler`. The existing workstation interpreter (same versions) shows the same `False`. | Override `lr_scheduler_step` with Lightning 1.7.7's own default body; unit-tested |
 | smoke-baseline-2 | Resume: `UnpicklingError: Weights only load failed ... numpy.core.multiarray._reconstruct` (phase A: 24 updates, all checks passed) | The harness stored NumPy's RNG state array in the checkpoint; Lightning 1.7 resumes through `torch.load`, whose default is `weights_only=True` on torch ≥ 2.6 | RNG state stored as tensors/plain values; static pickle scan confirmed NumPy was the only disallowed global; unit test for weights-only round trip |
 
-Update accounting across all attempts: baseline 0 + 24 + 24 = 48; Piper
-24 + 16 = 40 (limit 50 per model). Probes made no updates.
+| clean-clone DDP (2 GPUs, `train.py`) | Rank 0 waited forever in process-group initialisation; rank 1 printed "run-dir is not empty" and exited (no update made) | Lightning 1.7 re-runs the entry script for ranks ≥ 1; the non-empty run-directory guard ran there after rank 0 had populated it | Guard and run records only in the launcher process (`LOCAL_RANK`/`NODE_RANK` 0); regression test |
+
+Update accounting across all attempts: baseline 0 + 24 + 24 + 2 (DDP) = 50;
+Piper 24 + 16 + 2 (DDP) = 42 (limit 50 per model). Probes made no updates.
 
 ## Not checked
 
-- Multi-GPU (DDP) training through `hifimobinet.training.train` — see the
-  clean-clone record in [next-run.md](next-run.md) for the status of this check.
+- Multi-GPU (DDP) resume and long-run behaviour. A one-batch, two-GPU run of
+  `hifimobinet.training.train` from a clean clone passed for both models after
+  fixing a launcher defect (third failure row below; details in
+  [handoff-training-2026-10-06.md](handoff-training-2026-10-06.md) section 6).
 - RNG restore under DDP (deliberately not restored; rank 0's state only).
 - CUDA/NumPy/Python RNG equality after resume (restored, only torch CPU compared).
 - Baseline in fp32; Piper in bf16 (unsupported without modifying upstream).
@@ -75,4 +79,4 @@ Update accounting across all attempts: baseline 0 + 24 + 24 = 48; Piper
 Lightning there), 2 failed in `test_huggingface_bootstrap.py` with
 `WinError 1314` (no symlink privilege). The same two tests fail identically on
 a clean clone of the previous HEAD, so they are an environment limitation, not a
-regression. On Ubuntu: `tests/test_training.py` 18 passed.
+regression. On Ubuntu: `tests/test_training.py` 19 passed (development venv and clean clone).
