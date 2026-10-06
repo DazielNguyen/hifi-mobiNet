@@ -11,8 +11,10 @@ and split differences prevent decoder-only causal claims. No quality equivalence
 edge-device performance or production readiness is established here.
 
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
-and confirmed permission to share journal-related artifacts. A repository-wide
-license and external weight storage are **not yet confirmed**. Weights/audio are
+and confirmed permission to share journal-related artifacts. Original repository
+code and documentation owned by DazielNguyen are licensed under [MIT](LICENSE),
+subject to the scope and exclusions below. External artifact storage and artifact
+licensing remain unconfirmed. Weights/audio are
 not bundled in Git or uploaded in this step. Missing local weights are reported
 explicitly; no different model is silently substituted.
 
@@ -124,7 +126,7 @@ results/           Historical observations, manifests and prior audit
 demo/              Streamlit app and aligned audio catalog
 tests/             Functional/fixture checks, not research experiments
 docs/              Provenance, checks, status and release gaps
-licenses/          Supplied notices; no blanket project license
+licenses/          Retained third-party license texts
 ```
 
 ## Validation and release status
@@ -149,8 +151,11 @@ separate imported evidence from new work. Source repositories remain unchanged.
 
 ## Attribution and access
 
-No repository-wide license has been chosen. Piper MIT, the supplied phonemizer
-notice and eSpeak NG GPL text are retained. BanhmiTTS has no root license;
-upstream attribution and native frontend distribution need author review. Dataset
-public-domain status does not itself license all weights or generated audio. See
+The [MIT License](LICENSE), copyright 2026 DazielNguyen, applies to original
+repository code and documentation owned by that copyright holder. It does not
+replace third-party terms or license checkpoints, ONNX artifacts, audio, datasets
+or imported evidence. Imported and derived upstream material retains its
+applicable terms; uncertain provenance remains under review. Piper MIT, the
+supplied phonemizer notice and eSpeak NG GPL text are retained. Native frontend
+binary distribution needs a separate review. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

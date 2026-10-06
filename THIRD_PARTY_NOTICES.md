@@ -1,9 +1,11 @@
 # Third-party notices and licensing status
 
-No license is granted for the repository as a whole at this stage. On 2026-10-06
-the author confirmed permission to share code, weights, logs and Harvard audio,
-and authorized public GitHub code publication. A named license remains unconfirmed;
-the declaration does not replace third-party terms or grant additional upstream rights.
+The author selected MIT on 2026-10-06 for original repository code and
+documentation owned by DazielNguyen; see the root LICENSE. This selection does not
+relicense third-party material, checkpoints, ONNX artifacts, audio, datasets or
+imported evidence. Upstream license and copyright notices remain applicable.
+Author permission to share artifacts was separately recorded; their distribution
+terms and upstream conditions remain unresolved where documented.
 
 | Material | Evidence and retained notice | Status |
 |---|---|---|
@@ -20,7 +22,7 @@ historical performance or novelty claims that this repository does not endorse.
 Inactive F0/Vocos-related references are preserved only for provenance; selected
 models do not use these branches. See `docs/release-gaps.md`.
 
-Dependency licenses are independent of the license of this repository. A later
+Dependency licenses are independent of the license of this repository. An artifact
 release must inventory the actual installed/bundled dependency versions and retain
 their required notices. No compiled frontend binary, model weight or WAV is included
 in Git. Public code publication does not imply blanket licensing or binary clearance.

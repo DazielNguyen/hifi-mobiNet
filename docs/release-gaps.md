@@ -1,8 +1,9 @@
 # Release gaps
 
-- BanhmiTTS has no top-level license. Author licensing of original contributions
-  and compatibility with upstream material are unresolved. Do not infer an MIT
-  grant from the license of Piper or a phonemizer subdirectory.
+- MIT was selected for original repository code/documentation owned by
+  DazielNguyen on 2026-10-06. BanhmiTTS source lineage and compatibility with
+  upstream material still need per-file assessment. Root MIT does not relicense
+  third-party material or artifacts.
 - Phonemization involves eSpeak NG (GPL-3.0); bundled binaries/build dependencies
   need a separate distribution review. Preserve all existing notices.
 - Third-party VITS/HiFi-GAN/BigVGAN utility attribution needs an author-reviewed

@@ -49,6 +49,9 @@ def main(argv=None):
             file=ROOT/entry['destination']
             if digest(file.read_bytes())!=entry['destination_sha256']:
                 raise ValueError('Source-map destination hash is stale: '+entry['destination'])
+        decisions_path=ROOT/'docs/release-decisions.json'
+        decisions=json.loads(decisions_path.read_text()) if decisions_path.exists() else {}
+        original_mit=decisions.get('original_code_license',{}).get('spdx')=='MIT' and (ROOT/'LICENSE').is_file()
         names=git('ls-files','-z').decode().rstrip('\0').split('\0')
         records=[]
         for name in names:
@@ -61,8 +64,8 @@ def main(argv=None):
                             'source_sha256':src['source_sha256'] if src else None,
                             'source_commit':src['source_commit'] if src else None,
                             'classification':src['classification'] if src else 'new_repository_implementation_or_documentation',
-                            'rights':src['license_status'] if src else 'author_license_decision_pending',
-                            'release_status':'code_publication_authorized_license_pending' if (ROOT/'docs/release-decisions.json').exists() else 'local_only_pending_author_release_review'})
+                            'rights':src['license_status'] if src else ('MIT_original_owned_material_only_artifacts_excluded' if original_mit else 'author_license_decision_pending'),
+                            'release_status':('code_publication_authorized_upstream_terms_review_pending' if src else 'code_publication_authorized_original_MIT') if original_mit else ('code_publication_authorized_license_pending' if decisions_path.exists() else 'local_only_pending_author_release_review')})
         # Scan every unique historical blob, not merely the current checkout.
         objects=git('rev-list','--objects','--all').decode().splitlines()
         seen=set();blobs=0
