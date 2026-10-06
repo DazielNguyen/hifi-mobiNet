@@ -1,0 +1,29 @@
+# Local environments, caches and host-specific inventory
+.venv/
+.local/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.DS_Store
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+# Model weights and generated outputs are never ordinary Git content
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.safetensors
+models/weights/
+outputs/
+*.log
+# Do not accidentally stage datasets or entire training runs
+data/
+training_output/
+lightning_logs/
+wandb/
