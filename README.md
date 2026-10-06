@@ -118,8 +118,9 @@ from the demo because of artifact and protocol gaps.
 Two training recipes can be run from a source checkout on Ubuntu/WSL2 with an
 NVIDIA GPU: `baseline-resblock2-vits2` (the internal ResBlock2 baseline recipe
 with VITS2 components, current BanhmiTTS code) and `Piper_no_VITS2_cpn`
-(the upstream Piper VITS graph at rhasspy/piper `73c04d8`, without VITS2
-components, trained from scratch). They never overwrite the released models.
+(EdgeTTS Config A: vanilla Piper from the EdgeTTS fork of rhasspy/piper `73c04d8`,
+with BigVGAN, VITS2 and F0 off, bf16, trained from scratch on the baseline's
+split). They never overwrite the released models.
 Start with [training setup](docs/training/training-setup-ubuntu.md); the
 component audit, protocol, smoke results and next-run commands are in
 [docs/training/](docs/training/). Smoke-test outputs are not research results.

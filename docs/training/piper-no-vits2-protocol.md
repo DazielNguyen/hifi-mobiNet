@@ -1,74 +1,56 @@
-# Protocol: Piper_no_VITS2_cpn versus the internal baseline
+# Protocol: Piper_no_VITS2_cpn (EdgeTTS Config A) versus the internal baseline
 
-Status: **draft, written before any long run.** Items marked *Decision* need
-the author's choice; nothing here has been trained beyond the functional smoke
-tests.
+Status: settings fixed by the author on 2026-10-06; written before any long run.
+Nothing has been trained beyond functional smoke tests. Where the comparison
+goes in the paper is not decided.
 
 ## 1. Question
 
-Does training the upstream Piper VITS graph (no VITS2 components) in the same
-data/split/harness give different quality or cost than the internal ResBlock2
-baseline with the VITS2 package? This compares **systems**. The two models also
-differ in non-VITS2 details (component table, section 3), so no per-component
-effect can be attributed, and a non-significant difference is not evidence of
-equivalence.
+Does adding the VITS2 components to Piper move quality or cost in a positive
+or negative direction? `Piper_no_VITS2_cpn` (EdgeTTS Config A: vanilla Piper)
+is compared with the internal ResBlock2 baseline that carries the VITS2
+package. This is a **system-level** comparison: the VITS2 package is removed as
+a whole and the two models come from different codebases, so no single
+component's effect can be attributed and a non-significant difference is not
+evidence of equivalence (component table:
+[piper-component-comparison.md](piper-component-comparison.md)).
 
-## 2. What can be held equal
+## 2. Fixed settings
 
-| Factor | Baseline recipe | Piper_no_VITS2_cpn (matched config) | Equal? |
-|---|---|---|---|
-| Dataset / preprocessing | Project LJSpeech cache, `dataset.jsonl` SHA-256 `f4a72ae0…295b` | Same files | Yes |
-| Phonemizer / IDs / vocabulary | `banhmi_phonemize` en-us, 256 symbols; 13,100/13,100 IDs reproduced | Same IDs | Yes (not Piper's frontend) |
-| Split | `results/manifests/canonical_split.json` SHA-256 `e678cf43…ae9d`: 12,500 / 100 / 500 | Same | Yes |
-| Sample rate, STFT, mel, segment | 22,050 Hz; 1024/256/1024; 80 mel; segment 8,192 | Same | Yes |
-| Decoder | ResBlock2 3/5/7, upsampling 8/8/4 | Same except final LeakyReLU slope 0.01 vs 0.1 | No (upstream detail) |
-| Seed / initialization | torch seed 1234; module-default init | Same seed; upstream init | Seed only (graphs differ) |
-| Batch / accumulation | 16 per GPU, no accumulation | Same | Yes |
-| Optimizer / LR schedule | AdamW 2e-4 (0.8, 0.99, 1e-9), ExponentialLR 0.999875/epoch | Same values; non-fused AdamW kernel | Values yes |
-| Precision | bf16 | fp32 (upstream fails under bf16) | **No** |
-| Gradient clipping | 1.0 | 1.0 | Yes |
-| Numerical guards in model | SDP clamps/eps, infer clamp | None (upstream) | No |
-| Harness policies | Non-finite skip, health gate, RNG save | Same | Yes |
-| Sampler | Length-bucket, seed 1234 | Same | Yes |
-| Validation and selection | `val_loss_mel` (teacher-forced, 100 val utterances), top-3 + last | Same | Yes |
-| Training budget | *Decision* (section 4) | Same number of optimizer updates | By construction |
-
-Budget arithmetic (length-bucket sampler on the 12,500 training utterances):
-batch 16 on 1 GPU = 784 batches/epoch; 2 GPUs = 392 batches/epoch/rank
-(1 generator + 1 discriminator update per batch). The historical baseline used
-2 GPUs × 16 for 1,500 epochs = 588,000 generator updates.
-
-## 3. Baseline identity
-
-The released `baseline-resblock2` (epoch 1489) was trained by **earlier**
-BanhmiTTS code: no non-finite skip, no health gate, clip null for its first
-phase, two resumes after SDP collapses (journal evidence package). The
-`baseline-resblock2-vits2` recipe here runs the **current** code. Therefore:
-
-- Comparing a new Piper_no_VITS2_cpn run against the historical baseline keeps
-  confounders (code version, resume history, precision, split handling of
-  that run). Report it only as an uncontrolled reference.
-- A controlled comparison needs **both** models trained now with this
-  harness, same split, same budget, same selection rule. *Decision:* train the
-  new model only, or both (recommended for a journal claim).
-
-## 4. Proposed settings (pending decisions)
-
-| Item | Proposal | Status |
+| Item | Setting | Source |
 |---|---|---|
-| Initialization | From scratch for both; no pretrained Piper or baseline weights | Fixed by protocol |
-| Budget | Equal optimizer updates, e.g. 588,000 generator updates (= 1,500 epochs at 2 × 16) | *Decision* |
-| GPUs | Same device count and per-device batch for both runs | *Decision* (1 or 2 GPUs) |
-| Seeds | 1234 for both; additional seeds only if budget allows | *Decision* |
-| Checkpoint selection | Lowest `val_loss_mel` among top-3, ties → later epoch; evaluate exactly one checkpoint per model | *Decision* |
-| Precision | Baseline bf16, Piper fp32; alternatively run both in fp32 to remove this difference (baseline fp32 not yet smoke-tested) | *Decision* |
-| Evaluation | Held-out test-500 / Harvard-720 with the existing scripts, after selection; test data never used for selection | Fixed |
+| Initialization | From scratch; no pretrained Piper/baseline weights | Protocol |
+| Data | Project LJSpeech cache, `dataset.jsonl` SHA-256 `f4a72ae0…295b`; IDs from `banhmi_phonemize` (13,100/13,100 reproduced); no F0 | Shared with baseline |
+| Split | `results/manifests/canonical_split.json` (SHA-256 `e678cf43…ae9d`): 12,500 / 100 / 500 | Same as baseline (author) |
+| Budget | 1,500 epochs, 2 GPUs (DDP), batch 16 per GPU = 392 batches/epoch/rank, 588,000 generator updates | Same as the three internal models (all `max_epochs` 1500, 2 × 16) |
+| Precision | bf16 | Author; Config A |
+| Gradient clipping | Norm 1.0 per optimizer (EdgeTTS `grad_clip`) | Config A run hparams; baseline final phases also 1.0 |
+| Seed | 1234 only | Author |
+| Validation / selection | `val_loss_mel` on the 100 validation utterances each epoch; evaluate the checkpoint with the lowest `val_loss_mel`; keep `last.ckpt` | Author ("best + last"); same rule as the internal models |
+| Sampler | Length-bucket, seed 1234 (baseline's); EdgeTTS's fixed-order loader available | Harness parity |
+| Max phoneme IDs | 400 (Config A); removes nothing (longest row 399) | Config A |
 
-## 5. Analysis rules
+## 3. Baseline side
 
-- Pre-register metrics (WER, UTMOSv2, RTF) and paired tests before evaluation.
-- Report effect sizes with confidence intervals; non-significance is not
-  equivalence. Use an equivalence test with a stated margin if equivalence is
-  claimed.
+The released `baseline-resblock2` (epoch 1489) was trained by earlier
+BanhmiTTS code (no non-finite skip, no health gate, clip null in its first
+phase, two resumes after SDP collapse). Comparing a new Config A run with that
+checkpoint therefore also compares code versions and training histories.
+Options, for the author:
+
+1. Compare with the released baseline as an uncontrolled reference (no new
+   baseline run).
+2. Retrain `baseline-resblock2-vits2` with this harness under the same budget
+   and selection rule (controlled pair across codebases).
+3. For the cleanest VITS2 test, also train EdgeTTS Config C (`use_vits2` only)
+   in the same harness and compare A versus C (one codebase, one switch).
+
+## 4. Analysis rules
+
+- Pre-register metrics (WER, UTMOSv2, RTF) and the paired tests before evaluation.
+- Evaluate on test-500 / Harvard-720 with the existing scripts after selection;
+  never use them for selection or tuning.
+- Report effect sizes with confidence intervals; claim equivalence only with an
+  equivalence test and a stated margin.
 - Do not attribute differences to any single component.
-- Smoke-test outputs, the 50-update runs and their WAVs are not results.
+- Smoke-test outputs and their WAVs are not results.

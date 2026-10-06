@@ -111,6 +111,7 @@ See [next-run.md](next-run.md). Do not start a long run before the protocol in
 |---|---|---|
 | `MisconfigurationException: ... ExponentialLR doesn't follow PyTorch's LRScheduler API` | Lightning 1.7.7 checks `torch.optim.lr_scheduler._LRScheduler`; torch ≥ 2.0 schedulers derive from `LRScheduler` | `lr_scheduler_step` override with Lightning's default body (`training/harness.py`) |
 | `UnpicklingError: Weights only load failed ... numpy.core.multiarray._reconstruct` on resume | torch ≥ 2.6 defaults to `weights_only=True`; a NumPy RNG state array was stored in the checkpoint | RNG state stored as tensors/plain values |
-| `RuntimeError: cuFFT doesn't support tensor of type: BFloat16` (Piper model) | Upstream Piper computes the generator-output STFT under autocast | Piper configs use `precision: "32"` |
+| `RuntimeError: cuFFT doesn't support tensor of type: BFloat16` with rhasspy Piper code | rhasspy/piper 73c04d8 computes the generator-output STFT under autocast | The model uses EdgeTTS's training step, which computes mel/STFT outside autocast (bf16 works) |
+| `KeyError: 'audio_f0_path'` if EdgeTTS's own dataset class is used | EdgeTTS's `PiperDataset` requires F0 paths; this dataset has none | The harness reads rows like the baseline and passes `f0s=None` (Config A never uses F0) |
 | Background install stops when the WSL shell exits | `nohup ... &` inside `wsl -e bash -c` is killed with the session | Run long commands in the foreground of a persistent terminal (or `tmux`) |
 | `git clone` refuses: "dubious ownership" | The Windows checkout's `.git` belongs to another Windows account | Use `git -c safe.directory=<path> clone ...` for that command; global Git config left unchanged |

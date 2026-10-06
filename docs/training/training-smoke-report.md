@@ -10,73 +10,83 @@ checkpoints and WAVs stay in local run storage.
 
 | Item | Value |
 |---|---|
-| Host | Ubuntu 24.04.4 LTS on WSL2, RTX 4070 Ti (1 of 2 used), driver 596.36 |
+| Host | Ubuntu 24.04.4 LTS on WSL2, RTX 4070 Ti (1 of 2 used; 2 for the DDP check), driver 596.36 |
 | Environment | New venv: Python 3.10.20, torch 2.13.0+cu130, Lightning 1.7.7 ([environment-record.json](environment-record.json)) |
-| Data | 16 canonical-train + 4 canonical-validation utterances copied into a new subset; **no test or Harvard item** |
+| Data | 16 canonical-train + 4 canonical-validation utterances copied into a new subset; **no test or Harvard item**; no F0 |
 | Smoke overrides | batch 4, 2 workers, 2 audio samples (recorded per run) |
-| Procedure | Phase A trains from scratch and checkpoints; phase B resumes from `last.ckpt` and trains one more epoch; one PyTorch inference WAV |
+| Procedure | Phase A trains one epoch from scratch and checkpoints; phase B resumes from `last.ckpt` for one more epoch; one PyTorch inference WAV |
 
-## Results
+## Results (current implementation)
 
-| Check | baseline-resblock2-vits2 | Piper_no_VITS2_cpn (matched) | Piper_no_VITS2_cpn (upstream harness) |
-|---|---|---|---|
-| 1 Preprocessing / IDs | pass | pass | pass |
-| 2 Batch shapes, lengths, padding (`spec_len == audio_len // 256`, zero padding) | pass | pass | pass |
-| 3 Real forward/backward | pass | pass | pass |
-| 4 Finite losses and gradients | pass | pass | pass |
-| 5 Generator and waveform discriminator updated | pass (745/745, 111/111 tensors) | pass | pass |
-| 6 Duration discriminator updated | pass (20/20 tensors) | not applicable | not applicable |
-| 7 VITS2 present (baseline) / absent (new model): modules, flow attention, MAS-noise argument, losses, optimizer groups | pass | pass | pass |
-| 8 Resume: model, optimizer, scheduler, global step, torch RNG | pass | pass | pass |
-| 8b Checkpoint loads with `torch.load(weights_only=True)` | pass | pass | pass |
-| 9 Validation leaves weights unchanged | pass | pass | pass |
-| 10 PyTorch inference WAV written, finite | pass | pass (4.96 s) | pass |
-| Optimizer updates in final run | 24 | 24 | 16 |
+| Check | baseline-resblock2-vits2 (bf16) | Piper_no_VITS2_cpn = EdgeTTS Config A (bf16) |
+|---|---|---|
+| 1 Preprocessing / IDs | pass | pass |
+| 2 Batch shapes, lengths, padding; batches carry no F0 | pass | pass |
+| 3 Real forward/backward | pass | pass |
+| 4 Finite losses and gradients | pass | pass |
+| 5 Generator and waveform discriminator updated | pass (745/745, 111/111 tensors) | pass (673/673, 111/111) |
+| 6 Duration discriminator updated | pass (20/20 tensors) | not applicable |
+| 7 VITS2 present (baseline) / absent (new model): Transformer flow, duration discriminator, noised MAS; also no Snake, MRD, F0 | pass | pass; component losses exactly 0, no MAS-noise schedule |
+| 8 Resume: model, optimizer, scheduler, global step, torch RNG | pass | pass |
+| 8b Checkpoint loads with `torch.load(weights_only=True)` | pass | pass |
+| 9 Validation leaves weights unchanged | pass | pass |
+| 10 PyTorch inference WAV written, finite | pass | pass (4.73 s) |
+| Optimizer updates in the run | 24 | 24 |
 
-Phoneme IDs were additionally checked against the original frontend for all
-13,100 dataset rows: 13,100 matched (Windows frontend build; default casing).
-A unit test showed `PiperNoVits2Module.training_step_g` returns a bit-identical
-loss to upstream `VitsModel.training_step_g` for the same batch and seed.
+Additional checks:
+
+- Phoneme IDs: all 13,100 dataset rows reproduced by re-phonemizing with the
+  original frontend (Windows build, default casing).
+- Unit tests assert that `PiperNoVits2Module` inherits EdgeTTS's
+  `training_step`, `training_step_g`, `training_step_d`, `configure_optimizers`,
+  `on_train_epoch_end` and `forward` unchanged, that its batches equal EdgeTTS's
+  own collate on every non-F0 field, and that Config A flags cannot be enabled.
+- Two-GPU DDP through `hifimobinet.training.train` from a clean clone: both
+  models initialised both ranks, completed one batch (global step 2), wrote
+  weights-only-loadable checkpoints and a run record on a clean tree (handoff
+  section 6).
 
 ### Memory probe (no optimizer step; weights verified unchanged)
 
 16 longest training utterances by phoneme count (395 IDs, 864 frames), one
-generator and one discriminator forward/backward:
+generator and one discriminator forward/backward, batch 16:
 
-| Model / precision | Peak allocated | Result |
-|---|---|---|
-| Piper_no_VITS2_cpn, fp32, batch 16 | 5.78 GiB of 11.99 | ok |
-| Piper_no_VITS2_cpn, bf16, batch 16 | — | `RuntimeError: cuFFT doesn't support tensor of type: BFloat16` at upstream `mel_processing.py:120` |
-| baseline-resblock2-vits2, bf16, batch 16 | 6.93 GiB of 11.99 | ok |
+| Model / precision | Peak allocated (of 11.99 GiB) |
+|---|---|
+| Piper_no_VITS2_cpn (EdgeTTS Config A), bf16 | 5.47 GiB |
+| baseline-resblock2-vits2, bf16 | 6.93 GiB |
 
 ## Failures found and fixed
 
 | Run | Original error | Root cause | Fix |
 |---|---|---|---|
-| smoke-baseline-1 | `MisconfigurationException: The provided lr scheduler ExponentialLR doesn't follow PyTorch's LRScheduler API` (before any update) | Lightning 1.7.7 validates schedulers with `isinstance(s, torch.optim.lr_scheduler._LRScheduler)`; since torch 2.0 `ExponentialLR` derives from `LRScheduler`. The existing workstation interpreter (same versions) shows the same `False`. | Override `lr_scheduler_step` with Lightning 1.7.7's own default body; unit-tested |
-| smoke-baseline-2 | Resume: `UnpicklingError: Weights only load failed ... numpy.core.multiarray._reconstruct` (phase A: 24 updates, all checks passed) | The harness stored NumPy's RNG state array in the checkpoint; Lightning 1.7 resumes through `torch.load`, whose default is `weights_only=True` on torch ≥ 2.6 | RNG state stored as tensors/plain values; static pickle scan confirmed NumPy was the only disallowed global; unit test for weights-only round trip |
+| smoke-baseline-1 | `MisconfigurationException: The provided lr scheduler ExponentialLR doesn't follow PyTorch's LRScheduler API` (no update made) | Lightning 1.7.7 checks `isinstance(s, torch.optim.lr_scheduler._LRScheduler)`; since torch 2.0 `ExponentialLR` derives from `LRScheduler`. The existing workstation interpreter shows the same result | `lr_scheduler_step` override with Lightning 1.7.7's default body; unit-tested |
+| smoke-baseline-2 | Resume: `UnpicklingError: Weights only load failed ... numpy.core.multiarray._reconstruct` (phase A: 24 updates, checks passed) | NumPy RNG state array in the checkpoint; Lightning 1.7 resumes with `torch.load`, default `weights_only=True` on torch ≥ 2.6 | RNG state as tensors/plain values; static pickle scan; round-trip test |
+| clean-clone DDP (2 GPUs) | Rank 0 hung in process-group initialisation; rank 1 exited with "run-dir is not empty" (no update made) | Lightning 1.7 re-runs the script for ranks ≥ 1; the run-directory guard ran there after rank 0 had populated it | Guard and run records only in the launcher process; regression test |
 
-| clean-clone DDP (2 GPUs, `train.py`) | Rank 0 waited forever in process-group initialisation; rank 1 printed "run-dir is not empty" and exited (no update made) | Lightning 1.7 re-runs the entry script for ranks ≥ 1; the non-empty run-directory guard ran there after rank 0 had populated it | Guard and run records only in the launcher process (`LOCAL_RANK`/`NODE_RANK` 0); regression test |
+## Superseded implementation
 
-Update accounting across all attempts: baseline 0 + 24 + 24 + 2 (DDP) = 50;
-Piper 24 + 16 + 2 (DDP) = 42 (limit 50 per model). Probes made no updates.
+Earlier the same day `Piper_no_VITS2_cpn` subclassed rhasspy/piper 73c04d8
+directly (fp32, since that code fails under bf16 with `cuFFT doesn't support
+tensor of type: BFloat16`). It passed the same checks (24 + 16 smoke updates,
+2 DDP updates) and was replaced on the author's request by EdgeTTS Config A,
+which is the same Piper base plus EdgeTTS's bf16-safe training loop.
+
+Update accounting: baseline 0 + 24 + 24 + 2 (DDP) = 50. Piper_no_VITS2_cpn:
+EdgeTTS implementation 24 + 2 (DDP) = 26; superseded implementation 42. Probes
+made no updates.
 
 ## Not checked
 
-- Multi-GPU (DDP) resume and long-run behaviour. A one-batch, two-GPU run of
-  `hifimobinet.training.train` from a clean clone passed for both models after
-  fixing a launcher defect (third failure row below; details in
-  [handoff-training-2026-10-06.md](handoff-training-2026-10-06.md) section 6).
+- DDP resume and long-run behaviour (stability, NaN rate, convergence, speed).
 - RNG restore under DDP (deliberately not restored; rank 0's state only).
 - CUDA/NumPy/Python RNG equality after resume (restored, only torch CPU compared).
-- Baseline in fp32; Piper in bf16 (unsupported without modifying upstream).
 - Linux build of the native frontend; preprocessing from raw LJSpeech audio.
-- Long-run stability (SDP collapse, NaN rate), convergence, quality, speed.
+- EdgeTTS code under its own Lightning 2.6.5 environment (not used here).
 
-## Pre-existing test status
+## Test status
 
-`python -m pytest` on Windows: 42 passed, 1 skipped (training tests need PyYAML /
-Lightning there), 2 failed in `test_huggingface_bootstrap.py` with
-`WinError 1314` (no symlink privilege). The same two tests fail identically on
-a clean clone of the previous HEAD, so they are an environment limitation, not a
-regression. On Ubuntu: `tests/test_training.py` 19 passed (development venv and clean clone).
+Ubuntu: `tests/test_training.py` 23 passed (development venv and clean clone).
+Windows full suite: training tests skip there (no PyYAML/Lightning); 2
+pre-existing failures in `test_huggingface_bootstrap.py` (`WinError 1314`, no
+symlink privilege) also fail on a clean clone of the earlier HEAD.

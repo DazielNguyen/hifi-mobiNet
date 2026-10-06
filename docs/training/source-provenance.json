@@ -14,24 +14,13 @@
       "note": "Values only"
     },
     {
-      "file": "configs/training/piper-no-vits2-cpn-upstream-harness.yaml",
-      "sha256": "56f7d76f008069ca2768cb91e335c56742bee9bb02e01333e5ce3c858539a4f8",
-      "classification": "derived_values",
-      "derived_from": [
-        "configs/piper-original.json",
-        "vendor/piper/vits/lightning.py"
-      ],
-      "note": "Values only"
-    },
-    {
       "file": "configs/training/piper-no-vits2-cpn.yaml",
-      "sha256": "3d02c8d999e9b45ef5157f5d09b4ae3927545a28f656ba0ade3a1de42477280f",
+      "sha256": "79be8ca04c25bc7155e3a7fa2eceae7569e291cf7abe20daeba8d12d205fdf0b",
       "classification": "derived_values",
       "derived_from": [
-        "configs/piper-original.json",
-        "vendor/piper/vits/lightning.py"
+        "vendor/edgetts/configs/baseline-vits.yaml"
       ],
-      "note": "Values only"
+      "note": "Config A values; EdgeTTS Config A run hparams"
     },
     {
       "file": "requirements/training-linux-cu130.txt",
@@ -42,11 +31,12 @@
     },
     {
       "file": "scripts/training/build_mas.sh",
-      "sha256": "cb53b53d182ecb88853a55822915e4e7d7d6633744a96965ab1d2a4260251c20",
+      "sha256": "14654bb741a7f2e349c933b0b82c35fcac022a775e6dd3916de72070bf5207eb",
       "classification": "new",
       "derived_from": [
         "vendor/piper/build_monotonic_align.sh",
-        "vendor/banhmi/vits/utils/monotonic_align/setup.py"
+        "vendor/banhmi/vits/utils/monotonic_align/setup.py",
+        "vendor/edgetts/vits/monotonic_align/setup.py"
       ],
       "note": "Same output layout as upstream; compiled in a temporary directory"
     },
@@ -59,14 +49,14 @@
     },
     {
       "file": "scripts/training/import_training_sources.py",
-      "sha256": "633c6b9fa55d0738037049257d03de87861d1d571216839f23fcf353d08d0fe1",
+      "sha256": "0887d1fa1ffe01ec96c4bc07a134816e4fa3d24855e70a19755d81162c96168a",
       "classification": "new",
       "derived_from": [],
       "note": ""
     },
     {
       "file": "scripts/training/probe_memory.py",
-      "sha256": "c11d6f5ce8700884088bd8fbdd367eae7e6f0b86d3163aed686cabccf14c5071",
+      "sha256": "50402bae047639cec6cf7000e71407e5b9acd5a966cc7b51d5f86878cb6dbadd",
       "classification": "new",
       "derived_from": [],
       "note": ""
@@ -87,7 +77,7 @@
     },
     {
       "file": "scripts/training/write_source_provenance.py",
-      "sha256": "dc6680fd49e432bff02c4b63d3c73c0ec677e934c15366cdd13e8d80001cd615",
+      "sha256": "160c6efd96c992b9557613b3e0bd6655624e937ef7055cf9eeea9b5e42b06583",
       "classification": "new",
       "derived_from": [],
       "note": ""
@@ -110,14 +100,14 @@
     },
     {
       "file": "src/hifimobinet/training/config.py",
-      "sha256": "2c49981222bf44f6b15f2e76090134debe941ab9789fa9a6261da83ae107c28d",
+      "sha256": "17a9a8fff0e9f2e97f880fc8382fd1b9e76e81ad779c426c5c617bfb1f0fd5f8",
       "classification": "new",
       "derived_from": [],
       "note": ""
     },
     {
       "file": "src/hifimobinet/training/data.py",
-      "sha256": "37855f16448419b13e41d9fd508d67508583c1f01024d077775d910ac277d959",
+      "sha256": "9862aeffc83e88c4e3ff68092d83b3f31910bde9bc1f11fb1ee19e6187073cb3",
       "classification": "new",
       "derived_from": [
         "vendor/banhmi/vits/training.py"
@@ -142,23 +132,23 @@
     },
     {
       "file": "src/hifimobinet/training/piper_module.py",
-      "sha256": "03b59656057414fc5f1148631adce0931f9f567016c3a9eaea67ffadd60607c0",
+      "sha256": "2347522dd9a25cf58668548a0bd5c52276f174db214c85385ed5fa8403971068",
       "classification": "adapter_subclass",
       "derived_from": [
-        "vendor/piper/vits/lightning.py"
+        "vendor/edgetts/vits/lightning.py"
       ],
-      "note": "Subclasses upstream VitsModel (rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be); training_step_g body copied with added logging"
+      "note": "Subclasses EdgeTTS a73a897 (fork of rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be) VitsModel with Config A flags; training methods inherited unchanged"
     },
     {
       "file": "src/hifimobinet/training/registry.py",
-      "sha256": "11bfa3ab9076945863efa8f5eb7d502c60a9a1a6f33a4829a453a92a805bbc65",
+      "sha256": "e699a26a0d576aff46089c809c38147fbc856501c7d0a8b3a05b16c9c4d57800",
       "classification": "new",
       "derived_from": [],
       "note": ""
     },
     {
       "file": "src/hifimobinet/training/smoke.py",
-      "sha256": "5031023f54f3e50237dee93877ee988b46a56b8e805b97008000df732ae8d336",
+      "sha256": "21b8adbe6f3154af14406dc24cec9cb059f8f4859e0bce6b6705ec6bfcc727d9",
       "classification": "new",
       "derived_from": [],
       "note": ""
@@ -169,20 +159,20 @@
       "classification": "adapted",
       "derived_from": [
         "vendor/banhmi/train.py",
-        "vendor/piper/__main__.py"
+        "vendor/edgetts/__main__.py"
       ],
       "note": "Checkpoint rule and seeding follow both entry points; explicit model ID/config/split are new"
     },
     {
       "file": "src/hifimobinet/training/vendor.py",
-      "sha256": "17b0850ba691d6bbf5e62f84759b608c9fd064ff66dec867152aa3f15900358e",
+      "sha256": "844d5b212942ad0fdf4899e1336a22bcc06631be0d29b52f5276721d80d15248",
       "classification": "new",
       "derived_from": [],
       "note": ""
     },
     {
       "file": "tests/test_training.py",
-      "sha256": "4876a499fd9a8349cbf7d6956428bcf9fe9b6019940b04585e7f65b84d4eb72a",
+      "sha256": "f6e00596d8f58ad99d430ae0f0c5902c33c051d78ed5b71e78f7a2c2671df893",
       "classification": "new",
       "derived_from": [],
       "note": ""

@@ -12,21 +12,21 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PIPER = "rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be"
+EDGETTS = "EdgeTTS a73a897 (fork of rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be)"
 
 DERIVATION = {
     "src/hifimobinet/training/baseline_module.py": (
         "adapted", ["vendor/banhmi/vits/training.py"],
         "Loss/optimizer/scheduler/skip/health-gate logic kept; Vocos/F0/MRD removed; data injected"),
     "src/hifimobinet/training/piper_module.py": (
-        "adapter_subclass", ["vendor/piper/vits/lightning.py"],
-        f"Subclasses upstream VitsModel ({PIPER}); training_step_g body copied with added logging"),
+        "adapter_subclass", ["vendor/edgetts/vits/lightning.py"],
+        f"Subclasses {EDGETTS} VitsModel with Config A flags; training methods inherited unchanged"),
     "src/hifimobinet/training/harness.py": (
         "adapted", ["vendor/banhmi/vits/training.py"],
         "Non-finite skip and health check factored out of BanhmiTTS VitsModel; RNG save/restore and "
         "Lightning-1.7 scheduler hook are new"),
     "src/hifimobinet/training/train.py": (
-        "adapted", ["vendor/banhmi/train.py", "vendor/piper/__main__.py"],
+        "adapted", ["vendor/banhmi/train.py", "vendor/edgetts/__main__.py"],
         "Checkpoint rule and seeding follow both entry points; explicit model ID/config/split are new"),
     "src/hifimobinet/training/data.py": (
         "new", ["vendor/banhmi/vits/training.py"],
@@ -34,11 +34,10 @@ DERIVATION = {
     "configs/training/baseline-resblock2-vits2.yaml": (
         "derived_values", ["configs/baseline-resblock2.json", "configs/original/default.yaml"], "Values only"),
     "configs/training/piper-no-vits2-cpn.yaml": (
-        "derived_values", ["configs/piper-original.json", "vendor/piper/vits/lightning.py"], "Values only"),
-    "configs/training/piper-no-vits2-cpn-upstream-harness.yaml": (
-        "derived_values", ["configs/piper-original.json", "vendor/piper/vits/lightning.py"], "Values only"),
+        "derived_values", ["vendor/edgetts/configs/baseline-vits.yaml"], "Config A values; EdgeTTS Config A run hparams"),
     "scripts/training/build_mas.sh": (
-        "new", ["vendor/piper/build_monotonic_align.sh", "vendor/banhmi/vits/utils/monotonic_align/setup.py"],
+        "new", ["vendor/piper/build_monotonic_align.sh", "vendor/banhmi/vits/utils/monotonic_align/setup.py",
+                "vendor/edgetts/vits/monotonic_align/setup.py"],
         "Same output layout as upstream; compiled in a temporary directory"),
     "requirements/training-linux-cu130.txt": (
         "new", [], "Versions observed in the existing workstation training interpreter"),

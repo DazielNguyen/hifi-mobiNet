@@ -23,3 +23,12 @@ from its HEAD). They stay unmodified: `src/hifimobinet/training/` loads them by
 path (`training/vendor.py`) or adapts copies in its own namespace. The compiled
 MAS module is built into the ignored `piper/vits/monotonic_align/monotonic_align/`
 directory by `scripts/training/build_mas.sh`. See `docs/training/`.
+
+`edgetts/` (2026-10-06): the EdgeTTS (PitchFlowNet) fork of Piper at commit
+`a73a897`, copied from Git objects with a clean working tree: `vits/` (model,
+Lightning module, dataset, MAS source), `__main__.py`, `requirements.txt`,
+`LICENSE.md` and the Config A / Config C YAML files. `Piper_no_VITS2_cpn` is
+EdgeTTS Config A and subclasses `edgetts/vits/lightning.py` without modifying it;
+its MAS module is built into the ignored
+`edgetts/vits/monotonic_align/monotonic_align/` directory. `piper/` remains as the
+rhasspy 73c04d8 reference and is no longer used for training.

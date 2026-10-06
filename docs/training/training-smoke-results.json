@@ -509,10 +509,10 @@
       "classification": "functional smoke test; not a research result"
     },
     {
-      "run": "smoke-piper-1",
+      "run": "smoke-edgetts-config-a-1",
       "model_id": "Piper_no_VITS2_cpn",
       "config": "piper-no-vits2-cpn.yaml",
-      "config_sha256": "3d02c8d999e9b45ef5157f5d09b4ae3927545a28f656ba0ade3a1de42477280f",
+      "config_sha256": "79be8ca04c25bc7155e3a7fa2eceae7569e291cf7abe20daeba8d12d205fdf0b",
       "smoke_overrides": {
         "batch_size": 4,
         "num_workers": 2,
@@ -565,13 +565,16 @@
             "text_encoder_attention_classes_kept": [
               "MultiHeadAttention"
             ],
-            "forward_parameters": [
-              "x",
-              "x_lengths",
-              "y",
-              "y_lengths",
-              "sid"
-            ],
+            "switches": {
+              "use_noised_mas": false,
+              "use_f0": false,
+              "dec.use_snake": false,
+              "flow.use_transformer_flows": false
+            },
+            "discriminators_absent": {
+              "model_d_dur": true,
+              "model_d_mrd": true
+            },
             "children": [
               "model_g",
               "model_d"
@@ -645,7 +648,8 @@
         "no_vits2_losses_logged": {
           "status": "pass",
           "detail": {
-            "found": []
+            "nonzero_component_losses": [],
+            "mas_noise_scale_logged": false
           }
         },
         "checkpoint_loads_weights_only": {
@@ -664,12 +668,12 @@
           "status": "pass",
           "detail": {
             "live": [
-              1,
-              1
+              0,
+              0
             ],
             "saved": [
-              1,
-              1
+              0,
+              0
             ]
           }
         },
@@ -696,8 +700,8 @@
         "pytorch_inference_wav": {
           "status": "pass",
           "detail": {
-            "samples": 109312,
-            "seconds": 4.957460317460318,
+            "samples": 104192,
+            "seconds": 4.725260770975057,
             "file": "smoke_inference.wav",
             "note": "not a quality judgement"
           }
@@ -723,15 +727,21 @@
         "total": 24
       },
       "phase_a_final_metrics": {
-        "loss_mel": 65.49646759033203,
-        "loss_kl": 15.648547172546387,
-        "loss_dur": 1.8565037250518799,
-        "loss_gen": 1.76532781124115,
-        "loss_fm": 0.295012503862381,
-        "loss_gen_all": 85.06185913085938,
-        "loss_disc_all": 3.137359142303467,
-        "val_loss": 88.19921875,
-        "val_loss_mel": 65.49646759033203
+        "loss_gen_all": 86.80400085449219,
+        "loss_mel": 66.51177978515625,
+        "loss_kl": 16.462324142456055,
+        "loss_dur": 1.8214489221572876,
+        "loss_gen": 1.7883715629577637,
+        "loss_gen_mrd": 0.0,
+        "loss_dur_gen": 0.0,
+        "loss_fm": 0.22007152438163757,
+        "loss_f0": 0.0,
+        "loss_disc_all": 3.1422359943389893,
+        "loss_disc": 3.1422359943389893,
+        "loss_disc_mrd": 0.0,
+        "loss_disc_dur": 0.0,
+        "val_loss": 89.94623565673828,
+        "val_loss_mel": 66.51177978515625
       },
       "phase_a_parameter_changes": {
         "model_g": {
@@ -743,246 +753,7 @@
           "total": 111
         }
       },
-      "repository_commit": "6ec6f37d56495294a693bc237205b9fb48bca051",
-      "repository_dirty": true,
-      "classification": "functional smoke test; not a research result"
-    },
-    {
-      "run": "smoke-piper-upstream-harness-1",
-      "model_id": "Piper_no_VITS2_cpn",
-      "config": "piper-no-vits2-cpn-upstream-harness.yaml",
-      "config_sha256": "56f7d76f008069ca2768cb91e335c56742bee9bb02e01333e5ce3c858539a4f8",
-      "smoke_overrides": {
-        "batch_size": 4,
-        "num_workers": 2,
-        "num_audio_samples": 2
-      },
-      "data": {
-        "train": 16,
-        "val": 4,
-        "split_sha256": "c5e176e936a1b96767bd267dfce7adc4badd567d6b30213e2172f99af8069bc1",
-        "test_items_in_split_file": 0
-      },
-      "summary": {
-        "pass": [
-          "batch_shapes_lengths_padding",
-          "checkpoint_loads_weights_only",
-          "generator_updates",
-          "gradients_finite",
-          "ids_match_dataset",
-          "losses_finite",
-          "no_vits2_losses_logged",
-          "no_vits2_modules_or_optimizer_groups",
-          "optimizer_param_coverage",
-          "pytorch_inference_wav",
-          "resume_global_step",
-          "resume_model_state",
-          "resume_optimizer_state",
-          "resume_rng_state",
-          "resume_scheduler_state",
-          "run_completed",
-          "update_budget",
-          "validation_does_not_update_weights",
-          "waveform_discriminator_updates"
-        ],
-        "fail": [],
-        "not_checked": [],
-        "not_applicable": [
-          "duration_discriminator_updates"
-        ]
-      },
-      "checks": {
-        "ids_match_dataset": {
-          "status": "pass",
-          "detail": "tensor IDs equal dataset.jsonl rows"
-        },
-        "no_vits2_modules_or_optimizer_groups": {
-          "status": "pass",
-          "detail": {
-            "flagged_classes": [],
-            "flow_attention_classes": [],
-            "text_encoder_attention_classes_kept": [
-              "MultiHeadAttention"
-            ],
-            "forward_parameters": [
-              "x",
-              "x_lengths",
-              "y",
-              "y_lengths",
-              "sid"
-            ],
-            "children": [
-              "model_g",
-              "model_d"
-            ]
-          }
-        },
-        "optimizer_param_coverage": {
-          "status": "pass",
-          "detail": {
-            "generator_params": 673,
-            "discriminator_params": 111,
-            "optimizer_sizes": [
-              673,
-              111
-            ]
-          }
-        },
-        "batch_shapes_lengths_padding": {
-          "status": "pass",
-          "detail": {
-            "issues": [],
-            "phoneme_ids": [
-              4,
-              331
-            ],
-            "spectrograms": [
-              4,
-              513,
-              777
-            ],
-            "audios": [
-              4,
-              1,
-              199069
-            ]
-          }
-        },
-        "gradients_finite": {
-          "status": "pass",
-          "detail": {
-            "optimizer": 1,
-            "num_grads": 111
-          }
-        },
-        "losses_finite": {
-          "status": "pass",
-          "detail": {
-            "nonfinite": []
-          }
-        },
-        "validation_does_not_update_weights": {
-          "status": "pass",
-          "detail": {
-            "validation_runs": 1
-          }
-        },
-        "generator_updates": {
-          "status": "pass",
-          "detail": {
-            "changed": 673,
-            "total": 673
-          }
-        },
-        "waveform_discriminator_updates": {
-          "status": "pass",
-          "detail": {
-            "changed": 111,
-            "total": 111
-          }
-        },
-        "no_vits2_losses_logged": {
-          "status": "pass",
-          "detail": {
-            "found": []
-          }
-        },
-        "checkpoint_loads_weights_only": {
-          "status": "pass",
-          "detail": null
-        },
-        "resume_model_state": {
-          "status": "pass",
-          "detail": null
-        },
-        "resume_optimizer_state": {
-          "status": "pass",
-          "detail": null
-        },
-        "resume_scheduler_state": {
-          "status": "pass",
-          "detail": {
-            "live": [
-              1,
-              1
-            ],
-            "saved": [
-              1,
-              1
-            ]
-          }
-        },
-        "resume_global_step": {
-          "status": "pass",
-          "detail": {
-            "live": 8,
-            "saved": 8,
-            "saved_epoch": 0,
-            "live_epoch": 1
-          }
-        },
-        "resume_rng_state": {
-          "status": "pass",
-          "detail": "torch CPU RNG compared immediately after restore; CUDA<path>/Python restored, not compared"
-        },
-        "update_budget": {
-          "status": "pass",
-          "detail": {
-            "total": 16,
-            "limit": 26
-          }
-        },
-        "pytorch_inference_wav": {
-          "status": "pass",
-          "detail": {
-            "samples": 88832,
-            "seconds": 4.028662131519274,
-            "file": "smoke_inference.wav",
-            "note": "not a quality judgement"
-          }
-        },
-        "run_completed": {
-          "status": "pass",
-          "detail": null
-        },
-        "duration_discriminator_updates": {
-          "status": "not_applicable",
-          "detail": "model has no duration discriminator"
-        }
-      },
-      "optimizer_updates": {
-        "phase_a": {
-          "0": 4,
-          "1": 4
-        },
-        "phase_b": {
-          "0": 4,
-          "1": 4
-        },
-        "total": 16
-      },
-      "phase_a_final_metrics": {
-        "loss_mel": 68.17071533203125,
-        "loss_kl": 33.9847526550293,
-        "loss_dur": 1.8066561222076416,
-        "loss_gen": 0.7344913482666016,
-        "loss_fm": 0.3118431866168976,
-        "loss_gen_all": 105.00845336914062,
-        "loss_disc_all": 3.558637857437134,
-        "val_loss": 108.56709289550781,
-        "val_loss_mel": 68.17071533203125
-      },
-      "phase_a_parameter_changes": {
-        "model_g": {
-          "changed": 673,
-          "total": 673
-        },
-        "model_d": {
-          "changed": 111,
-          "total": 111
-        }
-      },
-      "repository_commit": "6ec6f37d56495294a693bc237205b9fb48bca051",
+      "repository_commit": "4064626fbe2c7148341b3e3319c238c52c83f8de",
       "repository_dirty": true,
       "classification": "functional smoke test; not a research result"
     }
