@@ -10,7 +10,7 @@ The research concerns system-level quality and computational tradeoffs. Recipe
 and split differences prevent decoder-only causal claims. No quality equivalence,
 edge-device performance or production readiness is established here.
 
-The author has authorized public code publication under `DazielNguyen/hifi-mobiNet`
+The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. A repository-wide
 license and external weight storage are **not yet confirmed**. Weights/audio are
 not bundled in Git or uploaded in this step. Missing local weights are reported
@@ -30,11 +30,11 @@ and local functional validation are separate records. Passes were recorded on
 
 ## Checkout and setup
 
-No public clone URL exists yet. From the parent directory, clone to a new sibling:
+Clone the public repository into a new directory:
 
 ```sh
-git clone --no-hardlinks ./hifi-mobiNet ./hifi-mobiNet-checkout
-cd hifi-mobiNet-checkout
+git clone https://github.com/DazielNguyen/hifi-mobiNet.git
+cd hifi-mobiNet
 python -m venv .venv
 ```
 

@@ -16,5 +16,14 @@ The final verification commit adds the clean-checkout test record, source preser
 record and refreshed release/history audit. Its hash is available from `git log`;
 this document cannot contain its own future commit hash.
 
-No history was amended/squashed, no source repository was committed, and no remote
-or external publication was created.
+At those initial milestones, no history was amended/squashed, no source repository
+was committed and no remote was created. On 2026-10-06 the author subsequently
+authorized public repository creation and code push.
+
+| Later commit | Milestone |
+|---|---|
+| `1d8c7e7` | Verify clean checkout and audit release contents |
+| `2fbea09` | Verify all four Q05 ONNX models, twelve local Harvard WAVs and complete Harvard inventory |
+
+The subsequent publication-preparation commit records the real GitHub clone URL
+and explicit author decisions. Weights/audio are not included in the push.

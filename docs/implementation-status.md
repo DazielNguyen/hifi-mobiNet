@@ -79,3 +79,8 @@ this step. See release-decisions.json and artifact-inventory.json.
 The initial local-only restriction was superseded by explicit authorization for
 public repository creation and code push. Training/export/quantization/benchmark
 restrictions remain in effect. Original source/evidence files remain unchanged.
+
+The public repository `DazielNguyen/hifi-mobiNet` was created on 2026-10-06. The
+authorized origin is recorded in release-decisions.json. Publication includes
+audited code, documentation, manifests and existing result tables; it excludes
+model files, WAVs, environments, native binaries and private artifact locations.
