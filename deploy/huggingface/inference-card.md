@@ -35,7 +35,7 @@ Set `HF_REVISION` to that commit before the download.
 python -m pip install huggingface_hub==2.1.1
 export HF_REVISION='<full-40-character-commit>'
 hf download DazielNguyen/hifi-mobiNet-inference \
-  --revision "$HF_REVISION" --include 'onnx-q05/*' 'artifacts.json' 'SHA256SUMS' \
+  --revision "$HF_REVISION" \
   --local-dir "$HOME/hifi-mobiNet-inference-assets"
 cd "$HOME/hifi-mobiNet-inference-assets"
 shasum -a 256 -c SHA256SUMS

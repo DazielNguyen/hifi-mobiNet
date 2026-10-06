@@ -136,3 +136,12 @@ All 47 final inventoried files passed remote checks; a Sequential-IR ONNX downlo
 See huggingface-model-upload.md and huggingface-model-upload.json for exact observations and verification limits.
 Dataset/Space candidates remain local. No public visibility change, GitHub push, tag, paid compute or deployment occurred.
 Earlier sections describe historical preparation states. Remaining rights and target-host checks are still open.
+
+## Separate public inference release (2026-10-06)
+
+Four Q05 ONNX graphs, selected configs and notices are public at https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.
+Their pinned revision is `8561554ae2ad1936262153ed195a2bc04c747235`. All four anonymous downloads matched original hashes.
+The original checkpoint archive remains private. No training log, checkpoint or Harvard material is in the new inference repository.
+Source runtime targets now use the public inference repo. Previously prepared Space snapshots remain unchanged and need regeneration before deployment.
+See huggingface-inference-release.md/json and model-publication-review.md for observations and limits.
+Dataset/Space publication remains deferred. Earlier sections record preparation states.

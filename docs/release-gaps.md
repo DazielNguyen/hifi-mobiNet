@@ -38,3 +38,11 @@
 - Raw logs/hparams are kept privately; publication-intended copies have separate
   redaction records. The redaction scan is heuristic. Full unchanged training
   checkpoints can embed host paths/state and need distribution review before upload.
+
+## Current inference release status (2026-10-06)
+
+Public inference URLs are now verified at https://huggingface.co/DazielNguyen/hifi-mobiNet-inference, commit `8561554ae2ad1936262153ed195a2bc04c747235`.
+All four anonymous downloads passed size and SHA-256 checks. The original checkpoint archive remains private.
+Local Linux amd64 emulation checks appear in huggingface-validation.json. They do not establish target-host performance.
+Earlier unverified platform and storage statements describe historical preparation states.
+Code attribution, native frontend distribution, Harvard text terms and target-host checks remain separate open items.

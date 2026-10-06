@@ -14,8 +14,8 @@ The author has authorized public code publication at [DazielNguyen/hifi-mobiNet]
 and confirmed permission to share journal-related artifacts. Original repository
 code and documentation owned by DazielNguyen are licensed under [MIT](LICENSE),
 subject to the scope and exclusions below. Artifact licenses are documented in [artifact licensing](docs/artifact-licensing.md).
-Model artifacts are stored in a private [Hugging Face repository](https://huggingface.co/DazielNguyen/hifi-mobiNet).
-Public downloads are not available yet. Weights and audio remain outside Git.
+Four FP32 ONNX graphs are available from the public [inference repository](https://huggingface.co/DazielNguyen/hifi-mobiNet-inference).
+Original training checkpoints remain in a private archive. Weights and audio remain outside Git.
 Missing local weights are reported explicitly; no different model is silently substituted.
 
 | Model ID | Decoder | Selected epoch | FP32 artifact | Local TTS |
@@ -164,7 +164,9 @@ binary distribution needs a separate review. See
 
 ## Hugging Face model storage
 
-The verified model candidate is uploaded privately to [DazielNguyen/hifi-mobiNet](https://huggingface.co/DazielNguyen/hifi-mobiNet).
-Its current commit is `a4354007630f14b2cd0046a6f6b0dc17dd1f7ac9`. See [upload verification](docs/huggingface-model-upload.md) for file identities and limits.
+Four unchanged Q05 FP32 ONNX graphs are public at [DazielNguyen/hifi-mobiNet-inference](https://huggingface.co/DazielNguyen/hifi-mobiNet-inference).
+Use commit `8561554ae2ad1936262153ed195a2bc04c747235` for pinned downloads.
+See [the inference release](docs/huggingface-inference-release.md) for download commands, checksums and scope.
+Original training checkpoints remain private at `DazielNguyen/hifi-mobiNet`.
 The dataset and Docker Space candidates remain local. Demo hosting is deferred; historical audio remains off by default.
-See [Hugging Face handoff](docs/huggingface-deployment.md) for pinned runtime configuration and future steps.
+See [the artifact review](docs/model-publication-review.md) for metadata findings and limits.

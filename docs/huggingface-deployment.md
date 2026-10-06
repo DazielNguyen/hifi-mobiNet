@@ -1,5 +1,17 @@
 # Hugging Face handoff for DazielNguyen
 
+## Current inference source
+
+The public inference source is https://huggingface.co/DazielNguyen/hifi-mobiNet-inference.
+Use `8561554ae2ad1936262153ed195a2bc04c747235` as `HIFIMOBINET_MODEL_REVISION` with the current source targets.
+No token is needed to download these public ONNX files. Original checkpoints remain private in the separate archive.
+See [the public download guide](huggingface-inference-release.md) for verified commands and scope.
+The dataset and Space remain local. Hosting is deferred.
+The old Space candidate uses its preparation-era private model target. Regenerate it from current committed code before future deployment.
+The sections below describe previous preparation/private-upload stages. They do not change the current inference source.
+
+## Earlier preparation and upload instructions
+
 ## Current model upload
 
 The model candidate is uploaded privately at https://huggingface.co/DazielNguyen/hifi-mobiNet.

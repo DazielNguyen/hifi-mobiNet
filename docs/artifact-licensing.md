@@ -49,3 +49,10 @@ For a future artifact release, distribute this record, the relevant license text
 Use separate model and audio metadata. Do not assign one license to all members of a mixed archive.
 Keep the original transfer archives as provenance copies. Any new release package needs a new manifest and checksum.
 No push, upload, tag, release or deployment forms part of this license update.
+
+## Current distribution scope
+
+Four existing ONNX graphs are public in `DazielNguyen/hifi-mobiNet-inference`.
+The original full checkpoint archive remains private in `DazielNguyen/hifi-mobiNet`.
+See [the inference receipt](huggingface-inference-release.json) for the public commit and exact file identities.
+This distribution change does not broaden MIT, dataset rights or frontend binary permissions.
