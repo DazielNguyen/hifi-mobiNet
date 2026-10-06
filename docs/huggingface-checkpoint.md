@@ -6,7 +6,12 @@ Date: 2026-10-06. The separate Static Space is public at
 https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet.
 It contains twelve new demo WAVs, three sentences and four models.
 Audio URLs are pinned to the verified asset revision.
-GitHub Pages deployment and browser checks are recorded in listening-publication.json.
+GitHub Pages is live at https://dazielnguyen.github.io/hifi-mobiNet/.
+The successful workflow deployed code commit `ecfe9a291a59dc1f384aae0ca8f40d808c2094d6`.
+Both hosts and all twelve public WAV identities passed remote checks.
+Deployment and browser observations are recorded in listening-publication.json.
+Continue by collecting user feedback or preparing additional cleared demo sentences.
+Fixed sample pages do not accept arbitrary text; local CLI inference remains available.
 Original checkpoints remain private; Harvard audio and sentence text are excluded.
 No paid plan, compute instance or live inference host was requested.
 See listening-demo.md for provenance, scoped audio terms and maintenance.

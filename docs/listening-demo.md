@@ -29,7 +29,15 @@ Hugging Face Static Spaces hosts the frontend and audio.
 GitHub Pages hosts the frontend and reads pinned Hugging Face audio URLs.
 Audio files and weights stay outside Git.
 
-The publication receipt records the actual URLs, revisions and deployment checks.
+The [publication receipt](listening-publication.json) records the actual URLs, revisions and deployment checks.
+
+- [Hugging Face Space](https://huggingface.co/spaces/DazielNguyen/hifi-mobiNet)
+- [GitHub Pages](https://dazielnguyen.github.io/hifi-mobiNet/)
+
+Both pages were deployed and checked on 2026-10-06.
+All twelve anonymous WAV downloads matched their recorded SHA-256 values.
+Browser playback, sentence switching and a mobile viewport were checked.
+Hugging Face adds its own script to served HTML; other frontend files match the published sources byte for byte.
 The GitHub Pages workflow publishes only `demo/listen/`.
 Neither host needs a model inference service or a paid compute instance.
 

@@ -19,9 +19,136 @@
   },
   "authenticated_remote_hash_checks": 20,
   "github_pages_url": "https://dazielnguyen.github.io/hifi-mobiNet/",
-  "github_pages_state": "not_deployed_yet",
+  "github_pages_state": "deployed",
   "original_checkpoint_archive_private": true,
   "historical_harvard_published": false,
   "audio_samples": 12,
-  "no_paid_hardware_requested": true
+  "no_paid_hardware_requested": true,
+  "space_host": "https://dazielnguyen-hifi-mobinet.static.hf.space",
+  "static_http_checks": [
+    {
+      "url": "https://dazielnguyen-hifi-mobinet.static.hf.space/index.html",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": true
+    },
+    {
+      "url": "https://dazielnguyen-hifi-mobinet.static.hf.space/catalog.json",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen-hifi-mobinet.static.hf.space/app.js",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen-hifi-mobinet.static.hf.space/styles.css",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen.github.io/hifi-mobiNet/index.html",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen.github.io/hifi-mobiNet/catalog.json",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen.github.io/hifi-mobiNet/app.js",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    },
+    {
+      "url": "https://dazielnguyen.github.io/hifi-mobiNet/styles.css",
+      "http": 200,
+      "source_matches": true,
+      "hf_service_script_injection_removed_for_comparison": false
+    }
+  ],
+  "anonymous_audio_hash_checks": [
+    {
+      "path": "audio/welcome/baseline-resblock2.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/studio/baseline-resblock2.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/question/baseline-resblock2.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/welcome/parallel-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/studio/parallel-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/question/parallel-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/welcome/sequential-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/studio/sequential-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/question/sequential-ir.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/welcome/piper-original.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/studio/piper-original.wav",
+      "http": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "audio/question/piper-original.wav",
+      "http": 200,
+      "sha256_match": true
+    }
+  ],
+  "github_workflow_run": "https://github.com/DazielNguyen/hifi-mobiNet/actions/runs/37442045101",
+  "github_pages_deployed_commit": "ecfe9a291a59dc1f384aae0ca8f40d808c2094d6",
+  "browser_checks": {
+    "browser": "Chrome",
+    "huggingface": "All four welcome recordings decoded with readyState=4 and advancing/end currentTime; no media errors. Starting another recording paused Piper before its end.",
+    "github_pages": "Sequential-IR welcome recording decoded with readyState=4 and reached its end. Selecting the third sentence replaced all four URLs and stopped the old player.",
+    "local_responsive": "390x844 viewport visually checked; single-column cards and wrapped sentence controls; measured scrollWidth=375 at innerWidth=390. Viewport restored.",
+    "assessment_limit": "Functional playback checks only; no human listening quality assessment."
+  },
+  "validation_limits": [
+    "Hugging Face inserts a host-owned script into the served HTML; the original HTML matches after removing that exact injection. Other served frontend files match byte for byte.",
+    "Existing ONNX provenance limitations remain; these fixed samples do not establish benchmark results, equivalence or production readiness.",
+    "GitHub Pages serves the same catalog and uses pinned HF media; playback depends on HF audio availability."
+  ]
 }
