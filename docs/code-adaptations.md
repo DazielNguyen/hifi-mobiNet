@@ -5,8 +5,9 @@
 2. `src/hifimobinet/architecture/vits/` relocates current Banhmi model components.
    Forward and inference arithmetic are retained. An unsupported Vocos import is
    replaced by a class that raises explicitly on construction. The MAS Cython
-   import is deferred until the training-only function is called. Training itself
-   is not exposed or validated; do not use this as a replacement training recipe.
+   import is deferred until the training-only function is called. Training is
+   exposed only through `src/hifimobinet/training/` (added 2026-10-06), whose
+   adaptations are listed in `docs/training/piper-component-comparison.md`.
 3. The supported inference entry point consumes identified, pre-existing Q05
    ONNX graphs. It does not export the relocated PyTorch classes or deserialize
    Lightning checkpoints. No equivalence to the historical quality-evaluation

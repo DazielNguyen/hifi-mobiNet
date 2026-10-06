@@ -113,6 +113,17 @@ These scores do not describe this reorganized code, its ONNX demo or an edge dev
 UTMOSv2 is not human MOS. Historical PTQ tables remain exploratory and are excluded
 from the demo because of artifact and protocol gaps.
 
+## Training (new runs only)
+
+Two training recipes can be run from a source checkout on Ubuntu/WSL2 with an
+NVIDIA GPU: `baseline-resblock2-vits2` (the internal ResBlock2 baseline recipe
+with VITS2 components, current BanhmiTTS code) and `Piper_no_VITS2_cpn`
+(the upstream Piper VITS graph at rhasspy/piper `73c04d8`, without VITS2
+components, trained from scratch). They never overwrite the released models.
+Start with [training setup](docs/training/training-setup-ubuntu.md); the
+component audit, protocol, smoke results and next-run commands are in
+[docs/training/](docs/training/). Smoke-test outputs are not research results.
+
 ## Streamlit
 
 ```sh
@@ -132,10 +143,11 @@ custom-path input, PTQ selector or benchmark timing display. See
 ## Repository map
 
 ```text
-src/hifimobinet/    Portable inference, registry, evaluation, model components
+src/hifimobinet/    Portable inference, registry, evaluation, model components, training harness
 vendor/            Unchanged reference imports and native frontend source
-configs/           Checkpoint-derived JSON and original YAML templates
-scripts/           Inference, evaluation and validation entry points
+configs/           Checkpoint-derived JSON, original YAML templates, training recipes
+requirements/      Pinned training environment
+scripts/           Inference, evaluation, validation and training entry points
 models/            Artifact/checkpoint manifest and access instructions
 results/           Historical observations, manifests and prior audit
 demo/              Streamlit app and aligned audio catalog

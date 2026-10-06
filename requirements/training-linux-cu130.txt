@@ -1,0 +1,24 @@
+# Training environment for Ubuntu/WSL2 with an NVIDIA GPU (CUDA 13.0 wheels).
+#
+# Versions are the ones observed in the existing BanhmiTTS training interpreter
+# on the development workstation (2026-10-06), NOT the newest releases and NOT a
+# claim about the versions that ran the historical journal training. Upgrading
+# any of these needs its own validation (PyTorch Lightning 1.7 multi-optimizer
+# automatic optimization is the most fragile part).
+#
+# Install with pip 24.0: pytorch-lightning 1.7.x publishes a dependency specifier
+# ("torch>=1.9.*") that pip >= 24.1 rejects as invalid metadata.
+#   python -m pip install pip==24.0
+#   python -m pip install -r requirements/training-linux-cu130.txt
+--extra-index-url https://download.pytorch.org/whl/cu130
+torch==2.13.0+cu130
+pytorch-lightning==1.7.7
+torchmetrics==0.11.4
+numpy==1.26.4
+scipy==1.15.3
+librosa==0.11.0
+soundfile==0.14.0
+Cython==3.2.9
+PyYAML==6.0.3
+tensorboard==2.21.0
+setuptools==80.10.2

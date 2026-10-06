@@ -1,0 +1,69 @@
+# Internal baseline training recipe (new training runs only).
+#
+# Architecture values equal configs/baseline-resblock2.json (checkpoint metadata
+# of the released baseline, epoch 1489). Optimizer/loss values equal the
+# BanhmiTTS VitsModel defaults recorded in that checkpoint's hparams.
+# Trainer values equal the final historical phase (version_2: bf16, clip 1.0).
+#
+# This recipe runs the CURRENT BanhmiTTS training code (non-finite update skip
+# and free-running health gate always on there). The historical baseline was
+# trained by earlier code without those two mechanisms and with clip=null in its
+# first phase, so a new run with this file is not a re-run of the released model.
+model_id: baseline-resblock2-vits2
+
+model:
+  inter_channels: 192
+  hidden_channels: 192
+  filter_channels: 768
+  n_heads: 2
+  n_layers: 6
+  kernel_size: 3
+  p_dropout: 0.1
+  resblock: "2"
+  resblock_kernel_sizes: [3, 5, 7]
+  resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+  upsample_rates: [8, 8, 4]
+  upsample_initial_channel: 256
+  upsample_kernel_sizes: [16, 16, 8]
+  filter_length: 1024
+  hop_length: 256
+  win_length: 1024
+  mel_channels: 80
+  sample_rate: 22050
+  mel_fmin: 0.0
+  mel_fmax: null
+  segment_size: 8192
+  use_spectral_norm: false
+  posterior_encoder_kernel_size: 5
+  posterior_encoder_dilation_rate: 1
+  posterior_encoder_layers: 16
+  flow_kernel_size: 5
+  flow_dilation_rate: 1
+  flow_n_flows: 4
+  mas_noise_scale_initial: 0.01
+  mas_noise_scale_decay: 0.000002
+
+optim:
+  learning_rate: 0.0002
+  betas: [0.8, 0.99]
+  eps: 1.0e-9
+  lr_decay: 0.999875
+  c_mel: 45
+  c_kl: 1.0
+
+trainer:
+  precision: bf16
+  gradient_clip_val: 1.0
+  seed: 1234
+
+data:
+  batch_size: 16          # per device; the historical run used 2 GPUs (DDP)
+  sampler: length_bucket
+  num_workers: 8
+  max_phoneme_ids: null
+  num_audio_samples: 5
+
+harness:
+  skip_nonfinite_updates: true
+  dp_health_gate: true
+  save_rng_state: true
