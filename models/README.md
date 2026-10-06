@@ -32,5 +32,9 @@ templates remain under `configs/original/`. Runtime scales remain
 `[0.667, 1.0, 0.8]`, output is mono 22,050 Hz, and only CPU FP32 ONNX is enabled
 for functional validation. Historical INT8 graphs are excluded from the demo.
 
-Model release rights, external storage ownership and public URLs require author
-decisions. The Piper model card's dataset license is not a blanket weight license.
+The author confirmed sharing permission on 2026-10-06. Specific licenses, external
+storage and public URLs remain unconfirmed. The Piper card's dataset license is
+not a blanket weight license. All four existing Q05 graphs passed a short local
+functional synthesis check; these passes do not bind historical quality scores to
+the new runtime. Selected training checkpoints total 3.44 GB and include training
+state; no weights-only conversion was performed. See `docs/artifact-inventory.json`.

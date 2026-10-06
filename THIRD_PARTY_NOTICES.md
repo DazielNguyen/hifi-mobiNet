@@ -1,8 +1,9 @@
 # Third-party notices and licensing status
 
-No license is granted for the repository as a whole at this stage. Local
-consolidation does not resolve rights to redistribute original contributions,
-weights, generated audio, sentence collections or dependencies.
+No license is granted for the repository as a whole at this stage. On 2026-10-06
+the author confirmed permission to share code, weights, logs and Harvard audio,
+and authorized public GitHub code publication. A named license remains unconfirmed;
+the declaration does not replace third-party terms or grant additional upstream rights.
 
 | Material | Evidence and retained notice | Status |
 |---|---|---|
@@ -12,7 +13,7 @@ weights, generated audio, sentence collections or dependencies.
 | eSpeak NG dependency | [GPL-3.0 text](licenses/eSpeak-NG-GPL-3.0.txt) from the source package | Not bundled as a binary; distributing a linked phonemizer needs GPL compliance review |
 | VITS / HiFi-GAN / BigVGAN / VITS2 | Architectural and source-comment references within imported material | Do not treat citations as licenses. Full upstream attribution review remains open |
 | LJSpeech | Existing Piper model card identifies the dataset as public domain | Does not independently establish a license for every checkpoint or generated output |
-| Historical Harvard sentences/audio/results | Original Banhmi evidence package | Local research use; redistribution conditions pending author review |
+| Historical Harvard sentences/audio/results | Original Banhmi evidence package | Author sharing permission confirmed; specific terms still need documentation; WAVs are not uploaded in this step |
 
 All unchanged imported source retains its original comments. Some comments make
 historical performance or novelty claims that this repository does not endorse.
@@ -21,4 +22,5 @@ models do not use these branches. See `docs/release-gaps.md`.
 
 Dependency licenses are independent of the license of this repository. A later
 release must inventory the actual installed/bundled dependency versions and retain
-their required notices. No remote publication or binary redistribution has occurred.
+their required notices. No compiled frontend binary, model weight or WAV is included
+in Git. Public code publication does not imply blanket licensing or binary clearance.

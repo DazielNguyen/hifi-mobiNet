@@ -2,21 +2,22 @@
 
 Project: hifi-mobiNet
 
-Scope: independent local repository; source repositories and original evidence
-are read-only. No new training, export, quantization or benchmark. Functional
-validation is separate from historical research results.
+Scope: independent repository; source repositories and original evidence remain
+read-only. The author authorized public GitHub code publication on 2026-10-06.
+No new training, export, quantization or benchmark. Functional validation is
+separate from historical research results; weights/audio upload remains deferred.
 
 | Milestone | Status |
 |---|---|
-| Structure and provenance policy | Complete; independent Git repository, no remote |
+| Structure and provenance policy | Complete; independent Git repository; public publication authorized |
 | Original implementation/configuration import | Complete; source/destination SHA-256 recorded, unmodified import committed first |
-| Portable inference and model access | Implemented; actual Q05 model inference pending asset access |
+| Portable inference and model access | Complete; four identified Q05 ONNX models pass local functional synthesis |
 | Evaluation/statistical tools | Complete; fixtures passed; prior Harvard audit reproduced |
 | Historical results and experiment manifests | Complete; 20 raw result tables preserved unchanged |
-| Streamlit comparison and TTS | Implemented; UI/playback-fixture/error-state checks passed; historical audio bytes and real-model TTS pending |
+| Streamlit comparison and TTS | Complete locally; twelve original WAVs verified, real UI/TTS checks passed; assets external to Git |
 | Native frontend | Built in isolated Windows environment; three stored Harvard ID sequences matched |
 | PyTorch model components | All three internal synthesizers construct; original versus relocated decoder outputs exactly match on fixed functional inputs |
-| Release/license status | Local preparation only; author decisions and external artifact access remain open |
+| Release/license status | Public code authorized; named license and weight hosting unconfirmed |
 
 Resume by reading this file, `release-gaps.md`, `source-map.json` and the Git
 log. Inspect existing changes before continuing. Do not reset, amend or
@@ -46,27 +47,35 @@ rewrite history; commit finished milestones separately.
   build directory fixed it without changing original source. Windows UTF-8 output
   handling was made explicit in the portable statistical script.
 
-## Pending functional access
+## Resolved artifact access and author decisions (2026-10-06)
 
-The actual Q05 ONNX files and the twelve selected Harvard WAVs are referenced in WSL,
-outside the newly stated workspace source scope. Access clarification was requested;
-no WSL artifact was read or copied while that clarification remained pending.
-Consequently, all four new-code TTS entries remain disabled. The comparison interface
-is complete but actual historical listening requires those original WAVs.
+Ubuntu-24.04/WSL2 contains the four selected checkpoints and Q05 FP32 graphs.
+All eight SHA-256 identities match the previous manifests. Four existing graphs
+and twelve original Harvard WAVs were copied into ignored local storage.
+All four models synthesized a short sentence successfully; Streamlit rendered
+three aligned choices and exercised the baseline TTS button. These are functional
+checks, not benchmarks, human listening scores or historical runtime reproduction.
 
-This is separate from missing training history and release rights: receiving assets
-would enable functional checks, not prove historical quality/causality claims.
+The author explicitly selected public code publication in DazielNguyen/hifi-mobiNet,
+confirmed sharing permission, and restricted artifact scope to journal-related
+selected checkpoints, relevant logs and Harvard audio. The named license and
+weight storage provider remain unconfirmed. No weights/audio are uploaded in
+this step. See release-decisions.json and artifact-inventory.json.
 
 ## Resume
 
-1. With authorized artifact access, run `scripts/inference/install_local_assets.py`
-   for Q05 and Harvard directories; keep weights/audio outside Git as configured.
-2. Run `scripts/validation/smoke_models.py --enable-verified-models` with a new output
-   directory, then exercise actual historical audio and TTS in Streamlit.
-3. Update the model/source/release manifests and this status only for performed checks;
-   rerun tests and the history audit, then make a new local commit.
-4. Before any remote/push/deployment, resolve author licensing, upstream notices,
-   model/audio redistribution, approved storage URLs and target-host validation.
+1. Choose the license for original contributions, finish upstream notice/compatibility
+   review and document specific model/audio sharing terms.
+2. Choose external storage and approved URLs. Selected full training checkpoints,
+   Q05 ONNX and all Harvard WAVs total about 4.02 GB before logs. Full TensorBoard
+   event files from the three main runs alone total about 42.94 GB; decide separately
+   whether those are needed in the artifact release.
+3. A fresh clone needs external assets and the native frontend. Use the checksum
+   installer and functional smoke commands in setup.md; never substitute other weights.
+4. Before deployment, validate the target Linux host, peak loaded-model memory,
+   process isolation/timeouts and concurrent-user capacity. No deployment is authorized
+   or completed here.
 
-No remote, push, checkpoint upload, publication or deployment is authorized by the
-current preparation task. No training/export/quantization/benchmark was performed.
+The initial local-only restriction was superseded by explicit authorization for
+public repository creation and code push. Training/export/quantization/benchmark
+restrictions remain in effect. Original source/evidence files remain unchanged.

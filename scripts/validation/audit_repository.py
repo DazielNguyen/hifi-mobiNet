@@ -62,7 +62,7 @@ def main(argv=None):
                             'source_commit':src['source_commit'] if src else None,
                             'classification':src['classification'] if src else 'new_repository_implementation_or_documentation',
                             'rights':src['license_status'] if src else 'author_license_decision_pending',
-                            'release_status':'local_only_pending_author_release_review'})
+                            'release_status':'code_publication_authorized_license_pending' if (ROOT/'docs/release-decisions.json').exists() else 'local_only_pending_author_release_review'})
         # Scan every unique historical blob, not merely the current checkout.
         objects=git('rev-list','--objects','--all').decode().splitlines()
         seen=set();blobs=0
@@ -74,7 +74,14 @@ def main(argv=None):
             seen.add(oid)
             if git('cat-file','-t',oid).strip()!=b'blob':continue
             inspect(name,git('cat-file','blob',oid));blobs+=1
-        if git('remote').strip():raise ValueError('Unexpected Git remote configured')
+        remotes=git('remote').decode().splitlines()
+        decision_file=ROOT/'docs/release-decisions.json'
+        approved=json.loads(decision_file.read_text()).get('authorized_git_remote') if decision_file.exists() else None
+        for remote in remotes:
+            urls=git('remote','get-url','--all',remote).decode().splitlines()
+            push_urls=git('remote','get-url','--push','--all',remote).decode().splitlines()
+            if remote!='origin' or not approved or set(urls+push_urls)!={approved}:
+                raise ValueError('Unexpected Git remote configured')
         if args.write_manifest:
             models=json.loads((ROOT/'models/manifest.json').read_text())['models']
             out={'schema_version':1,'scope':'Tracked working files; self and final-audit excluded to avoid circular hashes.',
@@ -88,7 +95,7 @@ def main(argv=None):
             if actual!=expected:raise ValueError('Release manifest differs from tracked working files; inspect changes before refreshing it')
         report={'classification':'new_validation','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 'checked_head':git('rev-parse','HEAD').decode().strip(),'tracked_files':len(names),'unique_history_blobs':blobs,
-                'source_map_entries':len(source_map),'remote_count':0,'status':'passed',
+                'source_map_entries':len(source_map),'remote_count':len(remotes),'status':'passed',
                 'limits':'Heuristic content scan only; no guarantee of complete secret detection or license clearance. Source repositories verified separately.'}
         if args.record:(ROOT/'docs/final-audit.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         print(json.dumps(report,indent=2))

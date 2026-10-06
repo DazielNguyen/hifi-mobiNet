@@ -7,8 +7,9 @@
   need a separate distribution review. Preserve all existing notices.
 - Third-party VITS/HiFi-GAN/BigVGAN utility attribution needs an author-reviewed
   per-file assessment. Structural similarity alone does not establish lineage.
-- Checkpoint, generated-audio and Harvard sentence redistribution conditions
-  are not yet fully documented. Local access is not publication permission.
+- The author confirmed permission to share code, weights, logs and Harvard audio
+  on 2026-10-06. Specific licensing terms and third-party redistribution conditions
+  are not yet fully documented; the declaration is recorded in release-decisions.json.
 - Existing ONNX/PTQ quality results are historical. They cannot be attached to
   the later Q05 FP32 graphs as if they were evaluated together.
 - The historical LJSpeech-500 sets differ between MRF and the other internal
@@ -19,8 +20,9 @@
 - Intel N150 / Raspberry Pi 5 measurements and human listening scores are absent.
 - Public model download links for team artifacts are pending. No fake URL or
   implicit substitution is allowed.
-- Local access to actual Q05 ONNX and Harvard WAVs is pending clarification of WSL
-  scope. The four TTS models remain disabled; no real-model inference pass is claimed.
+- WSL artifact access is resolved. All four Q05 ONNX models passed a local functional
+  synthesis check; twelve original Harvard WAVs passed checksum and UI checks.
+  Assets remain outside Git. Storage provider/public download URLs are unconfirmed.
 - Native frontend was built on Windows only. Linux hosting, loaded-model memory,
   concurrent sessions and actual browser listening are not validated.
 - The current package exposes inference, component inspection and stored-result

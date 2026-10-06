@@ -10,20 +10,23 @@ The research concerns system-level quality and computational tradeoffs. Recipe
 and split differences prevent decoder-only causal claims. No quality equivalence,
 edge-device performance or production readiness is established here.
 
-**Local preparation only.** No remote, upload or deployment exists. Code licensing
-and model/audio redistribution require author review. Missing weights are reported
+The author has authorized public code publication under `DazielNguyen/hifi-mobiNet`
+and confirmed permission to share journal-related artifacts. A repository-wide
+license and external weight storage are **not yet confirmed**. Weights/audio are
+not bundled in Git or uploaded in this step. Missing local weights are reported
 explicitly; no different model is silently substituted.
 
 | Model ID | Decoder | Selected epoch | FP32 artifact | Local TTS |
 |---|---|---:|---|---|
-| `baseline-resblock2` | HiFi-GAN ResBlock2 | 1489 | Q05 identity recorded | Pending artifact access |
-| `parallel-ir` | Parallel IR, kernels 3/5/7, expansion 1 | 1386 | Q05 identity recorded | Pending artifact access |
-| `sequential-ir` | Two sequential IR blocks/stage, kernel 3, expansion 1 | 1442 | Q05 identity recorded | Pending artifact access |
-| `piper-original` | Piper medium ResBlock2 | 999 (filename 1000) | Q05 identity recorded | Pending artifact access |
+| `baseline-resblock2` | HiFi-GAN ResBlock2 | 1489 | Q05 SHA-256 verified | Functional pass |
+| `parallel-ir` | Parallel IR, kernels 3/5/7, expansion 1 | 1386 | Q05 SHA-256 verified | Functional pass |
+| `sequential-ir` | Two sequential IR blocks/stage, kernel 3, expansion 1 | 1442 | Q05 SHA-256 verified | Functional pass |
+| `piper-original` | Piper medium ResBlock2 | 999 (filename 1000) | Q05 SHA-256 verified | Functional pass |
 
 Exact configurations, sizes, SHA-256 values, source and sharing status are in
 [models/manifest.json](models/manifest.json). Checkpoint identity, ONNX identity
-and local functional validation are separate records.
+and local functional validation are separate records. Passes were recorded on
+2026-10-06 in the prepared local installation; a fresh checkout needs the assets.
 
 ## Checkout and setup
 

@@ -9,7 +9,9 @@ utterance ID/text, model, source, hash, frame count and WAV format. Historical b
 are passed to the player unchanged; missing or altered files have explicit errors.
 
 The catalog selects Harvard IDs 0000–0002 before listening or score selection.
-Actual WAVs remain external local assets until access/redistribution is settled.
+Twelve original WAVs are installed and verified in the author's prepared local
+installation. They remain external assets; a fresh clone does not include them.
+The author confirmed sharing permission, but external hosting remains undecided.
 Use the installer in `setup.md` or set `HIFIMOBINET_AUDIO_DIR` to an operator-managed
 directory containing `baseline/`, `mrf/`, `seq/` and `piper/`. Web users cannot set paths.
 
@@ -22,5 +24,8 @@ New audio is labelled separately and uses the original peak-to-PCM16 conversion.
 There is no timing/quality display or claim that demo output reproduces old samples.
 
 Programmatic tests cover rendering, sentence selection, WAV widgets, hash rejection
-and missing-weight states. Synthetic silent WAV fixtures are test-only, never
-research samples. Human/browser listening quality is not assessed by those tests.
+and missing-weight states. Synthetic silent fixtures are test-only, never research
+samples. Additional checks used all twelve real historical WAVs and the baseline
+TTS button; all four models passed direct ONNX synthesis. Human listening quality
+is not assessed by these checks. See `demo-functional-validation.json` and
+`functional-validation.json`.
