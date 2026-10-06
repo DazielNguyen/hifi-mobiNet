@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "scope": "Training additions of 2026-10-06; vendored references are in docs/source-map.json",
+  "license": "Original code MIT (repository LICENSE); adapted parts retain upstream terms (Piper MIT; BanhmiTTS author review pending per source-map)",
+  "files": [
+    {
+      "file": "configs/training/baseline-resblock2-vits2.yaml",
+      "sha256": "fc394b5d9632a068e149da48f5c2b7301ef3f4b0b69ee24be2c153862d3f092d",
+      "classification": "derived_values",
+      "derived_from": [
+        "configs/baseline-resblock2.json",
+        "configs/original/default.yaml"
+      ],
+      "note": "Values only"
+    },
+    {
+      "file": "configs/training/piper-no-vits2-cpn-upstream-harness.yaml",
+      "sha256": "56f7d76f008069ca2768cb91e335c56742bee9bb02e01333e5ce3c858539a4f8",
+      "classification": "derived_values",
+      "derived_from": [
+        "configs/piper-original.json",
+        "vendor/piper/vits/lightning.py"
+      ],
+      "note": "Values only"
+    },
+    {
+      "file": "configs/training/piper-no-vits2-cpn.yaml",
+      "sha256": "3d02c8d999e9b45ef5157f5d09b4ae3927545a28f656ba0ade3a1de42477280f",
+      "classification": "derived_values",
+      "derived_from": [
+        "configs/piper-original.json",
+        "vendor/piper/vits/lightning.py"
+      ],
+      "note": "Values only"
+    },
+    {
+      "file": "requirements/training-linux-cu130.txt",
+      "sha256": "5a40736047c8aebdce5eba912f9a2f5e88491d9f478698072fb4d9d8413d0867",
+      "classification": "new",
+      "derived_from": [],
+      "note": "Versions observed in the existing workstation training interpreter"
+    },
+    {
+      "file": "scripts/training/build_mas.sh",
+      "sha256": "cb53b53d182ecb88853a55822915e4e7d7d6633744a96965ab1d2a4260251c20",
+      "classification": "new",
+      "derived_from": [
+        "vendor/piper/build_monotonic_align.sh",
+        "vendor/banhmi/vits/utils/monotonic_align/setup.py"
+      ],
+      "note": "Same output layout as upstream; compiled in a temporary directory"
+    },
+    {
+      "file": "scripts/training/export_smoke_summary.py",
+      "sha256": "d7c2cf96af303843833a0fc02ebc5a1aebca77fa1dd997cbe3be699f30b18ca0",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "scripts/training/import_training_sources.py",
+      "sha256": "633c6b9fa55d0738037049257d03de87861d1d571216839f23fcf353d08d0fe1",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "scripts/training/probe_memory.py",
+      "sha256": "c11d6f5ce8700884088bd8fbdd367eae7e6f0b86d3163aed686cabccf14c5071",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "scripts/training/setup_ubuntu.sh",
+      "sha256": "7f5280723f94aba18864e40034a64d09dd9a8fc15578b2114db621395bd69a92",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "scripts/training/verify_phoneme_ids.py",
+      "sha256": "dc50514838bf0d44602c4a4f190d9de437772be9ab22deb28521c1ecf28b4dc3",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "scripts/training/write_source_provenance.py",
+      "sha256": "dc6680fd49e432bff02c4b63d3c73c0ec677e934c15366cdd13e8d80001cd615",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/__init__.py",
+      "sha256": "645e30e24012fb953a8ef8abbc2987641986b72159c166c8fd8f8847df02d84c",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/baseline_module.py",
+      "sha256": "8c8a4de0d7eb551051f941707ad5dc87a99ae41d75d2781e75720116049acea1",
+      "classification": "adapted",
+      "derived_from": [
+        "vendor/banhmi/vits/training.py"
+      ],
+      "note": "Loss/optimizer/scheduler/skip/health-gate logic kept; Vocos/F0/MRD removed; data injected"
+    },
+    {
+      "file": "src/hifimobinet/training/config.py",
+      "sha256": "2c49981222bf44f6b15f2e76090134debe941ab9789fa9a6261da83ae107c28d",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/data.py",
+      "sha256": "37855f16448419b13e41d9fd508d67508583c1f01024d077775d910ac277d959",
+      "classification": "new",
+      "derived_from": [
+        "vendor/banhmi/vits/training.py"
+      ],
+      "note": "Split/length-cache semantics follow BanhmiTTS; loaders call unmodified vendor Dataset/Collate"
+    },
+    {
+      "file": "src/hifimobinet/training/env.py",
+      "sha256": "be51c489c4407bad04e3c594deaf2ee47fc35cb695de1de0a3142a4f8a51dfa6",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/harness.py",
+      "sha256": "672db5db59fe39a298915d14d1109cad148bbd55f444f3383c287fb37749be70",
+      "classification": "adapted",
+      "derived_from": [
+        "vendor/banhmi/vits/training.py"
+      ],
+      "note": "Non-finite skip and health check factored out of BanhmiTTS VitsModel; RNG save/restore and Lightning-1.7 scheduler hook are new"
+    },
+    {
+      "file": "src/hifimobinet/training/piper_module.py",
+      "sha256": "03b59656057414fc5f1148631adce0931f9f567016c3a9eaea67ffadd60607c0",
+      "classification": "adapter_subclass",
+      "derived_from": [
+        "vendor/piper/vits/lightning.py"
+      ],
+      "note": "Subclasses upstream VitsModel (rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be); training_step_g body copied with added logging"
+    },
+    {
+      "file": "src/hifimobinet/training/registry.py",
+      "sha256": "11bfa3ab9076945863efa8f5eb7d502c60a9a1a6f33a4829a453a92a805bbc65",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/smoke.py",
+      "sha256": "5031023f54f3e50237dee93877ee988b46a56b8e805b97008000df732ae8d336",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "src/hifimobinet/training/train.py",
+      "sha256": "845031bbcad623828f820c390b5a660c8060cf5db0f2409fce4f0667841a7863",
+      "classification": "adapted",
+      "derived_from": [
+        "vendor/banhmi/train.py",
+        "vendor/piper/__main__.py"
+      ],
+      "note": "Checkpoint rule and seeding follow both entry points; explicit model ID/config/split are new"
+    },
+    {
+      "file": "src/hifimobinet/training/vendor.py",
+      "sha256": "17b0850ba691d6bbf5e62f84759b608c9fd064ff66dec867152aa3f15900358e",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    },
+    {
+      "file": "tests/test_training.py",
+      "sha256": "3e59d9f80c2485c601fea3a42e3ff1b5a085aa0406229d1bd809b80f5df0229f",
+      "classification": "new",
+      "derived_from": [],
+      "note": ""
+    }
+  ]
+}

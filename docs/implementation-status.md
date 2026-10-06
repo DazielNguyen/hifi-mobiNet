@@ -146,6 +146,30 @@ Source runtime targets now use the public inference repo. Previously prepared Sp
 See huggingface-inference-release.md/json and model-publication-review.md for observations and limits.
 Dataset/Space publication remains deferred. Earlier sections record preparation states.
 
+## Training harness and Piper_no_VITS2_cpn (2026-10-06)
+
+The author requested training capability while keeping the released baseline
+unchanged, plus a new model `Piper_no_VITS2_cpn` from the verified upstream Piper
+implementation without VITS2 components. This supersedes "No training entry
+point is promised" for these two recipes only; export, quantization, upload
+and long training were not performed.
+
+- Upstream audit: rhasspy/piper `73c04d8` is the archived repository's final
+  `master`; vendored bytes match its Git objects. Component table and adapter
+  diff: `docs/training/piper-component-comparison.md`.
+- Harness: `src/hifimobinet/training/` (explicit model IDs, strict configs,
+  explicit split, run records), configs in `configs/training/`, Ubuntu setup in
+  `docs/training/training-setup-ubuntu.md`.
+- Checks: real GPU smoke runs (≤ 24 updates each) passed every functional check
+  for both models after two harness defects were fixed at their root cause
+  (Lightning 1.7 scheduler check under torch 2; NumPy RNG state blocking
+  weights-only resume). 13,100/13,100 dataset phoneme-ID rows reproduced.
+  `docs/training/training-smoke-report.md`.
+- Open: comparison protocol decisions, multi-GPU status and the long-run
+  commands are in `docs/training/piper-no-vits2-protocol.md` and
+  `docs/training/next-run.md`; handoff in
+  `docs/training/handoff-training-2026-10-06.md`.
+
 ## Static listening publication (2026-10-06)
 
 The author selected fixed audio playback on Hugging Face and GitHub.
