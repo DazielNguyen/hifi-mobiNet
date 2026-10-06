@@ -1,0 +1,131 @@
+{
+  "classification": "local_release_preparation_validation",
+  "date": "2026-10-06",
+  "namespace": "DazielNguyen",
+  "prepared_code_commit": "53bb061cd3ec98ff0d322b31e6e808be150e02de",
+  "publications_performed": [],
+  "candidates": {
+    "model": {
+      "repo_id": "DazielNguyen/hifi-mobiNet",
+      "files_excluding_inventory": 45,
+      "bytes_excluding_inventory": 3710271097
+    },
+    "dataset": {
+      "repo_id": "DazielNguyen/hifi-mobiNet-harvard",
+      "files_excluding_inventory": 2891,
+      "bytes_excluding_inventory": 316800529
+    },
+    "space": {
+      "repo_id": "DazielNguyen/hifi-mobiNet",
+      "files_excluding_inventory": 136,
+      "bytes_excluding_inventory": 588608
+    }
+  },
+  "identity_validation": "All selected checkpoint/ONNX/WAV/log/config source bytes and candidate copies checked during preparation. Candidate file inventories reverified. No unsafe checkpoint load.",
+  "source_map_entries_unchanged": 121,
+  "host_tests": {
+    "unique_related_tests_passed": 20,
+    "commands": [
+      "pytest -q tests/test_huggingface_bootstrap.py tests/test_model_access.py tests/test_inference_contract.py tests/test_demo.py tests/test_frontend_native.py (18 checks before two additional tests)",
+      "pytest -q tests/test_huggingface_bootstrap.py (8 checks, including the two added preparation checks)"
+    ],
+    "scope": "Functional and identity/error-path checks, not a benchmark or research evaluation"
+  },
+  "docker": {
+    "platform": "linux/amd64",
+    "execution_host": "arm64 Mac, Docker Desktop emulation",
+    "build_passed": true,
+    "image_id": "sha256:dd70de84d6481a4d39950edcc31e62d865d86a522e8b58dcae1ea987c1be4b86",
+    "observed_base_digest": "sha256:7753c33391fc9f01d1984375bf375eb6686d52ba10db6043a86634a5ccf90dcf",
+    "native_build_fixes": [
+      "Absolute writable build directory",
+      "App directory explicitly owned by UID 1000",
+      "CMake 3.31.10 pinned inside isolated build"
+    ],
+    "dependency_check": "passed",
+    "http_health": {
+      "status": 200,
+      "body": "ok",
+      "binding": "127.0.0.1:8502",
+      "temporary_container_stopped": true
+    },
+    "tested_runtime_file_sha256": {
+      "deploy/huggingface/bootstrap.py": "281c6e72a5f02b33a9f115fa5a0b681f97f6847efa256c1ad50f75d81e5596c5",
+      "deploy/huggingface/start.sh": "8addfce7460c6678be5fe535f6bbebba148148b90b197ec8a21b1273efd05329",
+      "src/hifimobinet/inference.py": "c66a7e52307b54bc7ca220b37491bc5f11b44aad93e8480a3d2389708c54252b",
+      "src/hifimobinet/frontend.py": "5eff2b82cdbc8b6fd0e620c028817797473d118b65b0338c4aafd156151f742e",
+      "src/hifimobinet/registry.py": "a4857d5f228c069e2a05aab66e9f3476407872d4eb4c63073318f4dff94f5bf7",
+      "src/hifimobinet/comparison.py": "1d07015ea87756e05dfe8819f9903a6f5f10cad7958c313f1ef1a12ed4e80e34",
+      "demo/streamlit_app.py": "e888e73d314a0b57f5c4294f286dee8939afe48d3544f70ce5d75bad902aa3a9",
+      "models/manifest.json": "b65184ce9ce76a1e9878ca8f376de83d0992da68b55dfa99c5fb2609c9f265be",
+      "vendor/banhmi-phonemize/CMakeLists.txt": "3724a106184c13a7206e374576f93dcc84037f0f44951377448662790c84706f"
+    },
+    "runtime_files_match_prepared_code_and_candidate": true,
+    "smoke": {
+      "classification": "local_linux_engineering_smoke",
+      "platform": "Linux-6.11.11-linuxkit-x86_64-with-glibc2.36",
+      "machine": "x86_64",
+      "uid": 1000,
+      "python": "3.12.15",
+      "versions": {
+        "numpy": "2.4.6",
+        "onnxruntime": "1.23.2",
+        "streamlit": "1.50.0",
+        "huggingface_hub": "2.1.1",
+        "banhmi-phonemize": "1.0.0"
+      },
+      "frontend_saved_id_matches": 3,
+      "models": [
+        {
+          "model_id": "baseline-resblock2",
+          "valid_mono_pcm16": true,
+          "sample_rate": 22050,
+          "frames": 58624
+        },
+        {
+          "model_id": "parallel-ir",
+          "valid_mono_pcm16": true,
+          "sample_rate": 22050,
+          "frames": 57856
+        },
+        {
+          "model_id": "sequential-ir",
+          "valid_mono_pcm16": true,
+          "sample_rate": 22050,
+          "frames": 53248
+        },
+        {
+          "model_id": "piper-original",
+          "valid_mono_pcm16": true,
+          "sample_rate": 22050,
+          "frames": 64000
+        }
+      ],
+      "historical_wav_headers_and_hashes_verified": 2880,
+      "streamlit_sentence_choices": 720,
+      "streamlit_selected_audio_counts": [
+        4,
+        4,
+        4
+      ],
+      "streamlit_seq_synthesis_passed": true,
+      "offline_tts_only_bootstrap": {
+        "models_verified": 4,
+        "historical_audio_enabled": false,
+        "mode": "offline_identity_check",
+        "model_revision": null,
+        "audio_revision": null
+      },
+      "limits": "Linux amd64 container emulated on arm64 Mac. No hosted HF download, host capacity, browser listening, benchmark or research quality validation."
+    }
+  },
+  "remaining": [
+    "No HF authentication or repository creation performed",
+    "No artifact upload or hosted HF download verified",
+    "Actual HF repository revisions and public download URLs are unset",
+    "Harvard sentence distribution rights remain pending confirmation; hosted historical comparison defaults off",
+    "Remaining component redistribution and checkpoint embedded-metadata review",
+    "Actual Space capacity, concurrency, hard timeouts, browser playback and human listening are unverified"
+  ],
+  "scope": "Local engineering validation only. No train/export/quantize/benchmark, remote push, tag, release, upload or deployment."
+}

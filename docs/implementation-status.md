@@ -118,3 +118,11 @@ The same team-owned weights in existing ONNX exports use MIT. External Piper ret
 Generated Harvard WAVs use CC BY 4.0 only for rights the team holds. Original datasets retain their terms.
 Harvard sentence text terms remain unresolved. See artifact-licensing.md and artifact-licensing.json.
 Earlier sections record the handoff state. This update preserves transferred bytes and does not publish artifacts.
+
+## Hugging Face local preparation (2026-10-06)
+
+The author supplied namespace DazielNguyen. Three local model/dataset/Space candidates now exist outside Git.
+Linux amd64 Docker build, native frontend, four-model synthesis, historical audio checks and Streamlit functional checks passed locally.
+The runtime requires pinned model/dataset commits and verifies file identities. Historical comparison is off by default.
+No HF authentication, repository creation, upload or deployment occurred. Remaining rights and target-host checks are open.
+See huggingface-deployment.md, huggingface-validation.json and huggingface-checkpoint.md for the next steps.
