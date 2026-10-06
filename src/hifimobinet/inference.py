@@ -9,6 +9,8 @@ import numpy as np
 from .frontend import encode
 from .registry import ModelUnavailable, model_path, model_record
 
+_SYNTHESIS_SLOT = threading.BoundedSemaphore(1)
+
 
 def pcm16_wav(audio: np.ndarray, sample_rate: int) -> bytes:
     """Match Banhmi audio_float_to_int16; applies documented peak scaling."""
@@ -47,8 +49,13 @@ class Voice:
         x = np.asarray([ids], dtype=np.int64)
         feeds = {"input": x, "input_lengths": np.asarray([len(ids)], dtype=np.int64),
                  "scales": np.asarray([0.667, 1.0, 0.8], dtype=np.float32)}
-        with self.lock:
-            output = self.session.run(None, feeds)[0]
+        if not _SYNTHESIS_SLOT.acquire(blocking=False):
+            raise ModelUnavailable("A synthesis request is already running; retry when it finishes")
+        try:
+            with self.lock:
+                output = self.session.run(None, feeds)[0]
+        finally:
+            _SYNTHESIS_SLOT.release()
         if output.ndim != 3 or output.shape[:2] != (1, 1):
             raise ModelUnavailable("Unexpected ONNX output shape")
         rate = self.record["sample_rate"]

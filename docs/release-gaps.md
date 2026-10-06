@@ -19,3 +19,10 @@
 - Intel N150 / Raspberry Pi 5 measurements and human listening scores are absent.
 - Public model download links for team artifacts are pending. No fake URL or
   implicit substitution is allowed.
+- Local access to actual Q05 ONNX and Harvard WAVs is pending clarification of WSL
+  scope. The four TTS models remain disabled; no real-model inference pass is claimed.
+- Native frontend was built on Windows only. Linux hosting, loaded-model memory,
+  concurrent sessions and actual browser listening are not validated.
+- The current package exposes inference, component inspection and stored-result
+  audits. It does not provide a validated training launcher, ASR/UTMOS rescoring
+  installation, export or quantization workflow.
