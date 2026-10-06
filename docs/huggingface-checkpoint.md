@@ -1,4 +1,19 @@
-# Hugging Face preparation checkpoint
+# Hugging Face checkpoint
+
+## Latest state: private model uploaded
+
+Date: 2026-10-06. The author chose model upload first and deferred hosting.
+Account: DazielNguyen, authenticated; no PRO plan at the check.
+Model URL: https://huggingface.co/DazielNguyen/hifi-mobiNet. Visibility: private.
+Current verified model commit: `a4354007630f14b2cd0046a6f6b0dc17dd1f7ac9`.
+See huggingface-model-upload.md and huggingface-model-upload.json for the completed checks and download record.
+The dataset and Space candidates remain local. Public release, demo deployment and GitHub push remain undone.
+
+Next: finish the public artifact review, decide model visibility and choose demo hosting.
+Use the exact model commit for downloads. Do not replace it with `main` in runtime configuration.
+Keep historical audio off while Harvard text distribution conditions remain unresolved.
+
+## Historical local preparation
 
 Date: 2026-10-06. Namespace: DazielNguyen. Prepared code commit: `53bb061cd3ec98ff0d322b31e6e808be150e02de`.
 The three candidates are local at `~/hifi-mobiNet-hf-staging-v0.1.0/`.

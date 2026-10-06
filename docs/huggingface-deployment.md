@@ -1,5 +1,14 @@
 # Hugging Face handoff for DazielNguyen
 
+## Current model upload
+
+The model candidate is uploaded privately at https://huggingface.co/DazielNguyen/hifi-mobiNet.
+Use `a4354007630f14b2cd0046a6f6b0dc17dd1f7ac9` as `HIFIMOBINET_MODEL_REVISION` for future runtime downloads.
+See [upload verification](huggingface-model-upload.md) and its JSON record for exact checks.
+The dataset and Space remain local. The author deferred demo hosting. No paid compute was purchased.
+
+## Original preparation and future workflow
+
 This preparation is local. It does not create repositories, authenticate, upload, push, release or deploy.
 The namespace comes from the author. The targets below are planned repository IDs, not confirmed public URLs.
 

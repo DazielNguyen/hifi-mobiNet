@@ -126,3 +126,13 @@ Linux amd64 Docker build, native frontend, four-model synthesis, historical audi
 The runtime requires pinned model/dataset commits and verifies file identities. Historical comparison is off by default.
 No HF authentication, repository creation, upload or deployment occurred. Remaining rights and target-host checks are open.
 See huggingface-deployment.md, huggingface-validation.json and huggingface-checkpoint.md for the next steps.
+
+## Hugging Face private model upload (2026-10-06)
+
+The author selected model storage first and deferred demo hosting.
+The model candidate is uploaded privately at https://huggingface.co/DazielNguyen/hifi-mobiNet.
+Its verified current commit is `a4354007630f14b2cd0046a6f6b0dc17dd1f7ac9`. Four checkpoints and four ONNX artifacts retain their original bytes.
+All 47 final inventoried files passed remote checks; a Sequential-IR ONNX download passed local hash verification.
+See huggingface-model-upload.md and huggingface-model-upload.json for exact observations and verification limits.
+Dataset/Space candidates remain local. No public visibility change, GitHub push, tag, paid compute or deployment occurred.
+Earlier sections describe historical preparation states. Remaining rights and target-host checks are still open.

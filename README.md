@@ -14,9 +14,9 @@ The author has authorized public code publication at [DazielNguyen/hifi-mobiNet]
 and confirmed permission to share journal-related artifacts. Original repository
 code and documentation owned by DazielNguyen are licensed under [MIT](LICENSE),
 subject to the scope and exclusions below. Artifact licenses are documented in [artifact licensing](docs/artifact-licensing.md).
-External artifact storage and public download URLs remain unconfirmed. Weights/audio are
-not bundled in Git or uploaded in this step. Missing local weights are reported
-explicitly; no different model is silently substituted.
+Model artifacts are stored in a private [Hugging Face repository](https://huggingface.co/DazielNguyen/hifi-mobiNet).
+Public downloads are not available yet. Weights and audio remain outside Git.
+Missing local weights are reported explicitly; no different model is silently substituted.
 
 | Model ID | Decoder | Selected epoch | FP32 artifact | Local TTS |
 |---|---|---:|---|---|
@@ -162,8 +162,9 @@ supplied phonemizer notice and eSpeak NG GPL text are retained. Native frontend
 binary distribution needs a separate review. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-## Hugging Face preparation
+## Hugging Face model storage
 
-Local model, audio and Docker Space candidates use the author namespace `DazielNguyen`.
-See [Hugging Face handoff](docs/huggingface-deployment.md) for package contents, private upload steps and pinned runtime configuration.
-This preparation does not create or publish Hugging Face repositories. Historical audio remains off by default in the Space configuration.
+The verified model candidate is uploaded privately to [DazielNguyen/hifi-mobiNet](https://huggingface.co/DazielNguyen/hifi-mobiNet).
+Its current commit is `a4354007630f14b2cd0046a6f6b0dc17dd1f7ac9`. See [upload verification](docs/huggingface-model-upload.md) for file identities and limits.
+The dataset and Docker Space candidates remain local. Demo hosting is deferred; historical audio remains off by default.
+See [Hugging Face handoff](docs/huggingface-deployment.md) for pinned runtime configuration and future steps.
