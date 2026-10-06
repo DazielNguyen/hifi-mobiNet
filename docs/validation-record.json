@@ -16,6 +16,22 @@
       "name": "original_import",
       "status": "passed",
       "detail": "68 source files copied unchanged; source and destination SHA-256 matched; Python syntax parsed without executing imports."
+    },
+    {
+      "name": "inference_contract_tests",
+      "status": "passed",
+      "command": "python -m pytest tests/test_inference_contract.py -q --basetemp=.local/test-inference-001",
+      "detail": "5 passed. Model/config mapping, path rejection, original PCM conversion, frontend call contract and unchanged forward/infer AST. No model inference yet."
+    },
+    {
+      "name": "inference_cli_help",
+      "status": "passed",
+      "detail": "CLI --help, downloader --help and four-model unavailable states checked."
+    },
+    {
+      "name": "original_import_whitespace",
+      "status": "passed_with_preserved_source_format",
+      "detail": "Original Windows CRLF bytes preserved; first diff whitespace check flagged CR-at-EOL. core.whitespace=cr-at-eol configured locally; authored-file check passes. No raw import normalized."
     }
   ]
 }

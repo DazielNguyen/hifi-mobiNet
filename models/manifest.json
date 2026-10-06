@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "id": "baseline-resblock2",
+      "historical_label": "baseline",
+      "label": "HiFi-GAN ResBlock2",
+      "sample_rate": 22050,
+      "config": "configs/baseline-resblock2.json",
+      "checkpoint": {
+        "filename": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+        "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+        "bytes": 867027556,
+        "epoch_zero_based": 1489,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "pending_author_confirmation",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "artifact": {
+        "filename": "baseline_fp32.onnx",
+        "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+        "bytes": 68529068,
+        "format": "onnx",
+        "precision": "FP32",
+        "opset": 18,
+        "url": null,
+        "source_locator": "Q05-2026-10-04/baseline/baseline_fp32.onnx",
+        "identity_record": "BanhmiTTS/docs/evidence/q05_2026-10-04/FP32_HANDOFF.json",
+        "identity_record_sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+        "prior_engineering_validation": "passed; 10 matched-noise and 3 native-random cases",
+        "historical_quality_results_bound": false,
+        "sharing_rights": "pending_author_confirmation"
+      },
+      "frontend": "banhmi_phonemize en-us; flatten sentence phonemes; original NFD/ID mapping",
+      "compatibility": "Q05 FP32 input/input_lengths/scales -> [B,1,N]; checkpoint architecture is separately inventoried",
+      "local_functional_validation": {
+        "tts_passed": false,
+        "status": "pending weights and frontend"
+      },
+      "release_status": "local_only_pending_rights_review"
+    },
+    {
+      "id": "parallel-ir",
+      "historical_label": "mrf",
+      "label": "Parallel-IR",
+      "sample_rate": 22050,
+      "config": "configs/parallel-ir.json",
+      "checkpoint": {
+        "filename": "best-epoch=1386-val_loss_mel=18.7681.ckpt",
+        "sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+        "bytes": 864465901,
+        "epoch_zero_based": 1386,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "pending_author_confirmation",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "artifact": {
+        "filename": "mrf_fp32.onnx",
+        "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+        "bytes": 66546592,
+        "format": "onnx",
+        "precision": "FP32",
+        "opset": 18,
+        "url": null,
+        "source_locator": "Q05-2026-10-04/mrf/mrf_fp32.onnx",
+        "identity_record": "BanhmiTTS/docs/evidence/q05_2026-10-04/FP32_HANDOFF.json",
+        "identity_record_sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+        "prior_engineering_validation": "passed; 10 matched-noise and 3 native-random cases",
+        "historical_quality_results_bound": false,
+        "sharing_rights": "pending_author_confirmation"
+      },
+      "frontend": "banhmi_phonemize en-us; flatten sentence phonemes; original NFD/ID mapping",
+      "compatibility": "Q05 FP32 input/input_lengths/scales -> [B,1,N]; checkpoint architecture is separately inventoried",
+      "local_functional_validation": {
+        "tts_passed": false,
+        "status": "pending weights and frontend"
+      },
+      "release_status": "local_only_pending_rights_review"
+    },
+    {
+      "id": "sequential-ir",
+      "historical_label": "seq",
+      "label": "Sequential-IR",
+      "sample_rate": 22050,
+      "config": "configs/sequential-ir.json",
+      "checkpoint": {
+        "filename": "best-epoch=1442-val_loss_mel=19.0136.ckpt",
+        "sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+        "bytes": 863851145,
+        "epoch_zero_based": 1442,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "pending_author_confirmation",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "artifact": {
+        "filename": "seq_fp32.onnx",
+        "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+        "bytes": 66342331,
+        "format": "onnx",
+        "precision": "FP32",
+        "opset": 18,
+        "url": null,
+        "source_locator": "Q05-2026-10-04/seq/seq_fp32.onnx",
+        "identity_record": "BanhmiTTS/docs/evidence/q05_2026-10-04/FP32_HANDOFF.json",
+        "identity_record_sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+        "prior_engineering_validation": "passed; 10 matched-noise and 3 native-random cases",
+        "historical_quality_results_bound": false,
+        "sharing_rights": "pending_author_confirmation"
+      },
+      "frontend": "banhmi_phonemize en-us; flatten sentence phonemes; original NFD/ID mapping",
+      "compatibility": "Q05 FP32 input/input_lengths/scales -> [B,1,N]; checkpoint architecture is separately inventoried",
+      "local_functional_validation": {
+        "tts_passed": false,
+        "status": "pending weights and frontend"
+      },
+      "release_status": "local_only_pending_rights_review"
+    },
+    {
+      "id": "piper-original",
+      "historical_label": "piper",
+      "label": "Piper LJSpeech medium (external)",
+      "sample_rate": 22050,
+      "config": "configs/piper-original.json",
+      "checkpoint": {
+        "filename": "lj-med_1000.ckpt",
+        "sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+        "bytes": 845889993,
+        "epoch_zero_based": 999,
+        "selection_rule": "published checkpoint",
+        "url": "https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/ljspeech/medium/lj-med_1000.ckpt",
+        "sharing_rights": "pending_author_confirmation",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "artifact": {
+        "filename": "piper_fp32.onnx",
+        "sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+        "bytes": 63532855,
+        "format": "onnx",
+        "precision": "FP32",
+        "opset": 18,
+        "url": null,
+        "source_locator": "Q05-2026-10-04/piper/piper_fp32.onnx",
+        "identity_record": "BanhmiTTS/docs/evidence/q05_2026-10-04/FP32_HANDOFF.json",
+        "identity_record_sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+        "prior_engineering_validation": "passed; 10 matched-noise and 3 native-random cases",
+        "historical_quality_results_bound": false,
+        "sharing_rights": "pending_author_confirmation"
+      },
+      "frontend": "banhmi_phonemize en-us; flatten sentence phonemes; original NFD/ID mapping",
+      "compatibility": "Q05 FP32 input/input_lengths/scales -> [B,1,N]; checkpoint architecture is separately inventoried",
+      "local_functional_validation": {
+        "tts_passed": false,
+        "status": "pending weights and frontend"
+      },
+      "release_status": "local_only_pending_rights_review"
+    }
+  ],
+  "download_policy": "Only explicit existing URLs; team artifact URLs pending; no substitutions"
+}

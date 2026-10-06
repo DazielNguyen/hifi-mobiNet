@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hifi-mobinet"
+version = "0.1.0"
+description = "Auditable local packaging of HiFi-MobiNet research systems"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26,<3"]
+
+[project.optional-dependencies]
+inference = ["onnxruntime==1.23.2"]
+evaluation = ["scipy==1.15.3", "jiwer==4.0.0"]
+demo = ["streamlit==1.50.0", "onnxruntime==1.23.2"]
+architecture = ["torch>=2.6,<3"]
+test = ["pytest>=8,<9", "scipy==1.15.3", "jiwer==4.0.0", "streamlit==1.50.0"]
+
+[project.scripts]
+hifi-mobinet = "hifimobinet.cli:main"
+hifi-evaluate = "hifimobinet.evaluation:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

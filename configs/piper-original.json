@@ -1,0 +1,62 @@
+{
+  "model_id": "piper-original",
+  "evidence_class": "checkpoint_metadata_extracted_during_Q05",
+  "source": "BanhmiTTS/docs/evidence/q05_2026-10-04/piper/checkpoint_hparams.json",
+  "source_sha256": "722080311522508903f1fd8b648bf6d314621470d72099f92d5b3df4c99f569c",
+  "parameters": {
+    "num_symbols": 256,
+    "resblock": "2",
+    "resblock_kernel_sizes": [
+      3,
+      5,
+      7
+    ],
+    "resblock_dilation_sizes": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "upsample_rates": [
+      8,
+      8,
+      4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+      16,
+      16,
+      8
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "segment_size": 8192,
+    "gradient_clip_val": null,
+    "precision": 32,
+    "seed": 1234
+  },
+  "limits": [
+    "Selected fields only; no host paths. See original source locator for complete hparams.",
+    "Current architecture defaults are not a training-time source binding."
+  ]
+}
