@@ -16,6 +16,7 @@ from types import ModuleType
 
 _PACKAGES = {
     "piper_vits": ("piper", "vits"),
+    "edgetts_vits": ("edgetts", "vits"),
     "banhmi": ("banhmi",),
 }
 _PREFIX = "hifimobinet_vendor_"

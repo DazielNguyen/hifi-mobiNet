@@ -21,8 +21,8 @@ from hifimobinet.training.config import ConfigError, load_config  # noqa: E402
 from hifimobinet.training.registry import TRAINING_MODELS, get_training_model  # noqa: E402
 
 
-def _piper_mas_built() -> bool:
-    return any((ROOT / "vendor/piper/vits/monotonic_align/monotonic_align").glob("core*"))
+def _edgetts_mas_built() -> bool:
+    return any((ROOT / "vendor/edgetts/vits/monotonic_align/monotonic_align").glob("core*"))
 
 
 def _banhmi_mas_built() -> bool:
@@ -32,7 +32,7 @@ def _banhmi_mas_built() -> bool:
 
 needs_lightning = pytest.mark.skipif(importlib.util.find_spec("pytorch_lightning") is None,
                                      reason="pytorch_lightning not installed")
-needs_piper_mas = pytest.mark.skipif(not _piper_mas_built(), reason="Piper MAS extension not built")
+needs_edgetts_mas = pytest.mark.skipif(not _edgetts_mas_built(), reason="EdgeTTS MAS extension not built")
 needs_banhmi_mas = pytest.mark.skipif(not _banhmi_mas_built(), reason="internal MAS extension not built")
 
 
@@ -65,6 +65,17 @@ def test_config_rejects_missing_key(tmp_path):
 def test_config_rejects_vits2_key_for_piper(tmp_path):
     with pytest.raises(ConfigError, match="unknown keys"):
         load_config(_write(tmp_path, lambda d: d["model"].update(mas_noise_scale_initial=0.01)))
+
+
+@pytest.mark.parametrize("flag", ["use_bigvgan", "use_vits2", "use_f0"])
+def test_config_a_rejects_component_flags(tmp_path, flag):
+    with pytest.raises(ConfigError, match="Config A"):
+        load_config(_write(tmp_path, lambda d: d["model"].update({flag: True})))
+
+
+def test_config_a_rejects_trainer_clipping(tmp_path):
+    with pytest.raises(ConfigError, match="grad_clip"):
+        load_config(_write(tmp_path, lambda d: d["trainer"].update(gradient_clip_val=1.0)))
 
 
 def test_config_rejects_unknown_model_id(tmp_path):
@@ -104,7 +115,7 @@ def test_split_overlap_rejected(tmp_path):
         load_split(tmp_path / "s.json")
 
 
-@pytest.mark.parametrize("family", ["banhmi", "piper"])
+@pytest.mark.parametrize("family", ["banhmi", "edgetts"])
 def test_training_data_excludes_test_and_resolves_paths(tmp_path, family):
     from hifimobinet.training.data import load_split, load_training_data
     keys = _tiny_dataset(tmp_path)
@@ -114,16 +125,21 @@ def test_training_data_excludes_test_and_resolves_paths(tmp_path, family):
     assert all(Path(u.audio_norm_path).is_absolute() for u in data.full.utterances)
 
 
-def test_collates_produce_identical_batches(tmp_path):
+def test_edgetts_batches_match_edgetts_collate_without_f0(tmp_path):
+    """The F0-free batches equal EdgeTTS's own collate on every non-F0 field."""
     from hifimobinet.training.data import load_split, load_training_data
+    from hifimobinet.training.vendor import vendor_module
     _tiny_dataset(tmp_path)
-    split = load_split(tmp_path / "split.json")
-    a = load_training_data("banhmi", tmp_path / "dataset.jsonl", tmp_path, split)
-    b = load_training_data("piper", tmp_path / "dataset.jsonl", tmp_path, split)
-    items_a, items_b = [a.train[i] for i in range(4)], [b.train[i] for i in range(4)]
-    ba, bb = a.collate(8192)(items_a), b.collate(8192)(items_b)
+    data = load_training_data("edgetts", tmp_path / "dataset.jsonl", tmp_path, load_split(tmp_path / "split.json"))
+    items = [data.train[i] for i in range(4)]
+    ours = data.collate(8192)(items)
+    ds = vendor_module("edgetts_vits", "dataset")
+    theirs = ds.UtteranceCollate(False, 8192)([
+        ds.UtteranceTensors(phoneme_ids=u.phoneme_ids, spectrogram=u.spectrogram, audio_norm=u.audio_norm,
+                            f0=torch.rand(u.spectrogram.shape[1])) for u in items])
+    assert isinstance(ours, ds.Batch) and ours.f0s is None and ours.speaker_ids is None
     for field in ("phoneme_ids", "phoneme_lengths", "spectrograms", "spectrogram_lengths", "audios", "audio_lengths"):
-        assert torch.equal(getattr(ba, field), getattr(bb, field)), field
+        assert torch.equal(getattr(ours, field), getattr(theirs, field)), field
 
 
 # ---------------------------------------------------------------- harness
@@ -145,16 +161,27 @@ def _module(name, config):
 
 
 @needs_lightning
-@needs_piper_mas
-def test_piper_model_has_no_vits2_components():
+@needs_edgetts_mas
+def test_piper_model_is_config_a_without_vits2():
     module = _module("Piper_no_VITS2_cpn", "piper-no-vits2-cpn.yaml")
     classes = {type(m).__name__ for m in module.modules()}
-    assert not any("DurationDiscriminator" in c or "Transformer" in c or "MultiResolution" in c for c in classes)
+    assert not any(m in c for c in classes for m in ("DurationDiscriminator", "Transformer", "MultiResolution",
+                                                       "Snake", "F0Predictor"))
     assert not any("Attention" in type(m).__name__ for m in module.model_g.flow.modules())
-    assert any("Attention" in type(m).__name__ for m in module.model_g.enc_p.modules())  # upstream text encoder keeps it
+    assert any("Attention" in type(m).__name__ for m in module.model_g.enc_p.modules())  # Piper text encoder keeps it
+    assert module.model_d_dur is None and module.model_d_mrd is None
+    assert not module.model_g.use_noised_mas and not module.model_g.use_f0 and not module.model_g.dec.use_snake
     assert [n for n, _ in module.named_children()] == ["model_g", "model_d"]
-    opts, _ = module.configure_optimizers()
-    assert len(opts) == 2
+
+
+@needs_lightning
+@needs_edgetts_mas
+def test_piper_model_inherits_edgetts_training_unchanged():
+    from hifimobinet.training.piper_module import EdgeTTSVitsModel, PiperNoVits2Module
+    for name in ("training_step", "training_step_g", "training_step_d", "configure_optimizers",
+                 "on_train_epoch_end", "forward"):
+        assert getattr(PiperNoVits2Module, name) is getattr(EdgeTTSVitsModel, name), name
+    assert _module("Piper_no_VITS2_cpn", "piper-no-vits2-cpn.yaml").automatic_optimization is False
 
 
 @needs_lightning
@@ -166,30 +193,19 @@ def test_baseline_model_keeps_vits2_components():
     assert module.model_d_mrd is None
 
 
-def _synthetic_batch(module_family):
-    from hifimobinet.training.vendor import vendor_module
-    torch.manual_seed(7)
-    utts = []
-    for n_ph, frames in ((21, 48), (17, 40)):
-        tensors = vendor_module("piper_vits", "dataset").UtteranceTensors(
-            phoneme_ids=torch.randint(1, 100, (n_ph,)), spectrogram=torch.rand(513, frames),
-            audio_norm=torch.rand(1, frames * 256) * 2 - 1)
-        utts.append(tensors)
-    return vendor_module("piper_vits", "dataset").UtteranceCollate(False, 8192)(utts)
-
-
 @needs_lightning
-@needs_piper_mas
-def test_piper_training_step_g_matches_upstream():
-    from hifimobinet.training.piper_module import UpstreamVitsModel
+@needs_edgetts_mas
+def test_piper_generator_loss_runs_without_f0():
+    from hifimobinet.training.data import EdgeTTSBatchCollate
+    from hifimobinet.training.vendor import vendor_module
     module = _module("Piper_no_VITS2_cpn", "piper-no-vits2-cpn.yaml")
     module.log = lambda *a, **k: None
-    batch = _synthetic_batch("piper")
-    torch.manual_seed(123)
-    ours = module.training_step_g(batch)
-    torch.manual_seed(123)
-    upstream = UpstreamVitsModel.training_step_g(module, batch)
-    assert torch.equal(ours, upstream)
+    tensors = vendor_module("banhmi", "vits.dataset").UtteranceTensors
+    torch.manual_seed(7)
+    utts = [tensors(phoneme_ids=torch.randint(1, 100, (n,)), spectrogram=torch.rand(513, f),
+                    audio_norm=torch.rand(1, f * 256) * 2 - 1) for n, f in ((21, 48), (17, 40))]
+    loss_g, loss_mel = module.training_step_g(EdgeTTSBatchCollate(8192)(utts))
+    assert torch.isfinite(loss_g).all() and torch.isfinite(loss_mel).all()
 
 
 @needs_lightning

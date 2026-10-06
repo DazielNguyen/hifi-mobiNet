@@ -37,11 +37,13 @@ MODEL_KEYS = {
         "flow_kernel_size", "flow_dilation_rate", "flow_n_flows",
         "mas_noise_scale_initial", "mas_noise_scale_decay",
     },
-    # Upstream Piper hard-codes posterior-encoder/flow sizes inside SynthesizerTrn;
-    # only the knobs its VitsModel actually exposes are accepted here.
-    "Piper_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp"},
+    # EdgeTTS (Piper fork) hard-codes posterior-encoder/flow sizes inside
+    # SynthesizerTrn; only the knobs its VitsModel exposes are accepted here.
+    "Piper_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp", "use_bigvgan", "use_vits2", "use_f0"},
 }
 OPTIM_KEYS = {"learning_rate", "betas", "eps", "lr_decay", "c_mel", "c_kl"}
+# EdgeTTS clips gradients itself inside its manual-optimization training_step.
+EXTRA_OPTIM_KEYS = {"Piper_no_VITS2_cpn": {"grad_clip"}}
 TRAINER_KEYS = {"precision", "gradient_clip_val", "seed"}
 DATA_KEYS = {"batch_size", "sampler", "num_workers", "max_phoneme_ids", "num_audio_samples"}
 HARNESS_KEYS = {"skip_nonfinite_updates", "dp_health_gate", "save_rng_state"}
@@ -94,7 +96,12 @@ def load_config(path: Path) -> TrainingConfig:
         values = data.get(name)
         if not isinstance(values, dict):
             raise ConfigError(f"{path}: section {name!r} is required and must be a mapping")
-        allowed = MODEL_KEYS[model_id] if name == "model" else SECTION_KEYS[name]
+        if name == "model":
+            allowed = MODEL_KEYS[model_id]
+        elif name == "optim":
+            allowed = OPTIM_KEYS | EXTRA_OPTIM_KEYS.get(model_id, set())
+        else:
+            allowed = SECTION_KEYS[name]
         missing, unknown = allowed - set(values), set(values) - allowed
         if unknown:
             raise ConfigError(f"{path}: unknown keys in {name!r}: {sorted(unknown)}")
@@ -102,7 +109,19 @@ def load_config(path: Path) -> TrainingConfig:
             raise ConfigError(f"{path}: missing keys in {name!r}: {sorted(missing)} (no implicit defaults)")
         sections[name] = values
     _check_values(path, sections)
+    if model_id == "Piper_no_VITS2_cpn":
+        _check_config_a(path, sections)
     return TrainingConfig(model_id, sections, str(path), hashlib.sha256(raw).hexdigest())
+
+
+def _check_config_a(path: Path, s: Mapping[str, Mapping[str, Any]]) -> None:
+    on = [k for k in ("use_bigvgan", "use_vits2", "use_f0") if s["model"][k]]
+    if on:
+        raise ConfigError(f"{path}: Piper_no_VITS2_cpn is EdgeTTS Config A; set {on} to false")
+    if s["trainer"]["gradient_clip_val"] is not None:
+        raise ConfigError(f"{path}: manual optimization clips via optim.grad_clip; trainer.gradient_clip_val must be null")
+    if s["harness"]["skip_nonfinite_updates"]:
+        raise ConfigError(f"{path}: skip_nonfinite_updates is not available with EdgeTTS manual optimization")
 
 
 def _check_values(path: Path, s: Mapping[str, Mapping[str, Any]]) -> None:

@@ -5,8 +5,9 @@
 #
 # - Internal baseline: vendor/banhmi/.../core.pyx -> src/hifimobinet/architecture/vits/utils/monotonic_align/
 #   (the relocated wrapper imports `.core`).
-# - Piper: vendor/piper/vits/monotonic_align/core.pyx -> vendor/piper/vits/monotonic_align/monotonic_align/
-#   (upstream's wrapper imports `.monotonic_align.core`; same layout as upstream build_monotonic_align.sh).
+# - Piper_no_VITS2_cpn: vendor/edgetts/vits/monotonic_align/core.pyx -> vendor/edgetts/vits/monotonic_align/monotonic_align/
+#   (EdgeTTS keeps Piper's wrapper, which imports `.monotonic_align.core`; same layout as Piper's
+#   build_monotonic_align.sh).
 #
 # Sources are compiled in a temporary directory, so no generated .c file is
 # written into the checkout. Only the compiled modules land in ignored paths.
@@ -35,5 +36,5 @@ EOF
 
 build_one "$REPO/vendor/banhmi/vits/utils/monotonic_align/core.pyx" \
           "$REPO/src/hifimobinet/architecture/vits/utils/monotonic_align" banhmi
-build_one "$REPO/vendor/piper/vits/monotonic_align/core.pyx" \
-          "$REPO/vendor/piper/vits/monotonic_align/monotonic_align" piper
+build_one "$REPO/vendor/edgetts/vits/monotonic_align/core.pyx" \
+          "$REPO/vendor/edgetts/vits/monotonic_align/monotonic_align" edgetts

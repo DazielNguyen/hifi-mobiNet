@@ -53,6 +53,8 @@ def main() -> None:
         before = {k: v.detach().clone() for k, v in module.state_dict().items()}
         with torch.autocast("cuda", dtype=torch.bfloat16, enabled=precision == "bf16"):
             loss_g = module.training_step_g(batch)
+        if isinstance(loss_g, tuple):  # EdgeTTS returns (loss_gen_all, loss_mel)
+            loss_g = loss_g[0]
         loss_g.backward()
         module.zero_grad(set_to_none=True)
         with torch.autocast("cuda", dtype=torch.bfloat16, enabled=precision == "bf16"):

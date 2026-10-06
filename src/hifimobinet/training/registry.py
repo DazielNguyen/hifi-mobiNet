@@ -36,9 +36,9 @@ TRAINING_MODELS: Dict[str, TrainingModel] = {
         _baseline,
     ),
     "Piper_no_VITS2_cpn": TrainingModel(
-        "Piper_no_VITS2_cpn", "piper",
-        "Upstream Piper (rhasspy/piper 73c04d8) VITS training graph without VITS2 components, "
-        "trained from scratch in the project harness",
+        "Piper_no_VITS2_cpn", "edgetts",
+        "EdgeTTS Config A: vanilla Piper (EdgeTTS a73a897, fork of rhasspy/piper 73c04d8) with "
+        "BigVGAN, VITS2 and F0 flags off, trained from scratch in the project harness",
         _piper,
     ),
 }

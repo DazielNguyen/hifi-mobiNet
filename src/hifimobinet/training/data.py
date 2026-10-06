@@ -7,10 +7,9 @@ always an explicit file (train/val/test lists of ``audio_norm_path`` strings);
 there is no random-split fallback. The test partition is never handed to a
 training or validation dataloader.
 
-Each model keeps its own source's Dataset/Collate classes: the internal
-baseline uses BanhmiTTS's ``VitsDataset``/``UtteranceCollate`` and the Piper
-model uses upstream Piper's ``PiperDataset``/``UtteranceCollate``. Both are
-loaded unmodified from ``vendor/``.
+Rows are read and padded with BanhmiTTS's unmodified ``VitsDataset`` /
+``UtteranceCollate`` for both models; the EdgeTTS (Config A) model receives the
+same tensors packed into its own ``Batch`` type, without F0.
 """
 from __future__ import annotations
 
@@ -77,27 +76,49 @@ class TrainingData:
     def collate(self, segment_size: int):
         if self.family == "banhmi":
             return vendor_module("banhmi", "vits.dataset").UtteranceCollate(segment_size=segment_size)
-        return vendor_module("piper_vits", "dataset").UtteranceCollate(is_multispeaker=False, segment_size=segment_size)
+        return EdgeTTSBatchCollate(segment_size)
+
+
+class EdgeTTSBatchCollate:
+    """Batches for the EdgeTTS (Config A) model without any F0.
+
+    EdgeTTS's own PiperDataset/UtteranceCollate require an ``audio_f0_path`` per
+    row and always load F0, although with ``use_f0=False`` (Config A) the model
+    never reads it. Here rows are read and padded exactly like the baseline
+    (same padding/sorting as EdgeTTS's collate; tested) and packed into the
+    EdgeTTS ``Batch`` with ``f0s=None`` and ``speaker_ids=None``.
+    """
+
+    def __init__(self, segment_size: int):
+        self.segment_size = segment_size
+
+    def __call__(self, utterances):
+        b = vendor_module("banhmi", "vits.dataset").UtteranceCollate(segment_size=self.segment_size)(utterances)
+        return vendor_module("edgetts_vits", "dataset").Batch(
+            phoneme_ids=b.phoneme_ids, phoneme_lengths=b.phoneme_lengths, spectrograms=b.spectrograms,
+            spectrogram_lengths=b.spectrogram_lengths, audios=b.audios, audio_lengths=b.audio_lengths,
+            f0s=None, speaker_ids=None,
+        )
 
 
 def load_training_data(family: str, dataset_jsonl: Path, data_root: Path, split: Split,
                        max_phoneme_ids: Optional[int] = None) -> TrainingData:
-    """Load train/val partitions for ``family`` ('banhmi' or 'piper')."""
+    """Load train/val partitions for ``family`` ('banhmi' or 'edgetts').
+
+    Both families read rows with BanhmiTTS's VitsDataset (F0 paths dropped);
+    they differ only in the batch type their model expects.
+    """
     dataset_jsonl = Path(dataset_jsonl)
-    if family == "banhmi":
-        full = vendor_module("banhmi", "vits.dataset").VitsDataset(dataset_jsonl, max_phoneme_ids=max_phoneme_ids)
-    elif family == "piper":
-        full = vendor_module("piper_vits", "dataset").PiperDataset([dataset_jsonl], max_phoneme_ids=max_phoneme_ids)
-    else:
+    if family not in ("banhmi", "edgetts"):
         raise ValueError(f"unknown dataset family {family!r}")
+    full = vendor_module("banhmi", "vits.dataset").VitsDataset(dataset_jsonl, max_phoneme_ids=max_phoneme_ids)
 
     keys = [str(u.audio_norm_path) for u in full.utterances]
     for utt in full.utterances:
         utt.audio_norm_path = _resolve(Path(utt.audio_norm_path), data_root)
         utt.audio_spec_path = _resolve(Path(utt.audio_spec_path), data_root)
-        if getattr(utt, "audio_f0_path", None) is not None:
-            # F0 is outside the selected recipes; never load it.
-            utt.audio_f0_path = None
+        # F0 is outside both recipes; never load it.
+        utt.audio_f0_path = None
 
     index = {key: i for i, key in enumerate(keys)}
     if len(index) != len(keys):

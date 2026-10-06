@@ -78,6 +78,8 @@ class SmokeChecks(Callback):
         issues = []
         b = batch
         n = b.phoneme_ids.shape[0]
+        if getattr(b, "f0s", None) is not None:
+            issues.append("batch carries F0")
         if b.phoneme_ids.min() < 0 or b.phoneme_ids.max() >= self.num_symbols:
             issues.append("phoneme id out of range")
         for name, lengths, dim in (("phoneme", b.phoneme_lengths, b.phoneme_ids.shape[1]),
@@ -182,16 +184,23 @@ class ResumeChecks(Callback):
 
 
 def vits2_absence(module, report: Report) -> None:
+    """Config A: no VITS2 (Transformer flow, duration discriminator, noised MAS),
+    no BigVGAN parts (Snake, MRD) and no F0 branch."""
     names = sorted({type(m).__name__ for m in module.modules()})
-    flagged = [n for n in names if any(marker in n for marker in VITS2_CLASS_MARKERS)]
+    flagged = [n for n in names if any(marker in n for marker in VITS2_CLASS_MARKERS + ("Snake", "F0Predictor"))]
     flow_attention = sorted({type(m).__name__ for m in module.model_g.flow.modules() if "Attention" in type(m).__name__})
     text_attention = sorted({type(m).__name__ for m in module.model_g.enc_p.modules() if "Attention" in type(m).__name__})
-    sig = inspect.signature(module.model_g.forward).parameters
-    ok = not flagged and not flow_attention and "mas_noise_scale" not in sig and not hasattr(module, "model_d_dur")
+    g = module.model_g
+    switches = {"use_noised_mas": getattr(g, "use_noised_mas", None), "use_f0": getattr(g, "use_f0", None),
+                "dec.use_snake": getattr(g.dec, "use_snake", None),
+                "flow.use_transformer_flows": getattr(g.flow, "use_transformer_flows", None)}
+    absent = {"model_d_dur": getattr(module, "model_d_dur", None) is None,
+              "model_d_mrd": getattr(module, "model_d_mrd", None) is None}
+    ok = not flagged and not flow_attention and not any(switches.values()) and all(absent.values())
     report.set("no_vits2_modules_or_optimizer_groups", "pass" if ok else "fail", {
         "flagged_classes": flagged, "flow_attention_classes": flow_attention,
-        "text_encoder_attention_classes_kept": text_attention,
-        "forward_parameters": list(sig), "children": [n for n, _ in module.named_children()],
+        "text_encoder_attention_classes_kept": text_attention, "switches": switches,
+        "discriminators_absent": absent, "children": [n for n, _ in module.named_children()],
     })
 
 
@@ -281,8 +290,14 @@ def main(argv: Optional[List[str]] = None) -> None:
                           "parameter_changes": getattr(checks_a, "changed", None),
                           "metrics": {k: float(v) for k, v in trainer_a.callback_metrics.items()}}
         if config.model_id == "Piper_no_VITS2_cpn":
-            logged = [m for m in VITS2_METRICS if m in trainer_a.callback_metrics]
-            report.set("no_vits2_losses_logged", "fail" if logged else "pass", {"found": logged})
+            # EdgeTTS always logs loss_dur_gen/loss_disc_dur; without a duration
+            # discriminator they must be exactly zero. No MAS-noise schedule is logged.
+            metrics = trainer_a.callback_metrics
+            nonzero = [m for m in ("loss_dur_gen", "loss_disc_dur", "loss_gen_mrd", "loss_disc_mrd", "loss_f0")
+                       if m in metrics and float(metrics[m]) != 0.0]
+            noise = "mas_noise_scale" in metrics
+            report.set("no_vits2_losses_logged", "fail" if nonzero or noise else "pass",
+                       {"nonzero_component_losses": nonzero, "mas_noise_scale_logged": noise})
         else:
             needed = [m for m in VITS2_METRICS if m not in trainer_a.callback_metrics]
             report.set("vits2_losses_logged", "fail" if needed else "pass", {"missing": needed})

@@ -1,33 +1,30 @@
-"""Piper_no_VITS2_cpn: upstream Piper VITS training graph, trained from scratch
-inside this project's data/checkpoint harness.
+"""Piper_no_VITS2_cpn: EdgeTTS Config A (vanilla Piper, all component flags off),
+trained from scratch in this project's data/split/checkpoint harness.
 
-Subclasses the unmodified upstream ``VitsModel`` (vendor/piper/vits/lightning.py,
-rhasspy/piper 73c04d81d5590ecc46e522de3601ce7fb29fc2be). Inherited unchanged:
-``SynthesizerTrn`` (text encoder, posterior encoder, WaveNet coupling flow,
-stochastic duration predictor, plain MAS, HiFi-GAN generator),
-``MultiPeriodDiscriminator``, losses, ``training_step``, ``training_step_d``,
-``forward`` and ``configure_optimizers``.
+Subclasses the unmodified EdgeTTS ``VitsModel`` (vendor/edgetts/vits/lightning.py,
+EdgeTTS a73a897, a fork of rhasspy/piper 73c04d81). With ``use_bigvgan``,
+``use_vits2`` and ``use_f0`` all false it builds Piper's WaveNet coupling flow,
+stochastic duration predictor, plain MAS, LeakyReLU ResBlock2 generator and MPD,
+with no duration discriminator, MRD, Snake activation or F0 branch. Inherited
+unchanged: the model, losses, manual-optimization ``training_step`` (generator
+then discriminator, gradient-norm clipping by ``grad_clip``),
+``on_train_epoch_end`` (per-epoch ExponentialLR steps), ``configure_optimizers``,
+``training_step_g``/``training_step_d`` and ``forward``.
 
-Overridden for the project harness (documented in
-docs/training/piper-component-comparison.md):
+Overridden for the project harness (docs/training/piper-component-comparison.md):
 
-- dataset loading/dataloaders: explicit split file and project dataset instead
-  of ``random_split`` with ``validation_split``/``num_test_examples``;
-- ``training_step_g``: identical arithmetic and return value; additionally
-  logs the individual loss terms and keeps ``loss_mel`` for validation;
-- ``validation_step``: the upstream ``val_loss`` plus ``val_loss_mel`` for
-  checkpoint selection; audio examples come from validation utterances
-  (upstream used its 5 held-out "test" utterances);
-- optional harness policies (non-finite update skip, free-running health
-  gate, RNG state), each explicit in the config.
+- data: the shared explicit split and dataset instead of ``random_split``;
+  batches carry no F0 (Config A never reads it);
+- ``validation_step``: same ``val_loss`` / ``val_loss_mel`` values, logged with
+  ``sync_dist`` like the baseline; audio examples from validation utterances
+  (EdgeTTS used its held-out test split for them);
+- RNG state in checkpoints and Lightning-1.7 scheduler compatibility (harness).
 """
 from __future__ import annotations
 
 import logging
 
 import torch
-from torch import autocast
-from torch.nn import functional as F
 from torch.utils.data import DataLoader, Subset
 
 from .harness import HarnessMixin, free_running_healthy
@@ -35,30 +32,28 @@ from .vendor import vendor_module
 
 _LOGGER = logging.getLogger(__name__)
 
-_lightning = vendor_module("piper_vits", "lightning")
-_commons = vendor_module("piper_vits", "commons")
-_losses = vendor_module("piper_vits", "losses")
-_mel = vendor_module("piper_vits", "mel_processing")
-
-UpstreamVitsModel = _lightning.VitsModel
+EdgeTTSVitsModel = vendor_module("edgetts_vits", "lightning").VitsModel
+CONFIG_A_FLAGS = ("use_bigvgan", "use_vits2", "use_f0")
 
 
-class PiperNoVits2Module(HarnessMixin, UpstreamVitsModel):
-    family = "piper"
+class PiperNoVits2Module(HarnessMixin, EdgeTTSVitsModel):
+    family = "edgetts"
 
     def __init__(self, num_symbols: int, sampler: str, num_audio_samples: int,
-                 skip_nonfinite_updates: bool, dp_health_gate: bool, save_rng_state: bool, **upstream_kwargs):
-        # dataset=None: upstream _load_datasets() returns early; data is attached explicitly.
-        # Extra harness keys travel through upstream's **kwargs into hparams.
+                 skip_nonfinite_updates: bool, dp_health_gate: bool, save_rng_state: bool, **edgetts_kwargs):
+        on = [flag for flag in CONFIG_A_FLAGS if edgetts_kwargs.get(flag)]
+        if on:
+            raise ValueError(f"Piper_no_VITS2_cpn is EdgeTTS Config A; these flags must be false: {on}")
+        if skip_nonfinite_updates:
+            raise ValueError("EdgeTTS uses manual optimization; the non-finite update skip is not available")
+        # dataset=None: EdgeTTS _load_datasets() returns early; data is attached explicitly.
         super().__init__(
             num_symbols=num_symbols, num_speakers=1, dataset=None, sampler=sampler,
             num_audio_samples=num_audio_samples, skip_nonfinite_updates=skip_nonfinite_updates,
-            dp_health_gate=dp_health_gate, save_rng_state=save_rng_state, **upstream_kwargs,
+            dp_health_gate=dp_health_gate, save_rng_state=save_rng_state, **edgetts_kwargs,
         )
         self._data = None
         self._train_batch_sampler = None
-        self._last_loss_mel = None
-        self._last_batch_fingerprint = None
 
     # ------------------------------------------------------------------ data
     def attach_data(self, data, length_fn) -> None:
@@ -74,9 +69,10 @@ class PiperNoVits2Module(HarnessMixin, UpstreamVitsModel):
     def train_dataloader(self):
         collate = self._data.collate(self.hparams.segment_size)
         if self.hparams.sampler == "upstream_sequential":
-            # Upstream Piper's own DataLoader: fixed order, no shuffling.
+            # EdgeTTS/Piper's own loader: fixed order, no shuffling.
             return DataLoader(self._data.train, collate_fn=collate, num_workers=self.hparams.num_workers,
-                              batch_size=self.hparams.batch_size)
+                              batch_size=self.hparams.batch_size, pin_memory=True,
+                              persistent_workers=self.hparams.num_workers > 0)
         world_size, rank = 1, 0
         if torch.distributed.is_available() and torch.distributed.is_initialized():
             world_size, rank = torch.distributed.get_world_size(), torch.distributed.get_rank()
@@ -98,86 +94,37 @@ class PiperNoVits2Module(HarnessMixin, UpstreamVitsModel):
 
     def val_dataloader(self):
         return DataLoader(self._data.val, collate_fn=self._data.collate(self.hparams.segment_size),
-                          num_workers=self.hparams.num_workers, batch_size=self.hparams.batch_size)
+                          num_workers=self.hparams.num_workers, batch_size=self.hparams.batch_size,
+                          pin_memory=True, persistent_workers=self.hparams.num_workers > 0)
 
     def test_dataloader(self):
         raise RuntimeError("The held-out test split is not used by this training harness")
 
-    # -------------------------------------------------------------- training
-    def training_step(self, batch, batch_idx: int, optimizer_idx: int):
-        if optimizer_idx == 0:
-            self._last_batch_fingerprint = (int(self.current_epoch), int(batch_idx), batch.phoneme_lengths.tolist())
-        return super().training_step(batch, batch_idx, optimizer_idx)
-
-    def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx=0, optimizer_closure=None, **kwargs):
-        if self.hparams.skip_nonfinite_updates:
-            self.nonfinite_skipping_step(optimizer, optimizer_idx, optimizer_closure, self._last_batch_fingerprint)
-        else:
-            optimizer.step(closure=optimizer_closure)
-
-    def training_step_g(self, batch):
-        # Upstream body (vendor/piper/vits/lightning.py VitsModel.training_step_g)
-        # with added self.log calls and the loss_mel stash; arithmetic unchanged.
-        x, x_lengths, y, _, spec, spec_lengths, speaker_ids = (
-            batch.phoneme_ids,
-            batch.phoneme_lengths,
-            batch.audios,
-            batch.audio_lengths,
-            batch.spectrograms,
-            batch.spectrogram_lengths,
-            batch.speaker_ids if batch.speaker_ids is not None else None,
-        )
-        (
-            y_hat,
-            l_length,
-            _attn,
-            ids_slice,
-            _x_mask,
-            z_mask,
-            (_z, z_p, m_p, logs_p, _m_q, logs_q),
-        ) = self.model_g(x, x_lengths, spec, spec_lengths, speaker_ids)
-        self._y_hat = y_hat
-
-        mel = _mel.spec_to_mel_torch(
-            spec, self.hparams.filter_length, self.hparams.mel_channels, self.hparams.sample_rate,
-            self.hparams.mel_fmin, self.hparams.mel_fmax,
-        )
-        y_mel = _commons.slice_segments(mel, ids_slice, self.hparams.segment_size // self.hparams.hop_length)
-        y_hat_mel = _mel.mel_spectrogram_torch(
-            y_hat.squeeze(1), self.hparams.filter_length, self.hparams.mel_channels, self.hparams.sample_rate,
-            self.hparams.hop_length, self.hparams.win_length, self.hparams.mel_fmin, self.hparams.mel_fmax,
-        )
-        y = _commons.slice_segments(y, ids_slice * self.hparams.hop_length, self.hparams.segment_size)
-        self._y = y
-
-        _y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = self.model_d(y, y_hat)
-
-        with autocast(self.device.type, enabled=False):
-            loss_dur = torch.sum(l_length.float())
-            loss_mel = F.l1_loss(y_mel, y_hat_mel) * self.hparams.c_mel
-            loss_kl = _losses.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.hparams.c_kl
-
-            loss_fm = _losses.feature_loss(fmap_r, fmap_g)
-            loss_gen, _losses_gen = _losses.generator_loss(y_d_hat_g)
-            loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl
-
-            self._last_loss_mel = loss_mel.detach()
-            self.log("loss_mel", loss_mel)
-            self.log("loss_kl", loss_kl)
-            self.log("loss_dur", loss_dur)
-            self.log("loss_gen", loss_gen)
-            self.log("loss_fm", loss_fm)
-            self.log("loss_gen_all", loss_gen_all)
-
-            return loss_gen_all
-
+    # ------------------------------------------------------------ validation
     def validation_step(self, batch, batch_idx: int):
-        val_loss = self.training_step_g(batch) + self.training_step_d(batch)
+        loss_gen_all, loss_mel = self.training_step_g(batch)
+        val_loss = loss_gen_all + self.training_step_d(batch)
+        val_loss_mel = loss_mel
+        if self.hparams.dp_health_gate:
+            if not free_running_healthy(self, self._audio_sample_dataset, self.hparams.sample_rate):
+                val_loss_mel = torch.tensor(float("inf"), device=self.device)
+        elif batch_idx == 0:
+            self._log_audio_examples()
         self.log("val_loss", val_loss, sync_dist=True)
-        healthy = free_running_healthy(self, self._audio_sample_dataset, self.hparams.sample_rate)
-        val_loss_mel = self._last_loss_mel
-        if self.hparams.dp_health_gate and not healthy:
-            _LOGGER.warning("Reporting val_loss_mel=inf: free-running inference is degenerate")
-            val_loss_mel = torch.tensor(float("inf"), device=self.device)
         self.log("val_loss_mel", val_loss_mel, sync_dist=True)
         return val_loss
+
+    def _log_audio_examples(self) -> None:
+        # EdgeTTS behaviour (vendor lightning.py validation_step): synthesize a
+        # few utterances on the first validation batch and skip any that fail
+        # early in training; here from validation utterances, not the test split.
+        for idx, utt in enumerate(self._audio_sample_dataset):
+            try:
+                text = utt.phoneme_ids.unsqueeze(0).to(self.device)
+                lengths = torch.LongTensor([len(utt.phoneme_ids)]).to(self.device)
+                audio = self(text, lengths, [0.667, 1.0, 0.8]).detach()
+                audio = audio * (1.0 / max(0.01, abs(audio.max())))
+                if self.logger is not None:
+                    self.logger.experiment.add_audio(utt.text or str(idx), audio, sample_rate=self.hparams.sample_rate)
+            except Exception:  # noqa: BLE001 - mirrors EdgeTTS; failures are expected early in training
+                _LOGGER.debug("Audio example %d failed", idx, exc_info=True)

@@ -1,18 +1,20 @@
-# Piper_no_VITS2_cpn: upstream Piper VITS graph (rhasspy/piper 73c04d8) trained
-# from scratch, with the training harness matched to the baseline recipe
-# (configs/training/baseline-resblock2-vits2.yaml) wherever upstream allows.
+# Piper_no_VITS2_cpn = EdgeTTS Config A (vanilla Piper; all component flags off),
+# trained from scratch on the baseline's dataset and split.
 #
-# Architecture values equal configs/piper-original.json (published Piper
-# lj-medium checkpoint metadata) and the upstream VitsModel defaults; posterior
-# encoder (16 WN layers) and flow (4 couplings, 4 WN layers) are hard-coded
-# upstream and are not configurable here.
+# Purpose: ablation reference for asking whether adding the VITS2 components to
+# Piper changes results in a positive or negative direction.
 #
-# Differences from the baseline recipe that remain (see
-# docs/training/piper-no-vits2-protocol.md):
-#   - precision 32: upstream computes the generator-output STFT without
-#     forcing float32, so bf16 autocast is unsupported without modifying the
-#     upstream training step (published Piper checkpoint metadata: precision 32);
-#   - no VITS2 components and no numerical guards inside the upstream model.
+# Values follow EdgeTTS configs/baseline-vits.yaml (vendored unchanged under
+# vendor/edgetts/configs/) and the recorded hparams of EdgeTTS's own Config A run
+# (bf16-mixed, grad_clip 1.0, batch 16 per GPU, max_phoneme_ids 400, seed 1234).
+# Run length, device count and checkpoint rule are matched to the internal models
+# (1500 epochs, 2 GPUs, best val_loss_mel + last): see docs/training/next-run.md.
+#
+# Harness choices that differ from EdgeTTS's own launcher (recorded, intentional):
+#   - split: the baseline's canonical split instead of random_split(seed);
+#   - sampler: length-bucket like the baseline (EdgeTTS: fixed-order loader;
+#     set data.sampler to upstream_sequential to reproduce that);
+#   - no F0 is loaded at all (Config A never reads it).
 model_id: Piper_no_VITS2_cpn
 
 model:
@@ -39,6 +41,9 @@ model:
   segment_size: 8192
   use_spectral_norm: false
   use_sdp: true
+  use_bigvgan: false
+  use_vits2: false
+  use_f0: false
 
 optim:
   learning_rate: 0.0002
@@ -47,20 +52,21 @@ optim:
   lr_decay: 0.999875
   c_mel: 45
   c_kl: 1.0
+  grad_clip: 1.0          # EdgeTTS manual-optimization clipping (Config A run: 1.0)
 
 trainer:
-  precision: "32"
-  gradient_clip_val: 1.0
+  precision: bf16
+  gradient_clip_val: null # must stay null: clipping happens inside the EdgeTTS training_step
   seed: 1234
 
 data:
-  batch_size: 16
+  batch_size: 16          # per GPU
   sampler: length_bucket
   num_workers: 8
-  max_phoneme_ids: null
+  max_phoneme_ids: 400    # no-op on this dataset (longest row: 399 IDs)
   num_audio_samples: 5
 
 harness:
-  skip_nonfinite_updates: true
-  dp_health_gate: true
+  skip_nonfinite_updates: false   # not in EdgeTTS; unavailable with manual optimization
+  dp_health_gate: false           # not in EdgeTTS
   save_rng_state: true

@@ -1,0 +1,44 @@
+# Config C — VITS2 only.
+# use_bigvgan: false → LeakyReLU decoder, MPD only
+# use_vits2:   true  → transformer coupling flows + DurDisc + noised MAS (§2.3)
+# use_f0:      false → no F0 predictor, no f0_cond in decoder
+
+accelerator: gpu
+devices: "2"
+strategy: ddp_find_unused_parameters_true
+precision: bf16-mixed
+max_epochs: 1100
+seed: 1234
+
+dataset_dir: /home/dev/data_preprocessed
+
+quality: medium
+hidden_channels: 192
+inter_channels: 192
+filter_channels: 768
+n_layers: 6
+n_heads: 2
+resblock: "2"
+resblock_kernel_sizes: [3, 5, 7]
+resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+upsample_rates: [8, 8, 4]
+upsample_initial_channel: 256
+upsample_kernel_sizes: [16, 16, 8]
+
+batch_size: 16
+num_workers: 8
+learning_rate: 0.0002
+betas: [0.8, 0.99]
+eps: 1.0e-09
+lr_decay: 0.999875
+segment_size: 8192
+max_phoneme_ids: 400
+num_val_examples: 100
+num_test_examples: 500
+checkpoint_epochs: 1
+c_mel: 45
+c_kl: 1.0
+
+use_bigvgan: false
+use_vits2: true
+use_f0: false

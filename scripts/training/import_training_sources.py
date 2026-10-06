@@ -36,6 +36,19 @@ PIPER_FILES = {
     "src/python/build_monotonic_align.sh": "vendor/piper/build_monotonic_align.sh",
     "src/python/requirements.txt": "vendor/piper/requirements.txt",
 }
+EDGETTS_REMOTE = "https://github.com/MardeusVN/PitchFlowNet.git"
+EDGETTS_FILES = {
+    **{f"src/python/piper_train/vits/{name}.py": f"vendor/edgetts/vits/{name}.py" for name in (
+        "__init__", "attentions", "commons", "config", "dataset", "lightning", "losses",
+        "mel_processing", "models", "modules", "transforms", "utils", "wavfile")},
+    **{f"src/python/piper_train/vits/monotonic_align/{name}": f"vendor/edgetts/vits/monotonic_align/{name}"
+       for name in ("__init__.py", "core.pyx", "setup.py", "Makefile")},
+    "src/python/piper_train/__main__.py": "vendor/edgetts/__main__.py",
+    "src/python/requirements.txt": "vendor/edgetts/requirements.txt",
+    "configs/baseline-vits.yaml": "vendor/edgetts/configs/baseline-vits.yaml",
+    "configs/03_Config_C_VITS2.yaml": "vendor/edgetts/configs/03_Config_C_VITS2.yaml",
+    "LICENSE.md": "vendor/edgetts/LICENSE.md",
+}
 BANHMI_FILES = {
     "banhmi_train/train.py": "vendor/banhmi/train.py",
     "banhmi_train/vits/training.py": "vendor/banhmi/vits/training.py",
@@ -97,6 +110,32 @@ def main() -> None:
             "classification": "upstream_reference_for_training",
             "purpose": "Unmodified upstream Piper training reference (MAS build/import, entry point, requirements)",
             "license_status": "upstream_MIT_retained",
+            "release_status": "code_publication_authorized_upstream_terms_review_pending",
+        })
+
+    edgetts = WORKSPACE / "EdgeTTS"
+    if git(edgetts, "remote", "get-url", "origin").decode().strip() != EDGETTS_REMOTE:
+        raise SystemExit("Unexpected EdgeTTS remote")
+    edgetts_head = git(edgetts, "rev-parse", "HEAD").decode().strip()
+    edgetts_dirty = bool(git(edgetts, "status", "--porcelain").strip())
+    for src, dest in EDGETTS_FILES.items():
+        data = git(edgetts, "show", f"{edgetts_head}:{src}")
+        place(dest, data)
+        new_entries.append({
+            "source": f"EdgeTTS/{src}",
+            "source_repo": "EdgeTTS",
+            "source_commit": edgetts_head,
+            "source_remote": EDGETTS_REMOTE,
+            "source_file_state": "git_object_at_head",
+            "repository_tracked_dirty": edgetts_dirty,
+            "source_git_blob": git(edgetts, "rev-parse", f"{edgetts_head}:{src}").decode().strip(),
+            "source_sha256": sha(data),
+            "destination": dest,
+            "destination_sha256": sha((ROOT / dest).read_bytes()),
+            "bytes": len(data),
+            "classification": "project_fork_reference_for_training",
+            "purpose": "EdgeTTS (PitchFlowNet) fork of Piper 73c04d8; Config A = all component flags off",
+            "license_status": "upstream_MIT_retained_fork_changes_author_owned",
             "release_status": "code_publication_authorized_upstream_terms_review_pending",
         })
 
