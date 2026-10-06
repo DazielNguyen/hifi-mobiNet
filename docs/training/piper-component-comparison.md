@@ -7,7 +7,7 @@ retrained, renamed or overwritten.
 | Training ID | Meaning |
 |---|---|
 | `baseline-resblock2-vits2` | Internal baseline recipe: HiFi-GAN ResBlock2 decoder plus the project's VITS2 components, current BanhmiTTS training code |
-| `Piper_no_VITS2_cpn` | **EdgeTTS Config A** (vanilla Piper: BigVGAN, VITS2 and F0 flags all off), trained from scratch on the baseline's data and split |
+| `Piper_no_VITS2_cpn` | The hifi-mobiNet baseline **without** the VITS2 components: **EdgeTTS Config A** (vanilla Piper: BigVGAN, VITS2 and F0 flags all off), trained from scratch on the baseline's data and split with the SEQ/MRF training setup |
 | `piper-original` | Published Piper lj-medium checkpoint (external, unchanged; not produced here) |
 
 Purpose (author, 2026-10-06): `Piper_no_VITS2_cpn` is the reference for asking
@@ -63,7 +63,7 @@ a73a897), **P** = `vendor/piper/vits/` (rhasspy 73c04d8, reference).
 | Snake / MRD / F0 | Not used | Not built (`use_bigvgan`, `use_f0` false) | E `lightning.py:101-153` | Off | — |
 | Waveform discriminators | MPD + DiscriminatorS | Same | B `discriminators.py:97`; E `models.py:661` | Keep | — |
 | Losses | gen + fm + 45·mel + dur + kl (+ duration-adversarial) | gen + fm + 45·mel + dur + kl (component terms 0) | BT `549-617`; E `lightning.py:271-415` | Duration-adversarial term absent | — |
-| Optimization | Lightning automatic optimization, 2 AdamW (fused on CUDA), Trainer clip 1.0 | Manual optimization: G step then D step, `clip_gradients(norm, grad_clip=1.0)` per optimizer, 2 AdamW (not fused) | BT `697-728`; E `lightning.py:94,240-255,455-485` | Keep EdgeTTS | Same math; framework path differs |
+| Optimization | Lightning automatic optimization, 2 AdamW (fused on CUDA); released run: clip null then 1.0 | Manual optimization: G step then D step, 2 AdamW (not fused); `grad_clip` null here, as in SEQ/MRF (EdgeTTS's Config A run: 1.0) | BT `697-728`; E `lightning.py:94,240-255,455-485` | Keep EdgeTTS | Same math; framework path differs |
 | LR schedule | ExponentialLR 0.999875 per epoch (Lightning-stepped) | Same, stepped in `on_train_epoch_end` | E `lightning.py:263-269` | Keep | — |
 | Precision | bf16 (STFT in fp32) | bf16-mixed (mel/STFT outside autocast) | E `lightning.py:303,351,404` | bf16 | — |
 

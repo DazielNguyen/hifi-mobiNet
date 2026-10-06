@@ -20,6 +20,7 @@ import datetime
 import json
 import logging
 import os
+import subprocess
 import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
@@ -55,6 +56,19 @@ def build_module(config: TrainingConfig, dataset_dir: Path, data_root: Path, spl
     cache_dir = Path(run_dir) / "cache"
     module.attach_data(data, lambda subset: spectrogram_lengths(data, subset, cache_dir, read_only_length_caches))
     return module, data
+
+
+def _outside_git_content(path: Path) -> bool:
+    """True if ``path`` is outside the checkout, or inside it but Git-ignored
+    (checkpoints, logs and data must never become tracked content)."""
+    root = repository_root().resolve()
+    try:
+        path.resolve().relative_to(root)
+    except ValueError:
+        return True
+    result = subprocess.run(["git", "-C", str(root), "check-ignore", "-q", str(path.resolve())],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return result.returncode == 0
 
 
 def checkpoint_callback(run_dir: Path, every_n_epochs: int):
@@ -108,11 +122,8 @@ def main(argv: Optional[List[str]] = None) -> None:
     launcher = os.environ.get("LOCAL_RANK", "0") == "0" and os.environ.get("NODE_RANK", "0") == "0"
     if launcher and args.resume is None and run_dir.exists() and any(run_dir.iterdir()):
         raise SystemExit(f"{run_dir} is not empty; use a new --run-dir or --resume")
-    try:
-        run_dir.relative_to(repository_root().resolve())
-        raise SystemExit("--run-dir must be outside the Git checkout")
-    except ValueError:
-        pass
+    if not _outside_git_content(run_dir):
+        raise SystemExit("--run-dir must be outside the checkout or in a Git-ignored directory (e.g. training_output/)")
     run_dir.mkdir(parents=True, exist_ok=True)
 
     from pytorch_lightning import Trainer

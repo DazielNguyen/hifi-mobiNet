@@ -236,6 +236,18 @@ def test_train_non_empty_run_dir_guard_only_in_launcher(tmp_path, monkeypatch):
         main(argv)
 
 
+@needs_lightning
+def test_run_dir_must_not_be_tracked_content():
+    import shutil
+    if shutil.which("git") is None or not (ROOT / ".git").exists():
+        pytest.skip("needs a Git checkout")
+    from hifimobinet.training.train import _outside_git_content
+    assert _outside_git_content(ROOT / "training_output" / "some-run")  # ignored
+    assert _outside_git_content(ROOT / "data" / "ljspeech-medium")  # ignored
+    assert not _outside_git_content(ROOT / "docs" / "some-run")  # tracked area
+    assert _outside_git_content(ROOT.parent / "elsewhere")
+
+
 def test_train_cli_rejects_config_only_flags():
     pytest.importorskip("pytorch_lightning")
     from hifimobinet.training.train import main

@@ -1,19 +1,18 @@
-# Piper_no_VITS2_cpn = EdgeTTS Config A (vanilla Piper; all component flags off),
-# trained from scratch on the baseline's dataset and split.
+# Piper_no_VITS2_cpn = the hifi-mobiNet baseline WITHOUT the VITS2 components:
+# EdgeTTS Config A (vanilla Piper; BigVGAN, VITS2 and F0 flags off), trained from
+# scratch on the baseline's dataset and split. The released baseline-resblock2 is
+# Piper WITH the VITS2 components. Purpose: see whether the VITS2 components make
+# the model better or worse.
 #
-# Purpose: ablation reference for asking whether adding the VITS2 components to
-# Piper changes results in a positive or negative direction.
-#
-# Values follow EdgeTTS configs/baseline-vits.yaml (vendored unchanged under
-# vendor/edgetts/configs/) and the recorded hparams of EdgeTTS's own Config A run
-# (bf16-mixed, grad_clip 1.0, batch 16 per GPU, max_phoneme_ids 400, seed 1234).
-# Run length, device count and checkpoint rule are matched to the internal models
-# (1500 epochs, 2 GPUs, best val_loss_mel + last): see docs/training/next-run.md.
+# Model values follow EdgeTTS configs/baseline-vits.yaml (vendored unchanged under
+# vendor/edgetts/configs/). Training setup follows the BanhmiTTS SEQ and MRF runs
+# (recorded hparams): 1500 epochs, 2 GPUs DDP, batch 16 per GPU, bf16, seed 1234,
+# no gradient clipping, num_workers 1, no phoneme-length filter, checkpoint every
+# epoch with best val_loss_mel + last. See docs/training/next-run.md.
 #
 # Harness choices that differ from EdgeTTS's own launcher (recorded, intentional):
 #   - split: the baseline's canonical split instead of random_split(seed);
-#   - sampler: length-bucket like the baseline (EdgeTTS: fixed-order loader;
-#     set data.sampler to upstream_sequential to reproduce that);
+#   - sampler: length-bucket like the BanhmiTTS models (EdgeTTS: fixed-order loader);
 #   - no F0 is loaded at all (Config A never reads it).
 model_id: Piper_no_VITS2_cpn
 
@@ -52,7 +51,7 @@ optim:
   lr_decay: 0.999875
   c_mel: 45
   c_kl: 1.0
-  grad_clip: 1.0          # EdgeTTS manual-optimization clipping (Config A run: 1.0)
+  grad_clip: null         # no clipping, as in the SEQ/MRF runs (EdgeTTS's own Config A run used 1.0)
 
 trainer:
   precision: bf16
@@ -62,8 +61,8 @@ trainer:
 data:
   batch_size: 16          # per GPU
   sampler: length_bucket
-  num_workers: 8
-  max_phoneme_ids: 400    # no-op on this dataset (longest row: 399 IDs)
+  num_workers: 1          # SEQ/MRF value; data-loading parallelism only
+  max_phoneme_ids: null   # SEQ/MRF value (Config A's 400 would remove nothing: longest row 399)
   num_audio_samples: 5
 
 harness:
