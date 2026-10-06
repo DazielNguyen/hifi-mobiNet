@@ -32,6 +32,12 @@
       "name": "original_import_whitespace",
       "status": "passed_with_preserved_source_format",
       "detail": "Original Windows CRLF bytes preserved; first diff whitespace check flagged CR-at-EOL. core.whitespace=cr-at-eol configured locally; authored-file check passes. No raw import normalized."
+    },
+    {
+      "name": "evaluation_fixture_tests",
+      "status": "passed",
+      "command": "python -m pytest tests/test_evaluation.py -q",
+      "detail": "4 passed: known word counts, macro versus ratio-of-sums RTF, paired-ID/text/order rejection, missing observations and exact Wilcoxon example. Both evaluation CLI help commands passed."
     }
   ]
 }
