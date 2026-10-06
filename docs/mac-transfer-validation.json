@@ -1,0 +1,44 @@
+{
+  "classification": "new_validation_not_historical_research",
+  "scope": "portable_artifact_import_and_local_handoff",
+  "windows": {
+    "classification": "new_functional_validation_not_research_result",
+    "platform": "Windows",
+    "python": "3.13.9",
+    "imported_runtime_assets": "4 existing Q05 ONNX, 2880 unchanged Harvard WAVs, metadata ZIP",
+    "all_wav_hash_and_header_checks": 2880,
+    "cli_verified_models": 4,
+    "streamlit_sentence_choices": 720,
+    "streamlit_sampled_indices": [
+      0,
+      359,
+      719
+    ],
+    "historical_players_per_sentence": 4,
+    "sequential_ir_tts_button": "passed; fifth audio widget",
+    "mac_validation": "not_performed",
+    "metrics": "No timing, quality score or benchmark collected",
+    "human_listening": "not_performed"
+  },
+  "wsl_symlinks": {
+    "classification": "new_fixture_validation",
+    "platform": "Ubuntu-24.04 WSL2",
+    "source_symlink_rejected": true,
+    "destination_symlink_rejected": true,
+    "no_file_written_outside_destination": true,
+    "mac_validation": "not_performed"
+  },
+  "pytest": {
+    "passed": 35,
+    "warnings": 3,
+    "command": "python -m pytest -q --basetemp .local/pytest-mac-transfer-1 --tb=short",
+    "initial_environment_issue": "Default pytest temp directory was inaccessible under sandbox. A new explicit ignored basetemp resolved it; no global environment change."
+  },
+  "archives": {
+    "count": 7,
+    "every_member_checksum_verified": true,
+    "all_under_2_GiB": true
+  },
+  "no_unsafe_checkpoint_load": true,
+  "mac_runtime_validation": "not_performed"
+}

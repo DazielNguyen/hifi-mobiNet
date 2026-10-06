@@ -49,7 +49,9 @@ def model_record(model_id: str, root: Path | None = None) -> dict:
 
 def model_path(record: dict, root: Path | None = None, verify: bool = True) -> Path:
     root = root or repository_root()
-    storage = Path(os.environ.get("HIFIMOBINET_MODEL_DIR", root / "models/weights")).resolve()
+    assets = os.environ.get("HIFIMOBINET_ASSET_DIR")
+    default_storage = Path(assets) / "onnx-q05" if assets else root / "models/weights"
+    storage = Path(os.environ.get("HIFIMOBINET_MODEL_DIR", default_storage)).resolve()
     artifact = record["artifact"]
     if artifact["format"] != "onnx" or artifact["precision"] != "FP32":
         raise ModelUnavailable("Only the identified FP32 ONNX artifacts are supported")

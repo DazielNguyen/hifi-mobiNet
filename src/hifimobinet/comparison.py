@@ -5,14 +5,18 @@ import json
 import os
 import wave
 from pathlib import Path
-from .registry import repository_root, sha256, within
+from .registry import repository_root, sha256, within, manifest
 
 
 def audio_catalog(root: Path | None = None) -> dict:
     root=root or repository_root()
-    data=json.loads((root/'demo/audio_manifest.json').read_text(encoding='utf-8'))
+    assets=os.environ.get('HIFIMOBINET_ASSET_DIR')
+    catalog=Path(assets)/'manifests/audio-manifest.json' if assets else root/'demo/audio_manifest.json'
+    data=json.loads(catalog.read_text(encoding='utf-8'))
+    allowed={m['id'] for m in manifest(root)['models']}
     seen=set(); texts={}
     for sample in data['samples']:
+        if sample['model_id'] not in allowed: raise ValueError('Unknown model in audio manifest')
         key=(sample['utterance_id'],sample['model_id'])
         if key in seen: raise ValueError('Duplicate utterance/model in audio manifest')
         seen.add(key)
@@ -24,7 +28,8 @@ def audio_catalog(root: Path | None = None) -> dict:
 
 def audio_bytes(sample: dict, root: Path | None = None) -> bytes:
     root=root or repository_root()
-    storage=Path(os.environ.get('HIFIMOBINET_AUDIO_DIR',root/'.local/audio')).resolve()
+    default_storage=os.environ.get('HIFIMOBINET_ASSET_DIR',root/'.local/audio')
+    storage=Path(os.environ.get('HIFIMOBINET_AUDIO_DIR',default_storage)).resolve()
     path=within(storage,sample['relative_path'])
     if not path.is_file(): raise FileNotFoundError('Historical WAV unavailable in this installation')
     if path.stat().st_size!=sample['bytes'] or sha256(path)!=sample['sha256']:
