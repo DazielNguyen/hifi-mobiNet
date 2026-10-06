@@ -119,27 +119,37 @@
   "external_datasets": [
     {
       "name": "LJ Speech Dataset",
-      "terms": "Public domain according to the dataset publisher, explicitly in the US. No new MIT or CC0 license is assigned.",
+      "terms": "Public domain in the United States, as stated by the dataset author, covering text, audio and annotations. No new MIT or CC0 license is assigned.",
       "source_url": "https://keithito.com/LJ-Speech-Dataset/",
       "credits": [
         "Keith Ito",
         "Linda Johnson",
         "LibriVox"
       ],
-      "checked_date": "2026-10-06"
+      "checked_date": "2026-10-06",
+      "rights_statement_url": "https://keithito.com/LJ-Speech-Dataset/#license",
+      "attribution": "Keith Ito and Linda Johnson (2017)",
+      "publication_year": 2017,
+      "role": "training_dataset",
+      "project_usage_basis": "Training dataset identified by the project author; this licensing update does not independently audit every training run."
     },
     {
       "name": "Harvard sentence text",
       "terms": "Original rights and terms retained; authoritative redistribution terms remain unresolved. No MIT, CC BY or public-domain designation is assigned to the text.",
-      "source_url": null,
-      "verification_status": "unresolved"
+      "source_url": "https://www.cs.columbia.edu/~hgs/audio/harvard.html",
+      "verification_status": "source_reference_checked_distribution_rights_pending_confirmation",
+      "role": "evaluation_sentence_text",
+      "source_attribution": "Columbia University page attributes the list to IEEE Recommended Practice for Speech Quality Measurements, Appendix C, 1969.",
+      "source_page_license_statement": "No explicit redistribution license found on the supplied page.",
+      "checked_date": "2026-10-06"
     }
   ],
   "primary_source_checks": {
     "piper_repository_metadata": "README declares license: mit. This is upstream metadata, not a separate legal clearance of all files.",
     "piper_checkpoint_sha256": "The upstream file page SHA-256 matches the preserved local manifest.",
     "piper_dataset_card": "LJSpeech medium model card identifies its training dataset as public domain; this is separate from the checkpoint license.",
-    "piper_dataset_card_url": "https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD"
+    "piper_dataset_card_url": "https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD",
+    "harvard_source": "Columbia lists the sentences and attributes their source to IEEE. The page is a source reference, not evidence of a redistribution license."
   },
   "unchanged_inputs": "Original ZIPs, SHA256SUMS, checkpoint/ONNX/WAV bytes, imported source map and provenance manifests remain unchanged."
 }

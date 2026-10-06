@@ -20,13 +20,25 @@ The [selected checkpoint page](https://huggingface.co/datasets/rhasspy/piper-che
 That SHA-256 matches the local checkpoint identity. This establishes the declared repository license and file identity, not every upstream distribution condition.
 The [Piper LJSpeech card](https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD) separately describes the dataset.
 
-The [LJSpeech publisher](https://keithito.com/LJ-Speech-Dataset/) states that its text, audio and annotations are public domain.
-The publisher explicitly identifies public-domain status in the United States. This statement does not license generated outputs or checkpoints.
-The dataset credits Keith Ito, Linda Johnson and LibriVox.
+### Training dataset: LJSpeech
+
+The project author identifies the [LJ Speech Dataset](https://keithito.com/LJ-Speech-Dataset/) as the training dataset for these models.
+The [dataset rights statement](https://keithito.com/LJ-Speech-Dataset/#license) identifies public-domain status in the United States.
+This statement covers the dataset text, audio and annotations. It does not assign a license to model checkpoints or generated audio.
+Attribution: Keith Ito and Linda Johnson (2017). The dataset also credits LibriVox for the original recordings.
+This update records dataset terms and author-supplied usage, without a new audit of training runs.
+
+### Evaluation sentence text: Harvard
+
+The [Columbia University list](https://www.cs.columbia.edu/~hgs/audio/harvard.html) attributes the sentences to an IEEE publication from 1969.
+The reference identifies Appendix C of the IEEE practice for speech quality measurements.
+The supplied page has no explicit redistribution license. It provides a source reference, not confirmation of distribution rights.
+The redistribution status remains **pending confirmation**. No MIT, CC BY or public-domain designation applies to the sentence text through this repository.
+
 
 The [CC BY 4.0 terms](https://creativecommons.org/licenses/by/4.0/) require appropriate attribution, a license link and an indication of changes.
 They permit commercial use. The legal code, linked in the audio notice, defines the license.
-All source checks took place on 2026-10-06. The Harvard text terms still need an authoritative source.
+All source checks took place on 2026-10-06. The Harvard text redistribution terms still need authoritative confirmation.
 
 ## Provenance and release preparation
 
