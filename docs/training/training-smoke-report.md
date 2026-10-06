@@ -18,6 +18,11 @@ checkpoints and WAVs stay in local run storage.
 
 ## Results (current implementation)
 
+Piper_no_VITS2_cpn column: final configuration (SEQ/MRF setup: no gradient
+clipping, one data worker), run inside the training clone at `24ba622` with the
+staged in-repo dataset; the earlier Config A smoke with `grad_clip` 1.0 also
+passed every check.
+
 | Check | baseline-resblock2-vits2 (bf16) | Piper_no_VITS2_cpn = EdgeTTS Config A (bf16) |
 |---|---|---|
 | 1 Preprocessing / IDs | pass | pass |
@@ -45,6 +50,13 @@ Additional checks:
   models initialised both ranks, completed one batch (global step 2), wrote
   weights-only-loadable checkpoints and a run record on a clean tree (handoff
   section 6).
+- In-repo data: `scripts/training/stage_dataset.py` copied 26,203 files
+  (22.85 GB: `dataset.jsonl`, `config.json`, length cache, 26,200 tensors) into
+  the clone's ignored `data/ljspeech-medium/`, each SHA-256-verified against the
+  source; `dataset.jsonl` keeps SHA-256 `f4a72ae0…295b`.
+- Zero-update dry run of the exact long-run command on the staged data (1 GPU,
+  0 train/validation batches): split 12,500 / 100 / 500 loaded, dataset and
+  split hashes recorded as expected, no checkpoint written.
 
 ### Memory probe (no optimizer step; weights verified unchanged)
 
@@ -73,8 +85,8 @@ tensor of type: BFloat16`). It passed the same checks (24 + 16 smoke updates,
 which is the same Piper base plus EdgeTTS's bf16-safe training loop.
 
 Update accounting: baseline 0 + 24 + 24 + 2 (DDP) = 50. Piper_no_VITS2_cpn:
-EdgeTTS implementation 24 + 2 (DDP) = 26; superseded implementation 42. Probes
-made no updates.
+EdgeTTS implementation 24 (clip 1.0) + 2 (DDP) + 24 (final config) = 50;
+superseded implementation 42. Probes and the dry run made no updates.
 
 ## Not checked
 
@@ -86,7 +98,7 @@ made no updates.
 
 ## Test status
 
-Ubuntu: `tests/test_training.py` 23 passed (development venv and clean clone).
+Ubuntu: `tests/test_training.py` 24 passed.
 Windows full suite: training tests skip there (no PyYAML/Lightning); 2
 pre-existing failures in `test_huggingface_bootstrap.py` (`WinError 1314`, no
 symlink privilege) also fail on a clean clone of the earlier HEAD.

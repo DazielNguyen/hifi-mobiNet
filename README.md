@@ -115,12 +115,13 @@ from the demo because of artifact and protocol gaps.
 
 ## Training (new runs only)
 
-Two training recipes can be run from a source checkout on Ubuntu/WSL2 with an
-NVIDIA GPU: `baseline-resblock2-vits2` (the internal ResBlock2 baseline recipe
-with VITS2 components, current BanhmiTTS code) and `Piper_no_VITS2_cpn`
-(EdgeTTS Config A: vanilla Piper from the EdgeTTS fork of rhasspy/piper `73c04d8`,
-with BigVGAN, VITS2 and F0 off, bf16, trained from scratch on the baseline's
-split). They never overwrite the released models.
+`Piper_no_VITS2_cpn` is the hifi-mobiNet baseline **without** the VITS2
+components (EdgeTTS Config A: vanilla Piper from the EdgeTTS fork of rhasspy/piper
+`73c04d8`), trained from scratch with the SEQ/MRF setup on the baseline's split, to
+see whether the VITS2 components make the model better or worse. The released
+`baseline-resblock2` is Piper **with** the VITS2 components and is not retrained
+(its recipe `baseline-resblock2-vits2` is available). Code, staged data and runs
+all stay inside the clone; training never overwrites released models.
 Start with [training setup](docs/training/training-setup-ubuntu.md); the
 component audit, protocol, smoke results and next-run commands are in
 [docs/training/](docs/training/). Smoke-test outputs are not research results.

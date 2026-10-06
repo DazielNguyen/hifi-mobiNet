@@ -16,22 +16,29 @@ no push, upload, export, quantization or long training was performed.
 | Provenance of new code | [source-provenance.json](source-provenance.json); vendored files in `../source-map.json` |
 | Code | `src/hifimobinet/training/`, `configs/training/`, `scripts/training/`, `requirements/`, `tests/test_training.py`, `vendor/edgetts/` |
 
-Local-only material on the Ubuntu workstation (not in Git; under
-`$HIFI_TRAIN_ROOT`): training venv, the 16+4-utterance smoke subset, raw smoke
-reports/logs/checkpoints/WAVs, probe outputs and the clean-clone check
-(`clean-check/`). Exact host paths are intentionally omitted.
+Training clone on the Ubuntu workstation (Linux filesystem): all code, the
+staged dataset (`data/ljspeech-medium`, 26,203 verified files, 22.85 GB), the
+smoke subset (`data/smoke-ljs-16train-4val`) and runs (`training_output/`)
+live inside it; data and runs are Git-ignored. The venv sits next to it under
+`$HIFI_TRAIN_ROOT`. Older smoke runs and the clean-clone check remain in local
+storage outside the clone. Exact host paths are intentionally omitted.
 
 ## 2. The new model and how it differs from the baseline
 
-`Piper_no_VITS2_cpn` is **EdgeTTS Config A**: EdgeTTS's Piper fork (a73a897,
-based on rhasspy/piper 73c04d8) with `use_bigvgan`, `use_vits2` and `use_f0`
-off, trained in bf16 on the baseline's data and split. Purpose: reference for
-whether the VITS2 components move results up or down; paper placement open.
+`Piper_no_VITS2_cpn` is the hifi-mobiNet baseline **without** the VITS2
+components: **EdgeTTS Config A** (EdgeTTS's Piper fork a73a897, based on
+rhasspy/piper 73c04d8, with `use_bigvgan`, `use_vits2` and `use_f0` off). The
+released `baseline-resblock2` is Piper **with** the VITS2 components and is not
+retrained. Only the model without VITS2 is trained, with the BanhmiTTS SEQ/MRF
+setup (1,500 epochs, 2 GPUs × 16, bf16, seed 1234, no clipping, length-bucket
+sampler, canonical split, best `val_loss_mel` + last). Purpose: see whether the
+VITS2 components make the model better or worse; paper placement open.
 
 Absent compared with the baseline: Transformer-conditioned flow couplings, the
 duration discriminator (its losses and optimizer parameters) and noise-scaled
 MAS. Shared: text-encoder attention, stochastic duration predictor, MAS,
-ResBlock2 decoder with LeakyReLU 0.1, MPD, losses otherwise, bf16, clip 1.0.
+ResBlock2 decoder with LeakyReLU 0.1, MPD, losses otherwise, bf16. Clipping:
+none for the new run (SEQ/MRF), 1.0 in the released baseline's later phases.
 Also different, not VITS2: codebase (BanhmiTTS SDP guards vs EdgeTTS's single
 discriminant clamp; fused vs plain AdamW; automatic vs manual optimization;
 the baseline's non-finite skip and health gate are absent in EdgeTTS). It is a
@@ -70,7 +77,9 @@ not vanilla; the vendored current code is.
 
 - GPU smoke (1 GPU, bf16): baseline and Config A passed every functional check.
 - Memory, batch 16, bf16: Config A 5.47 GiB, baseline 6.93 GiB (of 12 GiB).
-- Tests: `tests/test_training.py` 23 passed on Ubuntu (dev venv and clean clone).
+- Tests: `tests/test_training.py` 24 passed on Ubuntu.
+- Final config smoke inside the training clone (`24ba622`, staged data): all checks passed.
+- Zero-update dry run of the long-run command on the staged full dataset: ok.
   Windows full suite: 2 pre-existing symlink-privilege failures, unrelated.
 - Clean clone on the Linux filesystem: setup script succeeded, package set equal
   to the smoke venv, working tree clean after building both MAS extensions.
@@ -90,14 +99,13 @@ The first baseline attempt (at `62c7d45`) hung: defect 3. Not checked under
 DDP: resume, RNG across ranks (by design not restored), throughput, long-run
 NCCL stability.
 
-## 7. Open decisions (author)
+## 7. Decisions
 
-1. Baseline side: released checkpoint as uncontrolled reference, retrain the
-   baseline in this harness, or add EdgeTTS Config C for a same-codebase A-vs-C
-   test of the VITS2 package (protocol section 3).
-2. Sampler: keep the baseline's length-bucket sampler (current) or EdgeTTS's
-   fixed-order loader.
-3. Where the comparison appears in the paper.
+Settled by the author on 2026-10-06: compare against the released baseline
+only (no Config C, no baseline retrain); SEQ/MRF training setup; length-bucket
+sampler; everything inside hifi-mobiNet. Open: where the comparison appears in
+the paper. Next step: start the long run with the command in
+[next-run.md](next-run.md).
 
 ## 8. Commits (local, not pushed)
 
@@ -110,4 +118,6 @@ NCCL stability.
 | `9fc94d9` | DDP launcher fix found by the clean-clone check |
 | `4064626` | First clean-clone record and handoff |
 | `0709f1c` | Piper_no_VITS2_cpn rebased on EdgeTTS Config A (vendored EdgeTTS) |
-| (this commit) | Documentation for EdgeTTS Config A, records, release manifest refresh |
+| `1014c62` | Documentation for EdgeTTS Config A |
+| `24ba622` | SEQ/MRF setup, in-repo dataset staging, runs in ignored `training_output/` |
+| (this commit) | Final smoke/staging records, handoff, release manifest refresh |
