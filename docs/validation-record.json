@@ -43,6 +43,26 @@
       "name": "historical_results_and_statistics",
       "status": "passed",
       "detail": "20 result tables preserved byte-for-byte. Portable Harvard prior-audit reproduction matches all 279 numeric values (rtol 1e-10, atol 1e-12). No new synthesis/ASR/UTMOS. Explicit UTF-8 fixed Windows output encoding; original script unchanged."
+    },
+    {
+      "name": "architecture_functional_checks",
+      "status": "passed",
+      "detail": "4 tests: all three complete internal synthesizers instantiate; decoder output matches original reference bit-for-bit on one deterministic random input per architecture. No checkpoint loaded, no training or timing."
+    },
+    {
+      "name": "streamlit_apptest",
+      "status": "passed",
+      "detail": "3 tests: missing model/audio states, sentence selection, checksum rejection and four audio widgets using an explicitly synthetic fixture. Actual historical playback remains pending asset access."
+    },
+    {
+      "name": "streamlit_local_http",
+      "status": "passed",
+      "detail": "Headless listener bound only to 127.0.0.1:8507; / and /_stcore/health returned HTTP 200. No deployment."
+    },
+    {
+      "name": "native_frontend_build",
+      "status": "passed_after_build_path_fix",
+      "detail": "Banhmi phonemizer 1.0.0 built from imported native source in isolated Windows Python 3.13 environment. Original long temporary build path failed; build-dir=../../.local/b succeeded without code changes. First three Harvard text encodings exactly match historical IDs."
     }
   ]
 }
