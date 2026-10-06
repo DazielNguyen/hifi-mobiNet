@@ -1,0 +1,52 @@
+# Pinned snapshot of banhmi_train's own code defaults (VitsModel.__init__ in
+# vits/training.py) -- i.e. what you get running `python -m banhmi_train.train
+# --quality medium` with NO --config at all. Every value below is spelled out
+# explicitly (not left to the code's own defaults), so this file stays a
+# trustworthy reference even if those defaults ever drift, and gives you a
+# named, diffable config to pass around instead of "no --config" (which is
+# easy to get wrong/forget).
+#
+# This is BanhmiTTS's actual baseline identity: the full VITS2 recipe
+# (transformer-in-flow coupling + duration discriminator + noise-scaled MAS)
+# is baked permanently into the architecture -- not a toggle, always on --
+# since the project builds on VITS2 rather than replicating EdgeTTS's
+# opt-in --use-vits2. With the HiFi-GAN resblock "2" below, the Generator
+# uses LeakyReLU and training uses MPD only (no MRD) -- that pairing is
+# fixed by the resblock type, not a separate setting.
+#
+# Usage:
+#   python -m banhmi_train.train --dataset-dir <dir> --config configs/default.yaml --batch-size <N> ...
+
+# TextEncoder / PosteriorEncoder / Flow / DurationPredictor width
+hidden_channels: 192
+inter_channels: 192
+filter_channels: 768
+n_heads: 2
+n_layers: 6
+kernel_size: 3
+p_dropout: 0.1
+
+# Generator (`--quality medium` tier -- lighter resblock, 3 upsample stages)
+resblock: "2"
+resblock_kernel_sizes: [3, 5, 7]
+resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+upsample_rates: [8, 8, 4]
+upsample_initial_channel: 256
+upsample_kernel_sizes: [16, 16, 8]
+
+# Flow (ResidualCouplingBlock) -- always VITS2-style transformer-in-flow,
+# no plain-WN-flow toggle exists anymore.
+flow_kernel_size: 5
+flow_dilation_rate: 1
+flow_n_flows: 4
+
+# VITS2's noise-scaled MAS -- always active (no toggle), anneals from
+# initial to 0 over training via these two knobs.
+mas_noise_scale_initial: 0.01
+mas_noise_scale_decay: 0.000002
+
+# PosteriorEncoder (training-only, discarded before ONNX export) -- matches
+# EdgeTTS/vanilla Piper's own hardcoded WaveNet depth of 16.
+posterior_encoder_kernel_size: 5
+posterior_encoder_dilation_rate: 1
+posterior_encoder_layers: 16

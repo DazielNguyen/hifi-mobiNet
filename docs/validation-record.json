@@ -2,7 +2,20 @@
   "schema_version": 1,
   "classification": "new_validation",
   "checks": [
-    {"name": "destination_inspection", "status": "passed", "detail": "Destination did not exist before creation; parent is not a source Git repository."},
-    {"name": "ignore_policy", "status": "passed", "detail": ".gitignore created before first stage; no weights, environments or secrets staged."}
+    {
+      "name": "destination_inspection",
+      "status": "passed",
+      "detail": "Destination did not exist before creation; parent is not a source Git repository."
+    },
+    {
+      "name": "ignore_policy",
+      "status": "passed",
+      "detail": ".gitignore created before first stage; no weights, environments or secrets staged."
+    },
+    {
+      "name": "original_import",
+      "status": "passed",
+      "detail": "68 source files copied unchanged; source and destination SHA-256 matched; Python syntax parsed without executing imports."
+    }
   ]
 }

@@ -1,0 +1,65 @@
+# Sequential (resblock="mb") variant of ResBlockInverted, expansion=(1,1,1)
+# -- the schedule that won the overfit-test sweep for the SEQUENTIAL
+# (2 blocks stacked, not 3 parallel branches) stacking style, revisited
+# after finding MRF(1,1,1)'s parallel-branch RTF disadvantage on real
+# hardware (ONNX Runtime/VNNI, long audio) -- see docs/TODO.md item 1 and
+# docs/final_4way_comparison_report.md SS3.3. Quick forward-pass-only
+# benchmark (untrained) showed sequential staying faster than baseline at
+# every tested sequence length (T=32..700), unlike MRF-parallel which
+# crosses over to slower at long T -- this config trains it to full 1500
+# epochs to confirm with a real, converged checkpoint.
+#
+# Uses canonical_split.json (training_output/ljspeech/medium/) so this run
+# gets the EXACT SAME train/val/test partition as baseline_v2_noclip --
+# fixes the train/test-leakage-via-random_split bug at the root (see
+# docs/mrf_full_investigation_report.md SS8.2) instead of reconstructing a
+# separate correct-for-this-model-only test set after the fact.
+#
+# Usage:
+#   python -m banhmi_train.train --dataset-dir <dir> --config configs/banhmi_mb_sequential_111.yaml --batch-size <N> --max-epochs <N> ...
+
+# TextEncoder / PosteriorEncoder / Flow / DurationPredictor width -- same as
+# configs/default.yaml, unchanged by this novelty (generator-only change).
+hidden_channels: 192
+inter_channels: 192
+filter_channels: 768
+n_heads: 2
+n_layers: 6
+kernel_size: 3
+p_dropout: 0.1
+
+# Generator: resblock "mb" selects sequential-stacking ResBlockInverted
+# (see Generator's own comment / mbconv_resblock_report.md for the block
+# itself). mb_kernel_size/mb_blocks_per_stage left at Generator's own
+# validated defaults (kernel=3, blocks_per_stage=2) -- not repeated here as
+# separate knobs. resblock_kernel_sizes/resblock_dilation_sizes below are
+# unused in "mb" mode (Generator still requires them positionally) -- left
+# at the medium-tier values for when switching back to resblock "2".
+resblock: "mb"
+mb_expansion: [1, 1, 1]
+resblock_kernel_sizes: [3, 5, 7]
+resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+upsample_rates: [8, 8, 4]
+upsample_initial_channel: 256
+upsample_kernel_sizes: [16, 16, 8]
+
+# SnakeBeta activations (throughout the Generator) and the MRD discriminator
+# come with the inverted-residual resblock automatically -- see
+# INVERTED_RESBLOCKS in banhmi_train/vits/modules/generator.py.
+
+# Flow (ResidualCouplingBlock) -- always VITS2-style transformer-in-flow,
+# no plain-WN-flow toggle exists anymore.
+flow_kernel_size: 5
+flow_dilation_rate: 1
+flow_n_flows: 4
+
+# VITS2's noise-scaled MAS -- always active (no toggle), anneals from
+# initial to 0 over training via these two knobs.
+mas_noise_scale_initial: 0.01
+mas_noise_scale_decay: 0.000002
+
+# PosteriorEncoder (training-only, discarded before ONNX export) -- matches
+# EdgeTTS/vanilla Piper's own hardcoded WaveNet depth of 16.
+posterior_encoder_kernel_size: 5
+posterior_encoder_dilation_rate: 1
+posterior_encoder_layers: 16

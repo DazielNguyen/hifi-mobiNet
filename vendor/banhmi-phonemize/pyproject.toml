@@ -1,0 +1,14 @@
+[project]
+    authors         = [{ name = "BanhmiTTS" }]
+    dependencies    = ["setuptools>=75.8.0", "wheel>=0.45.1"]
+    description     = "espeak-ng phonemization library for BanhmiTTS (independent implementation, piper_phonemize-output-compatible, English+Vietnamese only) -- see NOTICE.md"
+    name            = "banhmi-phonemize"
+    requires-python = ">=3.8"
+    version         = "1.0.0"
+
+[build-system]
+    build-backend = "scikit_build_core.build"
+    requires      = ["scikit-build-core", "pybind11>=3.0.1"]
+
+[tool.setuptools]
+    zip-safe             = false

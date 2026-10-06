@@ -1,0 +1,69 @@
+# MRF variant of the mbconv novelty direction (configs/banhmi_mbconv.yaml):
+# HiFi-GAN's *real* MRF mechanism (N branches run in PARALLEL on the same
+# input, summed then divided by N -- what resblock "1"/"2" already do) but
+# each branch is a ResBlockInverted (MobileNetV2-style inverted-residual,
+# see banhmi_train/vits/utils/resblocks.py) instead of ResBlock1/2's dilated
+# convs. resblock="mrf" in banhmi_train/vits/modules/generator.py.
+#
+# Picked over plain sequential stacking (resblock="mb",
+# configs/banhmi_mbconv.yaml) and over the other 3 MRF expansion schedules
+# tried, per the full sweep in docs/mbconv_resblock_report.md SS6-SS9:
+# expansion=(1,1,1) is the only MRF schedule that stays faster than plain
+# HiFi-GAN resblock "2" in isolated generator benchmarks (paired-ratio
+# methodology, ~0.43x baseline's time) -- (2,2,1)/(4,4,1)/(6,6,1) all lose
+# that speed edge once 3 parallel branches replace 1-2 sequential blocks.
+# Quality-wise MRF(1,1,1) (loss_mel=9.0788, 800-step overfit) is close to
+# but not better than sequential resblock="mb" at the same expansion
+# (8.9742) -- the case for MRF over sequential here is mainly HiFi-GAN
+# design-fidelity (real multi-receptive-field mechanism) plus the speed
+# margin, not a clean quality win. See the report for the full comparison
+# and the noise caveats on the speed numbers.
+#
+# Usage:
+#   python -m banhmi_train.train --dataset-dir <dir> --config configs/banhmi_mrf.yaml --batch-size <N> --max-epochs <N> ...
+
+# TextEncoder / PosteriorEncoder / Flow / DurationPredictor width -- same as
+# configs/default.yaml, unchanged by this novelty (generator-only change).
+hidden_channels: 192
+inter_channels: 192
+filter_channels: 768
+n_heads: 2
+n_layers: 6
+kernel_size: 3
+p_dropout: 0.1
+
+# Generator: resblock "mrf" selects the parallel-branch ResBlockInverted
+# path (see Generator's own comment for the mechanism). mb_mrf_kernel_sizes
+# defaults to (3,5,7) inside Generator -- matches resblock_kernel_sizes
+# below, not repeated here as a separate knob. resblock_kernel_sizes/
+# resblock_dilation_sizes below are unused in "mrf" mode (Generator still
+# requires them positionally) -- left at the medium-tier values for when
+# switching back to resblock "2".
+resblock: "mrf"
+mb_expansion: [1, 1, 1]
+resblock_kernel_sizes: [3, 5, 7]
+resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+upsample_rates: [8, 8, 4]
+upsample_initial_channel: 256
+upsample_kernel_sizes: [16, 16, 8]
+
+# SnakeBeta activations (throughout the Generator) and the MRD discriminator
+# come with the inverted-residual resblock automatically -- see
+# INVERTED_RESBLOCKS in banhmi_train/vits/modules/generator.py.
+
+# Flow (ResidualCouplingBlock) -- always VITS2-style transformer-in-flow,
+# no plain-WN-flow toggle exists anymore.
+flow_kernel_size: 5
+flow_dilation_rate: 1
+flow_n_flows: 4
+
+# VITS2's noise-scaled MAS -- always active (no toggle), anneals from
+# initial to 0 over training via these two knobs.
+mas_noise_scale_initial: 0.01
+mas_noise_scale_decay: 0.000002
+
+# PosteriorEncoder (training-only, discarded before ONNX export) -- matches
+# EdgeTTS/vanilla Piper's own hardcoded WaveNet depth of 16.
+posterior_encoder_kernel_size: 5
+posterior_encoder_dilation_rate: 1
+posterior_encoder_layers: 16
