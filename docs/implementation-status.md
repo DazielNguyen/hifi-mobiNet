@@ -36,6 +36,12 @@ rewrite history; commit finished milestones separately.
   fixture and missing/corrupt assets. Local HTTP root/health endpoints returned 200.
 - Two existing workspace checkpoints were hashed without deserialization. The
   selected original Piper file matches its archived/published identity record.
+- Full local environment: 20 tests passed. A separate clean clone and minimal
+  environment: 15 passed, with two optional modules skipped (PyTorch/frontend
+  absent). CLI and result auditing work without access to source repositories.
+- Entire reachable Git history and tracked files passed the bounded content scan;
+  the release manifest checks file identities. No weights, secrets detected by
+  the scan, environments or caches were staged. This is not a security guarantee.
 - Native frontend build initially failed with a long temporary path. A short ignored
   build directory fixed it without changing original source. Windows UTF-8 output
   handling was made explicit in the portable statistical script.

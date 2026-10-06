@@ -69,6 +69,16 @@
       "status": "passed",
       "command": "python -m pytest -q --basetemp=.local/test-full-002",
       "detail": "20 tests passed. PyTorch weight_norm emits an upstream deprecation warning; API deliberately retained to preserve checkpoint keys/behavior."
+    },
+    {
+      "name": "clean_checkout_minimal_environment",
+      "status": "passed",
+      "detail": "Cloned local commit 877b3bd with --no-hardlinks; installed editable package in a second isolated environment. 15 tests passed; two optional modules skipped because torch/native frontend were absent. CLI help/models and evaluation fixture passed; history/release audit passed. Initial test run needed creation of the explicit sandbox basetemp parent; offline cache install avoided network restriction. Clone origin removed; no remote remains."
+    },
+    {
+      "name": "documentation_links",
+      "status": "passed",
+      "detail": "15 local Markdown links resolve; source preservation checked separately."
     }
   ]
 }
