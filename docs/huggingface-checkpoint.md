@@ -1,5 +1,15 @@
 # Hugging Face checkpoint
 
+## Latest interface update: visual branding
+
+Date: 2026-10-06. Logo, cover and banner were applied to both listening hosts.
+The Space card and public model card use the same pinned brand assets.
+GitHub README and repository social preview display the banner.
+Original images are ignored in `visual-branding/`; image bytes were not pushed to Git.
+See branding-publication.json for asset hashes, remote commits and validation.
+Audio identity, inference model pins and checkpoint privacy remain unchanged.
+
+
 ## Current state: fixed listening demo
 
 Date: 2026-10-06. The separate Static Space is public at
