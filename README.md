@@ -161,3 +161,9 @@ applicable terms; uncertain provenance remains under review. Piper MIT, the
 supplied phonemizer notice and eSpeak NG GPL text are retained. Native frontend
 binary distribution needs a separate review. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Hugging Face preparation
+
+Local model, audio and Docker Space candidates use the author namespace `DazielNguyen`.
+See [Hugging Face handoff](docs/huggingface-deployment.md) for package contents, private upload steps and pinned runtime configuration.
+This preparation does not create or publish Hugging Face repositories. Historical audio remains off by default in the Space configuration.
