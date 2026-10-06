@@ -2,10 +2,10 @@
 
 The author selected MIT on 2026-10-06 for original repository code and
 documentation owned by DazielNguyen; see the root LICENSE. This selection does not
-relicense third-party material, checkpoints, ONNX artifacts, audio, datasets or
-imported evidence. Upstream license and copyright notices remain applicable.
-Author permission to share artifacts was separately recorded; their distribution
-terms and upstream conditions remain unresolved where documented.
+relicense third-party material, original datasets or imported evidence.
+The separate [artifact licensing record](docs/artifact-licensing.md) covers team-owned checkpoint contents and equivalent ONNX weights under MIT.
+Generated Harvard WAVs use CC BY 4.0 only for rights the team holds.
+Upstream license and copyright notices remain applicable. Remaining distribution conditions are documented separately.
 
 | Material | Evidence and retained notice | Status |
 |---|---|---|
@@ -14,8 +14,10 @@ terms and upstream conditions remain unresolved where documented.
 | Banhmi phonemizer | `vendor/banhmi-phonemize/NOTICE.md`, supplied MIT text credited to Michael Hansen (2023) | The supplied notice describes an independent implementation with compatible mapping; authors must reconcile scope/ownership before release |
 | eSpeak NG dependency | [GPL-3.0 text](licenses/eSpeak-NG-GPL-3.0.txt) from the source package | Not bundled as a binary; distributing a linked phonemizer needs GPL compliance review |
 | VITS / HiFi-GAN / BigVGAN / VITS2 | Architectural and source-comment references within imported material | Do not treat citations as licenses. Full upstream attribution review remains open |
-| LJSpeech | Existing Piper model card identifies the dataset as public domain | Does not independently establish a license for every checkpoint or generated output |
-| Historical Harvard sentences/audio/results | Original Banhmi evidence package | Author sharing permission confirmed; specific terms still need documentation; WAVs are not uploaded in this step |
+| External Piper checkpoint | Upstream checkpoint repository declares MIT; file page SHA-256 matches the local manifest | Retain upstream terms and attribution; do not assign DazielNguyen ownership |
+| LJSpeech | [Dataset publisher](https://keithito.com/LJ-Speech-Dataset/) identifies text, audio and annotations as public domain | Retain Keith Ito, Linda Johnson and LibriVox credits; no new dataset license |
+| Generated Harvard WAVs | Author selected [CC BY 4.0](licenses/Harvard-generated-audio-CC-BY-4.0.md) | Covers only rights the team holds in 2,880 generated WAVs; excludes sentence text and third-party rights |
+| Harvard sentence text and historical results | Original evidence package | Text redistribution terms remain unresolved; audio license does not cover text or all result files |
 
 All unchanged imported source retains its original comments. Some comments make
 historical performance or novelty claims that this repository does not endorse.

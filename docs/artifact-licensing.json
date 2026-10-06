@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "decision_date": "2026-10-06",
+  "classification": "author_license_decision_with_primary_source_checks",
+  "scope_note": "This record supplies current license decisions for the exact identities below. It does not modify source bytes or certify all redistribution conditions.",
+  "supersedes": "Earlier license-pending fields in models/manifest.json and transferred manifests, only for the identified material and rights in this record. Those files remain unchanged provenance records.",
+  "models": [
+    {
+      "model_id": "baseline-resblock2",
+      "checkpoint": {
+        "filename": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+        "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+        "bytes": 867027556,
+        "license": "MIT",
+        "basis": "explicit_author_license_selection",
+        "copyright_holder": "DazielNguyen",
+        "source_url": null
+      },
+      "onnx": {
+        "filename": "baseline_fp32.onnx",
+        "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+        "bytes": 68529068,
+        "weight_license": "MIT",
+        "basis": "same_team_owned_weights_in_existing_ONNX_representation",
+        "scope": "Model weights only; embedded third-party material retains its own terms."
+      },
+      "publication_status": "not_uploaded",
+      "upstream_notice_review": "remaining_component_review_not_cleared"
+    },
+    {
+      "model_id": "parallel-ir",
+      "checkpoint": {
+        "filename": "best-epoch=1386-val_loss_mel=18.7681.ckpt",
+        "sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+        "bytes": 864465901,
+        "license": "MIT",
+        "basis": "explicit_author_license_selection",
+        "copyright_holder": "DazielNguyen",
+        "source_url": null
+      },
+      "onnx": {
+        "filename": "mrf_fp32.onnx",
+        "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+        "bytes": 66546592,
+        "weight_license": "MIT",
+        "basis": "same_team_owned_weights_in_existing_ONNX_representation",
+        "scope": "Model weights only; embedded third-party material retains its own terms."
+      },
+      "publication_status": "not_uploaded",
+      "upstream_notice_review": "remaining_component_review_not_cleared"
+    },
+    {
+      "model_id": "sequential-ir",
+      "checkpoint": {
+        "filename": "best-epoch=1442-val_loss_mel=19.0136.ckpt",
+        "sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+        "bytes": 863851145,
+        "license": "MIT",
+        "basis": "explicit_author_license_selection",
+        "copyright_holder": "DazielNguyen",
+        "source_url": null
+      },
+      "onnx": {
+        "filename": "seq_fp32.onnx",
+        "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+        "bytes": 66342331,
+        "weight_license": "MIT",
+        "basis": "same_team_owned_weights_in_existing_ONNX_representation",
+        "scope": "Model weights only; embedded third-party material retains its own terms."
+      },
+      "publication_status": "not_uploaded",
+      "upstream_notice_review": "remaining_component_review_not_cleared"
+    },
+    {
+      "model_id": "piper-original",
+      "checkpoint": {
+        "filename": "lj-med_1000.ckpt",
+        "sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+        "bytes": 845889993,
+        "license": "MIT",
+        "basis": "upstream_repository_license_metadata",
+        "copyright_holder": null,
+        "source_url": "https://huggingface.co/datasets/rhasspy/piper-checkpoints/blob/main/README.md"
+      },
+      "onnx": {
+        "filename": "piper_fp32.onnx",
+        "sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+        "bytes": 63532855,
+        "weight_license": "MIT",
+        "basis": "retain_upstream_terms_for_weights_from_Piper_checkpoint",
+        "scope": "Model weights only; embedded third-party material retains its own terms."
+      },
+      "publication_status": "not_uploaded",
+      "upstream_notice_review": "remaining_component_review_not_cleared"
+    }
+  ],
+  "generated_audio": {
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "legal_code_url": "https://creativecommons.org/licenses/by/4.0/legalcode.en",
+    "notice_file": "licenses/Harvard-generated-audio-CC-BY-4.0.md",
+    "scope": "Only rights held by the team in generated WAVs, including outputs from all four models. Excludes original dataset recordings, sentence text and third-party rights.",
+    "count": 2880,
+    "per_model_count": 720,
+    "model_ids": [
+      "baseline-resblock2",
+      "parallel-ir",
+      "sequential-ir",
+      "piper-original"
+    ],
+    "identity_archive": {
+      "filename": "hifi-mobiNet-v0.1.0-audio-harvard.zip",
+      "bytes": 320750826,
+      "sha256": "4be5c0d14b1d306378bfd9d151b1a05171a597830e2c0b2e33c0d6d0b65f29d2"
+    },
+    "archive_license_note": "The archive also contains manifests and notices. CC BY 4.0 applies to the generated WAVs, not all archive members.",
+    "publication_status": "not_uploaded"
+  },
+  "external_datasets": [
+    {
+      "name": "LJ Speech Dataset",
+      "terms": "Public domain according to the dataset publisher, explicitly in the US. No new MIT or CC0 license is assigned.",
+      "source_url": "https://keithito.com/LJ-Speech-Dataset/",
+      "credits": [
+        "Keith Ito",
+        "Linda Johnson",
+        "LibriVox"
+      ],
+      "checked_date": "2026-10-06"
+    },
+    {
+      "name": "Harvard sentence text",
+      "terms": "Original rights and terms retained; authoritative redistribution terms remain unresolved. No MIT, CC BY or public-domain designation is assigned to the text.",
+      "source_url": null,
+      "verification_status": "unresolved"
+    }
+  ],
+  "primary_source_checks": {
+    "piper_repository_metadata": "README declares license: mit. This is upstream metadata, not a separate legal clearance of all files.",
+    "piper_checkpoint_sha256": "The upstream file page SHA-256 matches the preserved local manifest.",
+    "piper_dataset_card": "LJSpeech medium model card identifies its training dataset as public domain; this is separate from the checkpoint license.",
+    "piper_dataset_card_url": "https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD"
+  },
+  "unchanged_inputs": "Original ZIPs, SHA256SUMS, checkpoint/ONNX/WAV bytes, imported source map and provenance manifests remain unchanged."
+}

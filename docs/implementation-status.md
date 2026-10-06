@@ -110,3 +110,11 @@ prepared code Git bundle as well as ZIPs/checksums so the Mac receives local
 unpushed commits. macOS native frontend build, synthesis, human playback and host
 resource checks remain NOT CHECKED. License, third-party rights and public artifact
 storage remain pending. The preparation is not a published v0.1.0 release.
+
+## Current license decisions (2026-10-06)
+
+The author selected MIT for original owned code and team-owned contents of the three selected checkpoints.
+The same team-owned weights in existing ONNX exports use MIT. External Piper retains the upstream MIT declaration.
+Generated Harvard WAVs use CC BY 4.0 only for rights the team holds. Original datasets retain their terms.
+Harvard sentence text terms remain unresolved. See artifact-licensing.md and artifact-licensing.json.
+Earlier sections record the handoff state. This update preserves transferred bytes and does not publish artifacts.

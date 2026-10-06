@@ -14,7 +14,7 @@
   "weight_storage_provider": "not_confirmed",
   "weight_and_audio_upload_in_this_step": false,
   "upstream_terms_independently_cleared": false,
-  "scope_note": "Author selected MIT for original owned code/documentation. Sharing permission is an author declaration; no unseen institutional documents or upstream clearance are claimed. Artifact terms remain separately pending.",
+  "scope_note": "Author selected MIT for original owned code/documentation and team-owned contents of selected checkpoints, including the equivalent weights in existing Q05 ONNX exports. Generated Harvard audio uses CC BY 4.0 only for rights the team holds. Third-party material retains upstream terms; no blanket upstream clearance is claimed.",
   "original_code_license": {
     "spdx": "MIT",
     "copyright_holder": "DazielNguyen",
@@ -29,5 +29,34 @@
       "datasets",
       "imported evidence"
     ]
+  },
+  "team_model_license": {
+    "spdx": "MIT",
+    "copyright_holder": "DazielNguyen",
+    "year": 2026,
+    "confirmed_date": "2026-10-06",
+    "model_ids": [
+      "baseline-resblock2",
+      "parallel-ir",
+      "sequential-ir"
+    ],
+    "scope": "Team-owned contents of selected checkpoints and the equivalent weights in existing Q05 FP32 ONNX exports. Third-party content retains its own terms.",
+    "license_file": "LICENSE",
+    "identity_and_scope_record": "docs/artifact-licensing.json"
+  },
+  "generated_audio_license": {
+    "spdx": "CC-BY-4.0",
+    "confirmed_date": "2026-10-06",
+    "scope": "Only rights the team holds in the 2,880 generated Harvard WAVs. Original datasets, Harvard sentence text, third-party rights and model licenses are excluded.",
+    "notice_file": "licenses/Harvard-generated-audio-CC-BY-4.0.md"
+  },
+  "external_dataset_policy": "Retain original dataset terms and attribution; do not apply the repository MIT license to external datasets.",
+  "external_piper_license": {
+    "spdx": "MIT",
+    "basis": "Upstream repository metadata, not an author relicensing decision",
+    "source_url": "https://huggingface.co/datasets/rhasspy/piper-checkpoints/blob/main/README.md",
+    "checkpoint_identity_source": "https://huggingface.co/datasets/rhasspy/piper-checkpoints/blob/main/en/en_US/ljspeech/medium/lj-med_1000.ckpt",
+    "checked_date": "2026-10-06",
+    "blanket_upstream_clearance": false
   }
 }

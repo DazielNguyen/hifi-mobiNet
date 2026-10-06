@@ -89,7 +89,8 @@ def main(argv=None):
             models=json.loads((ROOT/'models/manifest.json').read_text())['models']
             out={'schema_version':1,'scope':'Tracked working files; self and final-audit excluded to avoid circular hashes.',
                  'excluded_self_metadata':sorted(EXCLUDED_METADATA),'files':records,
-                 'models':[{'id':m['id'],'checkpoint':m['checkpoint'],'artifact':m['artifact'],'release_status':m['release_status']} for m in models]}
+                 'models':[{'id':m['id'],'checkpoint':m['checkpoint'],'artifact':m['artifact'],'release_status':m['release_status']} for m in models],
+                 'artifact_licensing_record':'docs/artifact-licensing.json' if (ROOT/'docs/artifact-licensing.json').exists() else None}
             (ROOT/'docs/release-manifest.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
         else:
             saved=json.loads((ROOT/'docs/release-manifest.json').read_text(encoding='utf-8'))

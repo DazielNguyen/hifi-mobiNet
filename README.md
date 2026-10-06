@@ -13,8 +13,8 @@ edge-device performance or production readiness is established here.
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. Original repository
 code and documentation owned by DazielNguyen are licensed under [MIT](LICENSE),
-subject to the scope and exclusions below. External artifact storage and artifact
-licensing remain unconfirmed. Weights/audio are
+subject to the scope and exclusions below. Artifact licenses are documented in [artifact licensing](docs/artifact-licensing.md).
+External artifact storage and public download URLs remain unconfirmed. Weights/audio are
 not bundled in Git or uploaded in this step. Missing local weights are reported
 explicitly; no different model is silently substituted.
 
@@ -153,8 +153,10 @@ separate imported evidence from new work. Source repositories remain unchanged.
 
 The [MIT License](LICENSE), copyright 2026 DazielNguyen, applies to original
 repository code and documentation owned by that copyright holder. It does not
-replace third-party terms or license checkpoints, ONNX artifacts, audio, datasets
-or imported evidence. Imported and derived upstream material retains its
+replace third-party terms. The separate [artifact licensing record](docs/artifact-licensing.md)
+assigns MIT to team-owned checkpoint contents and equivalent ONNX weights.
+Generated Harvard WAVs use CC BY 4.0 only for rights the team holds.
+Original datasets and imported evidence retain their own terms. Imported and derived upstream material retains its
 applicable terms; uncertain provenance remains under review. Piper MIT, the
 supplied phonemizer notice and eSpeak NG GPL text are retained. Native frontend
 binary distribution needs a separate review. See

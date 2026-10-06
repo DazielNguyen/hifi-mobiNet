@@ -3,14 +3,17 @@
 - MIT was selected for original repository code/documentation owned by
   DazielNguyen on 2026-10-06. BanhmiTTS source lineage and compatibility with
   upstream material still need per-file assessment. Root MIT does not relicense
-  third-party material or artifacts.
+  third-party material. Separate MIT decisions cover team-owned checkpoint contents and equivalent ONNX weights.
+  See artifact-licensing.md for exact scope.
 - Phonemization involves eSpeak NG (GPL-3.0); bundled binaries/build dependencies
   need a separate distribution review. Preserve all existing notices.
 - Third-party VITS/HiFi-GAN/BigVGAN utility attribution needs an author-reviewed
   per-file assessment. Structural similarity alone does not establish lineage.
 - The author confirmed permission to share code, weights, logs and Harvard audio
-  on 2026-10-06. Specific licensing terms and third-party redistribution conditions
-  are not yet fully documented; the declaration is recorded in release-decisions.json.
+  on 2026-10-06. Team checkpoints and equivalent ONNX weights use MIT for team-owned content.
+  Generated Harvard WAVs use CC BY 4.0 for rights the team holds.
+  Piper retains its upstream MIT declaration. Harvard text terms and remaining upstream conditions still need documentation.
+  These decisions are recorded in release-decisions.json and artifact-licensing.json.
 - Existing ONNX/PTQ quality results are historical. They cannot be attached to
   the later Q05 FP32 graphs as if they were evaluated together.
 - The historical LJSpeech-500 sets differ between MRF and the other internal

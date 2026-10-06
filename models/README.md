@@ -33,8 +33,10 @@ templates remain under `configs/original/`. Runtime scales remain
 for functional validation. Historical INT8 graphs are excluded from the demo.
 
 The author confirmed sharing permission on 2026-10-06. Specific licenses, external
-storage and public URLs remain unconfirmed. The Piper card's dataset license is
-not a blanket weight license. All four existing Q05 graphs passed a short local
+storage and public URLs were unconfirmed at the handoff. Current license decisions
+are in [artifact licensing](../docs/artifact-licensing.md). Team-owned checkpoint contents
+and equivalent ONNX weights use MIT. Piper retains the upstream MIT declaration.
+The Piper card's dataset terms remain separate from its checkpoint license. All four existing Q05 graphs passed a short local
 functional synthesis check; these passes do not bind historical quality scores to
 the new runtime. Selected training checkpoints total 3.44 GB and include training
 state; no weights-only conversion was performed. See `docs/artifact-inventory.json`.

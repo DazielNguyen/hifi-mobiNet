@@ -13,7 +13,8 @@ files from the trusted handoff together; hashes detect corruption, not authentic
 Do not transfer the staging `private/` directory for publication. Original logs,
 host locators and training hparams remain there locally. Full checkpoint bytes can
 still contain training host paths/optimizer state; they were not deserialized or
-rewritten. Named license, weight host and public artifact URLs remain pending.
+rewritten. Current license decisions appear in [artifact licensing](artifact-licensing.md).
+Weight storage and public artifact URLs remain pending.
 
 ```sh
 cd "$HOME/Downloads/hifi-mobiNet-transfer"
