@@ -1,0 +1,530 @@
+{
+  "model": "baseline",
+  "started_utc": "2026-10-04T00:09:02.563469+00:00",
+  "argv": [
+    "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/scripts/run_q05_model.py",
+    "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z",
+    "baseline"
+  ],
+  "status": "passed",
+  "checkpoint": {
+    "original_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+    "snapshot_checkpoint": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+    "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2"
+  },
+  "source_manifest_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+  "runner_sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745",
+  "run_config_sha256": "e1e27d787834c9d68d668f1d071d6b608f37848ae7361da2e24c4b973575879d",
+  "engineering_inputs_sha256": "b5bd09687df72d4f4a97e8ef0f9e4317d4926f485bb673f98cad698a8f2f1b0c",
+  "environment": {
+    "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "torch": "2.13.0+cu130",
+    "numpy": "1.26.4",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.23.2",
+    "provider": "CPUExecutionProvider",
+    "threads": 2,
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "not_quality_or_edge_benchmark": true,
+  "thresholds": {
+    "nrmse_max": 0.001,
+    "max_abs_error_max": 0.005,
+    "same_shape_required": true,
+    "finite_required": true
+  },
+  "epoch": 1489,
+  "global_step": 1168160,
+  "generator_state_entries": 745,
+  "strict_load": true,
+  "generator_constructor": {
+    "segment_size": 32,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "resblock": "2",
+    "resblock_kernel_sizes": [
+      3,
+      5,
+      7
+    ],
+    "resblock_dilation_sizes": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "upsample_rates": [
+      8,
+      8,
+      4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+      16,
+      16,
+      8
+    ],
+    "posterior_encoder_kernel_size": 5,
+    "posterior_encoder_dilation_rate": 1,
+    "posterior_encoder_layers": 16,
+    "flow_kernel_size": 5,
+    "flow_dilation_rate": 1,
+    "flow_n_flows": 4,
+    "use_vocos": false,
+    "vocos_dim": 512,
+    "vocos_intermediate_dim": 1536,
+    "vocos_num_layers": 8,
+    "n_vocab": 256,
+    "spec_channels": 513,
+    "n_speakers": 1,
+    "gin_channels": 0,
+    "use_f0": false
+  },
+  "weight_norm_removal_check": {
+    "same_shape": true,
+    "finite": true,
+    "shape": [
+      1,
+      1,
+      31232
+    ],
+    "max_abs_error": 0.0,
+    "mean_abs_error": 0.0,
+    "rmse": 0.0,
+    "reference_rms": 0.05571968263353632,
+    "nrmse": 0.0,
+    "passed": true
+  },
+  "graph": {
+    "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_fp32.onnx",
+    "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+    "bytes": 68529068,
+    "opset": 18,
+    "nodes": 7572,
+    "initializers": 422,
+    "op_counts": {
+      "Constant": 3220,
+      "Gather": 249,
+      "Mul": 340,
+      "Transpose": 240,
+      "Shape": 383,
+      "Cast": 199,
+      "Range": 39,
+      "Unsqueeze": 521,
+      "Less": 7,
+      "Conv": 153,
+      "Concat": 323,
+      "Reshape": 315,
+      "Div": 49,
+      "MatMul": 42,
+      "Sub": 136,
+      "ConstantOfShape": 188,
+      "Slice": 299,
+      "Pad": 82,
+      "Add": 235,
+      "Equal": 62,
+      "Where": 79,
+      "Softmax": 16,
+      "LayerNormalization": 44,
+      "Relu": 10,
+      "Split": 9,
+      "Erf": 24,
+      "RandomNormalLike": 2,
+      "GreaterOrEqual": 9,
+      "LessOrEqual": 3,
+      "And": 5,
+      "Not": 3,
+      "Expand": 90,
+      "ScatterND": 30,
+      "NonZero": 21,
+      "GatherND": 15,
+      "CumSum": 7,
+      "Softplus": 3,
+      "ReduceSum": 4,
+      "GatherElements": 21,
+      "Clip": 9,
+      "Neg": 11,
+      "Pow": 3,
+      "Sqrt": 3,
+      "Abs": 3,
+      "Exp": 7,
+      "Ceil": 1,
+      "IsNaN": 1,
+      "IsInf": 2,
+      "Greater": 1,
+      "ReduceMax": 1,
+      "Squeeze": 1,
+      "Tanh": 17,
+      "Sigmoid": 16,
+      "LeakyRelu": 16,
+      "ConvTranspose": 3
+    },
+    "random_nodes": [
+      {
+        "name": "/dp/RandomNormalLike",
+        "op": "RandomNormalLike",
+        "output": [
+          "/dp/RandomNormalLike_output_0"
+        ]
+      },
+      {
+        "name": "/RandomNormalLike",
+        "op": "RandomNormalLike",
+        "output": [
+          "/RandomNormalLike_output_0"
+        ]
+      }
+    ]
+  },
+  "historical_named_weight_comparison": {
+    "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx",
+    "sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+    "exact_matches": 422,
+    "mismatches": 0,
+    "mismatch_names": [],
+    "limitation": "Named weights only; folded/renamed weights and graph semantics not exhaustively matched. No retrospective export-command or calibration provenance."
+  },
+  "validation_graph": {
+    "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_validation_external_noise.onnx",
+    "sha256": "b80fcc9ee73671b3634d7cb094e1bb708d80ac525e5580a0a877011f7dd9fe99",
+    "only_random_nodes_replaced": true,
+    "deployment_artifact": false
+  },
+  "parity_cases": [
+    {
+      "id": "LJ043-0004",
+      "seed": 1234,
+      "phoneme_lengths": [
+        43
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_00.npz",
+      "arrays_sha256": "5c14288d48be71bf38347365ad054c32a46b9302c396c949d79b99a94ea8fb79",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        31232
+      ],
+      "max_abs_error": 6.83218240737915e-06,
+      "mean_abs_error": 1.8508281747464115e-07,
+      "rmse": 4.894856916620672e-07,
+      "reference_rms": 0.05571968263353632,
+      "nrmse": 8.78478965649129e-06,
+      "passed": true
+    },
+    {
+      "id": "LJ017-0090",
+      "seed": 1234,
+      "phoneme_lengths": [
+        147
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_01.npz",
+      "arrays_sha256": "22474d6a0687e53786129044fcea6bac58a42c64296a0908896c8ce81ca432f2",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        79872
+      ],
+      "max_abs_error": 0.00016516074538230896,
+      "mean_abs_error": 5.012764293149531e-07,
+      "rmse": 3.2714832528946694e-06,
+      "reference_rms": 0.06403713062534895,
+      "nrmse": 5.1087286718616033e-05,
+      "passed": true
+    },
+    {
+      "id": "LJ038-0203",
+      "seed": 1234,
+      "phoneme_lengths": [
+        201
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_02.npz",
+      "arrays_sha256": "5cf58b0d901e44514452965eba8dfd5cffa7e3f2c6b9ead1b857f587eaa4f303",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        111872
+      ],
+      "max_abs_error": 2.4549663066864014e-05,
+      "mean_abs_error": 1.4024932583900997e-07,
+      "rmse": 4.392759010348837e-07,
+      "reference_rms": 0.05096259418971808,
+      "nrmse": 8.619574965112539e-06,
+      "passed": true
+    },
+    {
+      "id": "LJ006-0244",
+      "seed": 1234,
+      "phoneme_lengths": [
+        249
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_03.npz",
+      "arrays_sha256": "04b586babd029466844ee687ced623455aecab9dab4445394080868b2fcd9a8d",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        169216
+      ],
+      "max_abs_error": 0.00027317553758621216,
+      "mean_abs_error": 9.091295873036449e-07,
+      "rmse": 5.704155790438261e-06,
+      "reference_rms": 0.061798040114862604,
+      "nrmse": 9.230318275201086e-05,
+      "passed": true
+    },
+    {
+      "id": "LJ009-0229",
+      "seed": 1234,
+      "phoneme_lengths": [
+        277
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_04.npz",
+      "arrays_sha256": "27146e822df790fa9b4b20a2bfaeced2503ccf45a661034e19931119bad79a0c",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        186624
+      ],
+      "max_abs_error": 0.0001221299171447754,
+      "mean_abs_error": 6.03328448375329e-07,
+      "rmse": 3.0449264389522355e-06,
+      "reference_rms": 0.06281056580247507,
+      "nrmse": 4.847793360957512e-05,
+      "passed": true
+    },
+    {
+      "id": "LJ030-0082",
+      "seed": 1234,
+      "phoneme_lengths": [
+        359
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_05.npz",
+      "arrays_sha256": "1f821eccb47c6a8dc82c106516ebd58f8824ad205a1c10f42440266f29e9ef59",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        192000
+      ],
+      "max_abs_error": 2.0697712898254395e-05,
+      "mean_abs_error": 1.883217329838316e-07,
+      "rmse": 5.953603028649236e-07,
+      "reference_rms": 0.05675735462676287,
+      "nrmse": 1.0489571030574294e-05,
+      "passed": true
+    },
+    {
+      "id": "repeat_seed_LJ038-0203",
+      "seed": 1235,
+      "phoneme_lengths": [
+        201
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_06.npz",
+      "arrays_sha256": "1f158db38b6b4014db4d2a6470684842c6780b9e26f8e4b1c29fd2ead2ba193f",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        122112
+      ],
+      "max_abs_error": 2.2821128368377686e-05,
+      "mean_abs_error": 2.5811642609053527e-07,
+      "rmse": 8.397008833551287e-07,
+      "reference_rms": 0.054912947786717736,
+      "nrmse": 1.5291491664525692e-05,
+      "passed": true
+    },
+    {
+      "id": "length_0.8_LJ038-0203",
+      "seed": 1234,
+      "phoneme_lengths": [
+        201
+      ],
+      "scales": [
+        0.6669999957084656,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_07.npz",
+      "arrays_sha256": "5ccfe2d7520cf8e79312997e26efa67185fcebb69d8abfc1cd056b8732735741",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        96000
+      ],
+      "max_abs_error": 8.881092071533203e-06,
+      "mean_abs_error": 1.5935252151866307e-07,
+      "rmse": 4.15330923896919e-07,
+      "reference_rms": 0.05247956165106727,
+      "nrmse": 7.91414620911706e-06,
+      "passed": true
+    },
+    {
+      "id": "length_1.2_LJ038-0203",
+      "seed": 1234,
+      "phoneme_lengths": [
+        201
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.2000000476837158,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_08.npz",
+      "arrays_sha256": "1e04cf34b36de713d17cb2ab3f6121a2736213f8086113957912e1ad06885143",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        1,
+        1,
+        145664
+      ],
+      "max_abs_error": 1.65402889251709e-05,
+      "mean_abs_error": 1.8709650785150166e-07,
+      "rmse": 6.117235380992236e-07,
+      "reference_rms": 0.0584364379380008,
+      "nrmse": 1.0468186626095224e-05,
+      "passed": true
+    },
+    {
+      "id": "padded_batch_2",
+      "seed": 1234,
+      "phoneme_lengths": [
+        43,
+        147
+      ],
+      "scales": [
+        0.6669999957084656,
+        1.0,
+        0.800000011920929
+      ],
+      "arrays": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/parity_case_09.npz",
+      "arrays_sha256": "c9333c1e60caa5e032a68d17905718c310a8726c2a6e5c4c330c5646a73f7bca",
+      "same_shape": true,
+      "finite": true,
+      "shape": [
+        2,
+        1,
+        78336
+      ],
+      "max_abs_error": 5.240924656391144e-05,
+      "mean_abs_error": 2.2447495068164625e-07,
+      "rmse": 1.2038137276029326e-06,
+      "reference_rms": 0.0499956747606788,
+      "nrmse": 2.4078357445226892e-05,
+      "passed": true
+    }
+  ],
+  "native_random_smoke": [
+    {
+      "id": "LJ043-0004",
+      "shape": [
+        1,
+        1,
+        35584
+      ],
+      "finite": true,
+      "std": 0.051760464906692505,
+      "sample_rate": 22050,
+      "duration_seconds": 1.6137868480725623,
+      "wave_sha256": "40596ff00c9143a68853e6a1fc6d12a91773b1c5cf05f97e7db0571b9b35763f"
+    },
+    {
+      "id": "LJ006-0244",
+      "shape": [
+        1,
+        1,
+        177920
+      ],
+      "finite": true,
+      "std": 0.06229099631309509,
+      "sample_rate": 22050,
+      "duration_seconds": 8.068934240362811,
+      "wave_sha256": "a5283ed3512297ac7a0f41ca654f783d315f87220eb2d6a585455005aa838abf"
+    },
+    {
+      "id": "LJ030-0082",
+      "shape": [
+        1,
+        1,
+        230400
+      ],
+      "finite": true,
+      "std": 0.05395698919892311,
+      "sample_rate": 22050,
+      "duration_seconds": 10.448979591836734,
+      "wave_sha256": "578809a8d53665b406721a7d768fcf4a6ab8e60fae37af3bd5c031f3f9cd2963"
+    }
+  ],
+  "ort_rng_check": {
+    "seed": 1234,
+    "fresh_sessions_same_seed_equal": true,
+    "consecutive_calls_same_session_equal": false,
+    "scope": "This CPU runtime/provider and engineering input only; not a cross-framework noise equivalence claim."
+  },
+  "finished_utc": "2026-10-04T00:09:14.933554+00:00",
+  "generator_parameters_excluding_posterior": 17620784,
+  "metadata_note": "Parameter-count label corrected after run; count includes SDP training-only parameters. Not an inference-only parameter count."
+}

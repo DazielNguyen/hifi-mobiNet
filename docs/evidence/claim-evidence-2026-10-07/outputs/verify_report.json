@@ -1,0 +1,872 @@
+{
+ "options": {
+  "parity_dir": true,
+  "dataset_jsonl": true,
+  "graph_dir": true
+ },
+ "python": "3.10.20",
+ "checks_total": 85,
+ "checks_failed": [],
+ "sections": {
+  "package": {
+   "checks": [
+    {
+     "check": "every copied file matches destination_sha256 in source-manifest.json",
+     "passed": true,
+     "files": 29,
+     "mismatched": []
+    }
+   ]
+  },
+  "J-C001": {
+   "checks": [
+    {
+     "check": "baseline_checkpoint_vs_code_banhmitts_baseline_recipe: counts re-derived from the stored name inventories",
+     "passed": true
+    },
+    {
+     "check": "baseline_checkpoint_vs_code_edgetts_use_vits2: counts re-derived from the stored name inventories",
+     "passed": true
+    },
+    {
+     "check": "piper_checkpoint_vs_code_edgetts_config_a: counts re-derived from the stored name inventories",
+     "passed": true
+    },
+    {
+     "check": "baseline checkpoint names equal the relocated BanhmiTTS code names (876/876)",
+     "passed": true
+    }
+   ],
+   "comparisons": {
+    "baseline_checkpoint_vs_code_banhmitts_baseline_recipe": {
+     "left": 876,
+     "right": 876,
+     "common": 876,
+     "only_right": [],
+     "only_left": []
+    },
+    "baseline_checkpoint_vs_code_edgetts_use_vits2": {
+     "left": 876,
+     "right": 881,
+     "common": 876,
+     "only_right": [
+      "model_g.enc_q.enc._n_channels",
+      "model_g.flow.flows.0.enc._n_channels",
+      "model_g.flow.flows.2.enc._n_channels",
+      "model_g.flow.flows.4.enc._n_channels",
+      "model_g.flow.flows.6.enc._n_channels"
+     ],
+     "only_left": []
+    },
+    "piper_checkpoint_vs_code_edgetts_config_a": {
+     "left": 784,
+     "right": 789,
+     "common": 784,
+     "only_right": [
+      "model_g.enc_q.enc._n_channels",
+      "model_g.flow.flows.0.enc._n_channels",
+      "model_g.flow.flows.2.enc._n_channels",
+      "model_g.flow.flows.4.enc._n_channels",
+      "model_g.flow.flows.6.enc._n_channels"
+     ],
+     "only_left": []
+    }
+   },
+   "basis": "parameter and persistent-buffer NAMES only; shapes and values not compared"
+  },
+  "J-C011": {
+   "checks": [
+    {
+     "check": "baseline: graph metadata checkpoint_sha256 equals the report's checkpoint SHA-256",
+     "passed": true,
+     "metadata_checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+     "compared_with": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2"
+    },
+    {
+     "check": "baseline: inventory graph SHA-256 equals the report's graph SHA-256",
+     "passed": true,
+     "graph_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f"
+    },
+    {
+     "check": "baseline: report thresholds equal RUN_CONFIG thresholds",
+     "passed": true
+    },
+    {
+     "check": "baseline: RUN_CONFIG created before this model run started",
+     "passed": true,
+     "run_config_created_utc": "2026-10-04T00:08:30.547897+00:00",
+     "model_started_utc": "2026-10-04T00:09:02.563469+00:00"
+    },
+    {
+     "check": "baseline: all stored parity cases passed",
+     "passed": true,
+     "cases": 10
+    },
+    {
+     "check": "mrf: graph metadata checkpoint_sha256 equals the report's checkpoint SHA-256",
+     "passed": true,
+     "metadata_checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+     "compared_with": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466"
+    },
+    {
+     "check": "mrf: inventory graph SHA-256 equals the report's graph SHA-256",
+     "passed": true,
+     "graph_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7"
+    },
+    {
+     "check": "mrf: report thresholds equal RUN_CONFIG thresholds",
+     "passed": true
+    },
+    {
+     "check": "mrf: RUN_CONFIG created before this model run started",
+     "passed": true,
+     "run_config_created_utc": "2026-10-04T00:08:30.547897+00:00",
+     "model_started_utc": "2026-10-04T00:10:04.228388+00:00"
+    },
+    {
+     "check": "mrf: all stored parity cases passed",
+     "passed": true,
+     "cases": 10
+    },
+    {
+     "check": "seq: graph metadata checkpoint_sha256 equals the report's checkpoint SHA-256",
+     "passed": true,
+     "metadata_checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+     "compared_with": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385"
+    },
+    {
+     "check": "seq: inventory graph SHA-256 equals the report's graph SHA-256",
+     "passed": true,
+     "graph_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3"
+    },
+    {
+     "check": "seq: report thresholds equal RUN_CONFIG thresholds",
+     "passed": true
+    },
+    {
+     "check": "seq: RUN_CONFIG created before this model run started",
+     "passed": true,
+     "run_config_created_utc": "2026-10-04T00:08:30.547897+00:00",
+     "model_started_utc": "2026-10-04T00:10:19.736727+00:00"
+    },
+    {
+     "check": "seq: all stored parity cases passed",
+     "passed": true,
+     "cases": 10
+    },
+    {
+     "check": "piper: graph metadata checkpoint_sha256 equals the report's checkpoint SHA-256",
+     "passed": true,
+     "metadata_checkpoint_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+     "compared_with": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c"
+    },
+    {
+     "check": "piper: inventory graph SHA-256 equals the report's graph SHA-256",
+     "passed": true,
+     "graph_sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b"
+    },
+    {
+     "check": "piper: report thresholds equal RUN_CONFIG thresholds",
+     "passed": true
+    },
+    {
+     "check": "piper: RUN_CONFIG created before this model run started",
+     "passed": true,
+     "run_config_created_utc": "2026-10-04T00:08:30.547897+00:00",
+     "model_started_utc": "2026-10-04T00:10:33.923828+00:00"
+    },
+    {
+     "check": "piper: all stored parity cases passed",
+     "passed": true,
+     "cases": 10
+    }
+   ],
+   "per_model": {
+    "baseline": {
+     "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+     "epoch_zero_based": 1489,
+     "fp32_graph_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "validation_graph_sha256": "b80fcc9ee73671b3634d7cb094e1bb708d80ac525e5580a0a877011f7dd9fe99",
+     "cases": 10,
+     "max_nrmse_stored": 9.230318275201086e-05,
+     "mean_nrmse_stored": 2.77514520677345e-05,
+     "max_abs_error_stored": 0.00027317553758621216,
+     "historical_graph_named_weights": {
+      "graph_sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+      "exact": 422,
+      "mismatch": 0
+     }
+    },
+    "mrf": {
+     "checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+     "epoch_zero_based": 1386,
+     "fp32_graph_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "validation_graph_sha256": "f7da48be447b31e21b6fdac2135b1cfc661d906313605a8047a9be0cb2cec0ff",
+     "cases": 10,
+     "max_nrmse_stored": 0.00011396346906796278,
+     "mean_nrmse_stored": 2.224054630068656e-05,
+     "max_abs_error_stored": 0.0005581676959991455,
+     "historical_graph_named_weights": {
+      "graph_sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+      "exact": 0,
+      "mismatch": 478
+     }
+    },
+    "seq": {
+     "checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+     "epoch_zero_based": 1442,
+     "fp32_graph_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "validation_graph_sha256": "9a4cd9987feb5e80043da65289ebfa21fa40ca46e2e9a9f0228f2d09a9c340ed",
+     "cases": 10,
+     "max_nrmse_stored": 4.413525440295965e-05,
+     "mean_nrmse_stored": 1.7754543594736444e-05,
+     "max_abs_error_stored": 0.00014218129217624664,
+     "historical_graph_named_weights": {
+      "graph_sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+      "exact": 454,
+      "mismatch": 0
+     }
+    },
+    "piper": {
+     "checkpoint_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+     "epoch_zero_based": 999,
+     "fp32_graph_sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+     "validation_graph_sha256": "59f4cf7b410dabf096902868c5cde2a27e326bd08c6bf909f465d36d53918a2c",
+     "cases": 10,
+     "max_nrmse_stored": 7.05622492201068e-05,
+     "mean_nrmse_stored": 3.337920321163811e-05,
+     "max_abs_error_stored": 0.00013436377048492432,
+     "historical_graph_named_weights": null
+    }
+   },
+   "formula": "err = pytorch - onnx; nrmse = sqrt(mean(err^2)) / max(sqrt(mean(pytorch^2)), 1e-12); pass = same shape AND finite AND nrmse <= 0.001 AND max|err| <= 0.005; aggregate = all 10 cases pass (max reported)"
+  },
+  "J-C011 parity": {
+   "checks": [
+    {
+     "check": "baseline case 00: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 8.78478965649129e-06,
+     "max_abs_error": 6.83218240737915e-06
+    },
+    {
+     "check": "baseline case 01: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 5.1087286718616033e-05,
+     "max_abs_error": 0.00016516074538230896
+    },
+    {
+     "check": "baseline case 02: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 8.619574965112539e-06,
+     "max_abs_error": 2.4549663066864014e-05
+    },
+    {
+     "check": "baseline case 03: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 9.230318275201086e-05,
+     "max_abs_error": 0.00027317553758621216
+    },
+    {
+     "check": "baseline case 04: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 4.847793360957512e-05,
+     "max_abs_error": 0.0001221299171447754
+    },
+    {
+     "check": "baseline case 05: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.0489571030574294e-05,
+     "max_abs_error": 2.0697712898254395e-05
+    },
+    {
+     "check": "baseline case 06: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.5291491664525692e-05,
+     "max_abs_error": 2.2821128368377686e-05
+    },
+    {
+     "check": "baseline case 07: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 7.91414620911706e-06,
+     "max_abs_error": 8.881092071533203e-06
+    },
+    {
+     "check": "baseline case 08: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.0468186626095224e-05,
+     "max_abs_error": 1.65402889251709e-05
+    },
+    {
+     "check": "baseline case 09: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 2.4078357445226892e-05,
+     "max_abs_error": 5.240924656391144e-05
+    },
+    {
+     "check": "mrf case 00: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 3.8029177131193074e-06,
+     "max_abs_error": 2.7418136596679688e-06
+    },
+    {
+     "check": "mrf case 01: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.7939329663861116e-05,
+     "max_abs_error": 2.0032748579978943e-05
+    },
+    {
+     "check": "mrf case 02: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.1433078681284955e-05,
+     "max_abs_error": 1.897476613521576e-05
+    },
+    {
+     "check": "mrf case 03: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.4083800224524732e-05,
+     "max_abs_error": 4.64320182800293e-05
+    },
+    {
+     "check": "mrf case 04: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 0.00011396346906796278,
+     "max_abs_error": 0.0005581676959991455
+    },
+    {
+     "check": "mrf case 05: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.3276059481201121e-05,
+     "max_abs_error": 5.283951759338379e-05
+    },
+    {
+     "check": "mrf case 06: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.1684881985716029e-05,
+     "max_abs_error": 1.8790364265441895e-05
+    },
+    {
+     "check": "mrf case 07: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.3390940458432129e-05,
+     "max_abs_error": 3.541633486747742e-05
+    },
+    {
+     "check": "mrf case 08: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.812955992363191e-05,
+     "max_abs_error": 2.7127563953399658e-05
+    },
+    {
+     "check": "mrf case 09: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 4.701425807131522e-06,
+     "max_abs_error": 5.707144737243652e-06
+    },
+    {
+     "check": "seq case 00: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 7.243445553088964e-06,
+     "max_abs_error": 5.684792995452881e-06
+    },
+    {
+     "check": "seq case 01: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.2831782509999387e-05,
+     "max_abs_error": 1.68532133102417e-05
+    },
+    {
+     "check": "seq case 02: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.912948565067121e-05,
+     "max_abs_error": 3.596395254135132e-05
+    },
+    {
+     "check": "seq case 03: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.7182927072954143e-05,
+     "max_abs_error": 4.991039168089628e-05
+    },
+    {
+     "check": "seq case 04: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 7.2256549461499095e-06,
+     "max_abs_error": 1.274794340133667e-05
+    },
+    {
+     "check": "seq case 05: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 3.330059779261589e-05,
+     "max_abs_error": 0.00014218129217624664
+    },
+    {
+     "check": "seq case 06: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 9.734089518685947e-06,
+     "max_abs_error": 2.3179687559604645e-05
+    },
+    {
+     "check": "seq case 07: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.0318103530379387e-05,
+     "max_abs_error": 2.0645558834075928e-05
+    },
+    {
+     "check": "seq case 08: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 4.413525440295965e-05,
+     "max_abs_error": 9.483471512794495e-05
+    },
+    {
+     "check": "seq case 09: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.6444094969859952e-05,
+     "max_abs_error": 3.177672624588013e-05
+    },
+    {
+     "check": "piper case 00: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 3.952751601476541e-05,
+     "max_abs_error": 6.023421883583069e-05
+    },
+    {
+     "check": "piper case 01: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 7.05622492201068e-05,
+     "max_abs_error": 0.00013436377048492432
+    },
+    {
+     "check": "piper case 02: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 3.247444394474855e-05,
+     "max_abs_error": 6.191432476043701e-05
+    },
+    {
+     "check": "piper case 03: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.9008210634687936e-05,
+     "max_abs_error": 3.4771859645843506e-05
+    },
+    {
+     "check": "piper case 04: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 3.0093073300927754e-05,
+     "max_abs_error": 7.82310962677002e-05
+    },
+    {
+     "check": "piper case 05: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.0509951801026778e-05,
+     "max_abs_error": 1.8425285816192627e-05
+    },
+    {
+     "check": "piper case 06: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 6.653642791502251e-05,
+     "max_abs_error": 0.0001079365611076355
+    },
+    {
+     "check": "piper case 07: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 2.769672873306053e-05,
+     "max_abs_error": 2.9571354389190674e-05
+    },
+    {
+     "check": "piper case 08: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 2.019572949603339e-05,
+     "max_abs_error": 2.802908420562744e-05
+    },
+    {
+     "check": "piper case 09: npz hash, recomputed NRMSE and max|err| match the report and thresholds",
+     "passed": true,
+     "nrmse": 1.7187701056001455e-05,
+     "max_abs_error": 2.0641833543777466e-05
+    }
+   ],
+   "per_model": {
+    "baseline": {
+     "cases": 10,
+     "max_nrmse_recomputed": 9.230318275201086e-05
+    },
+    "mrf": {
+     "cases": 10,
+     "max_nrmse_recomputed": 0.00011396346906796278
+    },
+    "seq": {
+     "cases": 10,
+     "max_nrmse_recomputed": 4.413525440295965e-05
+    },
+    "piper": {
+     "cases": 10,
+     "max_nrmse_recomputed": 7.05622492201068e-05
+    }
+   }
+  },
+  "J-C023": {
+   "checks": [
+    {
+     "check": "SEQ FP32 faster than baseline FP32 on 495/500 paired sentences",
+     "passed": true
+    },
+    {
+     "check": "SEQ INT8 faster than baseline INT8 on 498/500 paired sentences",
+     "passed": true
+    },
+    {
+     "check": "SEQ vs MRF historical runs share only 21 sentences",
+     "passed": true
+    }
+   ],
+   "comparisons": {
+    "eval_seq_final_fp32_onnx_results.json vs eval_baseline_fp32_onnx_500_results.json": {
+     "paired_sentences": 500,
+     "left_faster": 495,
+     "median_rtf_ratio": 0.889857767960794,
+     "left_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+     "right_sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105"
+    },
+    "eval_seq_final_int8_onnx_results.json vs eval_baseline_ptq_onnx_500_results.json": {
+     "paired_sentences": 500,
+     "left_faster": 498,
+     "median_rtf_ratio": 0.8382592706872578,
+     "left_sha256": "e9324326aad741ac7f2b3269e0982ef6c000111604694ca896480aa59e0e29f5",
+     "right_sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f"
+    },
+    "eval_seq_final_fp32_onnx_results.json vs eval_mrf_fp32_onnx_500_results.json": {
+     "paired_sentences": 21,
+     "left_faster": 21,
+     "median_rtf_ratio": 0.8206795235585391,
+     "left_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+     "right_sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292"
+    }
+   },
+   "int8_to_fp32_decoder_initializer_match": {
+    "baseline_flow_enc_p_dp.onnx <- ptq_sweep/baseline_fp32.onnx": {
+     "int8_sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+     "fp32_sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+     "decoder_initializers": 45,
+     "byte_identical_in_fp32_graph": 45
+    },
+    "mrf_flow_enc_p_dp.onnx <- ptq_sweep/mrf_fp32.onnx": {
+     "int8_sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+     "fp32_sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+     "decoder_initializers": 101,
+     "byte_identical_in_fp32_graph": 101
+    },
+    "seq_final_int8.onnx <- seq_final_onnx/seq_final_fp32.onnx": {
+     "int8_sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+     "fp32_sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+     "decoder_initializers": 77,
+     "byte_identical_in_fp32_graph": 77
+    }
+   }
+  },
+  "J-C019": {
+   "checks": [
+    {
+     "check": "WER SEQ-MRF bootstrap CI is [+0.0019, +0.0277] (fraction scale)",
+     "passed": true
+    }
+   ],
+   "values": {
+    "source": "results/prior_audit/harvard_stats_recomputed.json",
+    "source_sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+    "wer": {
+     "scale": "fraction of words, macro mean over 720 utterances",
+     "direction": "SEQ minus MRF (positive = SEQ worse)",
+     "mean_diff": 0.014884108946608946,
+     "ci95": [
+      0.0018842342071508742,
+      0.02768379479316979
+     ],
+     "ci95_percentage_points": [
+      0.18842342071508741,
+      2.7683794793169794
+     ],
+     "wilcoxon_p": 0.05233335068920692,
+     "holm_p": 0.09429160298369935
+    },
+    "utmosv2": {
+     "direction": "SEQ minus MRF",
+     "mean_diff": -0.023726058337423535,
+     "ci95": [
+      -0.04583776266210609,
+      -0.000985595815711556
+     ],
+     "wilcoxon_p": 0.04714580149184967
+    },
+    "interpretation_limit": "a CI that excludes 0 is not an equivalence test; no equivalence margin was declared"
+   }
+  },
+  "J-C010": {
+   "checks": [
+    {
+     "check": "candidate (designed, unused) calibration set is 60/60 canonical train",
+     "passed": true
+    },
+    {
+     "check": "historical (reconstructed) calibration set is 57 train + 3 test",
+     "passed": true
+    }
+   ],
+   "historical_test_items": [
+    "He assassinated the President, shot Officer Tippit, resisted arrest and tried to kill another policeman in the process.",
+    "the Director and Deputy Director for Plans of the CIA testified concerning that Agency's limited knowledge of Oswald before the assassination.",
+    "there were two flat lightweight curtain rods belonging to Ruth Paine but they were still there on Friday afternoon after Oswald's arrest."
+   ]
+  },
+  "J-C010 dataset": {
+   "checks": [
+    {
+     "check": "dataset.jsonl SHA-256 equals the recorded calibration source",
+     "passed": true
+    },
+    {
+     "check": "re-sampled 60 rows equal the reconstructed historical calibration ids",
+     "passed": true
+    }
+   ]
+  },
+  "J-C026": {
+   "checks": [
+    {
+     "check": "project Piper checkpoint SHA-256 equals the published LFS oid",
+     "passed": true,
+     "sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c"
+    },
+    {
+     "check": "stored MODEL_CARD git blob SHA-1 equals the published blob oid",
+     "passed": true,
+     "blob": "324d7470296a501e3c6396310f9b218fdbd7ed1e"
+    },
+    {
+     "check": "MODEL_CARD states training from scratch on LJ Speech",
+     "passed": true
+    },
+    {
+     "check": "shared phoneme symbols have identical ids; no Harvard item uses an id outside Piper's map",
+     "passed": true,
+     "piper_symbols": 157,
+     "project_symbols": 159
+    },
+    {
+     "check": "recomputed text/phoneme overlap equals the stored record",
+     "passed": true,
+     "compared": [
+      "n_harvard",
+      "exact_sentence_overlap_alnum_lower",
+      "exact_sentence_overlap_wer_normalization",
+      "harvard_sentences_sharing_any_4gram",
+      "harvard_sentences_sharing_any_5gram",
+      "harvard_sentences_sharing_any_6gram",
+      "exact_phoneme_id_sequence_overlap"
+     ]
+    }
+   ],
+   "text_overlap": {
+    "n_ljspeech": 13100,
+    "n_harvard": 720,
+    "exact_sentence_overlap_alnum_lower": 0,
+    "exact_sentence_overlap_wer_normalization": 0,
+    "harvard_sentences_sharing_any_4gram": 37,
+    "harvard_sentences_sharing_any_5gram": 7,
+    "harvard_sentences_sharing_any_6gram": 0,
+    "exact_phoneme_id_sequence_overlap": 0
+   }
+  },
+  "graphs": {
+   "checks": [],
+   "matched_by_sha256": [
+    "/tmp/seq_final_onnx/seq_final_fp32.onnx",
+    "/tmp/seq_final_onnx/seq_final_int8.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_fp32.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_validation_external_noise.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/mrf/mrf_fp32.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/mrf/mrf_validation_external_noise.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/piper/piper_fp32.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/piper/piper_validation_external_noise.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/seq/seq_fp32.onnx",
+    "wsl-project:paper_evidence/q05_2026-10-04T000830Z/seq/seq_validation_external_noise.onnx",
+    "wsl-project:quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx",
+    "wsl-project:quantized_models/ptq_sweep/baseline_fp32.onnx",
+    "wsl-project:quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx",
+    "wsl-project:quantized_models/ptq_sweep/mrf_fp32.onnx"
+   ]
+  },
+  "J-C025": {
+   "checks": [
+    {
+     "check": "baseline: flow initializer elements (weight_g removed) equal 8285568",
+     "passed": true
+    },
+    {
+     "check": "mrf: flow initializer elements (weight_g removed) equal 8285568",
+     "passed": true
+    },
+    {
+     "check": "seq: flow initializer elements (weight_g removed) equal 8285568",
+     "passed": true
+    },
+    {
+     "check": "piper: flow initializer elements (weight_g removed) equal 7090560",
+     "passed": true
+    }
+   ],
+   "flow_in_q05_graphs": {
+    "baseline": {
+     "graph_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "mrf": {
+     "graph_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "seq": {
+     "graph_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "piper": {
+     "graph_sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+     "flow_initializer_elements": 7102080,
+     "flow_bias_elements": 12672,
+     "flow_weight_g_elements": 11520,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 176,
+     "flow_ops": {
+      "Conv": 40,
+      "MatMul": 0,
+      "Softmax": 0,
+      "LayerNormalization": 0
+     }
+    }
+   }
+  },
+  "J-C024": {
+   "checks": [
+    {
+     "check": "baseline_flow_enc_p_dp.onnx: 133 QLinearConv, all INT8 per-channel weights, UINT8 activations, none under /dec/",
+     "passed": true
+    },
+    {
+     "check": "mrf_flow_enc_p_dp.onnx: 133 QLinearConv, all INT8 per-channel weights, UINT8 activations, none under /dec/",
+     "passed": true
+    },
+    {
+     "check": "seq_final_int8.onnx: 133 QLinearConv, all INT8 per-channel weights, UINT8 activations, none under /dec/",
+     "passed": true
+    }
+   ],
+   "int8_graphs": {
+    "baseline_flow_enc_p_dp.onnx": {
+     "graph_sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+     "qlinear_ops": {
+      "QLinearConv": 133
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    },
+    "mrf_flow_enc_p_dp.onnx": {
+     "graph_sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+     "qlinear_ops": {
+      "QLinearConv": 133
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    },
+    "seq_final_int8.onnx": {
+     "graph_sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+     "qlinear_ops": {
+      "QLinearConv": 133,
+      "QLinearMatMul": 40
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37,
+       "QLinearMatMul": 24
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64,
+       "QLinearMatMul": 16
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    }
+   }
+  }
+ }
+}

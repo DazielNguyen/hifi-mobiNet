@@ -1,0 +1,39 @@
+{
+ "method": "parameter/buffer names read statically from each checkpoint's data.pkl (pickletools.genops, no unpickling) and compared with state_dict names of models constructed from code (random init)",
+ "baseline_ckpt_vs_current_banhmitts_code": {
+  "n_left": 876,
+  "n_right": 876,
+  "only_left": [],
+  "only_right": []
+ },
+ "baseline_ckpt_vs_edgetts_use_vits2": {
+  "n_left": 876,
+  "n_right": 881,
+  "only_left": [],
+  "only_right": [
+   "model_g.enc_q.enc._n_channels",
+   "model_g.flow.flows.0.enc._n_channels",
+   "model_g.flow.flows.2.enc._n_channels",
+   "model_g.flow.flows.4.enc._n_channels",
+   "model_g.flow.flows.6.enc._n_channels"
+  ]
+ },
+ "piper_ckpt_vs_edgetts_config_a_piper_base": {
+  "n_left": 784,
+  "n_right": 789,
+  "only_left": [],
+  "only_right": [
+   "model_g.enc_q.enc._n_channels",
+   "model_g.flow.flows.0.enc._n_channels",
+   "model_g.flow.flows.2.enc._n_channels",
+   "model_g.flow.flows.4.enc._n_channels",
+   "model_g.flow.flows.6.enc._n_channels"
+  ]
+ },
+ "baseline_ckpt_vits2_markers": {
+  "flow_attention_keys": 72,
+  "duration_discriminator_keys": 20,
+  "posterior_encoder_present": true
+ },
+ "limits": "Name-level structural equality, not byte identity of the executed source files."
+}

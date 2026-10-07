@@ -1,0 +1,135 @@
+{
+ "flow_in_q05_fp32_graphs": {
+  "baseline": {
+   "flow_params_in_graph": 8285568,
+   "flow_weight_g_elements": 0,
+   "flow_ops": {
+    "Conv": 64,
+    "Softmax": 4,
+    "MatMul": 16,
+    "LayerNormalization": 8
+   }
+  },
+  "mrf": {
+   "flow_params_in_graph": 8285568,
+   "flow_weight_g_elements": 0,
+   "flow_ops": {
+    "Conv": 64,
+    "Softmax": 4,
+    "MatMul": 16,
+    "LayerNormalization": 8
+   }
+  },
+  "seq": {
+   "flow_params_in_graph": 8285568,
+   "flow_weight_g_elements": 0,
+   "flow_ops": {
+    "Conv": 64,
+    "Softmax": 4,
+    "MatMul": 16,
+    "LayerNormalization": 8
+   }
+  },
+  "piper": {
+   "flow_params_in_graph": 7102080,
+   "flow_weight_g_elements": 11520,
+   "flow_ops": {
+    "Conv": 40,
+    "Softmax": 0,
+    "MatMul": 0,
+    "LayerNormalization": 0
+   }
+  }
+ },
+ "flow_counts_reference": {
+  "internal_models_counted_from_code": 8285568,
+  "piper_counted_weight_norm_folded": 7090560
+ },
+ "historical_int8_graphs": {
+  "baseline_ckpt1489": {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx",
+   "sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+   "producer": "onnx.quantize",
+   "qlinear_ops": {
+    "QLinearConv": 133
+   },
+   "qlinearconv_per_channel_weight_scales": 133,
+   "qlinearconv_weight_dtypes": {
+    "INT8": 133
+   },
+   "qlinearconv_activation_zero_point_dtypes": {
+    "UINT8": 133
+   },
+   "by_prefix": {
+    "enc_p": {
+     "QLinearConv": 37
+    },
+    "dp": {
+     "QLinearConv": 32
+    },
+    "flow": {
+     "QLinearConv": 64
+    }
+   },
+   "quantized_ops_under_dec": 0
+  },
+  "seq_ckpt1442": {
+   "path": "/tmp/seq_final_onnx/seq_final_int8.onnx",
+   "sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+   "producer": "onnx.quantize",
+   "qlinear_ops": {
+    "QLinearConv": 133,
+    "QLinearMatMul": 40
+   },
+   "qlinearconv_per_channel_weight_scales": 133,
+   "qlinearconv_weight_dtypes": {
+    "INT8": 133
+   },
+   "qlinearconv_activation_zero_point_dtypes": {
+    "UINT8": 133
+   },
+   "by_prefix": {
+    "enc_p": {
+     "QLinearConv": 37,
+     "QLinearMatMul": 24
+    },
+    "dp": {
+     "QLinearConv": 32
+    },
+    "flow": {
+     "QLinearConv": 64,
+     "QLinearMatMul": 16
+    }
+   },
+   "quantized_ops_under_dec": 0
+  },
+  "mrf_source_unidentified": {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx",
+   "sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+   "producer": "onnx.quantize",
+   "qlinear_ops": {
+    "QLinearConv": 133
+   },
+   "qlinearconv_per_channel_weight_scales": 133,
+   "qlinearconv_weight_dtypes": {
+    "INT8": 133
+   },
+   "qlinearconv_activation_zero_point_dtypes": {
+    "UINT8": 133
+   },
+   "by_prefix": {
+    "enc_p": {
+     "QLinearConv": 37
+    },
+    "dp": {
+     "QLinearConv": 32
+    },
+    "flow": {
+     "QLinearConv": 64
+    }
+   },
+   "quantized_ops_under_dec": 0
+  }
+ },
+ "note": "Piper's exported graph keeps weight_g/weight_v; flow_params_in_graph minus flow_weight_g_elements equals the folded count."
+}

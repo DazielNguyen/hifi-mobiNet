@@ -1,0 +1,295 @@
+{
+  "protocol_id": "q04-v0.2",
+  "created_utc": "2026-10-03T23:39:43.176207+00:00",
+  "status": "candidate_design_with_common_training_calibration_and_model_specific_validation",
+  "ready_for_final_evaluation": false,
+  "new_model_experiments_executed": false,
+  "user_reporting_decision": "Report both LJSpeech-500 and Harvard-720 as separate result blocks.",
+  "harvard_historical_selection_use": "unconfirmed",
+  "historical_result_policy": "Retain original scores, dataset identity, runtime and historical/exploratory limitations; do not relabel as this protocol.",
+  "evidence": [
+    {
+      "path": "../q04_2026-10-04/Q04_DATA_AUDIT.json",
+      "sha256": "ac1de6b4c82b8db2c780a48ef63a8701034024880c7cba0a2d1751bd1979d96b",
+      "bytes": 70696
+    },
+    {
+      "path": "../q04_2026-10-04/CURRENT_SCORER_IDENTITY.json",
+      "sha256": "a85f76b8b2615bc6a7a0de2f1c033dedb87f2ab7f6c4babd5c37c75bed52ac9f",
+      "bytes": 28842
+    },
+    {
+      "path": "../q04_2026-10-04/RESULT_DATASET_MAP.csv",
+      "sha256": "7f7e15e01dbededf650ddfa9804e74a620053fb88a2cba23d8a0df204806e5a8",
+      "bytes": 5584
+    },
+    {
+      "path": "CANDIDATE_AUDIT_v0.2.json",
+      "sha256": "84164f8152f47d49394b3a9764867fbb5b1c50ca9e71d057372725ecdfdad595"
+    }
+  ],
+  "inputs": {
+    "lj500_baseline": {
+      "path": "../q04_2026-10-04/manifests/lj500_baseline.frozen.jsonl",
+      "sha256": "8d153af271e8ec3f724f307242e63627f85f908263cd3df8cfc20499dea62e5e",
+      "bytes": 701769,
+      "n": 500,
+      "role": "observed_historical_evaluation",
+      "held_out_for_all_models": false
+    },
+    "lj500_mrf": {
+      "path": "../q04_2026-10-04/manifests/lj500_mrf.frozen.jsonl",
+      "sha256": "43e154ef6bc97ea62945eb8059b57a3521684e582bd7cb65981dcb491111dd35",
+      "bytes": 690205,
+      "n": 500,
+      "role": "observed_historical_evaluation",
+      "held_out_for_all_models": false
+    },
+    "harvard720": {
+      "path": "../q04_2026-10-04/manifests/harvard720.frozen.jsonl",
+      "sha256": "a27019c91ea7cabd8f215a50d390eba9aaa1796c540da85c941434ecb33cfab1",
+      "bytes": 464920,
+      "n": 720,
+      "role": "shared_external_evaluation_already_observed",
+      "independent_of_selection_verified": false
+    },
+    "calibration": {
+      "path": "manifests/calibration60.common_train.candidate.jsonl",
+      "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53",
+      "bytes": 83876,
+      "n": 60,
+      "role": "candidate_common_train_for_three_BanhmiTTS_models",
+      "historical_training_membership_verified": false
+    },
+    "ptq_selection_by_model": {
+      "baseline": {
+        "path": "manifests/ptq_selection.canonical.candidate.jsonl",
+        "sha256": "25108c823551717b68444d3c3e6a05a2ab578daa1ca82782a10dedbf14d2254f",
+        "bytes": 141648,
+        "n": 98,
+        "role": "candidate_model_validation"
+      },
+      "seq": {
+        "path": "manifests/ptq_selection.canonical.candidate.jsonl",
+        "sha256": "25108c823551717b68444d3c3e6a05a2ab578daa1ca82782a10dedbf14d2254f",
+        "bytes": 141648,
+        "n": 98,
+        "role": "candidate_model_validation"
+      },
+      "mrf": {
+        "path": "manifests/ptq_selection.mrf_reconstructed.candidate.jsonl",
+        "sha256": "badc31c7af5b2951c60ac226d552fa0e3c89c70fdd37f4bb2f3586fb1c94d72f",
+        "bytes": 132798,
+        "n": 94,
+        "role": "candidate_reconstructed_model_validation"
+      }
+    }
+  },
+  "content_checks": {
+    "normalizer": [
+      "ToLowerCase",
+      "RemovePunctuation",
+      "RemoveMultipleSpaces",
+      "Strip",
+      "ReduceToListOfListOfWords"
+    ],
+    "keys": [
+      "utterance_id",
+      "normalized_text",
+      "phoneme_ids"
+    ],
+    "not_checked": [
+      "audio_fingerprint",
+      "near_duplicate_semantics",
+      "all_historical_training_corpora"
+    ]
+  },
+  "audio": {
+    "sample_rate": 22050,
+    "channels": 1,
+    "format": "WAV_PCM16",
+    "conversion": "clip(x * 32767 / max(max(abs(x)), 0.01), -32767, 32767).astype(int16)",
+    "common_persisted_source_for_scorers": true,
+    "external_silence_trimming": false,
+    "record_before_conversion": [
+      "num_samples",
+      "peak",
+      "rms",
+      "finite",
+      "shape"
+    ]
+  },
+  "synthesis": {
+    "batch_size": 1,
+    "scales": [
+      0.667,
+      1.0,
+      0.8
+    ],
+    "run_seeds": [
+      1234,
+      1235,
+      1236
+    ],
+    "seed_formula": "int.from_bytes(sha256(UTF8(\"q04-v0.2|<purpose>|<utterance_id>|<run_seed>\")).digest()[:4], \"big\")",
+    "purposes": [
+      "synthesis",
+      "asr",
+      "utmos-crop-0",
+      "utmos-crop-1",
+      "utmos-crop-2"
+    ],
+    "reset_rng_per_item": [
+      "python",
+      "numpy",
+      "torch"
+    ],
+    "onnx_rng_policy": "Unresolved until graph/runtime repeatability check; identical seeds do not prove paired noise.",
+    "repeatability_verified": false
+  },
+  "asr": {
+    "model": "small",
+    "device": "cpu",
+    "input": "persisted WAV path; loader resamples to 16000 Hz",
+    "weight": {
+      "source": "<WSL_USER_HOME>/.cache/whisper/small.pt",
+      "bytes": 483617219,
+      "sha256": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794",
+      "mtime_utc": "2026-08-20T04:32:44.555330+00:00",
+      "scope": "Observed current file only; not a historical scoring-time hash. Weights not copied or loaded."
+    },
+    "transcribe_kwargs": {
+      "language": "en",
+      "task": "transcribe",
+      "fp16": false,
+      "temperature": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "compression_ratio_threshold": 2.4,
+      "logprob_threshold": -1.0,
+      "no_speech_threshold": 0.6,
+      "condition_on_previous_text": true,
+      "initial_prompt": null,
+      "carry_initial_prompt": false,
+      "word_timestamps": false,
+      "beam_size": null,
+      "best_of": null
+    },
+    "remaining_defaults": "Bound to snapshotted Whisper source; record resolved options at execution."
+  },
+  "utmosv2": {
+    "config": "fusion_stage3",
+    "fold": 0,
+    "checkpoint_seed": 42,
+    "weight": {
+      "source": "<WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth",
+      "bytes": 818531314,
+      "sha256": "c8149d988e4bbf3f347e6966b5d769de347a5f8c59ffca1dc4bd4bf5b8585e57",
+      "mtime_utc": "2026-06-21T20:22:24.422153+00:00",
+      "scope": "Observed current file only; not a historical scoring-time hash. Weights not copied or loaded."
+    },
+    "input": "SoundFile float32 read from same persisted WAV; data=wave,sr=22050",
+    "predict_kwargs": {
+      "sr": 22050,
+      "device": "cpu",
+      "predict_dataset": "sarulab",
+      "num_workers": 0,
+      "batch_size": 1,
+      "num_repetitions": 1,
+      "remove_silent_section": false
+    },
+    "dataset_config_silence_flag_must_be_false": true,
+    "outer_crop_repetitions": 3,
+    "aggregation": "mean crops within WAV, then synthesis repetitions within utterance, then utterances"
+  },
+  "scorer_identity_observed_now": {
+    "path": "../q04_2026-10-04/CURRENT_SCORER_IDENTITY.json",
+    "sha256": "a85f76b8b2615bc6a7a0de2f1c033dedb87f2ab7f6c4babd5c37c75bed52ac9f",
+    "bytes": 28842
+  },
+  "metrics": {
+    "primary_wer": "macro utterance WER; average repeats within utterance before averaging utterances",
+    "secondary_wer": "corpus WER from explicit S/D/I/H counts; preserve per-repeat totals",
+    "wer_upper_clipping": false,
+    "utmos_label": "predicted UTMOSv2, not human MOS",
+    "rtf": "latency of each inference / duration of its corresponding output",
+    "separate_datasets": true,
+    "paired_unit": "utterance ID with verified identical reference",
+    "training_seed_variability_established": false
+  },
+  "failure_policy": {
+    "statuses": [
+      "success",
+      "inference_error",
+      "invalid_audio",
+      "scorer_error"
+    ],
+    "numeric_wer_sentinel_on_failure": null,
+    "report_counts": [
+      "expected",
+      "success",
+      "failed"
+    ],
+    "no_best_of_audio_regeneration": true,
+    "scorer_retry": "Same WAV and seed; log reason and attempts."
+  },
+  "ptq_selection": {
+    "quality_thresholds": null,
+    "selection_rule": null,
+    "policy": "Declare thresholds and tie-breaks on development data before selection; test sets cannot choose scopes.",
+    "development_scheme": "Per-model validation, not a shared development set. Candidate design, not yet executed.",
+    "same_selection_rule_for_all_models": true,
+    "shared_held_out_development_set_established": false
+  },
+  "benchmark_handoff_Q07": {
+    "devices": [
+      "Intel N150",
+      "Raspberry Pi 5"
+    ],
+    "batch_size": 1,
+    "intra_op_threads": 2,
+    "inter_op_threads": 1,
+    "warmup_runs": 5,
+    "timing_repetitions": 3,
+    "timer": "model inference only; pipeline timer reported separately",
+    "scoring_inside_timed_process": false,
+    "device_execution_verified": false
+  },
+  "unresolved_gates": [
+    {
+      "id": "data_provenance",
+      "closed": false,
+      "detail": "Candidates pass membership/content checks against canonical and corroborated MRF reconstruction. Historical completeness remains limited; per-model validation scheme must be disclosed, not called shared validation. Piper split remains unavailable."
+    },
+    {
+      "id": "harvard_selection_history",
+      "closed": false,
+      "detail": "Whether prior Harvard scores influenced checkpoint/decoder/PTQ/inference choices is unconfirmed."
+    },
+    {
+      "id": "ptq_acceptance_rule",
+      "closed": false,
+      "detail": "Numerical thresholds and selection rule require declaration before validation selection (Q06)."
+    },
+    {
+      "id": "artifact_lineage",
+      "closed": false,
+      "detail": "Exact checkpoint-to-ONNX-to-PTQ lineage and compatibility require Q05/Q06."
+    },
+    {
+      "id": "runner_and_rng",
+      "closed": false,
+      "detail": "Unified evaluation runner, sample-rate fix, failure handling, scorer compatibility and repeatability require implementation/verification (Q06/Q08)."
+    }
+  ],
+  "supersedes": "q04-v0.1 candidate inputs only; historical protocol and manifests preserved",
+  "data_provenance_assumptions": [
+    "Canonical represents baseline/SEQ historical partition; supported but not fully recorded per phase.",
+    "Reconstructed MRF partition represents MRF history; not a contemporaneous full manifest."
+  ]
+}

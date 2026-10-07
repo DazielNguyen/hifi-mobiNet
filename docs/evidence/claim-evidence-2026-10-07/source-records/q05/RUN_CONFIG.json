@@ -1,0 +1,70 @@
+{
+  "created_utc": "2026-10-04T00:08:30.547897+00:00",
+  "root": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z",
+  "q01": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z",
+  "checkpoints": {
+    "baseline": {
+      "original_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+      "snapshot_checkpoint": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+      "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2"
+    },
+    "mrf": {
+      "original_path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt",
+      "snapshot_checkpoint": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt",
+      "sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466"
+    },
+    "seq": {
+      "original_path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/best-epoch=1442-val_loss_mel=19.0136.ckpt",
+      "snapshot_checkpoint": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/seq111_final/checkpoints/best-epoch=1442-val_loss_mel=19.0136.ckpt",
+      "sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385"
+    },
+    "piper": {
+      "original_path": "<WSL_PROJECT_HOME>/piper_original/lj-med_1000.ckpt",
+      "snapshot_checkpoint": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/piper_original/lj-med_1000.ckpt",
+      "sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c"
+    }
+  },
+  "historical_fp32": {
+    "baseline": {
+      "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx",
+      "category": "historical_ptq_sweep",
+      "bytes": 68528009,
+      "archived_relative_path": "raw<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx",
+      "source_mtime_utc": "2026-09-06T17:27:58.621984+00:00",
+      "sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+      "destination_sha256_verified": true,
+      "source_stable_during_copy": true,
+      "archived_path": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx"
+    },
+    "mrf": {
+      "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx",
+      "category": "historical_ptq_sweep",
+      "bytes": 66545547,
+      "archived_relative_path": "raw<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx",
+      "source_mtime_utc": "2026-09-14T19:22:34.013482+00:00",
+      "sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+      "destination_sha256_verified": true,
+      "source_stable_during_copy": true,
+      "archived_path": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx"
+    },
+    "seq": {
+      "source": "/tmp/seq_final_onnx/seq_final_fp32.onnx",
+      "category": "seq_export",
+      "bytes": 66342170,
+      "archived_relative_path": "raw/tmp/seq_final_onnx/seq_final_fp32.onnx",
+      "source_mtime_utc": "2026-09-30T12:44:57.430042+00:00",
+      "sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+      "destination_sha256_verified": true,
+      "source_stable_during_copy": true,
+      "archived_path": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/raw/tmp/seq_final_onnx/seq_final_fp32.onnx"
+    }
+  },
+  "scope": "New FP32 ONNX export and engineering validation; no training, PTQ, ASR, UTMOS or device benchmark.",
+  "thresholds_declared_before_runs": {
+    "nrmse_max": 0.001,
+    "max_abs_error_max": 0.005,
+    "same_shape_required": true,
+    "finite_required": true
+  },
+  "source_policy": "Banhmi/Piper Python source frozen from Q01, except corrected exporter and named compiled MAS import dependency; not asserted to be historical training source."
+}

@@ -1,0 +1,673 @@
+{
+ "extracted_from": "journal-evidence-package/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json (2026-10-04)",
+ "selection": "graphs used in J-C011/J-C023/J-C024",
+ "graphs": [
+  {
+   "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_fp32.onnx",
+   "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+   "bytes": 68529068,
+   "mtime_utc": "2026-10-04T00:09:05.588078Z",
+   "ctime_utc": "2026-10-04T00:09:05.588078Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {
+    "q05_model": "baseline",
+    "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+    "checkpoint_epoch_zero_based": "1489",
+    "source_manifest_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+    "output_contract": "float32 [batch, 1, samples]",
+    "q05_purpose": "FP32 engineering validation; quality and PTQ pending"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     "samples"
+    ]
+   },
+   "n_nodes": 7572,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/mrf/mrf_fp32.onnx",
+   "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+   "bytes": 66546592,
+   "mtime_utc": "2026-10-04T00:10:07.244726Z",
+   "ctime_utc": "2026-10-04T00:10:07.244726Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {
+    "q05_model": "mrf",
+    "checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+    "checkpoint_epoch_zero_based": "1386",
+    "source_manifest_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+    "output_contract": "float32 [batch, 1, samples]",
+    "q05_purpose": "FP32 engineering validation; quality and PTQ pending"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     "samples"
+    ]
+   },
+   "n_nodes": 7936,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 29,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/piper/piper_fp32.onnx",
+   "sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+   "bytes": 63532855,
+   "mtime_utc": "2026-10-04T00:10:36.527591Z",
+   "ctime_utc": "2026-10-04T00:10:36.527591Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {
+    "q05_model": "piper",
+    "checkpoint_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+    "checkpoint_epoch_zero_based": "999",
+    "source_manifest_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+    "output_contract": "float32 [batch, 1, samples]",
+    "q05_purpose": "FP32 engineering validation; quality and PTQ pending"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     "samples"
+    ]
+   },
+   "n_nodes": 6189,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 40
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/paper_evidence/q05_2026-10-04T000830Z/seq/seq_fp32.onnx",
+   "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+   "bytes": 66342331,
+   "mtime_utc": "2026-10-04T00:10:22.563961Z",
+   "ctime_utc": "2026-10-04T00:10:22.563961Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {
+    "q05_model": "seq",
+    "checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+    "checkpoint_epoch_zero_based": "1442",
+    "source_manifest_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+    "output_contract": "float32 [batch, 1, samples]",
+    "q05_purpose": "FP32 engineering validation; quality and PTQ pending"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     "samples"
+    ]
+   },
+   "n_nodes": 7804,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx",
+   "sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+   "bytes": 24127088,
+   "mtime_utc": "2026-09-06T17:36:54.852661Z",
+   "ctime_utc": "2026-09-06T17:36:54.852661Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "onnx.quantize 0.1.0",
+   "metadata_props": {
+    "onnx.infer": "onnxruntime.quant"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 7809,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {
+    "enc_p": {
+     "QuantizeLinear": 25,
+     "QLinearConv": 37,
+     "DequantizeLinear": 37
+    },
+    "dp": {
+     "QLinearConv": 32,
+     "DequantizeLinear": 32,
+     "QuantizeLinear": 31
+    },
+    "flow": {
+     "QuantizeLinear": 40,
+     "QLinearConv": 64,
+     "DequantizeLinear": 64
+    },
+    "(top-level)": {
+     "QuantizeLinear": 16
+    }
+   },
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "MatMul": 24
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 378
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx",
+   "sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+   "bytes": 68528009,
+   "mtime_utc": "2026-09-06T17:27:58.621984Z",
+   "ctime_utc": "2026-09-06T17:27:58.621984Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {},
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     "time",
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 7564,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx",
+   "sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+   "bytes": 22167623,
+   "mtime_utc": "2026-09-14T19:28:29.007530Z",
+   "ctime_utc": "2026-09-14T19:28:29.007530Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "onnx.quantize 0.1.0",
+   "metadata_props": {
+    "onnx.infer": "onnxruntime.quant"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 8173,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {
+    "enc_p": {
+     "QuantizeLinear": 25,
+     "QLinearConv": 37,
+     "DequantizeLinear": 37
+    },
+    "dp": {
+     "QLinearConv": 32,
+     "DequantizeLinear": 32,
+     "QuantizeLinear": 31
+    },
+    "flow": {
+     "QuantizeLinear": 40,
+     "QLinearConv": 64,
+     "DequantizeLinear": 64
+    },
+    "(top-level)": {
+     "QuantizeLinear": 16
+    }
+   },
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "MatMul": 24
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 29,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 378
+  },
+  {
+   "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx",
+   "sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+   "bytes": 66545547,
+   "mtime_utc": "2026-09-14T19:22:34.013482Z",
+   "ctime_utc": "2026-09-14T19:22:34.013482Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {},
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     "time",
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 7928,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 29,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "/tmp/seq_final_onnx/seq_final_fp32.onnx",
+   "sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+   "bytes": 66342170,
+   "mtime_utc": "2026-09-30T12:44:57.430042Z",
+   "ctime_utc": "2026-09-30T12:44:57.430042Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "pytorch 2.13.0",
+   "metadata_props": {},
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     "time",
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 7806,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {},
+   "fp32_conv_matmul_by_prefix": {
+    "enc_p": {
+     "Conv": 37,
+     "MatMul": 24
+    },
+    "dp": {
+     "Conv": 32
+    },
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "flow": {
+     "Conv": 64,
+     "MatMul": 16
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 0
+  },
+  {
+   "path": "/tmp/seq_final_onnx/seq_final_int8.onnx",
+   "sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+   "bytes": 22021154,
+   "mtime_utc": "2026-09-30T12:45:25.590223Z",
+   "ctime_utc": "2026-09-30T12:45:25.590223Z",
+   "ir_version": 8,
+   "opset": {
+    "ai.onnx": 18
+   },
+   "producer": "onnx.quantize 0.1.0",
+   "metadata_props": {
+    "onnx.infer": "onnxruntime.quant"
+   },
+   "inputs": {
+    "input": [
+     "batch_size",
+     "phonemes"
+    ],
+    "input_lengths": [
+     "batch_size"
+    ],
+    "scales": [
+     3
+    ]
+   },
+   "outputs": {
+    "output": [
+     "batch_size",
+     1,
+     1,
+     "Unsqueezeoutput_dim_3"
+    ]
+   },
+   "n_nodes": 8162,
+   "random_nodes": {
+    "RandomNormalLike": 2
+   },
+   "quantized_ops_by_prefix": {
+    "enc_p": {
+     "QuantizeLinear": 67,
+     "QLinearConv": 37,
+     "DequantizeLinear": 61,
+     "QLinearMatMul": 24
+    },
+    "dp": {
+     "QuantizeLinear": 32,
+     "QLinearConv": 32,
+     "DequantizeLinear": 32
+    },
+    "flow": {
+     "QuantizeLinear": 68,
+     "QLinearConv": 64,
+     "DequantizeLinear": 80,
+     "QLinearMatMul": 16
+    },
+    "(top-level)": {
+     "QuantizeLinear": 16
+    }
+   },
+   "fp32_conv_matmul_by_prefix": {
+    "(top-level)": {
+     "MatMul": 2
+    },
+    "dec": {
+     "Conv": 20,
+     "ConvTranspose": 3
+    }
+   },
+   "any_quantized_op_under_dec": false,
+   "n_quantized_ops_total": 529
+  }
+ ]
+}

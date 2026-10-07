@@ -1,0 +1,444 @@
+{
+ "schema_version": 1,
+ "package": "docs/evidence/claim-evidence-2026-10-07",
+ "redaction_rules": [
+  {
+   "replaced": "absolute path of the author's project workspace (Windows drive form, WSL /mnt form, any separator)",
+   "replacement": "<WORKSPACE>/"
+  },
+  {
+   "replaced": "the author's Windows user profile directory (outside the workspace)",
+   "replacement": "<WINDOWS_USER_HOME>/"
+  },
+  {
+   "replaced": "the WSL project account home directory",
+   "replacement": "<WSL_PROJECT_HOME>/"
+  },
+  {
+   "replaced": "the WSL personal account home directory",
+   "replacement": "<WSL_USER_HOME>/"
+  }
+ ],
+ "files": [
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/README.md",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/pc-package/README.md",
+   "evidence_type": "ai_interpretation",
+   "source_bytes": 11139,
+   "source_sha256": "60333f0ac2953bfa7ad5018b13ed1b7699815a7bbd70a2ac92944d8bcc2451db",
+   "destination_bytes": 11139,
+   "destination_sha256": "60333f0ac2953bfa7ad5018b13ed1b7699815a7bbd70a2ac92944d8bcc2451db",
+   "transformation": "byte copy",
+   "note": "PC-side synthesis with suggested wording; not evidence of results"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence-index.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/pc-package/evidence-index.json",
+   "evidence_type": "manifest",
+   "source_bytes": 2058,
+   "source_sha256": "7e8bcf5b78c03a3ee988e0ced263edc0068afa906c57c662e372dcafc07bccfe",
+   "destination_bytes": 2058,
+   "destination_sha256": "7e8bcf5b78c03a3ee988e0ced263edc0068afa906c57c662e372dcafc07bccfe",
+   "transformation": "byte copy",
+   "note": "hash index of the PC package"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C001_checkpoint_key_structure.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C001_checkpoint_key_structure.json",
+   "evidence_type": "current_check_output",
+   "source_bytes": 1224,
+   "source_sha256": "33c7bab2c4f5ad501b0278b3b646547bf2eee89f0fa83f9d6e352d7e86379222",
+   "destination_bytes": 1224,
+   "destination_sha256": "33c7bab2c4f5ad501b0278b3b646547bf2eee89f0fa83f9d6e352d7e86379222",
+   "transformation": "byte copy",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C010_calibration.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C010_calibration.json",
+   "evidence_type": "current_check_output",
+   "source_bytes": 14915,
+   "source_sha256": "b3d22572a2ab806e55d28b733ebe090b7f84ff6d59120da43660967749b72052",
+   "destination_bytes": 14919,
+   "destination_sha256": "615454ed979f884445da6ab82143ff0e6d799a95730cb465b9e6690224ac518d",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07",
+   "private_original": "private-originals/outputs/pc/J-C010_calibration.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C011_onnx_export_parity.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C011_onnx_export_parity.json",
+   "evidence_type": "recomputed_from_stored_outputs",
+   "source_bytes": 35814,
+   "source_sha256": "8ee7e7931265eccaaabc3c5254cb01e0868eb31c0aa9384c49d8595b03b8f5a5",
+   "destination_bytes": 35822,
+   "destination_sha256": "5e5f798cd983e516ecaf87a56ff61c225cee6f741b6db9ccca76ea31912cdcab",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07",
+   "private_original": "private-originals/outputs/pc/J-C011_onnx_export_parity.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C023_onnx_speed_history.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C023_onnx_speed_history.json",
+   "evidence_type": "recomputed_from_stored_outputs",
+   "source_bytes": 1493,
+   "source_sha256": "dca141bed198b70e3da8aedd44344e5111ca99e6f3e7a5b9bd0ef362931fe4b5",
+   "destination_bytes": 1497,
+   "destination_sha256": "42552d963edef5b78cf09e4c025b80832c34c192e7292e1f22169619aaf59e4a",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07",
+   "private_original": "private-originals/outputs/pc/J-C023_onnx_speed_history.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C024_J-C025_graph_structure.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C024_J-C025_graph_structure.json",
+   "evidence_type": "current_check_output",
+   "source_bytes": 3042,
+   "source_sha256": "129a9659c1ab105c2704471a2d643625c8ce676bcea15095ec446610d7b92664",
+   "destination_bytes": 3050,
+   "destination_sha256": "5da48b3f2e1e0055c1ce8e6951269e9cbd55d5886b12fdc7efe72485e3d9a5ae",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07",
+   "private_original": "private-originals/outputs/pc/J-C024_J-C025_graph_structure.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/J-C026_harvard_exposure.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C026_harvard_exposure.json",
+   "evidence_type": "current_check_output",
+   "source_bytes": 754,
+   "source_sha256": "32b48521d00b1328cf6d572172c28d1f1f9e64f4241cfba31a1f5f14311d9d2c",
+   "destination_bytes": 754,
+   "destination_sha256": "32b48521d00b1328cf6d572172c28d1f1f9e64f4241cfba31a1f5f14311d9d2c",
+   "transformation": "byte copy",
+   "note": "output of scripts/pc/collect_claim_evidence.py run on 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/public_piper_voices_ljspeech_medium_MODEL_CARD.txt",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_voices_ljspeech_medium_MODEL_CARD.txt",
+   "evidence_type": "public_source",
+   "source_bytes": 517,
+   "source_sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d",
+   "destination_bytes": 517,
+   "destination_sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d",
+   "transformation": "byte copy",
+   "note": "retrieved 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/public_piper_checkpoints_listing.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_checkpoints_listing.json",
+   "evidence_type": "public_source",
+   "source_bytes": 571,
+   "source_sha256": "6c9bdd483be311b2048f5214bddd9dddf46e8d9928e7a46cdca91031f71a37af",
+   "destination_bytes": 571,
+   "destination_sha256": "6c9bdd483be311b2048f5214bddd9dddf46e8d9928e7a46cdca91031f71a37af",
+   "transformation": "byte copy",
+   "note": "retrieved 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/public_piper_lj_med_config.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_lj_med_config.json",
+   "evidence_type": "public_source",
+   "source_bytes": 7089,
+   "source_sha256": "854155811f0334519486568b09d9d2d53f15b328eb22607aec35b25a8f37942f",
+   "destination_bytes": 7089,
+   "destination_sha256": "854155811f0334519486568b09d9d2d53f15b328eb22607aec35b25a8f37942f",
+   "transformation": "byte copy",
+   "note": "retrieved 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/evidence/public_metadata_retrieval.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_metadata_retrieval.json",
+   "evidence_type": "public_source",
+   "source_bytes": 462,
+   "source_sha256": "6ee680d54e6cf72ff92516d0a31d895c5dc2353ee9de42e4cbb3d33a931b737b",
+   "destination_bytes": 462,
+   "destination_sha256": "6ee680d54e6cf72ff92516d0a31d895c5dc2353ee9de42e4cbb3d33a931b737b",
+   "transformation": "byte copy",
+   "note": "retrieved 2026-10-07"
+  },
+  {
+   "source": "workspace:BanhmiTTS/work/claim-evidence-2026-10-07/scripts/collect_claim_evidence.py",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/pc/collect_claim_evidence.sanitized.py",
+   "evidence_type": "script_record",
+   "source_bytes": 15566,
+   "source_sha256": "dd09e5ec3ca2567cb220479a7454805bdf3ec21711c58365a3ca66c03d1eb5b4",
+   "destination_bytes": 15619,
+   "destination_sha256": "5e9efc05478b8ec1326ca32b8f38cb75f142dc939f59b399a1e5f6e17479e667",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "the collector that produced outputs/pc; host paths redacted, so not runnable as-is",
+   "private_original": "private-originals/scripts/pc/collect_claim_evidence.sanitized.py"
+  },
+  {
+   "source": "workspace:piper/download/checkpoints/en_US-ljspeech-medium/download_manifest.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/piper_download_manifest_2026-09-30.json",
+   "evidence_type": "public_source_download_record",
+   "source_bytes": 1545,
+   "source_sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9",
+   "destination_bytes": 1545,
+   "destination_sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9",
+   "transformation": "byte copy",
+   "note": "written when the published checkpoint was downloaded on 2026-09-30"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/RUN_CONFIG.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/RUN_CONFIG.json",
+   "evidence_type": "runtime_record",
+   "source_bytes": 4006,
+   "source_sha256": "e1e27d787834c9d68d668f1d071d6b608f37848ae7361da2e24c4b973575879d",
+   "destination_bytes": 4098,
+   "destination_sha256": "01dbba9d7192fc19fede0a24ca3f993c63d982c379a1ca19d64347a346994cfd",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "created 2026-10-04T00:08:30Z, before the first model run (00:09:02Z); declares thresholds",
+   "private_original": "private-originals/source-records/q05/RUN_CONFIG.json"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/baseline/REPORT.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.baseline.json",
+   "evidence_type": "runtime_record",
+   "source_bytes": 14505,
+   "source_sha256": "40cfb71388cd0a02e7842f3837c202cc70b69eeb75dcbf8f15a9dba85773774e",
+   "destination_bytes": 14577,
+   "destination_sha256": "7fb5d3b586f7043e9e5cd9793271e6e71dc42df061f73ccec9239bac7bd0dec7",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "Q05 export/parity report",
+   "private_original": "private-originals/source-records/q05/REPORT.baseline.json"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/mrf/REPORT.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.mrf.json",
+   "evidence_type": "runtime_record",
+   "source_bytes": 35327,
+   "source_sha256": "91a1ab5c83d8c07ddb7ede3fd01afdd3183f5f55f1d92e6023eacefee2bb5ae6",
+   "destination_bytes": 35399,
+   "destination_sha256": "61241c5e8296c5b8b2df6a78c3fc4866abbd7733532701a6d4e54c7600a3f396",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "Q05 export/parity report",
+   "private_original": "private-originals/source-records/q05/REPORT.mrf.json"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/seq/REPORT.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.seq.json",
+   "evidence_type": "runtime_record",
+   "source_bytes": 14467,
+   "source_sha256": "5f8da9eb23533e85b356a9c2d549f44e073171d70ca8ca305d3835a80b6a5bea",
+   "destination_bytes": 14535,
+   "destination_sha256": "771b8987afb315a658a94158d894852e24b1f200790f7ad3249bf00e97cade88",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "Q05 export/parity report",
+   "private_original": "private-originals/source-records/q05/REPORT.seq.json"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/piper/REPORT.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.piper.json",
+   "evidence_type": "runtime_record",
+   "source_bytes": 13575,
+   "source_sha256": "473020432016726c4e90fc495a89a22cddcdbff2c71d8acc25e382a553fa373b",
+   "destination_bytes": 13643,
+   "destination_sha256": "893c3e1be1e9c8d75736d12bf7809d35ce92b9d4ceb34714a414988476553f81",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "Q05 export/parity report",
+   "private_original": "private-originals/source-records/q05/REPORT.piper.json"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/scripts/run_q05_model.py",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/q05/run_q05_model.py",
+   "evidence_type": "script_record",
+   "source_bytes": 15203,
+   "source_sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745",
+   "destination_bytes": 15203,
+   "destination_sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745",
+   "transformation": "byte copy",
+   "note": "Q05 runner that wrote the reports and parity files (metrics() defines NRMSE)"
+  },
+  {
+   "source": "workspace:BanhmiTTS/docs/evidence/q05_2026-10-04/piper/checkpoint_hparams.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/piper_checkpoint_hparams.json",
+   "evidence_type": "artifact_metadata_extracted_prior_round",
+   "source_bytes": 2673,
+   "source_sha256": "722080311522508903f1fd8b648bf6d314621470d72099f92d5b3df4c99f569c",
+   "destination_bytes": 2673,
+   "destination_sha256": "722080311522508903f1fd8b648bf6d314621470d72099f92d5b3df4c99f569c",
+   "transformation": "byte copy",
+   "note": "hyper-parameters stored in the published Piper checkpoint, extracted during Q05"
+  },
+  {
+   "source": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/inputs/calibration60.candidate.jsonl",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/calibration60.candidate.jsonl",
+   "evidence_type": "design_record",
+   "source_bytes": 83876,
+   "source_sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53",
+   "destination_bytes": 83876,
+   "destination_sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53",
+   "transformation": "byte copy",
+   "note": "train-only candidate; never used in a PTQ run"
+  },
+  {
+   "source": "workspace:BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_calibration60_recomputed.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/historical_calibration60_recomputed.json",
+   "evidence_type": "recomputed_prior_round",
+   "source_bytes": 14350,
+   "source_sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa",
+   "destination_bytes": 14350,
+   "destination_sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa",
+   "transformation": "byte copy",
+   "note": "historical calibration reconstructed from the PTQ script's sampling rule (no saved manifest)"
+  },
+  {
+   "source": "workspace:BanhmiTTS/docs/evidence/q03_q04_completion_2026-10-04/PROTOCOL_Q04_v0.2.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/PROTOCOL_Q04_v0.2.json",
+   "evidence_type": "design_record",
+   "source_bytes": 10317,
+   "source_sha256": "92fcddf4d5dbe475b290d3fed727118509a954c40e9584870db07d40657c4d46",
+   "destination_bytes": 10329,
+   "destination_sha256": "32787f75591816a46f1f734918e736eca3efe9220acd26f8b749c41cae6d2529",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "candidate PTQ protocol; selection rule not declared",
+   "private_original": "private-originals/source-records/calibration/PROTOCOL_Q04_v0.2.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/ptq_quantize.py",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/ptq_quantize.py",
+   "evidence_type": "script_record",
+   "source_bytes": 5442,
+   "source_sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+   "destination_bytes": 5442,
+   "destination_sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+   "transformation": "byte copy",
+   "note": "historical PTQ script (sampling rule, QOperator, per-channel)"
+  },
+  {
+   "source": "workspace:BanhmiTTS/journal-evidence-package/evidence/C_data_split/data_split_checks_recomputed.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/data-overlap/data_split_checks_recomputed.json",
+   "evidence_type": "recomputed_prior_round",
+   "source_bytes": 16052,
+   "source_sha256": "83f654636cab447e03a333e719775ded5c28133fb2b40ca3300088b2afabfa89",
+   "destination_bytes": 15800,
+   "destination_sha256": "49b5a9198ea81446098710d67cc65a15da2700f3a824192e4ce1d8a80f268bbd",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "Harvard vs LJSpeech overlap output (2026-10-04)",
+   "private_original": "private-originals/source-records/data-overlap/data_split_checks_recomputed.json"
+  },
+  {
+   "source": "workspace:BanhmiTTS/journal-evidence-package/scripts/collect_C_data_split.py",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/collect_C_data_split.py",
+   "evidence_type": "script_record",
+   "source_bytes": 6971,
+   "source_sha256": "86ce750c7477d48ce1a3e50a8dfe35fe38666863cfadddfe2bb43f71aad3868b",
+   "destination_bytes": 6988,
+   "destination_sha256": "2fa2db44bca1334d7799868d4b7a2c330c2cf13d6e0ce8b1393d07647d572f7d",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "script that produced the overlap output; host paths redacted",
+   "private_original": "private-originals/scripts/historical/collect_C_data_split.py"
+  },
+  {
+   "source": "wsl-project:BanhmiTTS/training_output/ljspeech/medium/config.json",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/project/ljspeech_medium_config.json",
+   "evidence_type": "artifact_metadata_current",
+   "source_bytes": 7629,
+   "source_sha256": "4b751b911b4d42f5dc1a8c604e4c7cd5b19d298b9768ba07564e96696d665b6e",
+   "destination_bytes": 7629,
+   "destination_sha256": "4b751b911b4d42f5dc1a8c604e4c7cd5b19d298b9768ba07564e96696d665b6e",
+   "transformation": "byte copy",
+   "note": "project dataset config (phoneme_id_map)"
+  },
+  {
+   "source": "workspace:BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json [subset]",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/onnx/onnx_inventory_extract.json",
+   "evidence_type": "artifact_metadata_current_prior_round",
+   "source_bytes": 13970,
+   "source_sha256": "5905a26e78f83f87d6d54a3280694c30b2f2d740d3a5b8b4984ea7c67700840c",
+   "destination_bytes": 14002,
+   "destination_sha256": "e8841edcfd1773fd6e6c9f408075f1396a201e5ca0bbc486b8a0f25a295ccb4e",
+   "transformation": "host-path redaction (see redaction_rules); original kept in transfer ZIP private-originals/",
+   "note": "10 of 51 entries selected (source_sha256 is of the extract before redaction; full inventory in private-originals/)",
+   "private_original": "private-originals/source-records/onnx/onnx_inventory_extract.json"
+  }
+ ],
+ "created_in_package": [
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/README.md",
+   "evidence_type": "package_documentation",
+   "bytes": 5283,
+   "sha256": "954fa807552ae3bc63792fb89a77133bef5b69d9259bd4e9464d7e8aee73765d",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/claim-evidence-index.json",
+   "evidence_type": "index",
+   "bytes": 54695,
+   "sha256": "6f2728f5042edd2df84e1cc50f6f568c95a71dcc9818db70cc13a8e6d5be69a3",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/evidence-map.md",
+   "evidence_type": "package_documentation",
+   "bytes": 10279,
+   "sha256": "8725b0aa30816453f9ecd0b6e0339d435a88a18fd9c21315f9d34614f1387243",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/provenance-and-limitations.md",
+   "evidence_type": "package_documentation",
+   "bytes": 5558,
+   "sha256": "c9c2d54a41ae44e2c7dc6e0b4488f7338b790bde8058b005b488a9d73eaa8835",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/reproduction.md",
+   "evidence_type": "package_documentation",
+   "bytes": 3842,
+   "sha256": "041942f0d4b35d1f135a6f6b66242580ce5a6650049951903cfd08e277299aa3",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+   "evidence_type": "manifest",
+   "bytes": 26777,
+   "sha256": "c1c01f49ff87a11446678f98ee8e31966262ee87344df96dfc23cefc6745bbfd",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+   "evidence_type": "verification_script",
+   "bytes": 22621,
+   "sha256": "ea3d2110a8ef94f502939520f54953061ae04ac0397cd5a74054c2933291610a",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/scripts/export_key_inventories.py",
+   "evidence_type": "calculation_script",
+   "bytes": 4294,
+   "sha256": "c244d67833daa00be401deea4fde301648b19c622b7adca1a713e12208663b8f",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/outputs/J-C001_key_inventories.json",
+   "evidence_type": "current_check_output",
+   "bytes": 208706,
+   "sha256": "4f94fbdad90d93dabf747d63bb119fae67595005886546d2946d9344c992582b",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json",
+   "evidence_type": "recomputed_from_stored_outputs",
+   "bytes": 29858,
+   "sha256": "09b44725d8416b645a7c9363b88a610846b5c1e376149478fdd28fc8bf37c4ef",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/source-records/search-records.md",
+   "evidence_type": "ai_search_log",
+   "bytes": 4104,
+   "sha256": "59a0568884af03f70c45f91f8c27f5b63be09e5000d04fff0632c5a0267e430e",
+   "created": "2026-10-07, this packaging round"
+  },
+  {
+   "path": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_revision_record_2026-10-07.json",
+   "evidence_type": "public_source",
+   "bytes": 2113,
+   "sha256": "332d2eb8d731b1c269f62207df29c6429b67e126393a7961ac6ed8c7512e6443",
+   "created": "2026-10-07, this packaging round"
+  }
+ ],
+ "note": "files[] were copied (byte copy or host-path redaction); created_in_package[] were written in this round; this manifest does not list itself"
+}

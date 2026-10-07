@@ -1,0 +1,35 @@
+{
+ "graphs": {
+  "baseline_fp32": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx (weights match ckpt 1489, JEP)",
+  "baseline_int8": "ptq_sweep/baseline_flow_enc_p_dp.onnx",
+  "seq_fp32/int8": "/tmp/seq_final_onnx/seq_final_{fp32,int8}.onnx (454/454 named weights match ckpt 1442, Q05)",
+  "mrf": "graph source unidentified (0/478 tensors match ckpt 1386, JEP); different 500 sentences"
+ },
+ "runtime": "ONNX Runtime CPU, intra-op 2 threads, inter-op 1, no warm-up, one timing per utterance (round7 audit)",
+ "comparisons": {
+  "eval_seq_final_fp32_onnx_results.json vs eval_baseline_fp32_onnx_500_results.json": {
+   "paired_sentences": 500,
+   "mean_rtf_left": 0.03455200325623326,
+   "mean_rtf_right": 0.03877565598301487,
+   "left_faster_count": 495,
+   "median_ratio": 0.889857767960794,
+   "geometric_mean_ratio": 0.8904063670464372
+  },
+  "eval_seq_final_int8_onnx_results.json vs eval_baseline_ptq_onnx_500_results.json": {
+   "paired_sentences": 500,
+   "mean_rtf_left": 0.028872748056492148,
+   "mean_rtf_right": 0.03454040076413626,
+   "left_faster_count": 498,
+   "median_ratio": 0.8382592706872578,
+   "geometric_mean_ratio": 0.8358560942625705
+  },
+  "eval_seq_final_fp32_onnx_results.json vs eval_mrf_fp32_onnx_500_results.json": {
+   "paired_sentences": 21,
+   "mean_rtf_left": 0.03455200325623326,
+   "mean_rtf_right": 0.04160499579865139,
+   "left_faster_count": 21,
+   "median_ratio": 0.8206795235585391,
+   "geometric_mean_ratio": 0.8206413333135896
+  }
+ }
+}

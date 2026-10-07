@@ -1,0 +1,1010 @@
+{
+ "schema_version": 1,
+ "package": "docs/evidence/claim-evidence-2026-10-07",
+ "created_utc": "2026-10-07T05:00:00Z",
+ "status_note": "journal_verification is NOT_CHECKED for every claim. pc_reported_assessment repeats the PC session's own labels and is not a journal verification. proposed_narrowed_claim is suggested wording, not evidence.",
+ "evidence_type_vocabulary": {
+  "runtime_record": "written by the run itself at run time",
+  "current_check_output": "produced on 2026-10-07 by inspecting artifacts or metadata as they exist now",
+  "recomputed_from_stored_outputs": "recomputed now from outputs stored by an earlier run",
+  "recomputed_prior_round": "recomputed in the 2026-10-04 audit from stored data",
+  "artifact_metadata_current_prior_round": "metadata of artifacts inspected on 2026-10-04",
+  "artifact_metadata_extracted_prior_round": "values extracted from an artifact in an earlier round",
+  "artifact_metadata_current": "artifact file as it exists now",
+  "artifact_current": "data file as it exists now",
+  "historical_result": "result file written by a historical evaluation run",
+  "manifest": "split or test-set manifest tracked in the repository",
+  "release_record": "repository record of a public release",
+  "public_source": "public model card, listing or revision metadata",
+  "public_source_download_record": "record written when the public file was downloaded",
+  "script_record": "script that produced a record (copied as a record; may not run as-is)",
+  "design_record": "plan or candidate input that was not executed",
+  "ai_search_log": "assistant search log; absence only within the scanned scope",
+  "ai_interpretation": "AI synthesis and suggested wording; not evidence",
+  "checkpoint": "model checkpoint (referenced, not copied)",
+  "onnx_fp32_q05": "Q05 FP32 graph (referenced, not copied)",
+  "onnx_historical": "historical ONNX graph (referenced, not copied)"
+ },
+ "claims": [
+  {
+   "claim_id": "J-C001",
+   "original_claim": "Baseline là bản phát triển từ Piper, không phải Piper nguyên bản hay bản tái tạo đầy đủ VITS2.",
+   "original_claim_en": "The baseline is a development of Piper, neither the original Piper nor a complete VITS2 reproduction.",
+   "proposed_narrowed_claim": "The selected baseline checkpoint (epoch 1489) and the model built from the released hifi-mobiNet code expose the same 876 parameter/buffer names (876/876). The published Piper lj-medium checkpoint exposes 784 names; the baseline additionally holds 72 flow-attention and 20 duration-discriminator names that the Piper checkpoint lacks. This is a name-level structural comparison.",
+   "author_account": "Author statement (2026-10-05/07): the baseline was rewritten following Piper's design and combines selected VITS2 components; Piper was not forked or cloned. Recorded as the author's account, not as evidence derived from artifacts.",
+   "pc_reported_assessment": "Supportable in narrowed form (PC README 2026-10-07: 'Hỗ trợ được (bản thu hẹp)').",
+   "journal_verification": "NOT_CHECKED",
+   "comparison_basis": "parameter and persistent-buffer NAMES only; tensor shapes, values, forward behaviour, executed source code and code origin are not compared",
+   "comparator_inventories": {
+    "baseline_checkpoint_vs_code_banhmitts_baseline_recipe": "876 vs 876, 876 common",
+    "baseline_checkpoint_vs_code_edgetts_use_vits2": "876 vs 881, 876 common; only in EdgeTTS code: ['model_g.enc_q.enc._n_channels', 'model_g.flow.flows.0.enc._n_channels', 'model_g.flow.flows.2.enc._n_channels', 'model_g.flow.flows.4.enc._n_channels', 'model_g.flow.flows.6.enc._n_channels']",
+    "piper_checkpoint_vs_code_edgetts_config_a": "784 vs 789, 784 common (EdgeTTS Config A used as the Piper-base comparator; upstream Piper code was not built)",
+    "baseline_checkpoint_vs_piper_checkpoint": "92 names only in baseline (= 72 'model_g.flow.*.attn.*' + 20 'model_d_dur.*'), 0 only in Piper"
+   },
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/J-C001_key_inventories.json",
+     "locator": "comparisons; inventories.*.names",
+     "evidence_type": "current_check_output",
+     "sha256": "4f94fbdad90d93dabf747d63bb119fae67595005886546d2946d9344c992582b"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C001_checkpoint_key_structure.json",
+     "locator": "baseline_ckpt_vits2_markers",
+     "evidence_type": "current_check_output",
+     "sha256": "33c7bab2c4f5ad501b0278b3b646547bf2eee89f0fa83f9d6e352d7e86379222"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+     "locator": "names read statically from data.pkl",
+     "evidence_type": "checkpoint",
+     "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+     "availability": "workstation; private HF archive"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:piper_original/lj-med_1000.ckpt",
+     "locator": "names read statically from data.pkl",
+     "evidence_type": "checkpoint",
+     "sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+     "availability": "workstation; team checkpoints in the private HF archive; Piper public"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/export_key_inventories.py",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/J-C001_key_inventories.json",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "Equal names show structural compatibility of the stored state, not identical forward computation, not which code was executed, and not code lineage.",
+    "Code-side inventories come from the current checkout (relocated BanhmiTTS code and vendored EdgeTTS a73a897), not from code archived at training time.",
+    "The 5 '_n_channels' buffers produced by current EdgeTTS code are absent from the checkpoint; this shows a difference from current EdgeTTS code only and is not used to infer which code trained the baseline.",
+    "Differences from VITS2 (linear-spectrogram posterior input, blank tokens kept) come from code/config reading and the VITS2 paper, not from this name comparison."
+   ],
+   "remaining_inputs": [
+    "Training-time source snapshot or commit tied to the checkpoint run, if a code-origin statement is wanted.",
+    "Shape-level comparison (possible without unpickling only with a dedicated reader; not done here)."
+   ]
+  },
+  {
+   "claim_id": "J-C010",
+   "original_claim": "Dữ liệu calibration PTQ lấy từ train; chọn phạm vi quantization bằng validation riêng.",
+   "original_claim_en": "PTQ calibration data come from the training split; the quantization scope was selected on a separate validation set.",
+   "proposed_narrowed_claim": "The historical PTQ graphs were calibrated with 60 sentences drawn by random.Random(42).sample from all 13,100 dataset.jsonl rows (57 canonical train, 3 canonical test). A train-only 60-sentence calibration set has been designed for future PTQ runs but has not been used.",
+   "pc_reported_assessment": "Not true for the PTQ that was run; design only (PC README: 'Không đúng với PTQ đã chạy; chỉ có thiết kế').",
+   "journal_verification": "NOT_CHECKED",
+   "calibration_actually_used": {
+    "rule": "ptq_quantize.py JsonlCalibReader: random.Random(42).sample(non-empty dataset.jsonl rows in file order, 60)",
+    "split_membership": {
+     "train": 57,
+     "test": 3
+    },
+    "test_sentences": [
+     "He assassinated the President, shot Officer Tippit, resisted arrest and tried to kill another policeman in the process.",
+     "the Director and Deputy Director for Plans of the CIA testified concerning that Agency's limited knowledge of Oswald before the assassination.",
+     "there were two flat lightweight curtain rods belonging to Ruth Paine but they were still there on Friday afternoon after Oswald's arrest."
+    ],
+    "manifest_status": "no calibration manifest was saved at run time; the list is reconstructed from the script's rule and dataset.jsonl (SHA-256 recorded)"
+   },
+   "designed_not_used": {
+    "file": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/calibration60.candidate.jsonl",
+    "split_membership": {
+     "train": 60
+    },
+    "status": "candidate; no INT8 graph was produced after 2026-10-04; selection rule in PROTOCOL_Q04_v0.2 is not declared ('selection_rule': null)"
+   },
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/historical_calibration60_recomputed.json",
+     "locator": "rule; ids; membership",
+     "evidence_type": "recomputed_prior_round",
+     "sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/ptq_quantize.py",
+     "locator": "class JsonlCalibReader",
+     "evidence_type": "script_record",
+     "sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/calibration60.candidate.jsonl",
+     "locator": "all rows",
+     "evidence_type": "design_record",
+     "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/PROTOCOL_Q04_v0.2.json",
+     "locator": "status; selection_rule",
+     "evidence_type": "design_record",
+     "sha256": "32787f75591816a46f1f734918e736eca3efe9220acd26f8b749c41cae6d2529"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C010_calibration.json",
+     "locator": "candidate_calibration; ptq_runs_after_2026-10-04",
+     "evidence_type": "current_check_output",
+     "sha256": "615454ed979f884445da6ab82143ff0e6d799a95730cb465b9e6690224ac518d"
+    },
+    {
+     "path": "results/manifests/canonical_split.json",
+     "locator": "train / val / test",
+     "evidence_type": "manifest",
+     "sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "transfer-only/dataset/dataset.jsonl",
+     "locator": "re-sample with seed 42",
+     "evidence_type": "artifact_current",
+     "sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+     "availability": "transfer bundle"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (j_c010, j_c010_dataset)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C010, sections.J-C010 dataset",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "The historical list assumes dataset.jsonl was unchanged between the PTQ runs and now (its hash matches the 2026-10-04 record; the file's ctime is 2026-07-28).",
+    "No record shows that a separate validation set was used to choose the quantization scope; the historical scope-selection evaluator also had the sample-rate defect (see J-C012)."
+   ],
+   "remaining_inputs": [
+    "A PTQ run that uses the train-only calibration set, with a pre-declared selection rule and validation list, if the original claim is to be kept."
+   ]
+  },
+  {
+   "claim_id": "J-C011",
+   "original_claim": "ONNX FP32 cuối được export từ đúng checkpoint và đạt parity với PyTorch.",
+   "original_claim_en": "The final FP32 ONNX graphs were exported from the intended checkpoints and match PyTorch.",
+   "proposed_narrowed_claim": "Each of the four Q05 FP32 graphs (published at DazielNguyen/hifi-mobiNet-inference revision f760e85a) carries in its metadata the SHA-256 of the checkpoint recorded for that run, and on 10 stored parity cases per model the ONNX output matched PyTorch within thresholds declared in the run configuration before the runs (NRMSE <= 1e-3, max |error| <= 5e-3).",
+   "pc_reported_assessment": "Supported for the Q05 graphs (PC README: 'Hỗ trợ (cho graph Q05)').",
+   "journal_verification": "NOT_CHECKED",
+   "per_model": {
+    "baseline": {
+     "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+     "epoch_zero_based": 1489,
+     "fp32_graph_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "validation_graph_sha256": "b80fcc9ee73671b3634d7cb094e1bb708d80ac525e5580a0a877011f7dd9fe99",
+     "cases": 10,
+     "max_nrmse_stored": 9.230318275201086e-05,
+     "mean_nrmse_stored": 2.77514520677345e-05,
+     "max_abs_error_stored": 0.00027317553758621216,
+     "historical_graph_named_weights": {
+      "graph_sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+      "exact": 422,
+      "mismatch": 0
+     }
+    },
+    "mrf": {
+     "checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+     "epoch_zero_based": 1386,
+     "fp32_graph_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "validation_graph_sha256": "f7da48be447b31e21b6fdac2135b1cfc661d906313605a8047a9be0cb2cec0ff",
+     "cases": 10,
+     "max_nrmse_stored": 0.00011396346906796278,
+     "mean_nrmse_stored": 2.224054630068656e-05,
+     "max_abs_error_stored": 0.0005581676959991455,
+     "historical_graph_named_weights": {
+      "graph_sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+      "exact": 0,
+      "mismatch": 478
+     }
+    },
+    "seq": {
+     "checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+     "epoch_zero_based": 1442,
+     "fp32_graph_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "validation_graph_sha256": "9a4cd9987feb5e80043da65289ebfa21fa40ca46e2e9a9f0228f2d09a9c340ed",
+     "cases": 10,
+     "max_nrmse_stored": 4.413525440295965e-05,
+     "mean_nrmse_stored": 1.7754543594736444e-05,
+     "max_abs_error_stored": 0.00014218129217624664,
+     "historical_graph_named_weights": {
+      "graph_sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+      "exact": 454,
+      "mismatch": 0
+     }
+    },
+    "piper": {
+     "checkpoint_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+     "epoch_zero_based": 999,
+     "fp32_graph_sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+     "validation_graph_sha256": "59f4cf7b410dabf096902868c5cde2a27e326bd08c6bf909f465d36d53918a2c",
+     "cases": 10,
+     "max_nrmse_stored": 7.05622492201068e-05,
+     "mean_nrmse_stored": 3.337920321163811e-05,
+     "max_abs_error_stored": 0.00013436377048492432,
+     "historical_graph_named_weights": null
+    }
+   },
+   "parity_recomputed_from_npz": {
+    "baseline": {
+     "cases": 10,
+     "max_nrmse_recomputed": 9.230318275201086e-05
+    },
+    "mrf": {
+     "cases": 10,
+     "max_nrmse_recomputed": 0.00011396346906796278
+    },
+    "seq": {
+     "cases": 10,
+     "max_nrmse_recomputed": 4.413525440295965e-05
+    },
+    "piper": {
+     "cases": 10,
+     "max_nrmse_recomputed": 7.05622492201068e-05
+    }
+   },
+   "nrmse": {
+    "formula": "err = pytorch - onnx; nrmse = sqrt(mean(err^2)) / max(sqrt(mean(pytorch^2)), 1e-12); pass = same shape AND finite AND nrmse <= 0.001 AND max|err| <= 0.005; aggregate = all 10 cases pass (max reported)",
+    "cases_per_model": 10,
+    "aggregation": "all cases must pass; maximum and mean over cases reported",
+    "thresholds": {
+     "nrmse_max": 0.001,
+     "max_abs_error_max": 0.005,
+     "same_shape_required": true,
+     "finite_required": true
+    },
+    "prespecified_proof": "RUN_CONFIG.json created_utc 2026-10-04T00:08:30Z declares thresholds_declared_before_runs; the first model run started 00:09:02Z (REPORT.*.started_utc); the runner asserts the config thresholds. An earlier directory (00:07:44Z) holds the same thresholds."
+   },
+   "graph_identity_notes": [
+    "Validation graphs (external noise inputs) and deployed graphs have identical initializers (422/478/454/382) and differ only in 2 RandomNormalLike nodes: identical initializers, not an identical pipeline.",
+    "A matching metadata checkpoint hash records what the exporter was told; it does not by itself prove which checkpoint bytes were read at export time. The Q05 runner computed the SHA-256 of the snapshot it loaded (strict load) in the same run."
+   ],
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/RUN_CONFIG.json",
+     "locator": "created_utc; thresholds_declared_before_runs; checkpoints.*.sha256",
+     "evidence_type": "runtime_record",
+     "sha256": "01dbba9d7192fc19fede0a24ca3f993c63d982c379a1ca19d64347a346994cfd"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.baseline.json",
+     "locator": "checkpoint; graph; validation_graph; parity_cases; started_utc",
+     "evidence_type": "runtime_record",
+     "sha256": "7fb5d3b586f7043e9e5cd9793271e6e71dc42df061f73ccec9239bac7bd0dec7"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.mrf.json",
+     "locator": "checkpoint; graph; validation_graph; parity_cases; started_utc",
+     "evidence_type": "runtime_record",
+     "sha256": "61241c5e8296c5b8b2df6a78c3fc4866abbd7733532701a6d4e54c7600a3f396"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.seq.json",
+     "locator": "checkpoint; graph; validation_graph; parity_cases; started_utc",
+     "evidence_type": "runtime_record",
+     "sha256": "771b8987afb315a658a94158d894852e24b1f200790f7ad3249bf00e97cade88"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.piper.json",
+     "locator": "checkpoint; graph; validation_graph; parity_cases; started_utc",
+     "evidence_type": "runtime_record",
+     "sha256": "893c3e1be1e9c8d75736d12bf7809d35ce92b9d4ceb34714a414988476553f81"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/scripts/q05/run_q05_model.py",
+     "locator": "metrics()",
+     "evidence_type": "script_record",
+     "sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/onnx/onnx_inventory_extract.json",
+     "locator": "graphs[*].metadata_props for q05 graphs",
+     "evidence_type": "artifact_metadata_current_prior_round",
+     "sha256": "e8841edcfd1773fd6e6c9f408075f1396a201e5ca0bbc486b8a0f25a295ccb4e"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C011_onnx_export_parity.json",
+     "locator": "models.*.validation_graph_vs_deployed",
+     "evidence_type": "recomputed_from_stored_outputs",
+     "sha256": "5e5f798cd983e516ecaf87a56ff61c225cee6f741b6db9ccca76ea31912cdcab"
+    },
+    {
+     "path": "docs/huggingface-inference-release.json",
+     "locator": "files[*].sha256",
+     "evidence_type": "release_record",
+     "sha256": "c66ab47ec06408e808912c49908bded353df1c9b4f246bedfd59ec69cdb7ef0a"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "transfer-only/q05-parity/baseline/parity_case_00.npz",
+     "locator": "40 parity files (see artifact-manifest transfer_only_inputs)",
+     "evidence_type": "runtime_record",
+     "sha256": "5c14288d48be71bf38347365ad054c32a46b9302c396c949d79b99a94ea8fb79",
+     "availability": "transfer bundle"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (j_c011, j_c011_parity)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C011, sections.J-C011 parity",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "10 inputs per model, ONNX Runtime 1.23.2 CPU, 2 threads; parity under the validation graphs with injected noise.",
+    "Says nothing about the historical benchmark or INT8 graphs (see J-C023/J-C024)."
+   ],
+   "remaining_inputs": []
+  },
+  {
+   "claim_id": "J-C012",
+   "original_claim": "PTQ cuối đã sửa lỗi sample rate của evaluator và có quy trình tái lập.",
+   "original_claim_en": "The final PTQ fixed the evaluator's sample-rate bug and has a reproducible procedure.",
+   "proposed_narrowed_claim": "Not found in the scanned scope: no corrected evaluator, re-run PTQ selection or re-evaluation exists. Treat as future work.",
+   "pc_reported_assessment": "None found (PC README: 'Không có').",
+   "journal_verification": "NOT_CHECKED",
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/search-records.md",
+     "locator": "## J-C012",
+     "evidence_type": "ai_search_log",
+     "sha256": "59a0568884af03f70c45f91f8c27f5b63be09e5000d04fff0632c5a0267e430e"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C010_calibration.json",
+     "locator": "ptq_runs_after_2026-10-04 (empty)",
+     "evidence_type": "current_check_output",
+     "sha256": "615454ed979f884445da6ab82143ff0e6d799a95730cb465b9e6690224ac518d"
+    }
+   ],
+   "calculation_script": null,
+   "calculation_output": null,
+   "limitations": [
+    "Absence is limited to the scanned scope listed in search-records.md."
+   ],
+   "remaining_inputs": [
+    "Corrected evaluator (resampling 22.05 kHz to 16 kHz before Whisper), PTQ selection re-run and its logs."
+   ]
+  },
+  {
+   "claim_id": "J-C013",
+   "original_claim": "Đã đo runtime và memory trên Intel N150, Raspberry Pi 5.",
+   "original_claim_en": "Runtime and memory were measured on Intel N150 and Raspberry Pi 5.",
+   "proposed_narrowed_claim": "Not found in the scanned scope: no device logs. The author plans these measurements once the devices are available.",
+   "pc_reported_assessment": "None found; future work (PC README: 'Không có → future work').",
+   "journal_verification": "NOT_CHECKED",
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/search-records.md",
+     "locator": "## J-C013",
+     "evidence_type": "ai_search_log",
+     "sha256": "59a0568884af03f70c45f91f8c27f5b63be09e5000d04fff0632c5a0267e430e"
+    }
+   ],
+   "calculation_script": null,
+   "calculation_output": null,
+   "limitations": [
+    "The only CPU benchmark package (2026-08-23) ran on the development i7-14700 with an EdgeTTS-era Piper voice."
+   ],
+   "remaining_inputs": [
+    "Device logs (hardware, OS, ORT version, threads, warm-up, repetitions, RSS) for N150 and Pi 5."
+   ]
+  },
+  {
+   "claim_id": "J-C015",
+   "original_claim": "Human listening study xác nhận chất lượng cảm nhận của model triển khai.",
+   "original_claim_en": "A human listening study confirms the perceived quality of the deployed model.",
+   "proposed_narrowed_claim": "Not found in the scanned scope: no listening-study protocol, participants, ratings or analysis. UTMOSv2 is not a substitute.",
+   "pc_reported_assessment": "None found (PC README: 'Không có').",
+   "journal_verification": "NOT_CHECKED",
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/search-records.md",
+     "locator": "## J-C015",
+     "evidence_type": "ai_search_log",
+     "sha256": "59a0568884af03f70c45f91f8c27f5b63be09e5000d04fff0632c5a0267e430e"
+    }
+   ],
+   "calculation_script": null,
+   "calculation_output": null,
+   "limitations": [
+    "Public listening-demo pages are samples, not a study."
+   ],
+   "remaining_inputs": [
+    "Study protocol, participant records, ratings and analysis."
+   ]
+  },
+  {
+   "claim_id": "J-C019",
+   "original_claim": "SEQ có chất lượng tương đương Parallel-IR.",
+   "original_claim_en": "SEQ has quality equivalent to Parallel-IR (MRF).",
+   "proposed_narrowed_claim": "Equivalence was not established: no equivalence margin or test was pre-specified. On Harvard-720 the data describe a runtime-quality trade-off: SEQ minus MRF WER = +0.0149 (fraction of words; paired bootstrap 95% CI [+0.0019, +0.0277], i.e. +0.19 to +2.77 percentage points; Wilcoxon p = 0.052, Holm-adjusted 0.094), UTMOSv2 difference -0.024 (CI [-0.046, -0.001]), with 9.1% lower mean RTF for SEQ.",
+   "pc_reported_assessment": "PC README labels this 'Bị dữ liệu phản bác ở WER' (contradicted on WER). Not adopted: a CI excluding 0 is not an equivalence test.",
+   "journal_verification": "NOT_CHECKED",
+   "values": {
+    "source": "results/prior_audit/harvard_stats_recomputed.json",
+    "source_sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+    "wer": {
+     "scale": "fraction of words, macro mean over 720 utterances",
+     "direction": "SEQ minus MRF (positive = SEQ worse)",
+     "mean_diff": 0.014884108946608946,
+     "ci95": [
+      0.0018842342071508742,
+      0.02768379479316979
+     ],
+     "ci95_percentage_points": [
+      0.18842342071508741,
+      2.7683794793169794
+     ],
+     "wilcoxon_p": 0.05233335068920692,
+     "holm_p": 0.09429160298369935
+    },
+    "utmosv2": {
+     "direction": "SEQ minus MRF",
+     "mean_diff": -0.023726058337423535,
+     "ci95": [
+      -0.04583776266210609,
+      -0.000985595815711556
+     ],
+     "wilcoxon_p": 0.04714580149184967
+    },
+    "interpretation_limit": "a CI that excludes 0 is not an equivalence test; no equivalence margin was declared"
+   },
+   "method": {
+    "bootstrap": "paired, 10,000 resamples of the 720 per-sentence differences, percentile 2.5/97.5, numpy default_rng(20261004) shared across the 15 tests in order",
+    "unit_conversion": "WER fraction x 100 = percentage points (absolute)"
+   },
+   "evidence": [
+    {
+     "path": "results/prior_audit/harvard_stats_recomputed.json",
+     "locator": "paired_tests.seq_vs_mrf_wer; paired_tests.seq_vs_mrf_utmosv2; paired_tests.seq_vs_mrf_rtf",
+     "evidence_type": "recomputed_prior_round",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe"
+    },
+    {
+     "path": "scripts/evaluation/original/recompute_B_stats.py",
+     "locator": "PAIRS loop; bootstrap",
+     "evidence_type": "script_record",
+     "sha256": "187e3c2c68bc3944ca33314d91c3ad9af09a4d754317fb5776051e49799b74a4"
+    }
+   ],
+   "calculation_script": "scripts/evaluation/original/recompute_B_stats.py",
+   "calculation_output": "results/prior_audit/harvard_stats_recomputed.json",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "One synthesis draw, one scorer pass and one training run per model; exploratory statistics.",
+    "Not labelled CONTRADICTED: no equivalence design exists to contradict."
+   ],
+   "remaining_inputs": [
+    "A pre-specified equivalence margin with a matching test (e.g. TOST), if an equivalence claim is wanted."
+   ]
+  },
+  {
+   "claim_id": "J-C023",
+   "original_claim": "Lợi thế tốc độ SEQ được giữ qua PyTorch, ONNX FP32 và INT8.",
+   "original_claim_en": "SEQ's speed advantage holds across PyTorch, ONNX FP32 and INT8.",
+   "proposed_narrowed_claim": "In historical ONNX Runtime CPU runs on the same 500 LJSpeech sentences, SEQ was faster than the ResBlock2 baseline on 495/500 sentences in FP32 (median RTF ratio 0.89) and 498/500 after backbone PTQ (0.84). These are SEQ-vs-baseline results; no identified MRF graph was benchmarked under the same conditions.",
+   "pc_reported_assessment": "Partly supported, SEQ vs baseline (PC README: 'Hỗ trợ một phần').",
+   "journal_verification": "NOT_CHECKED",
+   "comparisons": {
+    "eval_seq_final_fp32_onnx_results.json vs eval_baseline_fp32_onnx_500_results.json": {
+     "paired_sentences": 500,
+     "left_faster": 495,
+     "median_rtf_ratio": 0.889857767960794,
+     "left_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+     "right_sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105"
+    },
+    "eval_seq_final_int8_onnx_results.json vs eval_baseline_ptq_onnx_500_results.json": {
+     "paired_sentences": 500,
+     "left_faster": 498,
+     "median_rtf_ratio": 0.8382592706872578,
+     "left_sha256": "e9324326aad741ac7f2b3269e0982ef6c000111604694ca896480aa59e0e29f5",
+     "right_sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f"
+    },
+    "eval_seq_final_fp32_onnx_results.json vs eval_mrf_fp32_onnx_500_results.json": {
+     "paired_sentences": 21,
+     "left_faster": 21,
+     "median_rtf_ratio": 0.8206795235585391,
+     "left_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+     "right_sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292"
+    }
+   },
+   "graph_table": [
+    {
+     "model": "baseline",
+     "q05_fp32_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+     "benchmark_fp32": "ptq_sweep/baseline_fp32.onnx",
+     "benchmark_fp32_sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+     "benchmark_fp32_relation": "CONFIRMED (named weights): 422/422 named initializers equal checkpoint 1489 (Q05 REPORT.baseline.json)",
+     "benchmark_int8": "ptq_sweep/baseline_flow_enc_p_dp.onnx",
+     "benchmark_int8_sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+     "benchmark_int8_relation": "CONFIRMED (decoder): 45/45 FP32 decoder initializers byte-identical to benchmark_fp32"
+    },
+    {
+     "model": "seq",
+     "q05_fp32_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+     "benchmark_fp32": "seq_final_onnx/seq_final_fp32.onnx",
+     "benchmark_fp32_sha256": "3226c0189cb12f56a5c51ba258228f0a535fa0e7caa19a6059f555eceb74238b",
+     "benchmark_fp32_relation": "CONFIRMED (named weights): 454/454 named initializers equal checkpoint 1442 (Q05 REPORT.seq.json)",
+     "benchmark_int8": "seq_final_onnx/seq_final_int8.onnx",
+     "benchmark_int8_sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+     "benchmark_int8_relation": "CONFIRMED (decoder): 77/77 FP32 decoder initializers byte-identical to benchmark_fp32"
+    },
+    {
+     "model": "mrf",
+     "q05_fp32_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+     "benchmark_fp32": "ptq_sweep/mrf_fp32.onnx",
+     "benchmark_fp32_sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+     "benchmark_fp32_relation": "NOT LINKED: 0/478 named initializers equal checkpoint 1386; source checkpoint unidentified",
+     "benchmark_int8": "ptq_sweep/mrf_flow_enc_p_dp.onnx",
+     "benchmark_int8_sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+     "benchmark_int8_relation": "derived from benchmark_fp32 (101/101 decoder initializers identical), hence equally unidentified"
+    }
+   ],
+   "why_mrf_gap": "The Q05 MRF graph was exported on 2026-10-04 from checkpoint 1386 with the checkpoint hash written into its metadata. The historical benchmark used ptq_sweep/mrf_fp32.onnx (no metadata), whose named weights match none of checkpoint 1386's 478 tensors, so it came from another checkpoint/export that cannot be identified from the records. The historical MRF run also used a different 500-sentence set (21 sentences shared with SEQ).",
+   "protocol_from_records": "ONNX Runtime CPU, intra-op 2 threads, inter-op 1, no warm-up, one timing per utterance; runs made on different days (2026-09-19 and 2026-09-30, per the round-7 audit record cited in the PC output).",
+   "pytorch_level": "Harvard-720 PyTorch runs: SEQ mean RTF 9.08% below MRF (results/prior_audit/harvard_stats_recomputed.json paired_tests.seq_vs_mrf_rtf).",
+   "evidence": [
+    {
+     "path": "results/historical/onnx_historical/eval_seq_final_fp32_onnx_results.json",
+     "locator": "per-utterance rtf",
+     "evidence_type": "historical_result",
+     "sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860"
+    },
+    {
+     "path": "results/historical/onnx_historical/eval_baseline_fp32_onnx_500_results.json",
+     "locator": "per-utterance rtf",
+     "evidence_type": "historical_result",
+     "sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105"
+    },
+    {
+     "path": "results/historical/onnx_historical/eval_seq_final_int8_onnx_results.json",
+     "locator": "per-utterance rtf",
+     "evidence_type": "historical_result",
+     "sha256": "e9324326aad741ac7f2b3269e0982ef6c000111604694ca896480aa59e0e29f5"
+    },
+    {
+     "path": "results/historical/onnx_historical/eval_baseline_ptq_onnx_500_results.json",
+     "locator": "per-utterance rtf",
+     "evidence_type": "historical_result",
+     "sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f"
+    },
+    {
+     "path": "results/historical/onnx_historical/eval_mrf_fp32_onnx_500_results.json",
+     "locator": "per-utterance rtf",
+     "evidence_type": "historical_result",
+     "sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.baseline.json",
+     "locator": "historical_named_weight_comparison",
+     "evidence_type": "runtime_record",
+     "sha256": "7fb5d3b586f7043e9e5cd9793271e6e71dc42df061f73ccec9239bac7bd0dec7"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.mrf.json",
+     "locator": "historical_named_weight_comparison",
+     "evidence_type": "runtime_record",
+     "sha256": "61241c5e8296c5b8b2df6a78c3fc4866abbd7733532701a6d4e54c7600a3f396"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.seq.json",
+     "locator": "historical_named_weight_comparison",
+     "evidence_type": "runtime_record",
+     "sha256": "771b8987afb315a658a94158d894852e24b1f200790f7ad3249bf00e97cade88"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C023_onnx_speed_history.json",
+     "locator": "comparisons; runtime",
+     "evidence_type": "recomputed_from_stored_outputs",
+     "sha256": "42552d963edef5b78cf09e4c025b80832c34c192e7292e1f22169619aaf59e4a"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (j_c023; graphs)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C023",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "Historical graphs, not the Q05 graphs; the Q05 graphs have not been timed.",
+    "SEQ's INT8 scope is wider (40 extra QLinearMatMul), so the INT8 comparison mixes architecture and quantization scope.",
+    "Single timing per utterance without warm-up, on the development workstation."
+   ],
+   "remaining_inputs": [
+    "Timing of the Q05 graphs (and a PTQ of them) for all models under one protocol, if a deployed-model speed claim is wanted."
+   ]
+  },
+  {
+   "claim_id": "J-C024",
+   "original_claim": "PTQ thực tế đúng toàn bộ recipe: QOperator, INT8/UINT8, per-channel, 60 câu, đúng các module; decoder FP32.",
+   "original_claim_en": "The executed PTQ followed the full recipe: QOperator, INT8/UINT8, per-channel, 60 sentences, the stated modules; decoder kept FP32.",
+   "proposed_narrowed_claim": "The historical INT8 graphs of baseline (checkpoint 1489) and SEQ (checkpoint 1442) use QOperator QLinearConv with per-channel INT8 weights and UINT8 activations on 133 convolutions (enc_p 37, dp 32, flow 64) and no quantized op under /dec/; the SEQ graph also quantizes 40 attention MatMuls (enc_p 24, flow 16). Calibration used 60 sentences drawn from the whole dataset (57 train, 3 test).",
+   "pc_reported_assessment": "Partly supported, historical PTQ (PC README: 'Hỗ trợ một phần').",
+   "journal_verification": "NOT_CHECKED",
+   "int8_graphs": {
+    "baseline_flow_enc_p_dp.onnx": {
+     "graph_sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+     "qlinear_ops": {
+      "QLinearConv": 133
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    },
+    "mrf_flow_enc_p_dp.onnx": {
+     "graph_sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+     "qlinear_ops": {
+      "QLinearConv": 133
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    },
+    "seq_final_int8.onnx": {
+     "graph_sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+     "qlinear_ops": {
+      "QLinearConv": 133,
+      "QLinearMatMul": 40
+     },
+     "by_top_module": {
+      "enc_p": {
+       "QLinearConv": 37,
+       "QLinearMatMul": 24
+      },
+      "dp": {
+       "QLinearConv": 32
+      },
+      "flow": {
+       "QLinearConv": 64,
+       "QLinearMatMul": 16
+      }
+     },
+     "qlinearconv_weight_dtypes": {
+      "INT8": 133
+     },
+     "qlinearconv_input_zero_point_dtypes": {
+      "UINT8": 133
+     },
+     "qlinearconv_per_channel": 133,
+     "quantized_ops_under_dec": 0
+    }
+   },
+   "scope_per_model": {
+    "baseline": "QLinearConv 133 (enc_p 37, dp 32, flow 64); 0 QLinearMatMul",
+    "seq": "QLinearConv 133 + QLinearMatMul 40 (enc_p 24, flow 16)",
+    "mrf": "QLinearConv 133 (same scope as baseline) but the source FP32 graph is unidentified (see J-C023)",
+    "piper": "no INT8 graph"
+   },
+   "calibration": "see J-C010 calibration_actually_used (historical rule, 57 train / 3 test); the 60/60 train-only candidate set was not used",
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C024_J-C025_graph_structure.json",
+     "locator": "historical_int8_graphs",
+     "evidence_type": "current_check_output",
+     "sha256": "5da48b3f2e1e0055c1ce8e6951269e9cbd55d5886b12fdc7efe72485e3d9a5ae"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/ptq_quantize.py",
+     "locator": "quantize_static arguments; in_scope()",
+     "evidence_type": "script_record",
+     "sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx",
+     "locator": "QLinear nodes",
+     "evidence_type": "onnx_historical",
+     "sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+     "availability": "workstation only"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "/tmp/seq_final_onnx/seq_final_int8.onnx",
+     "locator": "QLinear nodes",
+     "evidence_type": "onnx_historical",
+     "sha256": "e6e306451f93dedefeec9ae46cf257c537fd272c9bac15909cd7bd582e9a708c",
+     "availability": "workstation only"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (graphs, needs --graph-dir)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C024",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "Describes historical PTQ graphs, not a 'final' PTQ of the Q05 graphs.",
+    "The quantize command lines for the baseline sweep come from scripts and logs, not from metadata stored in the graphs."
+   ],
+   "remaining_inputs": [
+    "PTQ of the Q05 graphs with a saved calibration manifest, if a final-PTQ claim is wanted."
+   ]
+  },
+  {
+   "claim_id": "J-C025",
+   "original_claim": "Toàn bộ mô tả flow, số tham số và phạm vi node /flow/ trong PTQ đều đúng với model liên quan.",
+   "original_claim_en": "The flow description, its parameter count and the /flow/ node scope in PTQ are all correct for the models concerned.",
+   "proposed_narrowed_claim": "In the Q05 FP32 graphs the flow of baseline, MRF and SEQ holds 8,285,568 initializer elements (weights and biases) and contains 64 Conv, 16 MatMul, 4 Softmax and 8 LayerNormalization nodes; Piper's flow holds 7,090,560 after removing weight-norm gains, with 40 Conv and no attention ops. Separately, the historical PTQ quantized all 64 flow convolutions, and the flow attention MatMuls only in SEQ.",
+   "pc_reported_assessment": "Supported in narrowed, artifact-specific form (PC README: 'Hỗ trợ (thu hẹp về artifact cụ thể)').",
+   "journal_verification": "NOT_CHECKED",
+   "counting_method": "Sum of elements of the unique initializers consumed by nodes named /flow/* or whose name starts with 'flow.'; includes weights and biases (bias elements reported separately); no initializer is shared with non-flow nodes; for Piper the weight_g tensors are subtracted (weight norm not folded in its export). Constant-node tensors inside /flow/ (754 elements internal, 176 Piper) are not counted. Buffers are not initializers unless exported as such.",
+   "per_graph": {
+    "baseline": {
+     "graph_sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "mrf": {
+     "graph_sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "seq": {
+     "graph_sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "flow_initializer_elements": 8285568,
+     "flow_bias_elements": 18048,
+     "flow_weight_g_elements": 0,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 754,
+     "flow_ops": {
+      "Conv": 64,
+      "MatMul": 16,
+      "Softmax": 4,
+      "LayerNormalization": 8
+     }
+    },
+    "piper": {
+     "graph_sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+     "flow_initializer_elements": 7102080,
+     "flow_bias_elements": 12672,
+     "flow_weight_g_elements": 11520,
+     "flow_initializers_shared_with_non_flow_nodes": [],
+     "flow_constant_node_elements": 176,
+     "flow_ops": {
+      "Conv": 40,
+      "MatMul": 0,
+      "Softmax": 0,
+      "LayerNormalization": 0
+     }
+    }
+   },
+   "interpretation_limits": [
+    "Op counts identify graph operators, not module types: 4 Softmax nodes show 4 attention softmaxes in the exported flow, not the number of heads or layer design.",
+    "The architecture description (what the flow is) and the PTQ /flow/ scope (which flow nodes were quantized in historical graphs) are separate statements; see J-C024 for the latter."
+   ],
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C024_J-C025_graph_structure.json",
+     "locator": "flow_in_q05_fp32_graphs; flow_counts_reference",
+     "evidence_type": "current_check_output",
+     "sha256": "5da48b3f2e1e0055c1ce8e6951269e9cbd55d5886b12fdc7efe72485e3d9a5ae"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/baseline/baseline_fp32.onnx",
+     "locator": "initializers and /flow/ nodes",
+     "evidence_type": "onnx_fp32_q05",
+     "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+     "availability": "public HF inference repo DazielNguyen/hifi-mobiNet-inference @ f760e85a"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/mrf/mrf_fp32.onnx",
+     "locator": "initializers and /flow/ nodes",
+     "evidence_type": "onnx_fp32_q05",
+     "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+     "availability": "public HF inference repo DazielNguyen/hifi-mobiNet-inference @ f760e85a"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/seq/seq_fp32.onnx",
+     "locator": "initializers and /flow/ nodes",
+     "evidence_type": "onnx_fp32_q05",
+     "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+     "availability": "public HF inference repo DazielNguyen/hifi-mobiNet-inference @ f760e85a"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "wsl-project:paper_evidence/q05_2026-10-04T000830Z/piper/piper_fp32.onnx",
+     "locator": "initializers and /flow/ nodes",
+     "evidence_type": "onnx_fp32_q05",
+     "sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+     "availability": "public HF inference repo DazielNguyen/hifi-mobiNet-inference @ f760e85a"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (graphs, needs --graph-dir)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C025",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "Counts are tied to the four Q05 graphs listed with their SHA-256; other exports may differ."
+   ],
+   "remaining_inputs": []
+  },
+  {
+   "claim_id": "J-C026",
+   "original_claim": "Harvard-720 chưa từng được bất kỳ model nào trong so sánh nhìn thấy.",
+   "original_claim_en": "Harvard-720 was never seen by any model in the comparison.",
+   "proposed_narrowed_claim": "At text level, no Harvard-720 sentence occurs in the 13,100 LJSpeech transcripts used to train the three project models (0 exact matches under two normalizations, 0 shared 6-grams, 0 identical phoneme-ID sequences), and the published Piper checkpoint, whose SHA-256 equals the public LFS object, is described by its model card as trained from scratch on LJ Speech.",
+   "pc_reported_assessment": "Supported at text level for all four models (PC README: 'Hỗ trợ ở mức văn bản cho cả 4 model').",
+   "journal_verification": "NOT_CHECKED",
+   "public_source": {
+    "model_card_url": "https://huggingface.co/rhasspy/piper-voices/raw/main/en/en_US/ljspeech/medium/MODEL_CARD",
+    "model_card_quote": "Trained from scratch for 1000 epochs on medium quality settings using the LJ Speech dataset.",
+    "piper_voices_revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+    "piper_checkpoints_revision": "37d1bea250e21ca0d617818d2bef1db724edb80c",
+    "accessed_utc": [
+     "2026-10-07T04:08:41Z",
+     "2026-10-07T04:29:10Z"
+    ],
+    "checkpoint_comparison": "project lj-med_1000.ckpt SHA-256 dcf2449b... equals the published LFS oid (verified at download 2026-09-30 and again now)"
+   },
+   "text_overlap": {
+    "n_ljspeech": 13100,
+    "n_harvard": 720,
+    "exact_sentence_overlap_alnum_lower": 0,
+    "exact_sentence_overlap_wer_normalization": 0,
+    "harvard_sentences_sharing_any_4gram": 37,
+    "harvard_sentences_sharing_any_5gram": 7,
+    "harvard_sentences_sharing_any_6gram": 0,
+    "exact_phoneme_id_sequence_overlap": 0
+   },
+   "normalization": {
+    "n1": "lowercase, drop all characters except a-z and space, collapse spaces (exact and n-gram checks)",
+    "n2": "jiwer ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip (exact check)"
+   },
+   "evidence": [
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_voices_ljspeech_medium_MODEL_CARD.txt",
+     "locator": "## Training",
+     "evidence_type": "public_source",
+     "sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_revision_record_2026-10-07.json",
+     "locator": "repositories; stored_model_card",
+     "evidence_type": "public_source",
+     "sha256": "332d2eb8d731b1c269f62207df29c6429b67e126393a7961ac6ed8c7512e6443"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_checkpoints_listing.json",
+     "locator": "lj-med_1000.ckpt lfs.oid",
+     "evidence_type": "public_source",
+     "sha256": "6c9bdd483be311b2048f5214bddd9dddf46e8d9928e7a46cdca91031f71a37af"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/public/piper_download_manifest_2026-09-30.json",
+     "locator": "files[0]",
+     "evidence_type": "public_source_download_record",
+     "sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/piper_checkpoint_hparams.json",
+     "locator": "dataset; max_epochs; resume_from_checkpoint",
+     "evidence_type": "artifact_metadata_extracted_prior_round",
+     "sha256": "722080311522508903f1fd8b648bf6d314621470d72099f92d5b3df4c99f569c"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/source-records/data-overlap/data_split_checks_recomputed.json",
+     "locator": "exact_*; harvard_sentences_sharing_*; exact_phoneme_id_sequence_overlap",
+     "evidence_type": "recomputed_prior_round",
+     "sha256": "49b5a9198ea81446098710d67cc65a15da2700f3a824192e4ce1d8a80f268bbd"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/collect_C_data_split.py",
+     "locator": "n1/n2; n-gram loop",
+     "evidence_type": "script_record",
+     "sha256": "2fa2db44bca1334d7799868d4b7a2c330c2cf13d6e0ce8b1393d07647d572f7d"
+    },
+    {
+     "path": "results/manifests/harvard720.json",
+     "locator": "text; phoneme_ids",
+     "evidence_type": "manifest",
+     "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/outputs/pc/J-C026_harvard_exposure.json",
+     "locator": "phoneme_id_maps; piper_checkpoint_hparams",
+     "evidence_type": "current_check_output",
+     "sha256": "32b48521d00b1328cf6d572172c28d1f1f9e64f4241cfba31a1f5f14311d9d2c"
+    },
+    {
+     "path": "docs/evidence/claim-evidence-2026-10-07/artifact-manifest.json",
+     "artifact": "transfer-only/dataset/dataset.jsonl",
+     "locator": "13,100 transcripts",
+     "evidence_type": "artifact_current",
+     "sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+     "availability": "transfer bundle"
+    }
+   ],
+   "calculation_script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py (j_c026; recompute with --dataset-jsonl)",
+   "calculation_output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json#sections.J-C026",
+   "verification": {
+    "script": "docs/evidence/claim-evidence-2026-10-07/scripts/verify_stored_outputs.py",
+    "output": "docs/evidence/claim-evidence-2026-10-07/outputs/verify_report.json"
+   },
+   "limitations": [
+    "Text-level comparison only; it does not show that a model 'never saw' Harvard material.",
+    "Piper's actual training transcripts are not available; its training data are taken from the model card.",
+    "Audio-level similarity and the training data of Whisper and UTMOSv2 are not checked.",
+    "37 Harvard sentences share a 4-gram and 7 share a 5-gram with LJSpeech text (common phrases)."
+   ],
+   "remaining_inputs": [
+    "Piper's training dataset manifest, if a stronger statement about Piper is wanted."
+   ]
+  }
+ ]
+}
