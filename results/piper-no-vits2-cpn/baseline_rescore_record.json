@@ -1,0 +1,40 @@
+{
+ "created_utc": "2026-10-10T17:21:38.157357+00:00",
+ "synth_record": "baseline_ctrl_synth_record.json",
+ "synth_record_sha256": "b627abe3ee5d322b656d1116665b5df60816e34609e37dc6be0577a9fb3b5844",
+ "model_id": "baseline-resblock2 (historical checkpoint; original BanhmiTTS synth_banhmi.py)",
+ "checkpoint": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+ "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+ "scorers": {
+  "utmosv2": {
+   "package": "1.3.1.dev0",
+   "config": "fusion_stage3",
+   "fold": 0,
+   "weights": "fold0_s42_best_model.pth",
+   "weights_sha256": "c8149d988e4bbf3f347e6966b5d769de347a5f8c59ffca1dc4bd4bf5b8585e57",
+   "repetitions_per_wav": 1,
+   "explicit_seed": null
+  },
+  "whisper": {
+   "package": "20250625",
+   "model": "small",
+   "weights_sha256": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794",
+   "language": "en",
+   "fp16": false,
+   "input": "WAV path (Whisper resamples to 16 kHz)"
+  },
+  "jiwer": "4.0.0",
+  "wer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfWords",
+  "hf_offline": true
+ },
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "torch": "2.13.0+cu130",
+  "numpy": "1.26.4",
+  "soundfile": "0.14.0"
+ },
+ "wall_time_s": 2265.178260998917,
+ "results_file": "harvard_baseline_rescored_results.json",
+ "results_sha256": "b3ac5a480d9779d490ed835330ef2b9de911812a401cfb1616b432e5df289819"
+}

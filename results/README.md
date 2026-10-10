@@ -40,5 +40,15 @@ observations, not variation across training runs or hardware. Non-significance
 does not establish equivalence, and recipe/split differences prevent a claim of
 decoder-only causation.
 
+## New measurements
+
+`piper-no-vits2-cpn/` holds the first new measurements in this repository (2026-10-10/11):
+the Harvard-720 evaluation of `Piper_no_VITS2_cpn`, the baseline without the VITS2
+components. It contains its own README, per-sentence results, scorer records, paired
+comparisons with the historical files above, and same-session controls. These files
+add to the historical tables above and do not replace them. The historical RTF values
+are not comparable with RTF measured in that session (a timing drift of +8.3% was
+measured on the same baseline model).
+
 Public redistribution of sentence collections, result records and generated
 audio remains an author decision. Local inclusion does not assert those rights.

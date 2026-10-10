@@ -240,8 +240,102 @@
         "Not bound to Q05 FP32 artifacts. MRF legacy graph does not match epoch 1386.",
         "Calibration overlap and unequal PTQ scope; exploratory only."
       ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/training_summary.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "6223152d8bb66f2588656ca4042b224b307752e48a2bb7ca8fe5d261f06e958a",
+      "classification": "new_summary_of_run_logs",
+      "n": 1500,
+      "limits": [
+        "Validation loss on 100 utterances; best epoch is a noise-selected minimum."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/harvard720_synth_record.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "72bee8b472b6a0307d68359bfafb5cad36637600fd08e3e44079f033e7cb7c70",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "CPU timing in one session (2026-10-10); not comparable with RTF from other sessions (see session_control.json)."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/harvard_piper_no_vits2_cpn_results.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "4ee3ac35743286cf3e7f1dfb0fad83137a1701f23b3e6f5e2469d7b7e431cfc0",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Not a single-component ablation: the baseline and this model also differ in codebase (docs/training/piper-component-comparison.md).",
+        "RTF from the 2026-10-10 session; compare only with the same-session control."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/score_record.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "b139fedf83619f79bd70be6fc72c6448510dcd67a1f0809c2d276ef2fe7c0d36",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/comparison.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "6a1e44c498221fecec6a6bb181e8e03bd33964174d062e3fb279169e69287b38",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Not a single-component ablation: the baseline and this model also differ in codebase (docs/training/piper-component-comparison.md).",
+        "RTF tests against historical rows are cross-session and confounded by an 8.3% timing drift."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/session_control.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "0ee684e0f746238d04b2554bbc77e21c88b1e22b69cab985cb67111bd0eb5350",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; different code bases with the same torch build."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/harvard_baseline_rescored_results.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "b3ac5a480d9779d490ed835330ef2b9de911812a401cfb1616b432e5df289819",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "Rescoring of byte-identical historical baseline WAVs; RTF fields are from the control synthesis."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/baseline_rescore_record.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "e2f67f22931f4d8658bcd6f43c6268878eaef77b571d866969db45adbde49a38",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": [
+        "Cites a synthesis record kept outside Git (contains host paths)."
+      ]
+    },
+    {
+      "file": "results/piper-no-vits2-cpn/scorer_control.json",
+      "source": "new run in this repository (2026-10-10/11); see results/piper-no-vits2-cpn/README.md",
+      "sha256": "6731a7d408a251e0ff7aec3d1b66749078d10d97941a557acf8db6f3606b98c3",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
     }
   ],
-  "status": "historical_observations_only",
+  "status": "historical_observations_and_new_measurements",
   "release_rights": "pending_author_review"
 }

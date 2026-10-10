@@ -111,3 +111,25 @@ a73a897), **P** = `vendor/piper/vits/` (rhasspy 73c04d8, reference).
   overridden; the harness overrides it with Lightning's own default body. The
   existing BanhmiTTS interpreter has the same versions and the same failure.
 - Checkpoints written by the harness load with `torch.load(weights_only=True)`.
+
+## 6. Outcome (2026-10-10/11)
+
+The 1,500-epoch run finished on 2026-10-10. The selected checkpoint is epoch 1403,
+`val_loss_mel` 19.7719 (SHA-256 `2eeff535…`). On Harvard-720, with the historical
+protocol, it is compared with the stored baseline (with VITS2) results:
+
+| | Without VITS2 | Baseline with VITS2 |
+|---|---:|---:|
+| UTMOSv2 (predicted) | 3.517 | 3.026 |
+| Macro WER | 0.061 | 0.148 |
+| RTF, same session | 0.0421 | 0.0452 |
+
+The validation mel loss is nearly equal (window means within 0.08).
+
+Controls:
+- Re-synthesis reproduced the historical baseline WAVs byte for byte.
+- Rescoring them reproduced every Whisper transcript.
+
+The reading in section 3 still applies: the VITS2 package is removed as a whole and the
+codebases differ, so this is not a single-component ablation. Full results, controls and
+limits: `results/piper-no-vits2-cpn/README.md`.

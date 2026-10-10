@@ -9,7 +9,12 @@ checkpoint every epoch, best `val_loss_mel` + last.
 
 Everything lives inside a hifi-mobiNet clone on the Linux filesystem: code,
 the staged dataset (`data/`) and the run (`training_output/`). Both directories
-are Git-ignored. Nothing below has been started.
+are Git-ignored.
+
+Status:
+- The run started 2026-10-06 and finished 2026-10-10 (1,500 epochs).
+- It was evaluated on Harvard-720 on 2026-10-10/11; see `results/piper-no-vits2-cpn/README.md`.
+- The test-500 evaluation is still open (section 4).
 
 ## 1. One-time preparation (inside the clone)
 
