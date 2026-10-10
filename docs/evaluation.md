@@ -62,6 +62,13 @@ python scripts/evaluation/harvard/compare.py --candidate results/<model>/harvard
   - It is not an equivalence test.
 - **`scripts/training/summarize_run.py`** reads the per-epoch `val_loss_mel` of a finished run, and optionally of a reference run, from TensorBoard scalars. It also lists checkpoint hashes.
 
+Two controls separate model differences from session effects:
+- **`session_control.py`:** re-synthesizes a historical model with its original script in the same session, then records:
+  - whether its WAVs are byte-identical to the historical WAVs;
+  - the RTF drift against the stored values;
+  - a paired same-session RTF comparison with the new model.
+- **`scorer_control.py`:** compares today's scores of byte-identical historical WAVs with the stored scores.
+
 UTMOSv2 crops randomly and the historical protocol does not seed it. The same WAV
 can therefore score slightly differently in another scoring session.
 
