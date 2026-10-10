@@ -29,6 +29,42 @@ and ordering. LJSpeech-500 MRF has a different test manifest; it must not be fed
 into a paired comparison against the other models. Harvard-720 comparisons are
 paired by sentence, but this does not establish independence from model selection.
 
+## Harvard-720 evaluation of newly trained checkpoints
+
+`scripts/evaluation/harvard/` runs the historical Harvard protocol on a checkpoint
+trained by this repository's harness. It runs strictly one step at a time.
+
+```sh
+# training venv, from the checkout root (relative paths keep records host-independent)
+python scripts/evaluation/harvard/synthesize.py --config <config.yaml> --checkpoint <ckpt> \
+  --manifest results/manifests/harvard720.json --wav-dir <run>/eval/harvard720/wavs --output <run>/eval/harvard720/synth.json
+# scorer environment (UTMOSv2, Whisper, JiWER), same directory
+python scripts/evaluation/harvard/score.py --synth <run>/eval/harvard720/synth.json \
+  --output results/<model>/harvard_<label>_results.json --record results/<model>/score_record.json
+python scripts/evaluation/harvard/compare.py --candidate results/<model>/harvard_<label>_results.json \
+  --label <label> --reference-dir results/historical/harvard --output results/<model>/comparison.json
+```
+
+- **`synthesize.py`** reproduces the historical synthesis settings:
+  - PyTorch FP32 on CPU, scales 0.667/1.0/0.8;
+  - `torch.manual_seed(1234)` before every utterance;
+  - decoder weight norm removed; only the forward call is timed.
+  - The checkpoint is loaded strictly (`weights_only=True`). Its stored hyper-parameters must equal the config.
+- **`score.py`** is the historical `score.py` with arguments added:
+  - UTMOSv2 `fusion_stage3` fold 0, one prediction per WAV, without explicit seeding;
+  - Whisper `small` on the WAV path, `language="en"`, `fp16=False`;
+  - the WER transform above.
+  - Additions: Hugging Face is forced offline, WAV hashes are checked, and scorer weight hashes are recorded.
+- **`compare.py`** pairs the new results with `results/historical/harvard/`, using `hifimobinet.evaluation`:
+  - Wilcoxon and Mann–Whitney tests;
+  - a paired bootstrap of the mean difference (10,000 resamples, a fresh `default_rng(20261004)` per comparison);
+  - an exploratory Holm adjustment.
+  - It is not an equivalence test.
+- **`scripts/training/summarize_run.py`** reads the per-epoch `val_loss_mel` of a finished run, and optionally of a reference run, from TensorBoard scalars. It also lists checkpoint hashes.
+
+UTMOSv2 crops randomly and the historical protocol does not seed it. The same WAV
+can therefore score slightly differently in another scoring session.
+
 Full acoustic rescoring requires the original local Whisper-small/UTMOSv2
 artifacts, installation identities and waveform handling protocol. Historical
 scorers were inspected and indexed; no automatic scorer-weight download is
