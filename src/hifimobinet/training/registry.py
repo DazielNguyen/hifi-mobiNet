@@ -28,6 +28,11 @@ def _piper():
     return PiperNoVits2Module
 
 
+def _piper_ir():
+    from .piper_ir_module import PiperIRNoVits2Module
+    return PiperIRNoVits2Module
+
+
 TRAINING_MODELS: Dict[str, TrainingModel] = {
     "baseline-resblock2-vits2": TrainingModel(
         "baseline-resblock2-vits2", "banhmi",
@@ -40,6 +45,18 @@ TRAINING_MODELS: Dict[str, TrainingModel] = {
         "EdgeTTS Config A: vanilla Piper (EdgeTTS a73a897, fork of rhasspy/piper 73c04d8) with "
         "BigVGAN, VITS2 and F0 flags off, trained from scratch in the project harness",
         _piper,
+    ),
+    "Piper_ParIR_no_VITS2_cpn": TrainingModel(
+        "Piper_ParIR_no_VITS2_cpn", "edgetts",
+        "Piper-ParIR: the Piper_no_VITS2_cpn backbone (EdgeTTS Config A) with the released Parallel-IR "
+        "decoder bundle (three parallel inverted-residual branches, kernels 3/5/7, expansion 1, SnakeBeta, MRD)",
+        _piper_ir,
+    ),
+    "Piper_SeqIR_no_VITS2_cpn": TrainingModel(
+        "Piper_SeqIR_no_VITS2_cpn", "edgetts",
+        "Piper-SeqIR: the Piper_no_VITS2_cpn backbone (EdgeTTS Config A) with the released Sequential-IR "
+        "decoder bundle (two sequential inverted-residual blocks, kernel 3, expansion 1, SnakeBeta, MRD)",
+        _piper_ir,
     ),
 }
 

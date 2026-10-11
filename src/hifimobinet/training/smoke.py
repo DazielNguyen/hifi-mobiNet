@@ -136,6 +136,9 @@ class SmokeChecks(Callback):
         self.r.set("generator_updates", "pass" if changed["model_g"]["changed"] > 0 else "fail", changed["model_g"])
         self.r.set("waveform_discriminator_updates", "pass" if changed["model_d"]["changed"] > 0 else "fail",
                    changed["model_d"])
+        if "model_d_mrd" in changed:
+            self.r.set("mrd_discriminator_updates", "pass" if changed["model_d_mrd"]["changed"] > 0 else "fail",
+                       changed["model_d_mrd"])
         if "model_d_dur" in changed:
             self.r.set("duration_discriminator_updates",
                        "pass" if changed["model_d_dur"]["changed"] > 0 else "fail", changed["model_d_dur"])
@@ -202,6 +205,42 @@ def vits2_absence(module, report: Report) -> None:
         "text_encoder_attention_classes_kept": text_attention, "switches": switches,
         "discriminators_absent": absent, "children": [n for n, _ in module.named_children()],
     })
+
+
+IR_EXPECTED = {"Piper_ParIR_no_VITS2_cpn": ("mrf", [[(3, 1), (5, 1), (7, 1)]] * 3),
+               "Piper_SeqIR_no_VITS2_cpn": ("mb", [[(3, 1), (3, 1)]] * 3)}
+
+
+def ir_bundle_checks(module, report: Report, model_id: str) -> None:
+    """Config A backbone with the released IR decoder bundle: no VITS2 or F0
+    parts; inverted-residual decoder with SnakeBeta only inside the decoder;
+    the three-resolution MRD discriminator."""
+    g = module.model_g
+    names = sorted({type(m).__name__ for m in module.modules()})
+    vits2 = [n for n in names if any(k in n for k in ("DurationDiscriminator", "TransformerCoupling", "F0Predictor"))]
+    flow_attention = sorted({type(m).__name__ for m in g.flow.modules() if "Attention" in type(m).__name__})
+    switches = {"use_noised_mas": getattr(g, "use_noised_mas", None), "use_f0": getattr(g, "use_f0", None),
+                "flow.use_transformer_flows": getattr(g.flow, "use_transformer_flows", None)}
+    ok = not vits2 and not flow_attention and not any(switches.values()) and module.model_d_dur is None
+    report.set("no_vits2_modules_or_optimizer_groups", "pass" if ok else "fail", {
+        "vits2_or_f0_classes": vits2, "flow_attention_classes": flow_attention, "switches": switches,
+        "model_d_dur_absent": module.model_d_dur is None, "children": [n for n, _ in module.named_children()]})
+    resblock, expected = IR_EXPECTED[model_id]
+    dec = g.dec
+    blocks = [[(b.dw.kernel_size[0], b.pw_expand.out_channels // b.pw_expand.in_channels) for b in stage]
+              for stage in (dec.mb_blocks or [])]
+    dec_activations = sorted({type(m).__name__ for m in dec.modules() if "Snake" in type(m).__name__ or "LeakyReLU" in type(m).__name__})
+    snake_outside = sorted({n.split(".")[0] + "." + n.split(".")[1] for n, m in module.named_modules()
+                            if "Snake" in type(m).__name__ and not n.startswith("model_g.dec.")})
+    mrd = getattr(module, "model_d_mrd", None)
+    resolutions = [list(d.resolution) for d in mrd.discriminators] if mrd is not None else None
+    ok = (getattr(dec, "resblock_mode", None) == resblock and blocks == expected and dec_activations == ["SnakeBeta"]
+          and not snake_outside and type(mrd).__name__ == "MultiResolutionDiscriminator" and resolutions is not None
+          and len(resolutions) == 3 and module.hparams.resblock == resblock)
+    report.set("ir_decoder_bundle", "pass" if ok else "fail", {
+        "decoder_class": type(dec).__name__, "resblock_mode": getattr(dec, "resblock_mode", None),
+        "blocks_per_stage_kernel_expansion": blocks, "decoder_activation_classes": dec_activations,
+        "snake_outside_decoder": snake_outside, "mrd_class": type(mrd).__name__, "mrd_resolutions": resolutions})
 
 
 def vits2_presence(module, report: Report) -> None:
@@ -278,6 +317,8 @@ def main(argv: Optional[List[str]] = None) -> None:
             for i in range(len(data.train))) else "fail", "tensor IDs equal dataset.jsonl rows")
         if config.model_id == "Piper_no_VITS2_cpn":
             vits2_absence(module, report)
+        elif config.model_id in IR_EXPECTED:
+            ir_bundle_checks(module, report, config.model_id)
         else:
             vits2_presence(module, report)
         hop, seg = module.hparams.hop_length, module.hparams.segment_size
@@ -298,6 +339,16 @@ def main(argv: Optional[List[str]] = None) -> None:
             noise = "mas_noise_scale" in metrics
             report.set("no_vits2_losses_logged", "fail" if nonzero or noise else "pass",
                        {"nonzero_component_losses": nonzero, "mas_noise_scale_logged": noise})
+        elif config.model_id in IR_EXPECTED:
+            # Duration-discriminator and F0 losses must be exactly zero; the MRD
+            # terms must be logged and non-zero (the discriminator is active).
+            metrics = trainer_a.callback_metrics
+            nonzero = [m for m in ("loss_dur_gen", "loss_disc_dur", "loss_f0") if m in metrics and float(metrics[m]) != 0.0]
+            mrd = {m: float(metrics[m]) if m in metrics else None for m in ("loss_gen_mrd", "loss_disc_mrd")}
+            noise = "mas_noise_scale" in metrics
+            ok = not nonzero and not noise and all(v not in (None, 0.0) for v in mrd.values())
+            report.set("component_losses_logged", "pass" if ok else "fail",
+                       {"nonzero_vits2_or_f0_losses": nonzero, "mrd_losses": mrd, "mas_noise_scale_logged": noise})
         else:
             needed = [m for m in VITS2_METRICS if m not in trainer_a.callback_metrics]
             report.set("vits2_losses_logged", "fail" if needed else "pass", {"missing": needed})
@@ -339,7 +390,7 @@ def main(argv: Optional[List[str]] = None) -> None:
     else:
         report.set("run_completed", "pass")
     for name in ("duration_discriminator_updates",):
-        if config.model_id == "Piper_no_VITS2_cpn":
+        if config.model_id == "Piper_no_VITS2_cpn" or config.model_id in IR_EXPECTED:
             report.checks.setdefault(name, {"status": "not_applicable", "detail": "model has no duration discriminator"})
     out["checks"] = report.checks
     out["summary"] = {s: sorted(k for k, v in report.checks.items() if v["status"] == s)

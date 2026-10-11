@@ -40,10 +40,19 @@ MODEL_KEYS = {
     # EdgeTTS (Piper fork) hard-codes posterior-encoder/flow sizes inside
     # SynthesizerTrn; only the knobs its VitsModel exposes are accepted here.
     "Piper_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp", "use_bigvgan", "use_vits2", "use_f0"},
+    # Config A backbone + released IR decoder bundle (piper_ir_module.py): only
+    # the settings each decoder actually reads, plus the explicit MRD switch.
+    "Piper_ParIR_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp", "use_bigvgan", "use_vits2", "use_f0",
+                                                 "mb_expansion", "mb_mrf_kernel_sizes", "use_mrd"},
+    "Piper_SeqIR_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp", "use_bigvgan", "use_vits2", "use_f0",
+                                                 "mb_expansion", "mb_kernel_size", "mb_blocks_per_stage", "use_mrd"},
 }
+CONFIG_A_FAMILY = ("Piper_no_VITS2_cpn", "Piper_ParIR_no_VITS2_cpn", "Piper_SeqIR_no_VITS2_cpn")
+IR_RESBLOCK = {"Piper_ParIR_no_VITS2_cpn": "mrf", "Piper_SeqIR_no_VITS2_cpn": "mb"}
 OPTIM_KEYS = {"learning_rate", "betas", "eps", "lr_decay", "c_mel", "c_kl"}
 # EdgeTTS clips gradients itself inside its manual-optimization training_step.
-EXTRA_OPTIM_KEYS = {"Piper_no_VITS2_cpn": {"grad_clip"}}
+EXTRA_OPTIM_KEYS = {model_id: {"grad_clip"} for model_id in ("Piper_no_VITS2_cpn", "Piper_ParIR_no_VITS2_cpn",
+                                                                 "Piper_SeqIR_no_VITS2_cpn")}
 TRAINER_KEYS = {"precision", "gradient_clip_val", "seed"}
 DATA_KEYS = {"batch_size", "sampler", "num_workers", "max_phoneme_ids", "num_audio_samples"}
 HARNESS_KEYS = {"skip_nonfinite_updates", "dp_health_gate", "save_rng_state"}
@@ -109,19 +118,33 @@ def load_config(path: Path) -> TrainingConfig:
             raise ConfigError(f"{path}: missing keys in {name!r}: {sorted(missing)} (no implicit defaults)")
         sections[name] = values
     _check_values(path, sections)
-    if model_id == "Piper_no_VITS2_cpn":
-        _check_config_a(path, sections)
+    if model_id in CONFIG_A_FAMILY:
+        _check_config_a(path, sections, model_id)
+    if model_id in IR_RESBLOCK:
+        _check_ir_decoder(path, sections, model_id)
     return TrainingConfig(model_id, sections, str(path), hashlib.sha256(raw).hexdigest())
 
 
-def _check_config_a(path: Path, s: Mapping[str, Mapping[str, Any]]) -> None:
+def _check_config_a(path: Path, s: Mapping[str, Mapping[str, Any]], model_id: str = "Piper_no_VITS2_cpn") -> None:
     on = [k for k in ("use_bigvgan", "use_vits2", "use_f0") if s["model"][k]]
     if on:
-        raise ConfigError(f"{path}: Piper_no_VITS2_cpn is EdgeTTS Config A; set {on} to false")
+        raise ConfigError(f"{path}: {model_id} uses the EdgeTTS Config A backbone; set {on} to false")
     if s["trainer"]["gradient_clip_val"] is not None:
         raise ConfigError(f"{path}: manual optimization clips via optim.grad_clip; trainer.gradient_clip_val must be null")
     if s["harness"]["skip_nonfinite_updates"]:
         raise ConfigError(f"{path}: skip_nonfinite_updates is not available with EdgeTTS manual optimization")
+
+
+def _check_ir_decoder(path: Path, s: Mapping[str, Mapping[str, Any]], model_id: str) -> None:
+    m = s["model"]
+    if m["resblock"] != IR_RESBLOCK[model_id]:
+        raise ConfigError(f"{path}: {model_id} needs resblock {IR_RESBLOCK[model_id]!r}, got {m['resblock']!r}")
+    if m["use_mrd"] is not True:
+        raise ConfigError(f"{path}: the IR decoder bundle includes the MRD discriminator; use_mrd must be true")
+    expansion = m["mb_expansion"]
+    if not (isinstance(expansion, list) and len(expansion) == len(m["upsample_rates"])
+            and all(isinstance(e, int) and e >= 1 for e in expansion)):
+        raise ConfigError(f"{path}: mb_expansion must list one positive integer per upsampling stage")
 
 
 def _check_values(path: Path, s: Mapping[str, Mapping[str, Any]]) -> None:
