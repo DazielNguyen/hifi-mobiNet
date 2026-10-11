@@ -7,6 +7,24 @@ Piper_no_VITS2_cpn setup (2 GPUs DDP, bf16, 1,500 epochs). It runs inside the
 training clone on Ubuntu/WSL, in tmux. It does not depend on an interactive
 session staying open, and it never shuts the machine down.
 
+## Keep the WSL instance alive
+
+WSL stops the distro, including tmux and the training, when no `wsl.exe` client is
+connected (observed on 2026-10-11; see [piper-ir-checks.md](piper-ir-checks.md)).
+
+For the whole sequence, keep a client connected. Either keep a terminal attached to the
+tmux session, or start a hidden keep-alive from Windows PowerShell. The keep-alive is
+created through WMI, so it does not belong to any console or editor session:
+
+```powershell
+Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine = 'C:\Windows\System32\wsl.exe -d Ubuntu-24.04 -e sh -c "exec sleep infinity"'}
+# check:   Get-CimInstance Win32_Process -Filter "Name='wsl.exe'" | Where-Object CommandLine -like '*sleep infinity*'
+# stop it only after the sequence is completed:  ... | Invoke-CimMethod -MethodName Terminate
+```
+
+The keep-alive does not survive a Windows sign-out, restart or `wsl --shutdown`. After
+any of these the controller finds the run `needs_recovery` (see below).
+
 ## Start
 
 From the training clone root:
