@@ -122,6 +122,9 @@ see whether the VITS2 components make the model better or worse. The released
 `baseline-resblock2` is Piper **with** the VITS2 components and is not retrained
 (its recipe `baseline-resblock2-vits2` is available). Code, staged data and runs
 all stay inside the clone; training never overwrites released models.
+`Piper_ParIR_no_VITS2_cpn` and `Piper_SeqIR_no_VITS2_cpn` put the released
+Parallel-IR / Sequential-IR decoder bundles (IR decoder, SnakeBeta, MRD) on that
+Config A backbone ([protocol](docs/training/piper-ir-protocol.md)).
 Start with [training setup](docs/training/training-setup-ubuntu.md); the
 component audit, protocol, smoke results and next-run commands are in
 [docs/training/](docs/training/). Smoke-test outputs are not research results.

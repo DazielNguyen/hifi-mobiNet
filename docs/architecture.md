@@ -32,7 +32,7 @@ The text encoder, posterior encoder, flow, SDP, generator, waveform/duration
 discriminators, MAS source and losses are included as reference components.
 The selected JSON configs are extracted from checkpoint metadata, not inferred
 from the current YAML templates. Training of new runs (not of the released
-models) is available for two recipes; see `docs/training/`.
+models) is available for four recipes; see `docs/training/`.
 
 | Component | Selected internal configuration |
 |---|---|
