@@ -1,5 +1,7 @@
 # Historical research results
 
+*Tiếng Việt: [README.vi.md](README.vi.md)*
+
 All files under `historical/` are byte-identical to the indicated files in the
 existing journal evidence package. Their hashes, source locators and limitations
 are in `manifest.json` and `docs/source-map.json`. No new research measurements
@@ -49,6 +51,18 @@ comparisons with the historical files above, and same-session controls. These fi
 add to the historical tables above and do not replace them. The historical RTF values
 are not comparable with RTF measured in that session (a timing drift of +8.3% was
 measured on the same baseline model).
+
+`piper-parir-no-vits2-cpn/` (2026-10-16) holds the Harvard-720 quality evaluation of
+`Piper_ParIR_no_VITS2_cpn`: the same backbone with the released Parallel-IR decoder
+bundle (inverted-residual decoder, SnakeBeta, MRD). It is compared by sentence with
+`Piper_no_VITS2_cpn` and the four historical systems. It includes a same-session scorer
+control that rescored the `Piper_no_VITS2_cpn` WAVs. RTF is not reported yet: it will be
+measured on an idle machine after `Piper_SeqIR_no_VITS2_cpn` finishes training.
+
+| New model | UTMOSv2 (predicted) | Macro WER | Mean RTF |
+|---|---:|---:|---:|
+| Piper_no_VITS2_cpn (ResBlock2) | 3.517 | 0.0612 | 0.0421 (own session) |
+| Piper_ParIR_no_VITS2_cpn | 3.530 | 0.0726 | not measured yet |
 
 Public redistribution of sentence collections, result records and generated
 audio remains an author decision. Local inclusion does not assert those rights.

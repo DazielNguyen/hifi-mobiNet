@@ -1,5 +1,7 @@
 # Piper_no_VITS2_cpn: training outcome and Harvard-720 evaluation
 
+*Tiếng Việt: [README.vi.md](README.vi.md)*
+
 The question this run serves (author, 2026-10-06) is whether the VITS2 components
 make Piper better or worse. `Piper_no_VITS2_cpn` is the hifi-mobiNet baseline without
 those components: EdgeTTS Config A, trained from scratch on the baseline's data and
@@ -158,3 +160,30 @@ python scripts/training/summarize_run.py --run-dir training_output/piper-no-vits
 - UTMOSv2 per-sentence scores vary between scoring sessions.
 
 **Session control:** the original `synth_banhmi.py` was run with label `baseline_ctrl_20261010`. Then `session_control.py` compared its WAVs and timing with the historical baseline.
+
+## 9. Update 2026-10-16: comparison with Piper-ParIR
+
+`Piper_ParIR_no_VITS2_cpn` uses this run's backbone, data and recipe, with the released
+Parallel-IR decoder bundle (inverted-residual decoder, SnakeBeta, MRD). Full report:
+[`../piper-parir-no-vits2-cpn/README.md`](../piper-parir-no-vits2-cpn/README.md). The
+numbers in sections 1–8 above are unchanged.
+
+| Model | Selected epoch (`val_loss_mel`) | UTMOSv2 (predicted) | Macro WER | Sentences with WER 0 | Mean RTF |
+|---|---:|---:|---:|---:|---:|
+| **Piper_no_VITS2_cpn** (this run) | 1403 (19.7719) | 3.517 | **0.0612** | **502** | 0.0421 |
+| Piper-ParIR | 1486 (19.0069) | 3.530 | 0.0726 | 464 | not measured yet |
+| baseline-resblock2 (with VITS2) | 1489 (19.7882) | 3.026 | 0.1476 | 318 | 0.0418 |
+| Parallel-IR (MRF) | — | **3.568** | 0.1073 | 381 | 0.0339 |
+| Sequential-IR (SEQ) | — | 3.544 | 0.1222 | 351 | 0.0308 |
+| Piper (published) | — | 3.451 | 0.1747 | 228 | 0.0392 |
+
+ParIR compared with this run, paired by sentence:
+- **Validation:** its validation mel loss is clearly lower: −0.77 over epochs 1300–1499.
+- **WER:** slightly higher, +0.011 [+0.002, +0.021]; Holm p 0.11 over that file's 10 tests.
+- **UTMOSv2:** about the same.
+  - Cross-session: +0.013 [−0.011, +0.037].
+  - Same session, after rescoring this run's WAVs: +0.025 [+0.002, +0.049], Wilcoxon p 0.097.
+- **Scorer drift:** that rescoring reproduced this run's Whisper transcripts 720/720 and its macro WER exactly. The mean UTMOSv2 moved by −0.012.
+
+This run therefore still has the lowest WER of the six systems. RTF for ParIR (and
+Piper-SeqIR) will be measured in one idle session, with this run as the control.
