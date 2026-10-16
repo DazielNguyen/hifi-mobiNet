@@ -28,6 +28,8 @@ import json
 from pathlib import Path
 
 N_BOOT, SEED = 10_000, 20261004
+DEFAULT_LIMITS = ("one timing pass per sentence, no warm-up, run back to back on the same workstation; "
+                  "the two models run through different code bases (harness/EdgeTTS vs BanhmiTTS) with the same torch build")
 
 
 def sha256(path: Path) -> str:
@@ -47,6 +49,8 @@ def main(argv=None) -> int:
     p.add_argument("--historical-results", required=True, type=Path)
     p.add_argument("--control-script", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--limits", default=DEFAULT_LIMITS,
+                   help="limits recorded with the RTF comparison; the default describes the BanhmiTTS control")
     a = p.parse_args(argv)
     if a.output.exists():
         p.error("output exists; choose a new path")
@@ -86,8 +90,7 @@ def main(argv=None) -> int:
             "paired_bootstrap95_mean_diff": [float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))],
             "wilcoxon_p": float(wilcoxon(x, y).pvalue),
             "candidate_faster_count": int((d < 0).sum()), "control_faster_count": int((d > 0).sum()),
-            "limits": "one timing pass per sentence, no warm-up, run back to back on the same workstation; "
-                      "the two models run through different code bases (harness/EdgeTTS vs BanhmiTTS) with the same torch build",
+            "limits": a.limits,
         },
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)

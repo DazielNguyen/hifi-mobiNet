@@ -11,6 +11,13 @@ so an interval does not depend on the order of comparisons (the prior audit shar
 stream across its 15 tests). The Holm adjustment over this file's comparisons is
 exploratory. None of this is an equivalence test.
 
+``--extra-reference LABEL=PATH`` (repeatable) adds a newer scored model in the same
+per-sentence schema, for example an earlier hifi-mobiNet run. It is paired and tested
+exactly like the historical references, after them, and joins the Holm family.
+``--metrics`` restricts the paired tests (and so the Holm family) to a subset, for
+example ``utmosv2,wer`` when the candidate's RTF was timed under a different load and
+is not comparable; the per-model summaries still list every field.
+
     python scripts/evaluation/harvard/compare.py \
         --candidate <results.json> --label piper_no_vits2_cpn \
         --reference-dir results/historical/harvard --output <comparison.json>
@@ -49,9 +56,23 @@ def main(argv=None) -> int:
     p.add_argument("--label", required=True)
     p.add_argument("--reference-dir", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--extra-reference", action="append", default=[], metavar="LABEL=PATH")
+    p.add_argument("--metrics", default=",".join(METRICS), help=f"comma-separated subset of {','.join(METRICS)}")
     a = p.parse_args(argv)
     if a.output.exists():
         p.error("output exists; choose a new path")
+    metrics = tuple(m for m in METRICS if m in a.metrics.split(","))
+    if not metrics or set(a.metrics.split(",")) - set(METRICS):
+        p.error(f"--metrics must be a non-empty subset of {','.join(METRICS)}, got {a.metrics!r}")
+    extra = {}
+    for spec in a.extra_reference:
+        label, sep, path = spec.partition("=")
+        if not sep or not label or not path:
+            p.error(f"--extra-reference must be LABEL=PATH, got {spec!r}")
+        if label in extra or label in REFERENCES or label == a.label:
+            p.error(f"duplicate reference label {label!r}")
+        extra[label] = Path(path)
+    references = REFERENCES + tuple(extra)
 
     sys.path.insert(0, str(REPO / "src"))
     import numpy as np
@@ -60,9 +81,9 @@ def main(argv=None) -> int:
 
     from hifimobinet.evaluation import check_pairs, load_rows, paired, summarize
 
-    files = {a.label: a.candidate, **{m: a.reference_dir / f"harvard_{m}_results.json" for m in REFERENCES}}
+    files = {a.label: a.candidate, **{m: a.reference_dir / f"harvard_{m}_results.json" for m in REFERENCES}, **extra}
     rows = {m: load_rows(f) for m, f in files.items()}
-    for m in REFERENCES:
+    for m in references:
         check_pairs(rows[a.label], rows[m])
 
     summary = {}
@@ -74,8 +95,8 @@ def main(argv=None) -> int:
         summary[m] = s
 
     tests = {}
-    for other in REFERENCES:
-        for k in METRICS:
+    for other in references:
+        for k in metrics:
             x = np.array([r[k] for r in rows[a.label]], float)
             y = np.array([r[k] for r in rows[other]], float)
             d = x - y
@@ -103,12 +124,13 @@ def main(argv=None) -> int:
                       "better": "lower RTF and WER, higher UTMOSv2",
                       "bootstrap": f"paired, {N_BOOT} resamples, percentile 2.5/97.5, default_rng({SEED}) per comparison",
                       "holm": f"exploratory, over the {len(tests)} comparisons in this file",
+                      "metrics_tested": list(metrics),
                       "equivalence": "not tested; no margin was pre-specified"},
            "summary": summary, "paired_tests": tests}
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(out, indent=1, allow_nan=False), encoding="utf-8")
-    for other in REFERENCES:
-        print(other, {k: round(tests[f"{a.label}_vs_{other}_{k}"]["mean_diff_x_minus_y"], 5) for k in METRICS})
+    for other in references:
+        print(other, {k: round(tests[f"{a.label}_vs_{other}_{k}"]["mean_diff_x_minus_y"], 5) for k in metrics})
     return 0
 
 
