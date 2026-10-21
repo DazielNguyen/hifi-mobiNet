@@ -46,6 +46,18 @@ không đụng vào dữ liệu gốc. Cần lưu ý khi đọc các kết quả
 - Không có ý nghĩa thống kê không có nghĩa là tương đương.
 - Công thức train và split khác nhau, nên không thể kết luận khác biệt chỉ do decoder.
 
+Nhập ngày 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`; byte kết quả giữ nguyên, script có đường dẫn máy đã được che):
+- **`lj500_development/`:** thêm các bảng LJ-500 lịch sử.
+  - Các checkpoint baseline trước đó.
+  - Quá trình train của MRF: epoch 74, 216, 353, 480, 836 và 1170.
+  - Các tiền thân của SEQ (`mbconv`); checkpoint của chúng đã bị xoá.
+  - Các biến thể ResBlock2 có Snake, MRD và BigVGAN.
+  - Script nằm trong `records/`. Log không được Git theo dõi (repository bỏ qua `*.log`); bản ghi nhập liệt kê từng log theo hash.
+- **`qat/`:** QAT của baseline và MRF. Các bảng này gồm cả số epoch train thêm và thời gian đo bằng PyTorch fake-quant, nên không phải kết quả của runtime INT8.
+- **`ptq_sweep/`:** PTQ sweep lịch sử để chọn scope. Evaluator WER của nó có lỗi sample rate đã biết (J-E026). Các file kết quả là bản dẫn xuất đã bỏ các mục Vocos (`*.without_vocos.json`), còn log có Vocos chỉ được ghi hash.
+- **Tập câu:** các bảng LJ-500 dùng ba tập 500 câu khác nhau. Chỉ so các bảng trong cùng một tập.
+- **Tổng quan:** toàn bộ kết quả thế hệ 1 và thế hệ 2 của SEQ/PAR được gom trong `docs/q2-readiness-seq-par.vi.md`.
+
 ## Phép đo mới
 
 `piper-no-vits2-cpn/` (README tiếng Việt: [piper-no-vits2-cpn/README.vi.md](piper-no-vits2-cpn/README.vi.md))

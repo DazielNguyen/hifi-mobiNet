@@ -42,6 +42,18 @@ observations, not variation across training runs or hardware. Non-significance
 does not establish equivalence, and recipe/split differences prevent a claim of
 decoder-only causation.
 
+Imported on 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`; unchanged result bytes, scripts with host paths redacted):
+- **`lj500_development/`:** further historical LJ-500 tables.
+  - Earlier baseline checkpoints.
+  - The MRF training trajectory: epochs 74, 216, 353, 480, 836 and 1170.
+  - SEQ precursors (`mbconv`), whose checkpoints are deleted.
+  - ResBlock2 variants with Snake, MRD and BigVGAN.
+  - The scripts are in `records/`. Logs are not tracked (the repository ignores `*.log`); the import record lists each by hash.
+- **`qat/`:** QAT of baseline and MRF. These tables include extra training epochs and PyTorch fake-quant timing, so they are not INT8 runtime results.
+- **`ptq_sweep/`:** the historical PTQ scope sweep. Its WER evaluator had a known sample-rate bug (J-E026). The result files are derived copies without their Vocos entries (`*.without_vocos.json`), and Vocos logs are referenced by hash only.
+- **Sentence sets:** the LJ-500 tables use three different 500-sentence sets. Compare tables only within one set.
+- **Overview:** all Gen 1 and Gen 2 results for SEQ/PAR are gathered in `docs/q2-readiness-seq-par.md`.
+
 ## New measurements
 
 `piper-no-vits2-cpn/` holds the first new measurements in this repository (2026-10-10/11):
