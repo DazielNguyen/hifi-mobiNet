@@ -52,6 +52,19 @@ Further checks:
 - **PyTorch determinism.** In every quality synthesis pass, the PyTorch reference WAVs were byte-identical to the stored PyTorch evaluations: 720/720 for each model. For SeqIR this is the second synthesis that was still missing.
 - **INT8 waveform parity is not meaningful.** The quantized duration predictor changes the frame counts slightly, so only 116, 103 and 108 of 720 INT8 outputs have the PyTorch length. The quality of the INT8 graphs is judged by the scores in section 3.
 
+**Known defect, found on 2026-10-22: the flow's weight norm was not folded before export.**
+- **What went wrong:**
+  - The export removed weight norm only in the decoder, as `harvard/synthesize.py` does.
+  - EdgeTTS's flow coupling layers (`WN`) keep theirs, so in every graph their 32 convolution weights are recomputed at each run (the 32 `ReduceL2` nodes).
+  - The quantizer could not treat those weights as constants. It quantized them **at run time, per tensor, as UINT8**, not as the declared static per-channel INT8.
+  - Only 8 of the 40 flow QLinearConv nodes follow the declared recipe; the "109 QLinearConv" above count both kinds.
+- **Consequences:**
+  - The INT8 graphs still store 27.8 MB of FP32 flow weights, so the sizes in this README understate what the scope can reach. The historical INT8 graphs are 22–24 MB.
+  - The INT8 RTF includes the per-run weight-norm and weight-quantization work.
+  - The measured INT8 quality is that of these graphs. Whether SeqIR's UTMOSv2 loss comes from the per-tensor flow weights is not known.
+  - The FP32 results, the parity results and the decoder analysis of section 5 are not affected.
+- **Correction:** call `remove_weight_norm()` on every flow coupling layer, then export, quantize, evaluate and time again. It has not been run yet; see `docs/plan-onnx-ptq-v2.md`.
+
 ## 3. Harvard-720 quality
 
 | Model | Version | UTMOSv2 (predicted) | Macro WER | Substitutions / deletions / insertions | Sentences with WER 0 |

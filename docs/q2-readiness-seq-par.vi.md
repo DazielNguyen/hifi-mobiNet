@@ -135,7 +135,7 @@ Nguồn: `results/piper-ir-onnx-ptq/`. Harvard-720; noise khớp với PyTorch; 
 | Decoder IR giữ được chất lượng của ResBlock2 | **Một phần.** UTMOSv2 lệch trong khoảng 0,04 và WER trong khoảng 1,1 điểm, nhưng WER của cả hai model IR đều kém hơn một chút, và không có ngưỡng tương đương nào được chốt | phép thử ghép cặp thế hệ 2 |
 | SEQ có chất lượng tốt hơn PAR | **Bị bác bỏ.** UTMOSv2 của SEQ thấp hơn ở cả thế hệ 1 lẫn thế hệ 2; WER không phân biệt được | J-E004, J-E031, thế hệ 2 |
 | Lợi thế tốc độ vẫn giữ sau khi export ONNX và INT8 | **Chỉ ở số thread thấp.** Giữ ở ORT 2 thread và đảo ngược ở 12 thread (đã xác định nguyên nhân) | `results/piper-ir-onnx-ptq/` |
-| PTQ INT8 có chọn lọc (enc_p/dp/flow) không làm giảm chất lượng | **Được hỗ trợ** với ResBlock2 và ParIR; SeqIR giảm 0,036 UTMOSv2. Graph nhỏ hơn 32–33% và nhanh hơn 4–17% | PTQ thế hệ 2 |
+| PTQ INT8 có chọn lọc (enc_p/dp/flow) không làm giảm chất lượng | **Một phần.** Được hỗ trợ với ResBlock2 và ParIR; SeqIR giảm 0,036 UTMOSv2. Graph nhỏ hơn 32–33% và nhanh hơn 4–17%, nhưng 32 trên 40 convolution của flow bị lượng tử hoá per-tensor lúc chạy (lỗi weight norm của flow), nên phải chạy lại đợt này thì mới thành kết quả của đúng công thức | PTQ thế hệ 2, `results/README.vi.md` |
 | Bỏ các thành phần VITS2 giúp model cỡ Piper tốt hơn | **Một phần:** WER −8,6 điểm và UTMOSv2 +0,49, nhưng code base cũng khác nhau | `results/piper-no-vits2-cpn/` |
 | Tốc độ trên thiết bị biên (N150, Raspberry Pi 5) | **Chưa có** | J-E028 |
 | Chất lượng qua người nghe (MOS) | **Chưa có**; UTMOSv2 chỉ là điểm dự đoán | J-E029 |
@@ -164,7 +164,7 @@ Với một paper về hệ thống TTS hay vocoder, các journal ở mức này
 - **Một câu chuyện paper có thể bảo vệ được:**
   - decoder inverted-residual gọn nhẹ cho TTS cỡ Piper/VITS chạy trên CPU;
   - giảm 30% tham số decoder và giảm 23–33% RTF trên PyTorch, đổi lại khoảng 1 điểm WER;
-  - PTQ INT8 có chọn lọc giảm thêm 32% kích thước và 4–17% RTF;
+  - PTQ INT8 có chọn lọc giảm thêm 32% kích thước và 4–17% RTF. Đây là số của các graph hiện tại; gộp weight norm của flow sẽ giảm kích thước thêm, và đợt này phải chạy lại;
   - **tốc độ triển khai phụ thuộc vào độ phủ kernel của runtime:** FLOPs và số tham số không dự đoán được tốc độ ORT ở 12 thread, vì `Sin` của SnakeBeta chạy đơn luồng. Phát hiện này cụ thể và đã được đo, nên đáng làm điểm nhấn của paper.
 - **Có đủ các mục ưu tiên 1, một paper hệ thống/triển khai ở mức Q2 là khả thi, nhưng không chắc chắn.** Các mục đó là nghe thử, thêm seed, một hoặc hai ablation và đo trên thiết bị: khoảng 4–6 tuần tính toán, cộng với nghiên cứu nghe thử. Tính mới cũng cần được định vị so với các công trình vocoder/TTS nhẹ đã có bằng một bước rà soát tài liệu; tài liệu này không đánh giá điều đó.
 

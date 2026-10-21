@@ -135,7 +135,7 @@ Source: `results/piper-ir-onnx-ptq/`. Harvard-720; matched noise; train-only cal
 | IR decoders keep the quality of ResBlock2 | **Partial.** UTMOSv2 within 0.04 and WER within 1.1 points, but WER is slightly worse in both IR models, and no equivalence margin was set | Gen 2 paired tests |
 | SEQ has better quality than PAR | **Contradicted.** SEQ has lower UTMOSv2 in Gen 1 and Gen 2; WER is not distinguishable | J-E004, J-E031, Gen 2 |
 | The speed advantage holds after ONNX export and INT8 | **Only at low thread counts.** It holds at 2 ORT threads and reverses at 12 (cause identified) | `results/piper-ir-onnx-ptq/` |
-| Selective INT8 PTQ (enc_p/dp/flow) costs no quality | **Supported** for ResBlock2 and ParIR; SeqIR loses 0.036 UTMOSv2. Graphs are 32–33% smaller and 4–17% faster | Gen 2 PTQ |
+| Selective INT8 PTQ (enc_p/dp/flow) costs no quality | **Partial.** Supported for ResBlock2 and ParIR; SeqIR loses 0.036 UTMOSv2. Graphs are 32–33% smaller and 4–17% faster, but 32 of the 40 flow convolutions were quantized per tensor at run time (the flow weight-norm defect), so the round must be repeated before this is a recipe result | Gen 2 PTQ, `results/README.md` |
 | Removing the VITS2 components improves a Piper-size model | **Partial:** WER −8.6 points and UTMOSv2 +0.49, but the code bases also differ | `results/piper-no-vits2-cpn/` |
 | Edge-device speed (N150, Raspberry Pi 5) | **Not available** | J-E028 |
 | Human listening quality (MOS) | **Not available**; UTMOSv2 is a prediction | J-E029 |
@@ -164,7 +164,7 @@ Journals at this level usually expect, for a TTS or vocoder systems paper, human
 - **A defensible paper story:**
   - lightweight inverted-residual decoders for Piper/VITS-class TTS on CPU;
   - −30% decoder parameters and −23% to −33% PyTorch RTF, at a quality cost of about 1 WER point;
-  - selective INT8 PTQ adds −32% size and −4% to −17% RTF;
+  - selective INT8 PTQ adds −32% size and −4% to −17% RTF. These are the current graphs; folding the flow's weight norm should reduce the size further, and the round has to be repeated;
   - **deployment speed depends on runtime kernel coverage:** FLOPs and parameters did not predict ORT speed at 12 threads because SnakeBeta's `Sin` is single-threaded. This finding is concrete and measured, which makes it a contribution worth highlighting.
 - **With the priority-1 items, a Q2-level systems or deployment paper is plausible, not guaranteed.** That means listening test, seeds, one or two ablations and device runs: about 4–6 weeks of compute plus the listening study. Novelty also has to be positioned against existing lightweight vocoder and TTS work through a literature review; this document does not assess it.
 

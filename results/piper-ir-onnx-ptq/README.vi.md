@@ -52,6 +52,19 @@ Các kiểm tra khác:
 - **Tính deterministic của PyTorch.** Trong mọi lượt synthesis chất lượng, WAV PyTorch tham chiếu giống từng byte với các lần đánh giá PyTorch đã lưu: 720/720 ở mỗi model. Với SeqIR, đây chính là lần synthesis thứ hai còn thiếu.
 - **Parity waveform của INT8 không có ý nghĩa.** Duration predictor đã lượng tử hoá làm số frame đổi một chút, nên chỉ 116, 103 và 108 trên 720 output INT8 có cùng độ dài với PyTorch. Chất lượng INT8 được đánh giá bằng điểm số ở mục 3.
 
+**Lỗi đã biết, phát hiện ngày 2026-10-22: weight norm của flow chưa được gộp trước khi export.**
+- **Sai ở đâu:**
+  - Lúc export chỉ bỏ weight norm của decoder, như `harvard/synthesize.py` làm.
+  - Các lớp coupling của flow trong EdgeTTS (`WN`) vẫn giữ weight norm, nên trong mọi graph, 32 trọng số convolution của chúng được tính lại ở mỗi lần chạy (chính là 32 node `ReduceL2`).
+  - Bộ lượng tử hoá không coi các trọng số đó là hằng số được. Nó lượng tử hoá chúng **lúc chạy, theo từng tensor, dạng UINT8**, chứ không phải INT8 per-channel tĩnh như đã khai báo.
+  - Chỉ 8 trên 40 node QLinearConv của flow đúng công thức đã khai báo; con số "109 QLinearConv" ở trên tính cả hai loại.
+- **Hệ quả:**
+  - Graph INT8 vẫn lưu 27,8 MB trọng số flow dạng FP32, nên các kích thước trong README này thấp hơn mức mà scope có thể đạt. Graph INT8 lịch sử chỉ 22–24 MB.
+  - RTF của INT8 có tính cả phần tính weight norm và lượng tử hoá trọng số ở mỗi lần chạy.
+  - Chất lượng INT8 đo được là của chính các graph này. Chưa biết mức giảm UTMOSv2 của SeqIR có phải do trọng số flow per-tensor hay không.
+  - Kết quả FP32, kết quả parity và phân tích decoder ở mục 5 không bị ảnh hưởng.
+- **Cách sửa:** gọi `remove_weight_norm()` trên mọi lớp coupling của flow, rồi export, lượng tử hoá, đánh giá và đo thời gian lại. Việc này chưa được chạy; xem `docs/plan-onnx-ptq-v2.vi.md`.
+
 ## 3. Chất lượng Harvard-720
 
 | Model | Phiên bản | UTMOSv2 (dự đoán) | Macro WER | Thay thế / mất từ / chèn thêm | Số câu WER = 0 |
