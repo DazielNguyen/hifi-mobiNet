@@ -19,6 +19,7 @@ Tổng quan và đánh giá hiện tại: [`../../q2-readiness-seq-par.vi.md`](.
   - Bản ghi nhập giữ SHA-256 của cả bản gốc lẫn bản đã che cho từng file.
   - Bản gốc được giữ riêng trong WSL (`<WSL_PROJECT_HOME>/hifimobinet-private/`), ngoài OneDrive và Git, và không dùng để phát hành.
   - Các script đã che chỉ là bản ghi, không chạy được nguyên trạng.
+- **Log (16 file):** không được Git theo dõi, vì repository bỏ qua `*.log` (từ commit đầu tiên). Mỗi log được liệt kê theo hash trong bản ghi nhập và vẫn nằm ở nguồn.
 - **Kiểm tra:**
   - quét mẫu thông tin xác thực trên mọi file đã chép;
   - quét đường dẫn máy độc lập sau khi nhập, không tìm thấy chỗ nào;

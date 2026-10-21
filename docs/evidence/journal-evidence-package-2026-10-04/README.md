@@ -19,6 +19,7 @@ Overview and current assessment: [`../../q2-readiness-seq-par.md`](../../q2-read
   - The import record keeps the original and redacted SHA-256 of each file.
   - The originals are kept privately in WSL (`<WSL_PROJECT_HOME>/hifimobinet-private/`), outside OneDrive and Git, and are not for release.
   - Redacted scripts are records, not runnable as they are.
+- **Logs (16 files):** not tracked, because the repository ignores `*.log` (as it has since its first commit). Each is listed by hash in the import record and stays at its source.
 - **Checks:**
   - a credential-pattern scan of every copied file;
   - an independent host-path scan after the import, which found 0 matches;
