@@ -66,12 +66,26 @@ chứa đánh giá chất lượng Harvard-720 của `Piper_ParIR_no_VITS2_cpn`:
 bằng bộ decoder Parallel-IR đã phát hành (decoder inverted-residual, SnakeBeta, MRD).
 - Model này được so ghép cặp theo từng câu với `Piper_no_VITS2_cpn` và bốn hệ thống lịch sử.
 - Có control scorer trong cùng phiên, bằng cách chấm lại các WAV của `Piper_no_VITS2_cpn`.
-- RTF chưa được báo cáo: sẽ đo trên máy rảnh sau khi `Piper_SeqIR_no_VITS2_cpn` train xong.
+- RTF được đo sau đó, trong phiên ngày 2026-10-21 nêu dưới đây.
 
-| Model mới | UTMOSv2 (dự đoán) | Macro WER | RTF trung bình |
-|---|---:|---:|---:|
-| Piper_no_VITS2_cpn (ResBlock2) | 3.517 | 0.0612 | 0.0421 (phiên riêng) |
-| Piper_ParIR_no_VITS2_cpn | 3.530 | 0.0726 | chưa đo |
+`piper-seqir-no-vits2-cpn/` (README tiếng Việt: [piper-seqir-no-vits2-cpn/README.vi.md](piper-seqir-no-vits2-cpn/README.vi.md), 2026-10-21)
+chứa đánh giá `Piper_SeqIR_no_VITS2_cpn`: cùng backbone, thay bằng bộ decoder Sequential-IR
+đã phát hành (hai khối IR mỗi tầng, SnakeBeta, MRD).
+- Model này được so ghép cặp theo từng câu với hai model Config A còn lại và bốn hệ thống lịch sử.
+- Có bản chấm lại cùng phiên cho các WAV của `Piper_no_VITS2_cpn` và ParIR.
+- README của nó cũng báo cáo phiên đo thời gian trên máy rảnh. Phiên này đo liền nhau ba
+  model Config A, với `Piper_no_VITS2_cpn` làm control. Bản ghi của phiên nằm trong
+  `piper-ir-timing-session/`.
+
+| Model mới | UTMOSv2 (dự đoán) | Macro WER | RTF trung bình, phiên 2026-10-21 | RTF tương đối |
+|---|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn (ResBlock2, control) | 3.517 | 0.0612 | 0.0510 | — |
+| Piper_ParIR_no_VITS2_cpn | 3.530 | 0.0726 | 0.0392 | −23,2% |
+| Piper_SeqIR_no_VITS2_cpn | 3.493 | 0.0696 | 0.0340 | −33,3% |
+
+Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong nội bộ phiên đó. Control chạy
+chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10 (0.0421). Vì vậy không thể đặt giá trị
+đó, hay bảng RTF lịch sử ở trên, cạnh các giá trị này.
 
 Việc phát hành công khai các bộ câu, bản ghi kết quả và audio sinh ra vẫn do tác giả
 quyết định. Việc chúng có mặt trong repo không khẳng định các quyền đó.

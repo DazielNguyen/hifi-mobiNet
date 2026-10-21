@@ -189,3 +189,32 @@ ParIR so với run này, ghép cặp theo từng câu:
 
 Vì vậy run này vẫn có WER thấp nhất trong sáu hệ thống. RTF của ParIR (và Piper-SeqIR) sẽ
 được đo trong cùng một phiên trên máy rảnh, với run này làm control.
+
+## 10. Cập nhật 2026-10-21: RTF cùng phiên với Piper-ParIR và Piper-SeqIR
+
+`Piper_SeqIR_no_VITS2_cpn` dùng backbone, dữ liệu và công thức train của run này, chỉ thay
+bằng bộ decoder Sequential-IR đã phát hành (hai khối IR mỗi tầng, SnakeBeta, MRD). Báo cáo
+đầy đủ, gồm cả phiên đo thời gian: [`../piper-seqir-no-vits2-cpn/README.vi.md`](../piper-seqir-no-vits2-cpn/README.vi.md).
+Các số liệu ở mục 1–9 phía trên giữ nguyên.
+
+Run này là control của một phiên đo trên máy rảnh, trong đó ba model Config A được đo thời
+gian liền nhau.
+
+| Model | UTMOSv2 (dự đoán) | Macro WER | RTF trung bình (phiên 2026-10-21) | So với run này |
+|---|---:|---:|---:|---:|
+| **Piper_no_VITS2_cpn** (run này, control) | 3.517 | **0.0612** | 0.0510 | — |
+| Piper-ParIR | **3.530** | 0.0726 | 0.0392 | −23,2% |
+| Piper-SeqIR | 3.493 | 0.0696 | **0.0340** | −33,3% |
+
+- **Tính tái lập của synthesis:** WAV của control giống từng byte với WAV ngày 2026-10-10 của run này (720/720).
+- **Độ trôi thời gian:** RTF trung bình của control là 0.0510, so với 0.0421 ngày 2026-10-10 (×1,21). Vì vậy RTF đo ở các phiên khác, kể cả giá trị 0.0421 ở mục 3 và mục 9, không so sánh được với bảng này.
+- **Độ trôi của scorer:** các WAV của run này được chấm lại thêm một lần.
+  - Whisper cho 720/720 transcript giống hệt.
+  - UTMOSv2 trung bình là 3.508 so với 3.517 đã lưu (`../piper-seqir-no-vits2-cpn/scorer_control.json`).
+- **SeqIR so với run này, ghép cặp theo từng câu:**
+  - WER chênh +0,008 [−0,0004, +0,018] (Holm p 0,12).
+  - UTMOSv2 chênh −0,024 khi so khác phiên, và −0,015 [−0,039, +0,009] khi so cùng phiên.
+  - Mel loss trên validation thấp hơn 0,66 trong epoch 1200–1499.
+
+Run này vẫn có WER thấp nhất trong bảy hệ thống. Cả hai decoder IR đều nhanh hơn trong cùng
+phiên: 23% (ParIR) và 33% (SeqIR).

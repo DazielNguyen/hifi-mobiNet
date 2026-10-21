@@ -1,0 +1,31 @@
+{
+ "classification": "new_measurement_scorer_control",
+ "inputs": {
+  "rescored": {
+   "file": "harvard_piper_no_vits2_cpn_rescored_results.json",
+   "sha256": "2e2bee2b1d65028c34f3aa6bb43d858fd9b9ff70c92dd3ddc7c3648c5bf86000"
+  },
+  "historical": {
+   "file": "harvard_piper_no_vits2_cpn_results.json",
+   "sha256": "4ee3ac35743286cf3e7f1dfb0fad83137a1701f23b3e6f5e2469d7b7e431cfc0"
+  }
+ },
+ "n": 720,
+ "whisper": {
+  "identical_transcripts": 720,
+  "identical_sentence_wer": 720,
+  "macro_wer_rescored": 0.06119363275613275,
+  "macro_wer_historical": 0.06119363275613275,
+  "macro_wer_difference": 0.0,
+  "max_abs_sentence_wer_difference": 0.0
+ },
+ "utmosv2": {
+  "mean_rescored": 3.507627123925421,
+  "mean_historical": 3.5169903079668683,
+  "mean_difference": -0.00936318404144711,
+  "sd_of_sentence_differences": 0.16572089657155778,
+  "max_abs_sentence_difference": 0.8753378391265869,
+  "pearson_r": 0.7902052134212741
+ },
+ "interpretation": "Same WAV bytes, same scorer code and weights, different session. Differences measure scorer run-to-run variation (UTMOSv2 random cropping is not seeded), not model differences."
+}

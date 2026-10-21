@@ -1,0 +1,40 @@
+{
+ "created_utc": "2026-10-21T03:38:53.135270+00:00",
+ "synth_record": "synth.json",
+ "synth_record_sha256": "99616e520a6efe5aefce25e898f5250f9dd1007826bb8100c8667dbb15d2c86c",
+ "model_id": "Piper_ParIR_no_VITS2_cpn",
+ "checkpoint": "best-epoch=1486-val_loss_mel=19.0069.ckpt",
+ "checkpoint_sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee",
+ "scorers": {
+  "utmosv2": {
+   "package": "1.3.1.dev0",
+   "config": "fusion_stage3",
+   "fold": 0,
+   "weights": "fold0_s42_best_model.pth",
+   "weights_sha256": "c8149d988e4bbf3f347e6966b5d769de347a5f8c59ffca1dc4bd4bf5b8585e57",
+   "repetitions_per_wav": 1,
+   "explicit_seed": null
+  },
+  "whisper": {
+   "package": "20250625",
+   "model": "small",
+   "weights_sha256": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794",
+   "language": "en",
+   "fp16": false,
+   "input": "WAV path (Whisper resamples to 16 kHz)"
+  },
+  "jiwer": "4.0.0",
+  "wer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfWords",
+  "hf_offline": true
+ },
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "torch": "2.13.0+cu130",
+  "numpy": "1.26.4",
+  "soundfile": "0.14.0"
+ },
+ "wall_time_s": 2606.5504645649926,
+ "results_file": "harvard_piper_parir_no_vits2_cpn_rescored_results.json",
+ "results_sha256": "3b485bb3cb7f9acfca1bec32ff2cbefbc13bdc8ad946880b1c126498464d2696"
+}

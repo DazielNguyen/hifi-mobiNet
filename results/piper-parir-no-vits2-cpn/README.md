@@ -14,7 +14,8 @@ Config A backbone, data, split and recipe. It changes three things:
 This is a decoder-bundle comparison, not a topology-only one.
 
 All numbers below are **new measurements** (2026-10-16), except the stored results they
-are compared with. **RTF was not measured in this round**; see section 6.
+are compared with. **RTF was not measured in this round**; see section 6. It was measured
+later, on an idle machine on 2026-10-21; see section 9.
 
 ## 1. Model evaluated
 
@@ -213,3 +214,31 @@ python scripts/training/summarize_run.py --run-dir training_output/piper-parir-n
 - UTMOSv2 per-sentence scores vary between scoring sessions.
 
 The pipeline that ran these steps is kept with the run (`eval/pipeline.sh`, `eval/pipeline.log`).
+
+## 9. Update 2026-10-21: RTF and comparison with Piper-SeqIR
+
+After Piper-SeqIR finished training, the three Config A models were timed back to back in
+one session on an idle machine. Full report: section 4 of
+[`../piper-seqir-no-vits2-cpn/README.md`](../piper-seqir-no-vits2-cpn/README.md). The
+numbers in sections 1–8 above are unchanged.
+
+| Model | Mean RTF (2026-10-21 session) | Relative to Piper_no_VITS2_cpn | Faster sentences |
+|---|---:|---:|---:|
+| Piper_no_VITS2_cpn (control) | 0.0510 | — | — |
+| **Piper-ParIR** | **0.0392** | **−23.2%** [paired CI of Δ −0.0126, −0.0110] | 653 / 720 |
+| Piper-SeqIR | 0.0340 | −33.3% | 690 / 720 |
+
+- **Determinism:** ParIR was re-synthesized in this session, and 720/720 WAVs are byte-identical to the evaluation in section 3 (`parir_determinism.json`). The quality results above therefore describe the audio that was timed.
+- **Comparability:** the control ran 1.21× slower than in its own 2026-10-10 session. Only within-session ratios are meaningful; do not compare 0.0392 with the historical RTF values in section 3.
+- **Limits:** one pass per sentence, fixed order (control, ParIR, SeqIR), PyTorch CPU under WSL.
+- **Rescoring:** the ParIR WAVs were rescored in the same round (`../piper-seqir-no-vits2-cpn/scorer_control_parir.json`).
+  - Whisper gave 720/720 identical transcripts, and macro WER 0.0726 was reproduced.
+  - Mean UTMOSv2 was 3.526 against 3.530 stored.
+- **Against Piper-SeqIR** (two sequential IR blocks per stage, kernel 3):
+  - WER is not distinguishable.
+  - ParIR's UTMOSv2 is 0.033–0.037 higher.
+  - SeqIR's RTF is 13% lower.
+  - SeqIR's validation mel loss is 0.09–0.12 higher, and SeqIR showed no step around epoch 800.
+
+With this, ParIR's speed against the ResBlock2 decoder (section 5, "not known yet") is
+answered: about 23% lower RTF in a same-session CPU timing.

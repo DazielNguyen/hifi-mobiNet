@@ -56,13 +56,27 @@ measured on the same baseline model).
 `Piper_ParIR_no_VITS2_cpn`: the same backbone with the released Parallel-IR decoder
 bundle (inverted-residual decoder, SnakeBeta, MRD). It is compared by sentence with
 `Piper_no_VITS2_cpn` and the four historical systems. It includes a same-session scorer
-control that rescored the `Piper_no_VITS2_cpn` WAVs. RTF is not reported yet: it will be
-measured on an idle machine after `Piper_SeqIR_no_VITS2_cpn` finishes training.
+control that rescored the `Piper_no_VITS2_cpn` WAVs. Its RTF was measured later, in the
+2026-10-21 session below.
 
-| New model | UTMOSv2 (predicted) | Macro WER | Mean RTF |
-|---|---:|---:|---:|
-| Piper_no_VITS2_cpn (ResBlock2) | 3.517 | 0.0612 | 0.0421 (own session) |
-| Piper_ParIR_no_VITS2_cpn | 3.530 | 0.0726 | not measured yet |
+`piper-seqir-no-vits2-cpn/` (2026-10-21) holds the evaluation of `Piper_SeqIR_no_VITS2_cpn`:
+the same backbone with the released Sequential-IR decoder bundle (two IR blocks per stage,
+SnakeBeta, MRD).
+- It is compared by sentence with the two other Config A models and the four historical systems.
+- It includes same-session rescoring of the `Piper_no_VITS2_cpn` and ParIR WAVs.
+- Its README also reports the idle-machine timing session. The session timed the three
+  Config A models back to back, with `Piper_no_VITS2_cpn` as the control. Its records are
+  in `piper-ir-timing-session/`.
+
+| New model | UTMOSv2 (predicted) | Macro WER | Mean RTF, 2026-10-21 session | Relative RTF |
+|---|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn (ResBlock2, control) | 3.517 | 0.0612 | 0.0510 | — |
+| Piper_ParIR_no_VITS2_cpn | 3.530 | 0.0726 | 0.0392 | −23.2% |
+| Piper_SeqIR_no_VITS2_cpn | 3.493 | 0.0696 | 0.0340 | −33.3% |
+
+The RTF column comes from one session and is comparable only within it. The control ran 1.21×
+slower than in its own 2026-10-10 session (0.0421), so neither that value nor the historical
+RTF table above can be set beside these values.
 
 Public redistribution of sentence collections, result records and generated
 audio remains an author decision. Local inclusion does not assert those rights.

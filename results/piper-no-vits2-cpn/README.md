@@ -187,3 +187,32 @@ ParIR compared with this run, paired by sentence:
 
 This run therefore still has the lowest WER of the six systems. RTF for ParIR (and
 Piper-SeqIR) will be measured in one idle session, with this run as the control.
+
+## 10. Update 2026-10-21: same-session RTF with Piper-ParIR and Piper-SeqIR
+
+`Piper_SeqIR_no_VITS2_cpn` uses this run's backbone, data and recipe, with the released
+Sequential-IR decoder bundle (two IR blocks per stage, SnakeBeta, MRD). Full report,
+including the timing session: [`../piper-seqir-no-vits2-cpn/README.md`](../piper-seqir-no-vits2-cpn/README.md).
+The numbers in sections 1–9 above are unchanged.
+
+This run was the control of an idle-machine session in which the three Config A models were
+timed back to back.
+
+| Model | UTMOSv2 (predicted) | Macro WER | Mean RTF (2026-10-21 session) | Relative to this run |
+|---|---:|---:|---:|---:|
+| **Piper_no_VITS2_cpn** (this run, control) | 3.517 | **0.0612** | 0.0510 | — |
+| Piper-ParIR | **3.530** | 0.0726 | 0.0392 | −23.2% |
+| Piper-SeqIR | 3.493 | 0.0696 | **0.0340** | −33.3% |
+
+- **Synthesis reproducibility:** the control WAVs were byte-identical to this run's 2026-10-10 WAVs (720/720).
+- **Timing drift:** the control's mean RTF was 0.0510, against 0.0421 on 2026-10-10 (×1.21). RTF values from different sessions, including the 0.0421 in sections 3 and 9, are therefore not comparable with this table.
+- **Scorer drift:** this run's WAVs were rescored again.
+  - Whisper gave 720/720 identical transcripts.
+  - Mean UTMOSv2 was 3.508 against 3.517 stored (`../piper-seqir-no-vits2-cpn/scorer_control.json`).
+- **SeqIR compared with this run, paired by sentence:**
+  - WER is +0.008 [−0.0004, +0.018] (Holm p 0.12).
+  - UTMOSv2 is −0.024 cross-session, and −0.015 [−0.039, +0.009] in the same session.
+  - Validation mel loss is −0.66 over epochs 1200–1499.
+
+This run keeps the lowest WER of the seven systems. Both IR decoders are faster in the same
+session, by 23% (ParIR) and 33% (SeqIR).

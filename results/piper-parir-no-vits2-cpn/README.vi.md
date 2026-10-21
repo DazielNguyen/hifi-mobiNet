@@ -14,7 +14,8 @@ split và công thức train. Nó chỉ thay ba thứ:
 Đây là phép so sánh **cả bộ decoder**, không phải chỉ so cấu trúc khối.
 
 Mọi con số dưới đây là **phép đo mới** (2026-10-16), trừ các kết quả đã lưu dùng để so
-sánh. **Đợt này chưa đo RTF**; xem mục 6.
+sánh. **Đợt này chưa đo RTF**; xem mục 6. RTF được đo sau đó, trên máy rảnh ngày
+2026-10-21; xem mục 9.
 
 ## 1. Model được đánh giá
 
@@ -189,3 +190,31 @@ Các lệnh giống hệt mục 8 của [README.md](README.md).
 - Điểm UTMOSv2 theo từng câu thay đổi giữa các lượt chấm.
 
 Pipeline đã chạy các bước này được giữ cùng run (`eval/pipeline.sh`, `eval/pipeline.log`).
+
+## 9. Cập nhật 2026-10-21: RTF và so sánh với Piper-SeqIR
+
+Sau khi Piper-SeqIR train xong, ba model Config A được đo thời gian liền nhau trong cùng
+một phiên trên máy rảnh. Báo cáo đầy đủ: mục 4 của
+[`../piper-seqir-no-vits2-cpn/README.vi.md`](../piper-seqir-no-vits2-cpn/README.vi.md).
+Các số liệu ở mục 1–8 phía trên giữ nguyên.
+
+| Model | RTF trung bình (phiên 2026-10-21) | So với Piper_no_VITS2_cpn | Số câu nhanh hơn |
+|---|---:|---:|---:|
+| Piper_no_VITS2_cpn (control) | 0.0510 | — | — |
+| **Piper-ParIR** | **0.0392** | **−23,2%** [CI ghép cặp của Δ −0.0126, −0.0110] | 653 / 720 |
+| Piper-SeqIR | 0.0340 | −33,3% | 690 / 720 |
+
+- **Tính deterministic:** ParIR được sinh lại trong phiên này, và 720/720 WAV giống từng byte với lần đánh giá ở mục 3 (`parir_determinism.json`). Vì vậy kết quả chất lượng ở trên mô tả đúng phần audio đã được bấm giờ.
+- **Khả năng so sánh:** control chạy chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10. Chỉ tỉ lệ trong cùng phiên mới có ý nghĩa; không so 0.0392 với các RTF lịch sử ở mục 3.
+- **Giới hạn:** mỗi câu đo một lần, thứ tự cố định (control, ParIR, SeqIR), PyTorch CPU dưới WSL.
+- **Chấm lại:** các WAV của ParIR được chấm lại trong cùng đợt (`../piper-seqir-no-vits2-cpn/scorer_control_parir.json`).
+  - Whisper cho 720/720 transcript giống hệt, và macro WER 0.0726 được tái tạo đúng.
+  - UTMOSv2 trung bình là 3.526 so với 3.530 đã lưu.
+- **So với Piper-SeqIR** (hai khối IR nối tiếp mỗi tầng, kernel 3):
+  - WER không phân biệt được.
+  - UTMOSv2 của ParIR cao hơn 0,033–0,037.
+  - RTF của SeqIR thấp hơn 13%.
+  - Mel loss trên validation của SeqIR cao hơn 0,09–0,12, và SeqIR không có bậc tăng quanh epoch 800.
+
+Như vậy câu hỏi về tốc độ của ParIR so với decoder ResBlock2 (mục 5, "chưa biết") đã có
+câu trả lời: RTF thấp hơn khoảng 23% khi đo trên CPU trong cùng một phiên.
