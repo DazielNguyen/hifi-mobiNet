@@ -85,7 +85,7 @@ ONNX Runtime timing session.
 - **Export:** lossless. All 720 sentences pass parity, and WER is identical to PyTorch.
 - **INT8 size and speed:** graphs are 32–33% smaller and 4–17% faster than FP32.
 - **INT8 quality:** no detectable change for Piper_no_VITS2_cpn and ParIR. SeqIR loses 0.036 in UTMOSv2.
-- **Decoder speed:** on ORT with 12 threads, the IR decoders are not faster than ResBlock2.
+- **Decoder speed:** on ORT with 12 threads, the IR decoders are not faster than ResBlock2. The profile shows why: SnakeBeta's `Sin` runs single-threaded in ONNX Runtime 1.23, while ResBlock2's convolutions scale with threads.
 
 | Model, ONNX INT8 | UTMOSv2 (predicted) | Macro WER | Graph size | ORT RTF, 2 threads | ORT RTF, 12 threads |
 |---|---:|---:|---:|---:|---:|

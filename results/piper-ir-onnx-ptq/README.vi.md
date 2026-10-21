@@ -28,6 +28,7 @@ PyTorch dùng để so sánh. Đợt này chạy từ 16:35 đến 21:47 +07
   - Các graph triển khai được đo với noise ngẫu nhiên gốc, ORT CPU, intra-op 2 và 12 thread.
   - Mỗi cấu hình thread chạy vòng A, rồi vòng B theo thứ tự ngược lại.
   - Một lần chạy control PyTorch của Piper_no_VITS2_cpn mở đầu phiên.
+- **Profile (bổ sung, 23:17–23:22).** Chạy profiler theo từng node của ORT và benchmark từng op để giải thích vì sao thứ hạng decoder thay đổi theo số thread (mục 5).
 
 ## 2. Kiểm tra export và PTQ
 
@@ -109,7 +110,64 @@ RTF trung bình của vòng A, kèm vòng B (thứ tự ngược) trong ngoặc.
   - Ở vòng B, kết quả của SeqIR và mọi thứ hạng ở 12 thread vẫn như cũ.
   - Mức lợi nhỏ của ParIR ở 2 thread thì không: ở vòng B, ParIR chậm hơn control (FP32 0,0453 so với 0,0439; INT8 0,0399 so với 0,0394).
 
-## 5. Đọc kết quả
+## 5. Vì sao thứ hạng decoder khác nhau trên ORT: profile
+
+Chạy sau đợt chính, trên cùng máy rảnh (23:17–23:22), bằng
+`scripts/evaluation/onnx/profile_graphs.py` và `profile_ops.py`; bản ghi nằm trong `profile/`.
+- **Profile graph.** Profiler theo từng node của ORT trên sáu graph triển khai, ở 2 và 12 thread, với spinning mặc định của ORT (thread rảnh quay chờ) và khi tắt spinning.
+  - Input là 30 câu Harvard (cứ 24 câu lấy một, khoảng 75 s audio), sau một lần chạy làm nóng không tính.
+  - Profiler có overhead, nên hãy so tỉ trọng và tỉ lệ giữa 2 và 12 thread, không so giá trị RTF với mục 4.
+- **Benchmark từng op.** Graph chỉ có một op, chạy trên tensor của tầng decoder cuối, [1, 32, 53.760], khoảng 2,4 s audio. Lấy trung vị của 50 lần chạy.
+
+**Graph FP32 dùng thời gian kernel vào đâu** (ms trên 30 câu, spinning mặc định). "Conv" gồm cả các conv đã được fuse.
+
+| Model | Thread | Tổng decoder | trong đó Conv | trong đó ConvTranspose | trong đó Sin | Phần còn lại của model |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 2 | 2.099 | 1.302 | 556 | — | 920 |
+| | 12 | **1.466** | 698 | 658 | — | 990 |
+| Piper-ParIR | 2 | 2.318 | 478 | 563 | 822 | 909 |
+| | 12 | **2.264** | 302 | 650 | **1.069** | 895 |
+| Piper-SeqIR | 2 | 1.693 | 308 | 555 | 561 | 903 |
+| | 12 | **1.702** | 200 | 640 | **719** | 921 |
+
+**Khả năng tăng tốc theo thread của từng op** (trung vị ms mỗi lần gọi):
+
+| Op | 1 thread | 2 thread | 4 thread | 12 thread | 12 thread, tắt spinning |
+|---|---:|---:|---:|---:|---:|
+| **Sin** | 2,13 | 2,27 | 2,33 | **3,13** | 2,39 |
+| **Cos** | 2,30 | 2,31 | 2,43 | **3,08** | 2,25 |
+| Mul | 0,28 | 0,15 | 0,08 | 0,04 | 0,14 |
+| Add | 0,28 | 0,15 | 0,08 | 0,04 | 0,14 |
+| Pow | 0,54 | 0,27 | 0,14 | 0,07 | 0,17 |
+| LeakyRelu | 0,30 | 0,15 | 0,08 | 0,05 | 0,14 |
+| Tanh | 0,45 | 0,22 | 0,11 | 0,07 | 0,17 |
+
+**Điều này cho thấy:**
+1. **Decoder chiếm 60–80% thời gian kernel** ở mọi graph. Phần còn lại của model (enc_p, dp, flow và các op nối) tốn gần như bằng nhau ở cả ba model, khoảng 900 ms, đúng như mong đợi vì chúng dùng chung backbone.
+2. **`Sin` của SnakeBeta không dùng thread pool.**
+   - Decoder IR áp dụng SnakeBeta, x + sin²(αx)/β, ở mọi khối. Trong graph đã tối ưu, ParIR có 22 node `Sin` và SeqIR có 16, tất cả chạy trên tensor độ phân giải đầy đủ.
+   - Trên ONNX Runtime 1.23.2 với CPU này, `Sin` (và `Cos`) tốn cùng một thời gian dù dùng 1, 2, 4 hay 12 thread.
+   - Mọi op element-wise khác được thử đều nhanh lên 6–8 lần khi dùng 12 thread.
+   - Tính theo từng phần tử, `Sin` vốn đã tốn gấp khoảng 5 lần `Tanh` và 8 lần `Mul` khi chạy 1 thread.
+   - ResBlock2 dùng LeakyRelu, op này tăng tốc được, và không có `Sin`.
+3. **Ở 12 thread, `Sin` còn chậm đi chứ không chỉ đứng yên:** +30% với ParIR (822 → 1.069 ms) và +28% với SeqIR.
+   - Nguyên nhân là spinning của các thread rảnh trong ORT. Khi tắt spinning, thời gian của op đơn lẻ quay về mức 1 thread (3,13 → 2,39 ms), và thời gian `Sin` trong graph ParIR về 874 ms.
+   - Tắt spinning không phải cách sửa: các op song song mất phần tăng tốc, và mọi graph đều chậm hơn ở 12 thread (RTF của ParIR khi profile 0,0438 → 0,0512).
+4. **`ConvTranspose` (các tầng upsampling) cũng không tăng tốc** (556 → 658 ms với ResBlock2). Op này có trong cả ba decoder với chi phí tương đương, nên không giải thích được thứ hạng.
+5. **Decoder IR đổi thời gian convolution lấy thời gian `Sin`:**
+   - Convolution của chúng rẻ hơn ResBlock2 2,7 lần (ParIR) và 4,2 lần (SeqIR): 478 / 308 ms so với 1.302 ms ở 2 thread.
+   - **Ở 2 thread,** khoản tiết kiệm này lớn hơn chi phí `Sin` với SeqIR (decoder 1.693 so với 2.099 ms). Với ParIR, vì có nhiều node `Sin` hơn, hai bên gần như triệt tiêu nhau (2.318 ms).
+   - **Ở 12 thread,** convolution dày của ResBlock2 nhanh lên 1,9 lần (1.302 → 698 ms), còn `Sin` của decoder IR không nhanh lên mà còn chậm đi. Khi đó ResBlock2 có decoder nhanh nhất (1.466 so với 1.702 và 2.264 ms). Đó chính là sự đảo ngược ở mục 4.
+   - **Graph INT8** có cùng decoder (FP32) và cho cùng một quy luật (`profile/*_int8*.json`).
+
+Vì vậy, sự đảo ngược thứ hạng là đặc tính của các kernel trong runtime, không phải của khối lượng tính toán của decoder. Nếu có `Sin` chạy đa thread, có thể kỳ vọng decoder IR vẫn dẫn trước nhờ convolution rẻ hơn, nhưng điều này chưa được kiểm chứng.
+- **PyTorch:** các kernel decoder của PyTorch chưa được profile ở đây.
+- **Các hướng khắc phục có thể có, chưa thử:**
+  - dùng ít thread ORT hơn (2–4, cấu hình thường gặp trên thiết bị biên);
+  - xấp xỉ `sin` bằng đa thức hoặc bảng tra chạy song song trong graph export (làm thay đổi kết quả số);
+  - dùng runtime hoặc execution provider khác.
+
+## 6. Đọc kết quả
 
 - **Export không làm mất gì.** Cả 720 câu Harvard đều đạt ngưỡng parity FP32, WER của Whisper giống hệt ở mọi câu, và UTMOSv2 lệch dưới 0,01. Mức lệch đó nằm trong dao động của scorer giữa các lần chấm (±0,01–0,02).
 - **INT8:**
@@ -122,7 +180,7 @@ RTF trung bình của vòng A, kèm vòng B (thứ tự ngược) trong ngoặc.
   - **PyTorch, 12 thread** (phiên trước): SeqIR nhanh hơn 33% và ParIR nhanh hơn 23% so với ResBlock2.
   - **ORT, 2 thread:** SeqIR vẫn nhanh nhất rõ rệt (−23% FP32, −28,5% INT8) ở cả hai vòng. Mức lợi 5–9% của ParIR ở vòng A không lặp lại ở vòng B.
   - **ORT, 12 thread:** thứ tự đảo ngược. ResBlock2 nhanh nhất, SeqIR chậm hơn 7%, ParIR chậm hơn 32–36%.
-  - Nguyên nhân chưa được tìm hiểu. Một cách giải thích hợp lý nhưng chưa kiểm chứng: activation SnakeBeta và các khối inverted-residual của decoder IR biến thành nhiều op element-wise nhỏ trong ORT, ít được lợi khi tăng thread, trong khi các convolution lớn hơn của ResBlock2 thì được lợi.
+  - **Nguyên nhân** (mục 5): `Sin` của SnakeBeta chạy đơn luồng trong ONNX Runtime và còn chậm đi khi các thread rảnh spinning, trong khi convolution dày của ResBlock2 tăng tốc theo số thread.
   - Vì vậy nhận định "decoder IR nhanh hơn" đúng với PyTorch và với ORT 2 thread, nhưng không đúng với ORT 12 thread trên CPU này.
 
 Những gì kết quả này **không** chứng minh:
@@ -131,7 +189,7 @@ Những gì kết quả này **không** chứng minh:
 - **Mức giảm chất lượng INT8 của SeqIR là do decoder của nó.** Các phần được lượng tử hoá (enc_p, dp, flow) có cùng kiến trúc ở cả ba model nhưng trọng số train khác nhau.
 - **Ý nghĩa qua các seed train,** hay MOS do người chấm.
 
-## 6. Các file
+## 7. Các file
 
 Trong mỗi thư mục model (`piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`):
 
@@ -153,13 +211,21 @@ Trong mỗi thư mục model (`piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`
 | `timing_summary.json` | Giá trị trung bình, kiểm thứ tự, phép thử ghép cặp INT8 vs FP32 và model vs control | phân tích mới |
 | `machine_state_before.txt`, `machine_state_after.txt` | Tải máy, mức dùng GPU, các tiến trình bận nhất | bản ghi phiên |
 
+`profile/` (mục 5):
+
+| File | Nội dung | Loại |
+|---|---|---|
+| `profile_<model>_{fp32,int8}.json` | Profile theo từng node của ORT ở 2 và 12 thread (spinning mặc định): thời gian kernel theo module và loại op, số op của graph đã tối ưu | phép đo mới |
+| `profile_<model>_{fp32,int8}_nospin.json` | Như trên, với `session.intra_op.allow_spinning=0` | phép đo mới |
+| `ops.json` | Khả năng tăng tốc theo thread của từng op (Sin, Cos, Mul, Add, Pow, LeakyRelu, Tanh) | phép đo mới |
+
 Các graph (`*.onnx`), WAV và log của đợt chạy nằm ngoài Git, trong `training_output/onnx-ptq/`. Hash của chúng có trong các bản ghi.
 
-## 7. Tái lập
+## 8. Tái lập
 
 Chạy từ thư mục gốc của clone training. Cần một môi trường Python có torch, onnx, onnxruntime và các scorer (`SPY`; đợt này dùng torch 2.13.0, onnx 1.22.0, onnxruntime 1.23.2), cùng venv training (`TPY`). Lệnh giống mục 7 của [README.md](README.md).
 
-Script dừng ở cổng kiểm đầu tiên bị lỗi, và chạy tiếp sau stage cuối cùng đã xong. Các bước riêng lẻ là `scripts/evaluation/onnx/{export,quantize,synthesize,time_graphs,summarize_timing}.py`, rồi đến `scripts/evaluation/harvard/{score,compare}.py`. Test nằm trong `tests/test_onnx_ptq.py`.
+Script dừng ở cổng kiểm đầu tiên bị lỗi, và chạy tiếp sau stage cuối cùng đã xong. Các bước riêng lẻ là `scripts/evaluation/onnx/{export,quantize,synthesize,time_graphs,summarize_timing}.py`, rồi đến `scripts/evaluation/harvard/{score,compare}.py`. Profile ở mục 5 chạy riêng bằng `profile_ops.py` và `profile_graphs.py` (lệnh ở mục 8 của [README.md](README.md)). Test nằm trong `tests/test_onnx_ptq.py`.
 
 **Kết quả mong đợi:**
 - Export và lượng tử hoá là deterministic, nên hash graph phải trùng.

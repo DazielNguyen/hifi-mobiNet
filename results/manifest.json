@@ -1300,6 +1300,148 @@
         "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
         "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
       ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/ops.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "5219eef1b87bdc4bd74226e622fd6e4ee65c19ebac29675d46f724194b6226a6",
+      "classification": "new_measurement",
+      "n": null,
+      "limits": [
+        "Single-op graphs on one tensor shape; median of 50 runs after 5 warm-up runs; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-no-vits2-cpn_fp32.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "52efecbe4e16ba3dd9be054c81bb5d3a3c7b411784b4696c8384cb9eb73f258d",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-no-vits2-cpn_fp32_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "a3a6b229705a47ea47b84ce846bd03fccd54f0b34323faafd6a16cc1b2af3752",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-no-vits2-cpn_int8.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "e0b2f2069873e90866d3c20502059caf0c12a7ef397602801e9072c58ad65735",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-no-vits2-cpn_int8_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "54d8dd349bd0a68ab1aa8376beaff729c6f2f2f3935d119ebf82db1ec45dbe5b",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "c230f6f60f630bbbb4e417d8fecadb8f38143072e0b34ad74fee1d9a6422c2c3",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-parir-no-vits2-cpn_fp32_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "2c19339f7a2e964641fbadab32ed14320425871868f3fe467e4018f1328bcc8a",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-parir-no-vits2-cpn_int8.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "c85632a70dd0369c4131995e22c50ae4c8317f06978514738101001443e8cfc1",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-parir-no-vits2-cpn_int8_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "de8743c2c3d1fe2f54a377c9241994245d420df4df452e5aea969ad0e2e04fc6",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "d60cd7a82fb2e992716141d22c9e4b68ca97208ff2d13fa4af5be838983e1fd1",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-seqir-no-vits2-cpn_fp32_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "06f3ca0d6ab8bfb102741c02a00e4a7aae4956c773281b4d7552aca1b18a7b2a",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "75111ee12a902abb14ae1f81c3a8b5f1fc48a42c1b33e7b51f3e84f475a0d626",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/profile/profile_piper-seqir-no-vits2-cpn_int8_nospin.json",
+      "source": "ORT profile follow-up (2026-10-21 23:17-23:22) to the ONNX/PTQ round; see results/piper-ir-onnx-ptq/README.md, section 5",
+      "sha256": "ab158472f01f178ecd9bb2007404d5e4d1d52af1cb7865a7c4e292bc4dbf24b4",
+      "classification": "new_measurement",
+      "n": 30,
+      "limits": [
+        "Profiler overhead inflates times; compare shares and thread ratios only.",
+        "30 Harvard sentences (every 24th) after one dropped warm-up run; ORT 1.23.2 on this CPU only."
+      ]
     }
   ],
   "status": "historical_observations_and_new_measurements",

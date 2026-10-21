@@ -1,0 +1,478 @@
+{
+ "created_utc": "2026-10-21T16:20:01.361798+00:00",
+ "shape": [
+  1,
+  32,
+  53760
+ ],
+ "repeats": 50,
+ "warm_up_runs": 5,
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "onnxruntime": "1.23.2",
+  "numpy": "1.26.4",
+  "cpu_count": 24
+ },
+ "load_average_start": [
+  0.94140625,
+  1.0107421875,
+  0.47265625
+ ],
+ "load_average_end": [
+  0.9462890625,
+  1.01025390625,
+  0.4755859375
+ ],
+ "script_sha256": "6f40593168c8113acb6e64330532ab6a8b8a11fd6d6a4253ffc2e64a0c4e8215",
+ "rows": [
+  {
+   "op": "Sin",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 2.131273504346609,
+   "min_ms": 2.097620046697557,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Sin",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 2.2720525739714503,
+   "min_ms": 2.133989008143544,
+   "speedup_vs_1_thread": 0.9380388151059527
+  },
+  {
+   "op": "Sin",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 2.326612069737166,
+   "min_ms": 2.247826079837978,
+   "speedup_vs_1_thread": 0.9160416263925665
+  },
+  {
+   "op": "Sin",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 3.133998019620776,
+   "min_ms": 2.47802899684757,
+   "speedup_vs_1_thread": 0.6800494100517971
+  },
+  {
+   "op": "Sin",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 2.3362620268017054,
+   "min_ms": 2.205776982009411,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Sin",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 2.1911069634370506,
+   "min_ms": 2.14369990862906,
+   "speedup_vs_1_thread": 1.066247365275568
+  },
+  {
+   "op": "Sin",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 2.2218554513528943,
+   "min_ms": 2.1427220199257135,
+   "speedup_vs_1_thread": 1.0514914574569414
+  },
+  {
+   "op": "Sin",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 2.393693954218179,
+   "min_ms": 2.234473009593785,
+   "speedup_vs_1_thread": 0.9760069881468069
+  },
+  {
+   "op": "Cos",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 2.298727515153587,
+   "min_ms": 2.1485619945451617,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Cos",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 2.3127964814193547,
+   "min_ms": 2.193929045461118,
+   "speedup_vs_1_thread": 0.9939169025987389
+  },
+  {
+   "op": "Cos",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 2.426936523988843,
+   "min_ms": 2.286043018102646,
+   "speedup_vs_1_thread": 0.9471724919181094
+  },
+  {
+   "op": "Cos",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 3.0808544834144413,
+   "min_ms": 2.3685829946771264,
+   "speedup_vs_1_thread": 0.7461331028546208
+  },
+  {
+   "op": "Cos",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 2.29747750563547,
+   "min_ms": 2.1907660411670804,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Cos",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 2.2007430088706315,
+   "min_ms": 2.096448093652725,
+   "speedup_vs_1_thread": 1.043955380694123
+  },
+  {
+   "op": "Cos",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 2.2047149832360446,
+   "min_ms": 2.146490034647286,
+   "speedup_vs_1_thread": 1.0420746096909408
+  },
+  {
+   "op": "Cos",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 2.251300436910242,
+   "min_ms": 2.1892799995839596,
+   "speedup_vs_1_thread": 1.0205112867070747
+  },
+  {
+   "op": "Mul",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 0.28399250004440546,
+   "min_ms": 0.27476297691464424,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Mul",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 0.1459789928048849,
+   "min_ms": 0.14175602700561285,
+   "speedup_vs_1_thread": 1.9454340284700347
+  },
+  {
+   "op": "Mul",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 0.0773234642110765,
+   "min_ms": 0.07428298704326153,
+   "speedup_vs_1_thread": 3.6727855243159664
+  },
+  {
+   "op": "Mul",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 0.04084897227585316,
+   "min_ms": 0.03200594801455736,
+   "speedup_vs_1_thread": 6.952255692667218
+  },
+  {
+   "op": "Mul",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 0.2820214722305536,
+   "min_ms": 0.2725220983847976,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Mul",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 0.18218951299786568,
+   "min_ms": 0.1688010524958372,
+   "speedup_vs_1_thread": 1.5479566720937306
+  },
+  {
+   "op": "Mul",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 0.126672035548836,
+   "min_ms": 0.12144399806857109,
+   "speedup_vs_1_thread": 2.226390939473185
+  },
+  {
+   "op": "Mul",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 0.14197546988725662,
+   "min_ms": 0.12859504204243422,
+   "speedup_vs_1_thread": 1.9864098527337728
+  },
+  {
+   "op": "Pow",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 0.5442490219138563,
+   "min_ms": 0.51169004291296,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Pow",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 0.2692434936761856,
+   "min_ms": 0.26132899802178144,
+   "speedup_vs_1_thread": 2.021400831206027
+  },
+  {
+   "op": "Pow",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 0.13772048987448215,
+   "min_ms": 0.13346492778509855,
+   "speedup_vs_1_thread": 3.9518376852266677
+  },
+  {
+   "op": "Pow",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 0.07396051660180092,
+   "min_ms": 0.06877200212329626,
+   "speedup_vs_1_thread": 7.358642785637383
+  },
+  {
+   "op": "Pow",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 0.5297939642332494,
+   "min_ms": 0.5052019841969013,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Pow",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 0.2955590025521815,
+   "min_ms": 0.28734304942190647,
+   "speedup_vs_1_thread": 1.792515063518369
+  },
+  {
+   "op": "Pow",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 0.19010750111192465,
+   "min_ms": 0.18620199989527464,
+   "speedup_vs_1_thread": 2.7868125199401597
+  },
+  {
+   "op": "Pow",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 0.1683384762145579,
+   "min_ms": 0.1523359678685665,
+   "speedup_vs_1_thread": 3.147194724264903
+  },
+  {
+   "op": "Add",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 0.2846894785761833,
+   "min_ms": 0.2700269687920809,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Add",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 0.14626403572037816,
+   "min_ms": 0.14156103134155273,
+   "speedup_vs_1_thread": 1.9464079271027466
+  },
+  {
+   "op": "Add",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 0.07585296407341957,
+   "min_ms": 0.0741549301892519,
+   "speedup_vs_1_thread": 3.7531753973467246
+  },
+  {
+   "op": "Add",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 0.043761509004980326,
+   "min_ms": 0.03316404763609171,
+   "speedup_vs_1_thread": 6.505476731704657
+  },
+  {
+   "op": "Add",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 0.2781215007416904,
+   "min_ms": 0.26875699404627085,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Add",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 0.17205101903527975,
+   "min_ms": 0.16695098020136356,
+   "speedup_vs_1_thread": 1.61650597771037
+  },
+  {
+   "op": "Add",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 0.12871349463239312,
+   "min_ms": 0.11971592903137207,
+   "speedup_vs_1_thread": 2.16077965667864
+  },
+  {
+   "op": "Add",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 0.13637443771585822,
+   "min_ms": 0.12833799701184034,
+   "speedup_vs_1_thread": 2.0393961317088474
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 0.2954960218630731,
+   "min_ms": 0.2804130781441927,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 0.1473300508223474,
+   "min_ms": 0.14442496467381716,
+   "speedup_vs_1_thread": 2.0056737930497714
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 0.0843305024318397,
+   "min_ms": 0.08313998114317656,
+   "speedup_vs_1_thread": 3.504023020637264
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 0.04970451118424535,
+   "min_ms": 0.0404260354116559,
+   "speedup_vs_1_thread": 5.945054378821361
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 0.3047060454264283,
+   "min_ms": 0.28645701240748167,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 0.18385046860203147,
+   "min_ms": 0.18067494966089725,
+   "speedup_vs_1_thread": 1.6573580026385717
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 0.1310279476456344,
+   "min_ms": 0.12650201097130775,
+   "speedup_vs_1_thread": 2.3255042218207294
+  },
+  {
+   "op": "LeakyRelu",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 0.1374315470457077,
+   "min_ms": 0.1340369926765561,
+   "speedup_vs_1_thread": 2.2171477508369137
+  },
+  {
+   "op": "Tanh",
+   "threads": 1,
+   "spinning": true,
+   "median_ms": 0.4454554873518646,
+   "min_ms": 0.42208493687212467,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Tanh",
+   "threads": 2,
+   "spinning": true,
+   "median_ms": 0.22429745877161622,
+   "min_ms": 0.21384190768003464,
+   "speedup_vs_1_thread": 1.9860032734719277
+  },
+  {
+   "op": "Tanh",
+   "threads": 4,
+   "spinning": true,
+   "median_ms": 0.11157745029777288,
+   "min_ms": 0.1099610235542059,
+   "speedup_vs_1_thread": 3.992343310974153
+  },
+  {
+   "op": "Tanh",
+   "threads": 12,
+   "spinning": true,
+   "median_ms": 0.06866449257358909,
+   "min_ms": 0.06706605199724436,
+   "speedup_vs_1_thread": 6.487421237031078
+  },
+  {
+   "op": "Tanh",
+   "threads": 1,
+   "spinning": false,
+   "median_ms": 0.5144610186107457,
+   "min_ms": 0.43428398203104734,
+   "speedup_vs_1_thread": 1.0
+  },
+  {
+   "op": "Tanh",
+   "threads": 2,
+   "spinning": false,
+   "median_ms": 0.24396448861807585,
+   "min_ms": 0.24192407727241516,
+   "speedup_vs_1_thread": 2.108753702331365
+  },
+  {
+   "op": "Tanh",
+   "threads": 4,
+   "spinning": false,
+   "median_ms": 0.16921799397096038,
+   "min_ms": 0.16334699466824532,
+   "speedup_vs_1_thread": 3.0402264353697084
+  },
+  {
+   "op": "Tanh",
+   "threads": 12,
+   "spinning": false,
+   "median_ms": 0.17371895955875516,
+   "min_ms": 0.15333190094679594,
+   "speedup_vs_1_thread": 2.9614557899579457
+  }
+ ]
+}

@@ -94,7 +94,7 @@ phiên đo thời gian bằng ONNX Runtime.
 - **Export:** không mất mát. Cả 720 câu đạt parity, và WER giống hệt PyTorch.
 - **Kích thước và tốc độ INT8:** graph nhỏ hơn 32–33% và nhanh hơn FP32 4–17%.
 - **Chất lượng INT8:** không phát hiện thay đổi với Piper_no_VITS2_cpn và ParIR. SeqIR giảm 0,036 UTMOSv2.
-- **Tốc độ decoder:** trên ORT 12 thread, decoder IR không nhanh hơn ResBlock2.
+- **Tốc độ decoder:** trên ORT 12 thread, decoder IR không nhanh hơn ResBlock2. Profile cho thấy lý do: `Sin` của SnakeBeta chạy đơn luồng trong ONNX Runtime 1.23, còn convolution của ResBlock2 tăng tốc theo số thread.
 
 | Model, ONNX INT8 | UTMOSv2 (dự đoán) | Macro WER | Kích thước graph | RTF ORT, 2 thread | RTF ORT, 12 thread |
 |---|---:|---:|---:|---:|---:|

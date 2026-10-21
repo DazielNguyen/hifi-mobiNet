@@ -28,6 +28,7 @@ calibration set before any graph existed. All numbers are **new measurements** o
   - The deployment graphs were timed with native random noise, ORT CPU, intra-op 2 and 12 threads.
   - Each thread setting ran round A, then round B in reverse order.
   - A PyTorch control run of Piper_no_VITS2_cpn opened the session.
+- **Profile (follow-up, 23:17–23:22).** ORT per-node profiles and single-op benchmarks were run to explain the thread-dependent ranking of the decoders (section 5).
 
 ## 2. Export and PTQ checks
 
@@ -109,7 +110,64 @@ Mean RTF in round A, with round B (reverse order) in brackets. "INT8 vs FP32" is
   - In round B the SeqIR results and all 12-thread rankings are the same.
   - ParIR's small 2-thread gain is not: in round B, ParIR was slower than the control at 2 threads (FP32 0.0453 vs 0.0439, INT8 0.0399 vs 0.0394).
 
-## 5. Reading the results
+## 5. Why the decoders rank differently on ORT: profile
+
+Run after the round on the same idle machine (23:17–23:22) with
+`scripts/evaluation/onnx/profile_graphs.py` and `profile_ops.py`; records in `profile/`.
+- **Graph profile.** ORT's per-node profiler on the six deployment graphs, at 2 and 12 threads, with ORT's default idle-thread spinning and with spinning off.
+  - The input is 30 Harvard sentences (every 24th, about 75 s of audio), after one dropped warm-up run.
+  - The profiler adds overhead, so compare the parts and the 2-vs-12 ratios, not the RTF values with section 4.
+- **Op benchmark.** Single-op graphs on a tensor of the last decoder stage, [1, 32, 53,760], about 2.4 s of audio. Median of 50 runs.
+
+**Where the FP32 graphs spend their kernel time** (ms over the 30 sentences, default spinning). "Conv" includes the fused convs.
+
+| Model | Threads | Decoder total | of which Conv | of which ConvTranspose | of which Sin | Rest of the model |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 2 | 2,099 | 1,302 | 556 | — | 920 |
+| | 12 | **1,466** | 698 | 658 | — | 990 |
+| Piper-ParIR | 2 | 2,318 | 478 | 563 | 822 | 909 |
+| | 12 | **2,264** | 302 | 650 | **1,069** | 895 |
+| Piper-SeqIR | 2 | 1,693 | 308 | 555 | 561 | 903 |
+| | 12 | **1,702** | 200 | 640 | **719** | 921 |
+
+**Thread scaling of single ops** (median ms per call):
+
+| Op | 1 thread | 2 threads | 4 threads | 12 threads | 12 threads, no spinning |
+|---|---:|---:|---:|---:|---:|
+| **Sin** | 2.13 | 2.27 | 2.33 | **3.13** | 2.39 |
+| **Cos** | 2.30 | 2.31 | 2.43 | **3.08** | 2.25 |
+| Mul | 0.28 | 0.15 | 0.08 | 0.04 | 0.14 |
+| Add | 0.28 | 0.15 | 0.08 | 0.04 | 0.14 |
+| Pow | 0.54 | 0.27 | 0.14 | 0.07 | 0.17 |
+| LeakyRelu | 0.30 | 0.15 | 0.08 | 0.05 | 0.14 |
+| Tanh | 0.45 | 0.22 | 0.11 | 0.07 | 0.17 |
+
+**What this shows:**
+1. **The decoder takes 60–80% of the kernel time** in every graph. The rest of the model (enc_p, dp, flow and glue ops) costs about the same in all three models, about 900 ms, as expected from the shared backbone.
+2. **SnakeBeta's `Sin` does not use the thread pool.**
+   - The IR decoders apply SnakeBeta, x + sin²(αx)/β, at every block. In the optimized graphs that is 22 `Sin` nodes for ParIR and 16 for SeqIR, all on full-resolution tensors.
+   - In ONNX Runtime 1.23.2 on this CPU, `Sin` (and `Cos`) take the same time with 1, 2, 4 or 12 threads.
+   - Every other elementwise op tested gets 6–8× faster with 12 threads.
+   - Per element, `Sin` already costs about 5× `Tanh` and 8× `Mul` on one thread.
+   - ResBlock2 uses LeakyRelu, which scales, and has no `Sin`.
+3. **At 12 threads `Sin` becomes slower, not just flat:** +30% for ParIR (822 → 1,069 ms) and +28% for SeqIR.
+   - The cause is ORT's idle-thread spinning. With spinning off, the single-op time returns to the 1-thread level (3.13 → 2.39 ms), and the ParIR graph's `Sin` time to 874 ms.
+   - Turning spinning off is not a fix: the parallel ops then lose their speed-up, and every graph gets slower at 12 threads (ParIR RTF under profiling 0.0438 → 0.0512).
+4. **`ConvTranspose` (the upsampling layers) does not scale either** (556 → 658 ms for ResBlock2). It is present in all three decoders with similar cost, so it does not explain the ranking.
+5. **The IR decoders trade convolution time for `Sin` time:**
+   - Their convolutions are 2.7× (ParIR) and 4.2× (SeqIR) cheaper than ResBlock2's (478 / 308 ms against 1,302 ms at 2 threads).
+   - **At 2 threads** that saving outweighs the `Sin` cost for SeqIR (decoder 1,693 against 2,099 ms). For ParIR, with more `Sin` nodes, it nearly cancels out (2,318 ms).
+   - **At 12 threads** ResBlock2's dense convolutions get 1.9× faster (1,302 → 698 ms), while the IR decoders' `Sin` does not get faster and even slows down. ResBlock2 then has the fastest decoder (1,466 against 1,702 and 2,264 ms). That is the reversal in section 4.
+   - **INT8** graphs have the same decoder (FP32) and show the same pattern (`profile/*_int8*.json`).
+
+So the ranking reversal is a property of the runtime's kernels, not of the decoders' arithmetic cost. With a multi-threaded `Sin`, the IR decoders' cheaper convolutions would be expected to keep them ahead, but that was not tested.
+- **PyTorch:** its decoder kernels were not profiled here.
+- **Possible remedies, not tested:**
+  - fewer ORT threads (2–4, the usual edge setting);
+  - a parallel polynomial or table approximation of `sin` in the exported graph (changes the numerics);
+  - another runtime or execution provider.
+
+## 6. Reading the results
 
 - **The export is lossless.** All 720 Harvard sentences pass the FP32 parity thresholds, the Whisper WER is identical on every sentence, and UTMOSv2 differs by less than 0.01. That is within the scorer's run-to-run variation (±0.01–0.02).
 - **INT8:**
@@ -122,7 +180,7 @@ Mean RTF in round A, with round B (reverse order) in brackets. "INT8 vs FP32" is
   - **PyTorch, 12 threads** (earlier session): SeqIR −33% and ParIR −23% against ResBlock2.
   - **ORT, 2 threads:** SeqIR is still clearly fastest (−23% FP32, −28.5% INT8), in both rounds. ParIR's 5–9% gain in round A did not repeat in round B.
   - **ORT, 12 threads:** the order reverses. ResBlock2 is fastest, SeqIR is 7% slower and ParIR 32–36% slower.
-  - The cause was not investigated. A plausible reading, not tested here: the IR decoders' SnakeBeta activations and inverted-residual blocks become many small elementwise ORT ops, which gain little from more threads, while ResBlock2's larger convolutions do.
+  - **Cause** (section 5): SnakeBeta's `Sin` runs single-threaded in ONNX Runtime and gets slower under idle-thread spinning, while ResBlock2's dense convolutions scale with threads.
   - The claim "IR decoders are faster" therefore holds for PyTorch and for 2-thread ORT, not for 12-thread ORT on this CPU.
 
 What this does **not** show:
@@ -131,7 +189,7 @@ What this does **not** show:
 - **That SeqIR's INT8 loss is specific to its decoder.** The quantized parts (enc_p, dp, flow) have the same architecture in all three models but different trained weights.
 - **Significance across training seeds,** or human MOS.
 
-## 6. Files
+## 7. Files
 
 Per model folder (`piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`):
 
@@ -153,9 +211,17 @@ Per model folder (`piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seq
 | `timing_summary.json` | Means, order check, paired INT8-vs-FP32 and model-vs-control tests | new analysis |
 | `machine_state_before.txt`, `machine_state_after.txt` | Load, GPU use and top processes | session record |
 
+`profile/` (section 5):
+
+| File | Content | Class |
+|---|---|---|
+| `profile_<model>_{fp32,int8}.json` | ORT per-node profile at 2 and 12 threads (default spinning): kernel time by module and op type, optimized-graph op counts | new measurement |
+| `profile_<model>_{fp32,int8}_nospin.json` | The same with `session.intra_op.allow_spinning=0` | new measurement |
+| `ops.json` | Single-op thread scaling (Sin, Cos, Mul, Add, Pow, LeakyRelu, Tanh) | new measurement |
+
 The graphs (`*.onnx`), WAVs and the round log stay outside Git in `training_output/onnx-ptq/`. Their hashes are in the records.
 
-## 7. Reproduction
+## 8. Reproduction
 
 From the training clone root, with a Python environment that has torch, onnx, onnxruntime and the scorers (`SPY`; the round used torch 2.13.0, onnx 1.22.0, onnxruntime 1.23.2) and the training venv (`TPY`):
 
@@ -164,7 +230,14 @@ SPY=<scorer python> TPY=<training venv python> RESULTS=<repository>/results/pipe
   bash <repository>/scripts/evaluation/onnx/run_round.sh
 ```
 
-The script stops at the first failed check and resumes after the last finished stage. The individual steps are `scripts/evaluation/onnx/{export,quantize,synthesize,time_graphs,summarize_timing}.py`, followed by `scripts/evaluation/harvard/{score,compare}.py`. The tests are in `tests/test_onnx_ptq.py`.
+The script stops at the first failed check and resumes after the last finished stage. The individual steps are `scripts/evaluation/onnx/{export,quantize,synthesize,time_graphs,summarize_timing}.py`, followed by `scripts/evaluation/harvard/{score,compare}.py`. The section 5 profile ran separately:
+
+```sh
+$SPY scripts/evaluation/onnx/profile_ops.py --output <dir>/ops.json
+$SPY scripts/evaluation/onnx/profile_graphs.py --graph <graph.onnx> [--graph ...] --threads 2 12 [--no-spinning] --out-dir <dir>
+```
+
+In that command, `scripts/` stands for `<repository>/scripts/`. The tests are in `tests/test_onnx_ptq.py`.
 
 **Expected outputs:**
 - Export and quantization are deterministic, so the graph hashes should match.
