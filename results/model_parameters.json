@@ -1,0 +1,221 @@
+{
+ "created_utc": "2026-10-21T09:01:32.174939+00:00",
+ "classification": "new_static_count_of_stored_checkpoints_and_records",
+ "definition": {
+  "generator_parameters_excluding_posterior": "model_g parameters without enc_q, weight-norm form, buffers excluded (Q05 definition); includes the SDP training-only path",
+  "inference_parameters": "generator_parameters_excluding_posterior minus dp.post_* (training only) and dp.flows.1 (dropped in reverse mode); weight-norm form",
+  "fp32_bytes": "4 bytes per parameter; not a file size",
+  "checkpoint_bytes": "file size of the full training checkpoint, not a deployable model size"
+ },
+ "new_models": {
+  "Piper_no_VITS2_cpn": {
+   "checkpoint": "best-epoch=1403-val_loss_mel=19.7719.ckpt",
+   "checkpoint_sha256": "2eeff5354c3320b12a288c0e52bdadbacce2c1ddaa14d5c739d1d4208b0f6003",
+   "checkpoint_bytes": 845906955,
+   "checkpoint_contents": "full Lightning training state (generator, discriminators, optimizer states)",
+   "epoch": 1403,
+   "parameters_by_module": {
+    "model_d": 46747132,
+    "model_g.dec": 1664768,
+    "model_g.dp": 1317168,
+    "model_g.enc_p": 6341760,
+    "model_g.enc_q": 7238016,
+    "model_g.flow": 7102080
+   },
+   "buffers_excluded": {
+    "model_g.enc_q.enc._n_channels": 1,
+    "model_g.flow.flows.0.enc._n_channels": 1,
+    "model_g.flow.flows.2.enc._n_channels": 1,
+    "model_g.flow.flows.4.enc._n_channels": 1,
+    "model_g.flow.flows.6.enc._n_channels": 1
+   },
+   "generator_parameters": 23663792,
+   "generator_parameters_excluding_posterior": 16425776,
+   "not_used_at_inference": {
+    "sdp_training_only_path": 640248,
+    "sdp_flow_dropped_in_reverse": 121757
+   },
+   "inference_parameters": 15663771,
+   "decoder_parameters": 1664768,
+   "discriminator_parameters": {
+    "model_d": 46747132
+   },
+   "fp32_bytes_generator_excluding_posterior": 65703104,
+   "fp32_bytes_inference_parameters": 62655084,
+   "onnx": null
+  },
+  "Piper_ParIR_no_VITS2_cpn": {
+   "checkpoint": "best-epoch=1486-val_loss_mel=19.0069.ckpt",
+   "checkpoint_sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee",
+   "checkpoint_bytes": 843355860,
+   "checkpoint_contents": "full Lightning training state (generator, discriminators, optimizer states)",
+   "epoch": 1486,
+   "parameters_by_module": {
+    "model_d": 46747132,
+    "model_d_mrd": 280902,
+    "model_g.dec": 1157024,
+    "model_g.dp": 1317168,
+    "model_g.enc_p": 6341760,
+    "model_g.enc_q": 7238016,
+    "model_g.flow": 7102080
+   },
+   "buffers_excluded": {
+    "model_g.enc_q.enc._n_channels": 1,
+    "model_g.flow.flows.0.enc._n_channels": 1,
+    "model_g.flow.flows.2.enc._n_channels": 1,
+    "model_g.flow.flows.4.enc._n_channels": 1,
+    "model_g.flow.flows.6.enc._n_channels": 1,
+    "model_d_mrd.discriminators.0.hann_window": 240,
+    "model_d_mrd.discriminators.1.hann_window": 600,
+    "model_d_mrd.discriminators.2.hann_window": 1200
+   },
+   "generator_parameters": 23156048,
+   "generator_parameters_excluding_posterior": 15918032,
+   "not_used_at_inference": {
+    "sdp_training_only_path": 640248,
+    "sdp_flow_dropped_in_reverse": 121757
+   },
+   "inference_parameters": 15156027,
+   "decoder_parameters": 1157024,
+   "discriminator_parameters": {
+    "model_d": 46747132,
+    "model_d_mrd": 280902
+   },
+   "fp32_bytes_generator_excluding_posterior": 63672128,
+   "fp32_bytes_inference_parameters": 60624108,
+   "onnx": null
+  },
+  "Piper_SeqIR_no_VITS2_cpn": {
+   "checkpoint": "best-epoch=1455-val_loss_mel=19.0332.ckpt",
+   "checkpoint_sha256": "cc1ba70d20471fe587d0099fc9d1c739bc0d8d3b08541450629eb8bb068c6637",
+   "checkpoint_bytes": 842731504,
+   "checkpoint_contents": "full Lightning training state (generator, discriminators, optimizer states)",
+   "epoch": 1455,
+   "parameters_by_module": {
+    "model_d": 46747132,
+    "model_d_mrd": 280902,
+    "model_g.dec": 1109760,
+    "model_g.dp": 1317168,
+    "model_g.enc_p": 6341760,
+    "model_g.enc_q": 7238016,
+    "model_g.flow": 7102080
+   },
+   "buffers_excluded": {
+    "model_g.enc_q.enc._n_channels": 1,
+    "model_g.flow.flows.0.enc._n_channels": 1,
+    "model_g.flow.flows.2.enc._n_channels": 1,
+    "model_g.flow.flows.4.enc._n_channels": 1,
+    "model_g.flow.flows.6.enc._n_channels": 1,
+    "model_d_mrd.discriminators.0.hann_window": 240,
+    "model_d_mrd.discriminators.1.hann_window": 600,
+    "model_d_mrd.discriminators.2.hann_window": 1200
+   },
+   "generator_parameters": 23108784,
+   "generator_parameters_excluding_posterior": 15870768,
+   "not_used_at_inference": {
+    "sdp_training_only_path": 640248,
+    "sdp_flow_dropped_in_reverse": 121757
+   },
+   "inference_parameters": 15108763,
+   "decoder_parameters": 1109760,
+   "discriminator_parameters": {
+    "model_d": 46747132,
+    "model_d_mrd": 280902
+   },
+   "fp32_bytes_generator_excluding_posterior": 63483072,
+   "fp32_bytes_inference_parameters": 60435052,
+   "onnx": null
+  }
+ },
+ "historical_models": {
+  "baseline-resblock2": {
+   "source": {
+    "q05_report": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.baseline.json",
+    "q05_report_sha256": "7fb5d3b586f7043e9e5cd9793271e6e71dc42df061f73ccec9239bac7bd0dec7",
+    "models_manifest": "models/manifest.json"
+   },
+   "checkpoint": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+   "checkpoint_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+   "checkpoint_bytes": 867027556,
+   "generator_parameters_excluding_posterior": 17620784,
+   "q05_note": "Parameter-count label corrected after run; count includes SDP training-only parameters. Not an inference-only parameter count.",
+   "inference_parameters": null,
+   "fp32_bytes_generator_excluding_posterior": 70483136,
+   "onnx": {
+    "filename": "baseline_fp32.onnx",
+    "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f",
+    "bytes": 68529068,
+    "precision": "FP32",
+    "opset": 18
+   }
+  },
+  "parallel-ir": {
+   "source": {
+    "q05_report": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.mrf.json",
+    "q05_report_sha256": "61241c5e8296c5b8b2df6a78c3fc4866abbd7733532701a6d4e54c7600a3f396",
+    "models_manifest": "models/manifest.json"
+   },
+   "checkpoint": "best-epoch=1386-val_loss_mel=18.7681.ckpt",
+   "checkpoint_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+   "checkpoint_bytes": 864465901,
+   "generator_parameters_excluding_posterior": 17113040,
+   "q05_note": "Parameter-count label corrected after run; count includes SDP training-only parameters. Not an inference-only parameter count.",
+   "inference_parameters": null,
+   "fp32_bytes_generator_excluding_posterior": 68452160,
+   "onnx": {
+    "filename": "mrf_fp32.onnx",
+    "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7",
+    "bytes": 66546592,
+    "precision": "FP32",
+    "opset": 18
+   }
+  },
+  "sequential-ir": {
+   "source": {
+    "q05_report": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.seq.json",
+    "q05_report_sha256": "771b8987afb315a658a94158d894852e24b1f200790f7ad3249bf00e97cade88",
+    "models_manifest": "models/manifest.json"
+   },
+   "checkpoint": "best-epoch=1442-val_loss_mel=19.0136.ckpt",
+   "checkpoint_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+   "checkpoint_bytes": 863851145,
+   "generator_parameters_excluding_posterior": 17065776,
+   "q05_note": "Parameter-count label corrected after run; count includes SDP training-only parameters. Not an inference-only parameter count.",
+   "inference_parameters": null,
+   "fp32_bytes_generator_excluding_posterior": 68263104,
+   "onnx": {
+    "filename": "seq_fp32.onnx",
+    "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3",
+    "bytes": 66342331,
+    "precision": "FP32",
+    "opset": 18
+   }
+  },
+  "piper-original": {
+   "source": {
+    "q05_report": "docs/evidence/claim-evidence-2026-10-07/source-records/q05/REPORT.piper.json",
+    "q05_report_sha256": "893c3e1be1e9c8d75736d12bf7809d35ce92b9d4ceb34714a414988476553f81",
+    "models_manifest": "models/manifest.json"
+   },
+   "checkpoint": "lj-med_1000.ckpt",
+   "checkpoint_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+   "checkpoint_bytes": 845889993,
+   "generator_parameters_excluding_posterior": 16425776,
+   "q05_note": "Parameter-count label corrected after run; count includes SDP training-only parameters. Not an inference-only parameter count.",
+   "inference_parameters": null,
+   "fp32_bytes_generator_excluding_posterior": 65703104,
+   "onnx": {
+    "filename": "piper_fp32.onnx",
+    "sha256": "2c87a6c368b3f03f8038644d9ce9c691c0d48b1042328128ad15067a07420d7b",
+    "bytes": 63532855,
+    "precision": "FP32",
+    "opset": 18
+   }
+  }
+ },
+ "limits": [
+  "Counts are in weight-norm form; removing weight norm drops the weight_g entries and changes counts slightly.",
+  "The new models have no ONNX export; their FP32 bytes are computed, not measured file sizes.",
+  "Historical counts are taken from the Q05 reports, not recounted here."
+ ]
+}

@@ -87,5 +87,39 @@ Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong n
 chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10 (0.0421). Vì vậy không thể đặt giá trị
 đó, hay bảng RTF lịch sử ở trên, cạnh các giá trị này.
 
+## Kích thước model
+
+`model_parameters.json` (2026-10-21) ghi số tham số và kích thước của cả bảy model
+Harvard-720. File được tạo bởi `scripts/evaluation/count_parameters.py`. Script đọc ba
+checkpoint mới bằng `weights_only=True`, không dựng và không chạy model. Các dòng lịch sử
+lấy từ báo cáo Q05 đã lưu và `models/manifest.json`.
+
+| Model | Tham số (định nghĩa Q05) | Dùng khi inference | Decoder | Trọng số FP32 | File ONNX FP32 | Checkpoint train |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn (ResBlock2) | 16.425.776 | 15.663.771 | 1.664.768 | 65,7 MB | chưa export | 845,9 MB |
+| Piper_ParIR_no_VITS2_cpn | 15.918.032 | 15.156.027 | 1.157.024 | 63,7 MB | chưa export | 843,4 MB |
+| Piper_SeqIR_no_VITS2_cpn | 15.870.768 | 15.108.763 | 1.109.760 | 63,5 MB | chưa export | 842,7 MB |
+| HiFi-GAN ResBlock2 (baseline, có VITS2) | 17.620.784 | — | — | 70,5 MB | 68,5 MB | 867,0 MB |
+| Parallel-IR (MRF) | 17.113.040 | — | — | 68,5 MB | 66,5 MB | 864,5 MB |
+| Sequential-IR (SEQ) | 17.065.776 | — | — | 68,3 MB | 66,3 MB | 863,9 MB |
+| Checkpoint Piper bên ngoài | 16.425.776 | — | — | 65,7 MB | 63,5 MB | 845,9 MB |
+
+Cách đọc các cột (MB = 10^6 byte):
+- **Tham số (định nghĩa Q05):**
+  - tham số của generator, không tính posterior encoder `enc_q` (chỉ dùng khi train);
+  - đếm ở dạng weight-norm, không tính buffer;
+  - cùng định nghĩa với các báo cáo export Q05, nên bảy dòng so sánh được với nhau.
+  - Con số này vẫn gồm 762.005 tham số của stochastic duration predictor mà inference không dùng: nhánh posterior `dp.post_*` chỉ dùng khi train (640.248) và flow bị bỏ ở chế độ reverse (121.757).
+- **Dùng khi inference:** số Q05 trừ đi 762.005 tham số đó. Chỉ tính cho các model mới.
+- **Trọng số FP32:** 4 byte × số Q05. Đây là con số tính ra, không phải kích thước file.
+- **File ONNX FP32:** kích thước đo được của các bản export Q05. Graph ONNX chỉ chứa đường inference, nên nhỏ hơn cột trọng số FP32. Các model mới chưa được export.
+- **Checkpoint train:** toàn bộ trạng thái Lightning: generator, posterior encoder, discriminator và trạng thái optimizer. Đây không phải kích thước model để triển khai.
+
+Các con số cho thấy:
+- **Phần chung:** ở ba model mới, mọi thứ ngoài decoder giống hệt nhau, 21.999.024 tham số (tính cả `enc_q`).
+- **Decoder:** decoder của ParIR và SeqIR ít hơn ResBlock2 lần lượt 30,5% và 33,3%. Tính trên toàn model thì chỉ ít hơn 3,1% và 3,4%, vì decoder chỉ là một phần nhỏ của generator.
+- **Piper_no_VITS2_cpn và checkpoint Piper bên ngoài:** cả hai có đúng 16.425.776 tham số. Cả hai đều dùng kiến trúc Piper (Config A).
+- **Chỉ dùng khi train:** MPD (46.747.132) và, với các model IR, MRD (280.902) là discriminator. Chúng không thuộc model synthesis.
+
 Việc phát hành công khai các bộ câu, bản ghi kết quả và audio sinh ra vẫn do tác giả
 quyết định. Việc chúng có mặt trong repo không khẳng định các quyền đó.

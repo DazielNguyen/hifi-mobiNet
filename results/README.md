@@ -78,5 +78,39 @@ The RTF column comes from one session and is comparable only within it. The cont
 slower than in its own 2026-10-10 session (0.0421), so neither that value nor the historical
 RTF table above can be set beside these values.
 
+## Model size
+
+`model_parameters.json` (2026-10-21) records parameter counts and sizes for all seven
+Harvard-720 models. It was written by `scripts/evaluation/count_parameters.py`, which reads
+the three new checkpoints with `weights_only=True` without building or running a model.
+The historical rows are taken from the stored Q05 reports and `models/manifest.json`.
+
+| Model | Parameters (Q05 definition) | Used at inference | Decoder | FP32 weights | ONNX FP32 file | Training checkpoint |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn (ResBlock2) | 16,425,776 | 15,663,771 | 1,664,768 | 65.7 MB | not exported | 845.9 MB |
+| Piper_ParIR_no_VITS2_cpn | 15,918,032 | 15,156,027 | 1,157,024 | 63.7 MB | not exported | 843.4 MB |
+| Piper_SeqIR_no_VITS2_cpn | 15,870,768 | 15,108,763 | 1,109,760 | 63.5 MB | not exported | 842.7 MB |
+| HiFi-GAN ResBlock2 (baseline, with VITS2) | 17,620,784 | — | — | 70.5 MB | 68.5 MB | 867.0 MB |
+| Parallel-IR (MRF) | 17,113,040 | — | — | 68.5 MB | 66.5 MB | 864.5 MB |
+| Sequential-IR (SEQ) | 17,065,776 | — | — | 68.3 MB | 66.3 MB | 863.9 MB |
+| Piper external checkpoint | 16,425,776 | — | — | 65.7 MB | 63.5 MB | 845.9 MB |
+
+How to read the columns (MB = 10^6 bytes):
+- **Parameters (Q05 definition):**
+  - generator parameters without the posterior encoder `enc_q`, which is used only in training;
+  - counted in weight-norm form, with buffers excluded;
+  - the same definition as the Q05 export reports, so all seven rows are comparable.
+  - It still includes 762,005 parameters of the stochastic duration predictor that inference does not use: the training-only posterior path `dp.post_*` (640,248) and the flow dropped in reverse mode (121,757).
+- **Used at inference:** the Q05 count minus those 762,005. It was computed for the new models only.
+- **FP32 weights:** 4 bytes × the Q05 count. This is computed, not a file size.
+- **ONNX FP32 file:** the measured size of the Q05 exports. The ONNX graphs hold only the inference path, so they are smaller than the FP32-weights column. The new models have not been exported.
+- **Training checkpoint:** the full Lightning state: generator, posterior encoder, discriminators and optimizer states. It is not a deployable model size.
+
+What the counts show:
+- **Shared part:** in the three new models, everything outside the decoder is identical, 21,999,024 parameters including `enc_q`.
+- **Decoder:** ParIR and SeqIR have 30.5% and 33.3% fewer decoder parameters than ResBlock2. Overall that is 3.1% and 3.4% fewer, because the decoder is a small part of the generator.
+- **Piper_no_VITS2_cpn and the external Piper checkpoint:** both have exactly 16,425,776 parameters. Both use the Piper (Config A) architecture.
+- **Training only:** the MPD (46,747,132) and, for the IR models, the MRD (280,902) are discriminators. They are not part of the synthesis model.
+
 Public redistribution of sentence collections, result records and generated
 audio remains an author decision. Local inclusion does not assert those rights.
