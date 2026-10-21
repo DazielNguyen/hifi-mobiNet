@@ -101,3 +101,25 @@ def test_refuses_unpaired_order(tmp_path):
     with pytest.raises(ValueError):
         compare.main(["--candidate", str(tmp_path / "cand.json"), "--label", "cand", "--reference-dir", str(refs),
                       "--output", str(tmp_path / "out.json")])
+
+
+def test_no_historical_pairs_only_extra_references(tmp_path):
+    parent = rows([0.04] * 6, [3.4] * 6, [0.1] * 6)
+    cand = rows([0.03] * 6, [3.3] * 6, [0.1, 0.1, 0.2, 0.1, 0.0, 0.1])
+    for name, data in (("cand.json", cand), ("parent.json", parent)):
+        (tmp_path / name).write_text(json.dumps(data))
+    compare.main(["--candidate", str(tmp_path / "cand.json"), "--label", "int8", "--no-historical",
+                  "--extra-reference", f"fp32={tmp_path / 'parent.json'}", "--metrics", "utmosv2,wer",
+                  "--output", str(tmp_path / "o.json")])
+    out = json.loads((tmp_path / "o.json").read_text())
+    assert set(out["paired_tests"]) == {"int8_vs_fp32_utmosv2", "int8_vs_fp32_wer"}
+    assert set(out["summary"]) == set(out["inputs"]) == {"int8", "fp32"}
+    assert out["classification"] == "new_comparison_of_new_observations"
+    assert out["paired_tests"]["int8_vs_fp32_utmosv2"]["mean_diff_x_minus_y"] == pytest.approx(-0.1)
+
+
+def test_no_historical_needs_an_extra_reference_and_dir_otherwise(tmp_path):
+    with pytest.raises(SystemExit):
+        compare.main(["--candidate", "c.json", "--label", "cand", "--no-historical", "--output", str(tmp_path / "o.json")])
+    with pytest.raises(SystemExit):
+        compare.main(["--candidate", "c.json", "--label", "cand", "--output", str(tmp_path / "o.json")])

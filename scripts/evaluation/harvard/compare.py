@@ -17,6 +17,10 @@ exactly like the historical references, after them, and joins the Holm family.
 ``--metrics`` restricts the paired tests (and so the Holm family) to a subset, for
 example ``utmosv2,wer`` when the candidate's RTF was timed under a different load and
 is not comparable; the per-model summaries still list every field.
+``--no-historical`` leaves the four historical references out (then ``--reference-dir``
+is not used and at least one ``--extra-reference`` is required), for comparisons that
+concern only newer files, for example an INT8 graph against its FP32 parent; the Holm
+family is then only those comparisons.
 
     python scripts/evaluation/harvard/compare.py \
         --candidate <results.json> --label piper_no_vits2_cpn \
@@ -54,13 +58,19 @@ def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--candidate", required=True, type=Path)
     p.add_argument("--label", required=True)
-    p.add_argument("--reference-dir", required=True, type=Path)
+    p.add_argument("--reference-dir", type=Path)
     p.add_argument("--output", required=True, type=Path)
     p.add_argument("--extra-reference", action="append", default=[], metavar="LABEL=PATH")
     p.add_argument("--metrics", default=",".join(METRICS), help=f"comma-separated subset of {','.join(METRICS)}")
+    p.add_argument("--no-historical", action="store_true", help="leave the four historical references out")
     a = p.parse_args(argv)
     if a.output.exists():
         p.error("output exists; choose a new path")
+    if a.no_historical and not a.extra_reference:
+        p.error("--no-historical needs at least one --extra-reference")
+    if not a.no_historical and a.reference_dir is None:
+        p.error("--reference-dir is required unless --no-historical is given")
+    historical = () if a.no_historical else REFERENCES
     metrics = tuple(m for m in METRICS if m in a.metrics.split(","))
     if not metrics or set(a.metrics.split(",")) - set(METRICS):
         p.error(f"--metrics must be a non-empty subset of {','.join(METRICS)}, got {a.metrics!r}")
@@ -72,7 +82,7 @@ def main(argv=None) -> int:
         if label in extra or label in REFERENCES or label == a.label:
             p.error(f"duplicate reference label {label!r}")
         extra[label] = Path(path)
-    references = REFERENCES + tuple(extra)
+    references = historical + tuple(extra)
 
     sys.path.insert(0, str(REPO / "src"))
     import numpy as np
@@ -81,7 +91,7 @@ def main(argv=None) -> int:
 
     from hifimobinet.evaluation import check_pairs, load_rows, paired, summarize
 
-    files = {a.label: a.candidate, **{m: a.reference_dir / f"harvard_{m}_results.json" for m in REFERENCES}, **extra}
+    files = {a.label: a.candidate, **{m: a.reference_dir / f"harvard_{m}_results.json" for m in historical}, **extra}
     rows = {m: load_rows(f) for m, f in files.items()}
     for m in references:
         check_pairs(rows[a.label], rows[m])
@@ -117,7 +127,8 @@ def main(argv=None) -> int:
     for name, value in holm({n: t["wilcoxon_p"] for n, t in tests.items()}).items():
         tests[name]["exploratory_holm_adjusted_wilcoxon_p"] = value
 
-    out = {"classification": "new_comparison_of_new_and_historical_observations",
+    out = {"classification": "new_comparison_of_new_observations" if a.no_historical
+           else "new_comparison_of_new_and_historical_observations",
            "inputs": {m: {"file": f.name, "sha256": sha256(f)} for m, f in files.items()},
            "scipy": scipy.__version__, "numpy": np.__version__,
            "method": {"direction": "x = candidate, y = reference; difference = x - y",
