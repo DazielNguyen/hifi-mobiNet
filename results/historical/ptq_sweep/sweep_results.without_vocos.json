@@ -1,0 +1,210 @@
+{
+  "baseline::none": {
+    "submodules": "",
+    "exclude_subs": "",
+    "wer": 0.1773935864616979,
+    "size_mb": 65.8,
+    "quant_time_s": 18.5,
+    "eval_time_s": 12.8
+  },
+  "baseline::flow_only": {
+    "submodules": "flow",
+    "exclude_subs": "",
+    "wer": 0.16471993251061767,
+    "size_mb": 42.3,
+    "quant_time_s": 19.9,
+    "eval_time_s": 12.2
+  },
+  "baseline::flow_finallayer": {
+    "submodules": "flow",
+    "exclude_subs": "conv_post,head/out",
+    "wer": 0.14464449344944702,
+    "size_mb": 42.3,
+    "quant_time_s": 19.0,
+    "eval_time_s": 12.3
+  },
+  "baseline::dp_only": {
+    "submodules": "dp",
+    "exclude_subs": "",
+    "wer": 0.13492937752037226,
+    "size_mb": 64.3,
+    "quant_time_s": 18.7,
+    "eval_time_s": 12.5
+  },
+  "baseline::dec_only": {
+    "submodules": "dec",
+    "exclude_subs": "",
+    "wer": 0.17866236561033977,
+    "size_mb": 63.0,
+    "quant_time_s": 18.7,
+    "eval_time_s": 12.1
+  },
+  "baseline::enc_p_only": {
+    "submodules": "enc_p",
+    "exclude_subs": "",
+    "wer": 0.1993067399838163,
+    "size_mb": 48.0,
+    "quant_time_s": 19.0,
+    "eval_time_s": 13.5
+  },
+  "baseline::flow_enc_p": {
+    "submodules": "flow,enc_p",
+    "exclude_subs": "",
+    "wer": 0.15033762951874408,
+    "size_mb": 24.5,
+    "quant_time_s": 19.7,
+    "eval_time_s": 12.1
+  },
+  "baseline::flow_dp": {
+    "submodules": "flow,dp",
+    "exclude_subs": "",
+    "wer": 0.17247526908113797,
+    "size_mb": 40.8,
+    "quant_time_s": 19.3,
+    "eval_time_s": 12.2
+  },
+  "baseline::flow_dec": {
+    "submodules": "flow,dec",
+    "exclude_subs": "",
+    "wer": 0.18505324311051866,
+    "size_mb": 39.5,
+    "quant_time_s": 19.4,
+    "eval_time_s": 11.8
+  },
+  "baseline::flow_enc_p_dp": {
+    "submodules": "flow,enc_p,dp",
+    "exclude_subs": "",
+    "wer": 0.12146554666523705,
+    "size_mb": 23.0,
+    "quant_time_s": 20.0,
+    "eval_time_s": 12.3
+  },
+  "baseline::enc_p_dp": {
+    "submodules": "enc_p,dp",
+    "exclude_subs": "",
+    "wer": 0.1813526805152192,
+    "size_mb": 46.5,
+    "quant_time_s": 19.0,
+    "eval_time_s": 12.2
+  },
+  "baseline::enc_p_dp_finallayer": {
+    "submodules": "enc_p,dp",
+    "exclude_subs": "conv_post,head/out",
+    "wer": 0.17204448063116792,
+    "size_mb": 46.5,
+    "quant_time_s": 19.0,
+    "eval_time_s": 12.4
+  },
+  "baseline::everything": {
+    "submodules": "enc_p,dp,flow,dec",
+    "exclude_subs": "",
+    "wer": 0.17049310676461032,
+    "size_mb": 20.2,
+    "quant_time_s": 20.3,
+    "eval_time_s": 11.9
+  },
+  "baseline::everything_except_finallayer": {
+    "submodules": "enc_p,dp,flow,dec",
+    "exclude_subs": "conv_post,head/out",
+    "wer": 0.16752916605238585,
+    "size_mb": 20.2,
+    "quant_time_s": 19.9,
+    "eval_time_s": 11.7
+  },
+  "mrf::none": {
+    "submodules": "",
+    "exclude_subs": "",
+    "wer": 0.12719685044917242,
+    "size_mb": 63.9,
+    "quant_time_s": 20.8,
+    "eval_time_s": 13.8
+  },
+  "mrf::flow_only": {
+    "submodules": "flow",
+    "exclude_subs": "",
+    "wer": 0.14216154759525335,
+    "size_mb": 40.5,
+    "quant_time_s": 22.3,
+    "eval_time_s": 13.5
+  },
+  "mrf::flow_finallayer": {
+    "submodules": "flow",
+    "exclude_subs": "conv_post,head/out",
+    "wer": 0.12128432266048365,
+    "size_mb": 40.5,
+    "quant_time_s": 22.8,
+    "eval_time_s": 13.5
+  },
+  "mrf::dp_only": {
+    "submodules": "dp",
+    "exclude_subs": "",
+    "wer": 0.12660391637945817,
+    "size_mb": 62.4,
+    "quant_time_s": 22.4,
+    "eval_time_s": 13.6
+  },
+  "mrf::dec_only": {
+    "error": "quantize_failed",
+    "stderr_tail": ".py\", line 212, in quantize_model\n    op_quantizer.quantize()\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/operators/conv.py\", line 195, in quantize\n    quantized_bias_name = self.quantizer.quantize_bias_static(node.input[2], node.input[0], node.input[1])\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 807, in quantize_bias_static\n    did_update, new_weight_scale = self._adjust_weight_scale_for_int32_bias(\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 689, in _adjust_weight_scale_for_int32_bias\n    bias_float_data = tensor_proto_to_array(bias_tp)\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/quant_utils.py\", line 1037, in tensor_proto_to_array\n    if initializer.data_type in (onnx_proto.TensorProto.FLOAT, onnx_proto.TensorProto.FLOAT16):\nAttributeError: 'NoneType' object has no attribute 'data_type'\n"
+  },
+  "mrf::enc_p_only": {
+    "submodules": "enc_p",
+    "exclude_subs": "",
+    "wer": 0.14152544583039936,
+    "size_mb": 46.1,
+    "quant_time_s": 22.3,
+    "eval_time_s": 13.3
+  },
+  "mrf::flow_enc_p": {
+    "submodules": "flow,enc_p",
+    "exclude_subs": "",
+    "wer": 0.11930242616001131,
+    "size_mb": 22.6,
+    "quant_time_s": 22.7,
+    "eval_time_s": 12.8
+  },
+  "mrf::flow_dp": {
+    "submodules": "flow,dp",
+    "exclude_subs": "",
+    "wer": 0.12257077803517431,
+    "size_mb": 39.0,
+    "quant_time_s": 22.5,
+    "eval_time_s": 13.6
+  },
+  "mrf::flow_dec": {
+    "error": "quantize_failed",
+    "stderr_tail": ".py\", line 212, in quantize_model\n    op_quantizer.quantize()\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/operators/conv.py\", line 195, in quantize\n    quantized_bias_name = self.quantizer.quantize_bias_static(node.input[2], node.input[0], node.input[1])\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 807, in quantize_bias_static\n    did_update, new_weight_scale = self._adjust_weight_scale_for_int32_bias(\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 689, in _adjust_weight_scale_for_int32_bias\n    bias_float_data = tensor_proto_to_array(bias_tp)\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/quant_utils.py\", line 1037, in tensor_proto_to_array\n    if initializer.data_type in (onnx_proto.TensorProto.FLOAT, onnx_proto.TensorProto.FLOAT16):\nAttributeError: 'NoneType' object has no attribute 'data_type'\n"
+  },
+  "mrf::flow_enc_p_dp": {
+    "submodules": "flow,enc_p,dp",
+    "exclude_subs": "",
+    "wer": 0.10777548818570488,
+    "size_mb": 21.1,
+    "quant_time_s": 23.3,
+    "eval_time_s": 13.0
+  },
+  "mrf::enc_p_dp": {
+    "submodules": "enc_p,dp",
+    "exclude_subs": "",
+    "wer": 0.11619572000067356,
+    "size_mb": 44.6,
+    "quant_time_s": 22.3,
+    "eval_time_s": 13.3
+  },
+  "mrf::enc_p_dp_finallayer": {
+    "submodules": "enc_p,dp",
+    "exclude_subs": "conv_post,head/out",
+    "wer": 0.1417998356992165,
+    "size_mb": 44.6,
+    "quant_time_s": 22.1,
+    "eval_time_s": 13.3
+  },
+  "mrf::everything": {
+    "error": "quantize_failed",
+    "stderr_tail": ".py\", line 212, in quantize_model\n    op_quantizer.quantize()\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/operators/conv.py\", line 195, in quantize\n    quantized_bias_name = self.quantizer.quantize_bias_static(node.input[2], node.input[0], node.input[1])\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 807, in quantize_bias_static\n    did_update, new_weight_scale = self._adjust_weight_scale_for_int32_bias(\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 689, in _adjust_weight_scale_for_int32_bias\n    bias_float_data = tensor_proto_to_array(bias_tp)\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/quant_utils.py\", line 1037, in tensor_proto_to_array\n    if initializer.data_type in (onnx_proto.TensorProto.FLOAT, onnx_proto.TensorProto.FLOAT16):\nAttributeError: 'NoneType' object has no attribute 'data_type'\n"
+  },
+  "mrf::everything_except_finallayer": {
+    "error": "quantize_failed",
+    "stderr_tail": ".py\", line 212, in quantize_model\n    op_quantizer.quantize()\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/operators/conv.py\", line 195, in quantize\n    quantized_bias_name = self.quantizer.quantize_bias_static(node.input[2], node.input[0], node.input[1])\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 807, in quantize_bias_static\n    did_update, new_weight_scale = self._adjust_weight_scale_for_int32_bias(\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/onnx_quantizer.py\", line 689, in _adjust_weight_scale_for_int32_bias\n    bias_float_data = tensor_proto_to_array(bias_tp)\n  File \"<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/quant_utils.py\", line 1037, in tensor_proto_to_array\n    if initializer.data_type in (onnx_proto.TensorProto.FLOAT, onnx_proto.TensorProto.FLOAT16):\nAttributeError: 'NoneType' object has no attribute 'data_type'\n"
+  }
+}
