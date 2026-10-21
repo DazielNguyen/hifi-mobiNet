@@ -1,0 +1,22 @@
+--- baseline_v0/banhmi_train/vits/utils/flows.py
++++ baseline_v2/banhmi_train/vits/utils/flows.py
+@@ -16,10 +16,15 @@
+ 
+ 
+ class Log(nn.Module):
+-    # Shared with ElementwiseAffine's bound below -- exp(30) ~= 1e13, far
+-    # inside bf16/fp32 range but generous enough to never constrain any
+-    # value this flow would legitimately produce.
+-    _EXP_CLAMP_MAX = 30.0
++    # Shared with ElementwiseAffine's bound below -- exp(10) ~= 2.2e4, still
++    # far more than any legitimate value this flow produces (log-duration
++    # of 10 would mean a duration of ~22000 frames for one phoneme), but
++    # tight enough that a value passing this guard can't itself explode a
++    # downstream Conv1d stack (the previous bound of 30 => exp(30) ~= 1e13
++    # was observed to survive this guard intact and then blow up further
++    # downstream, causing a 3rd StochasticDurationPredictor collapse despite
++    # both this guard and gradient clipping being active).
++    _EXP_CLAMP_MAX = 10.0
+ 
+     def forward(self, x: torch.Tensor, x_mask: torch.Tensor, reverse: bool = False):
+         if not reverse:

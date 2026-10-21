@@ -1,0 +1,47 @@
+[
+  {
+    "id": "G01",
+    "next": "Q05",
+    "issue": "Historical MRF ONNX has not been matched to checkpoint 1386. Archiving preserves the actual bytes without assigning a checkpoint."
+  },
+  {
+    "id": "G02",
+    "next": "Q05/Q06",
+    "issue": "SEQ export/quantization command and original calibration manifest not recovered. Evaluation log label epoch=1442 is not export provenance."
+  },
+  {
+    "id": "G03",
+    "next": "Q03/Q04",
+    "issue": "Current canonical split and hashes do not establish every original training/resume split; baseline/MRF historical 500-sentence sets differ."
+  },
+  {
+    "id": "G04",
+    "next": "Q03/Q04/Q07",
+    "issue": "Source/environment snapshot was taken at archive time. Historical commits, package versions, exact argv and thread/load conditions are not established merely by this snapshot."
+  },
+  {
+    "id": "G05",
+    "next": "Q03/Q09",
+    "issue": "eval_mrf_fp32_seeded_500.py references checkpoint 836; eval_mrf_final1500_500.py references 1386. Do not merge those results under one epoch label."
+  },
+  {
+    "id": "G06",
+    "next": "Q06/Q08",
+    "issue": "Historical calibration/test overlap and scorer selection issues remain; archive completion does not certify experimental validity."
+  },
+  {
+    "id": "G07",
+    "next": "Q01 scope",
+    "issue": "Large TensorBoard event files and the full training audio/cache are not copied; their original paths/sizes are listed. Core selected checkpoints, evaluated audio, manifests, logs and source snapshots are copied."
+  },
+  {
+    "id": "G08",
+    "next": "Q01 scope",
+    "issue": "Older exploratory result JSON files are retained as supplementary evidence. Some original checkpoints, exact commands or audio are not selected/available; RESULT_CATALOG records missing associations explicitly."
+  },
+  {
+    "id": "G09",
+    "next": "Q08",
+    "issue": "Scorer checkpoint hashes at the original scoring time are not established. Current package versions and scoring scripts do not prove historical scoring-weight identity."
+  }
+]

@@ -1,0 +1,230 @@
+--- mrf_v0/banhmi_train/vits/training.py
++++ seq_v0/banhmi_train/vits/training.py
+@@ -38,6 +38,12 @@
+ from .utils.commons import slice_segments
+ 
+ _LOGGER = logging.getLogger("banhmi_train.vits.training")
++
++# Dedicated seed for the train/val/test split only -- deliberately separate
++# from --seed (which governs weight init/dropout/etc, and can legitimately
++# differ run to run) so every architecture ever trained on this dataset
++# gets the exact same split. See VitsModel._load_dataset's use of this.
++_DATASET_SPLIT_SEED = 20260101
+ 
+ _N_SPEAKERS = 1
+ _GIN_CHANNELS = 0
+@@ -239,6 +245,12 @@
+         self._dur_real = None
+         self._dur_fake = None
+         self._last_loss_mel = None
++        # See optimizer_step(): counters for steps discarded because their
++        # gradients weren't finite, plus a fingerprint of the last batch so a
++        # discarded step can be traced back to the data that produced it.
++        self._skipped_steps = 0
++        self._total_steps = 0
++        self._last_batch_fingerprint = None
+ 
+     def _load_datasets(
+         self,
+@@ -259,9 +271,44 @@
+                 f">= dataset size ({len(full_dataset)}) -- nothing left to train on"
+             )
+ 
+-        self._train_dataset, self._val_dataset, self._test_dataset = random_split(
+-            full_dataset, [train_size, num_val_examples, num_test_examples]
+-        )
++        # Fixed, architecture-independent generator for the split -- using
++        # the ambient global RNG here (seeded once via --seed, then advanced
++        # by however many random draws model weight-init consumed) made the
++        # train/val/test split silently depend on the model's own param
++        # count: two architectures with the same --seed but different
++        # numbers of randomly-initialized weights reach this call with the
++        # global RNG in different states, producing DIFFERENT splits (and
++        # therefore train/test leakage when one model's "held-out" test
++        # utterances turn out to be in the other's training set -- see
++        # docs/mrf_full_investigation_report.md SS8.2). A dedicated
++        # generator seeded with a constant, independent of --seed and of
++        # anything consumed before this line, makes the split identical
++        # across every architecture trained on this dataset from now on.
++        #
++        # Preferred path: a canonical_split.json next to the dataset, listing
++        # each utterance's audio_norm_path per partition -- lets a NEW
++        # architecture reuse an EXISTING model's exact already-trained split
++        # (e.g. baseline's) without retraining that existing model, which
++        # the generator-seed fallback below cannot do (a fixed seed only
++        # guarantees new runs match EACH OTHER, not a specific past run that
++        # was itself produced by the old architecture-dependent mechanism).
++        canonical_split_path = Path(self.hparams.dataset[0]).parent / "canonical_split.json"
++        if canonical_split_path.exists():
++            with open(canonical_split_path, "r", encoding="utf-8") as split_file:
++                canonical_split = json.load(split_file)
++            path_to_index = {str(u.audio_norm_path): i for i, u in enumerate(full_dataset.utterances)}
++            train_idx = [path_to_index[p] for p in canonical_split["train"]]
++            val_idx = [path_to_index[p] for p in canonical_split["val"]]
++            test_idx = [path_to_index[p] for p in canonical_split["test"]]
++            self._train_dataset = Subset(full_dataset, train_idx)
++            self._val_dataset = Subset(full_dataset, val_idx)
++            self._test_dataset = Subset(full_dataset, test_idx)
++            _LOGGER.info("Loaded canonical train/val/test split from %s", canonical_split_path)
++        else:
++            split_generator = torch.Generator().manual_seed(_DATASET_SPLIT_SEED)
++            self._train_dataset, self._val_dataset, self._test_dataset = random_split(
++                full_dataset, [train_size, num_val_examples, num_test_examples], generator=split_generator
++            )
+         # A handful of *validation* utterances (never the held-out test set)
+         # purely for logging listenable audio samples during training.
+         num_audio_samples = min(num_audio_samples, len(self._val_dataset))
+@@ -387,8 +434,82 @@
+ 
+     def training_step(self, batch: Batch, batch_idx: int, optimizer_idx: int):
+         if optimizer_idx == 0:
++            self._last_batch_fingerprint = (
++                int(self.current_epoch),
++                int(batch_idx),
++                batch.phoneme_lengths.tolist(),
++            )
+             return self.training_step_g(batch)
+         return self.training_step_d(batch)
++
++    # Fraction of discarded steps above which the run is treated as genuinely
++    # diverging rather than as having hit isolated bad batches. The observed
++    # real-world rate for the dp instability this guards against is on the
++    # order of one step in 10^5, so anything near 1% means something else is
++    # wrong and must be surfaced, not silently absorbed.
++    _SKIP_RATE_ALARM = 0.01
++
++    def optimizer_step(
++        self, epoch, batch_idx, optimizer, optimizer_idx=0, optimizer_closure=None, **kwargs
++    ):
++        """Discards an update whose gradients aren't finite instead of letting
++        it reach the optimizer.
++
++        This is the safety net `torch.cuda.amp.GradScaler` provides for free
++        under fp16 (check for inf/NaN, skip the step, carry on) and which
++        bf16 training silently does without, since bf16 needs no loss scaling
++        and therefore gets no scaler. Without it, one non-finite gradient is
++        permanent: AdamW writes NaN into the parameters, and every subsequent
++        forward pass through those parameters is NaN forever after. That is
++        exactly how StochasticDurationPredictor kept dying here -- and because
++        dp's gradients don't reach dec/enc_p, loss_mel went on improving and
++        hid the damage for hundreds of epochs.
++
++        Skipping costs one finite-check per parameter per step and throws away
++        only the genuinely broken batch; the parameters keep their last good
++        values and training continues from there.
++
++        Under DDP this stays consistent across ranks without extra
++        synchronisation: gradients are all-reduced during backward, and a NaN
++        on any rank propagates through that averaging, so every rank sees the
++        same non-finite gradients and independently reaches the same decision.
++        """
++        optimizer_closure()  # forward + backward; populates .grad
++
++        nonfinite = False
++        for group in optimizer.param_groups:
++            for param in group["params"]:
++                if param.grad is not None and not torch.isfinite(param.grad).all():
++                    nonfinite = True
++                    break
++            if nonfinite:
++                break
++
++        if optimizer_idx == 0:
++            self._total_steps += 1
++
++        if not nonfinite:
++            optimizer.step()
++            return
++
++        optimizer.zero_grad(set_to_none=True)
++        self._skipped_steps += 1
++        skip_rate = self._skipped_steps / max(self._total_steps, 1)
++        _LOGGER.warning(
++            "Discarded optimizer step (optimizer_idx=%d): non-finite gradients. "
++            "Parameters left untouched, batch dropped. Skipped %d of %d steps so far "
++            "(%.4f%%). Batch fingerprint (epoch, batch_idx, phoneme_lengths)=%r",
++            optimizer_idx, self._skipped_steps, self._total_steps, 100 * skip_rate,
++            self._last_batch_fingerprint,
++        )
++        if skip_rate > self._SKIP_RATE_ALARM and self._total_steps > 200:
++            _LOGGER.error(
++                "Discarded-step rate %.2f%% exceeds %.2f%% -- this is no longer isolated "
++                "bad batches; the run is likely diverging and needs investigation, not "
++                "more skipping.",
++                100 * skip_rate, 100 * self._SKIP_RATE_ALARM,
++            )
++        self.log("skipped_steps", float(self._skipped_steps))
+ 
+     def _current_mas_noise_scale(self) -> float:
+         scale = self.hparams.mas_noise_scale_initial - self.global_step * self.hparams.mas_noise_scale_decay
+@@ -521,13 +642,32 @@
+         # across ranks, and the TensorBoard curve can show values the saved
+         # checkpoint never actually reflects. Cheap here; correctness-critical.
+         self.log("val_loss", val_loss, sync_dist=True)
++        # Free-running inference health has to be established BEFORE
++        # val_loss_mel is logged, because it decides what gets logged.
++        dp_healthy = self._log_audio_samples(self._audio_sample_dataset)
+         # Non-adversarial reconstruction loss, logged only from this method
+         # (unlike "loss_mel", which also gets logged from real training
+         # steps) -- a clean, low-noise "best model" signal for
+         # ModelCheckpoint(monitor="val_loss_mel", ...) to track, matching
+         # EdgeTTS's own val_loss_mel.
+-        self.log("val_loss_mel", self._last_loss_mel, sync_dist=True)
+-        self._log_audio_samples(self._audio_sample_dataset)
++        #
++        # val_loss_mel is teacher-forced: it exercises dec/enc_p but never
++        # dp's reverse sampling, so a model whose dp has collapsed still
++        # posts an improving val_loss_mel and ModelCheckpoint happily
++        # promotes it to "best", overwriting the genuinely-good checkpoints
++        # until none are left (observed: an entire run's clean checkpoints
++        # deleted this way, leaving nothing to resume from). Reporting +inf
++        # for an unusable model keeps "best" pointing at the last checkpoint
++        # that could actually synthesise speech.
++        val_loss_mel = self._last_loss_mel
++        if not dp_healthy:
++            _LOGGER.warning(
++                "Reporting val_loss_mel=inf for this epoch: free-running inference is "
++                "degenerate (collapsed StochasticDurationPredictor), so this checkpoint "
++                "must not be promoted over an earlier usable one."
++            )
++            val_loss_mel = torch.tensor(float("inf"), device=self.device)
++        self.log("val_loss_mel", val_loss_mel, sync_dist=True)
+         return val_loss
+ 
+     def test_step(self, batch: Batch, batch_idx: int):
+@@ -540,7 +680,7 @@
+         self.log("test_loss", test_loss, sync_dist=True)
+         return test_loss
+ 
+-    def _log_audio_samples(self, dataset) -> None:
++    def _log_audio_samples(self, dataset) -> bool:
+         # A real utterance should produce at least ~0.2s of audio; anything
+         # shorter (e.g. the dp.reverse-collapse 1-frame fallback in
+         # SynthesizerTrn.infer(), see that file's own warning) means free-
+@@ -549,13 +689,17 @@
+         # it here catches it live instead of only discovering it much later
+         # via a manual listening test.
+         min_reasonable_samples = int(0.2 * self.hparams.sample_rate)
++        # Returned to validation_step, which uses it to decide whether this
++        # epoch's checkpoint is eligible to become "best" at all.
++        healthy = True
+         for utt_idx, utt in enumerate(dataset):
+             tag = utt.text or str(utt_idx)
+             text = utt.phoneme_ids.unsqueeze(0).to(self.device)
+             text_lengths = torch.LongTensor([len(utt.phoneme_ids)]).to(self.device)
+             scales = [0.667, 1.0, 0.8]
+             audio = self(text, text_lengths, scales).detach()
+-            if audio.shape[-1] < min_reasonable_samples:
++            if audio.shape[-1] < min_reasonable_samples or not torch.isfinite(audio).all():
++                healthy = False
+                 _LOGGER.warning(
+                     "_log_audio_samples: utt %r produced only %d samples (%.3fs) -- "
+                     "suspiciously short, likely a collapsed StochasticDurationPredictor "
+@@ -564,6 +708,7 @@
+                 )
+             audio = audio * (1.0 / max(0.01, abs(audio.max())))
+             self.logger.experiment.add_audio(tag, audio, sample_rate=self.hparams.sample_rate)
++        return healthy
+ 
+     @staticmethod
+     def _make_adamw(params, **kwargs) -> torch.optim.AdamW:

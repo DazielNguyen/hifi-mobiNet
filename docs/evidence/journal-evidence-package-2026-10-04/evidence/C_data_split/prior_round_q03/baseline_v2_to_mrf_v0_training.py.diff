@@ -1,0 +1,61 @@
+--- baseline_v2/banhmi_train/vits/training.py
++++ mrf_v0/banhmi_train/vits/training.py
+@@ -54,6 +54,12 @@
+         upsample_rates: Tuple[int, ...] = (8, 8, 4),
+         upsample_initial_channel: int = 256,
+         upsample_kernel_sizes: Tuple[int, ...] = (16, 16, 8),
++        # Per-stage expansion ratio for resblock="mb" (ResBlockInverted) --
++        # e.g. (4,4,1) or (6,6,1) to keep the last upsample stage (T=8192,
++        # the most compute-exposed) cheap while earlier stages (much
++        # smaller T) can afford a higher ratio. Silently unused unless
++        # resblock="mb".
++        mb_expansion: Union[int, Tuple[int, ...]] = 6,
+         # mel
+         filter_length: int = 1024,
+         hop_length: int = 256,
+@@ -182,6 +188,7 @@
+             upsample_rates=self.hparams.upsample_rates,
+             upsample_initial_channel=self.hparams.upsample_initial_channel,
+             upsample_kernel_sizes=self.hparams.upsample_kernel_sizes,
++            mb_expansion=self.hparams.mb_expansion,
+             n_speakers=_N_SPEAKERS,
+             gin_channels=_GIN_CHANNELS,
+             posterior_encoder_kernel_size=self.hparams.posterior_encoder_kernel_size,
+@@ -197,6 +204,7 @@
+             vocos_dim=self.hparams.vocos_dim,
+             vocos_intermediate_dim=self.hparams.vocos_intermediate_dim,
+             vocos_num_layers=self.hparams.vocos_num_layers,
++            use_f0=self.hparams.use_f0,
+         )
+         if self.hparams.use_vocos:
+             self.model_d = VocosMultiPeriodDiscriminator()
+@@ -409,8 +417,8 @@
+             x_mask,
+             z_mask,
+             (_z, z_p, m_p, logs_p, _m_q, logs_q),
+-            (x_hidden, logw, logw_),
+-        ) = self.model_g(x, x_lengths, spec, spec_lengths, mas_noise_scale=mas_noise_scale)
++            (x_hidden, logw, logw_, l_f0),
++        ) = self.model_g(x, x_lengths, spec, spec_lengths, mas_noise_scale=mas_noise_scale, f0=batch.f0s)
+         self._y_hat = y_hat
+         self.log("mas_noise_scale", mas_noise_scale)
+ 
+@@ -440,7 +448,8 @@
+ 
+             loss_fm = feat_loss_fn(fmap_r, fmap_g)
+             loss_gen, _ = gen_loss_fn(y_d_hat_g)
+-            loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl
++            loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl + l_f0
++            self.log("loss_f0", l_f0)
+ 
+             # Stashed so validation_step can log a *validation-only*
+             # "val_loss_mel" (see below) -- self.log("loss_mel", ...) alone
+@@ -653,4 +662,8 @@
+             "--vocos-mrd-loss-coeff", type=float, default=0.1,
+             help="Weight on MRD's adversarial+feature-matching loss terms relative to MPD's, only used with --use-vocos (matches Vocos's own released config, not the class default of 1.0)",
+         )
++        parser.add_argument(
++            "--use-f0", action=argparse.BooleanOptionalAction, default=False,
++            help="F0Predictor + decoder F0 conditioning, wired into the Vocos generator only (only meaningful with --use-vocos). This project's own bug-fixed pathway -- trains the decoder on the ground-truth per-phoneme F0 average re-expanded through the same hard alignment inference uses, instead of the raw per-frame F0 upstream EdgeTTS trains on, which creates a train/inference mismatch (decoder never sees the smooth signal it trained on at inference, only a piecewise-constant one) -- see f0_predictor.py/synthesizer.py",
++        )
+         return parent_parser

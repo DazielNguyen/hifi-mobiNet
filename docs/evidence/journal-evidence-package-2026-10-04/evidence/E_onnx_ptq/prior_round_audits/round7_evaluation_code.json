@@ -1,0 +1,1879 @@
+{
+  "date": "2026-09-29",
+  "method": "Read source/metadata and hash existing weights; recompute arithmetic from saved transcripts. No synthesis, ASR, UTMOS inference, download, training, or artifact modification.",
+  "sources": [
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_onnx_ptq_500.py",
+      "exists": true,
+      "bytes": 3615,
+      "sha256": "0e19eaf3eda8446395c4cf774a1a8dd99b2cbb784f80361217715f93ab537941",
+      "selected_lines": [
+        {
+          "line": 22,
+          "text": "SR = 22050"
+        },
+        {
+          "line": 28,
+          "text": "opts = ort.SessionOptions()"
+        },
+        {
+          "line": 29,
+          "text": "opts.intra_op_num_threads = NUM_THREADS"
+        },
+        {
+          "line": 30,
+          "text": "opts.inter_op_num_threads = 1"
+        },
+        {
+          "line": 31,
+          "text": "opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL"
+        },
+        {
+          "line": 32,
+          "text": "sess = ort.InferenceSession(MODEL_PATH, sess_options=opts, providers=[\"CPUExecutionProvider\"])"
+        },
+        {
+          "line": 33,
+          "text": "print(f\"Loaded ONNX model: {MODEL_PATH} (intra_op_num_threads={NUM_THREADS})\", flush=True)"
+        },
+        {
+          "line": 37,
+          "text": "utmosv2_model = utmosv2.create_model(pretrained=True, device=\"cpu\")"
+        },
+        {
+          "line": 41,
+          "text": "asr = whisper.load_model(\"small\", device=\"cpu\")"
+        },
+        {
+          "line": 43,
+          "text": "import jiwer"
+        },
+        {
+          "line": 44,
+          "text": "wer_transform = jiwer.Compose(["
+        },
+        {
+          "line": 45,
+          "text": "    jiwer.ToLowerCase(),"
+        },
+        {
+          "line": 46,
+          "text": "    jiwer.RemovePunctuation(),"
+        },
+        {
+          "line": 47,
+          "text": "    jiwer.RemoveMultipleSpaces(),"
+        },
+        {
+          "line": 48,
+          "text": "    jiwer.Strip(),"
+        },
+        {
+          "line": 49,
+          "text": "    jiwer.ReduceToListOfListOfWords(),"
+        },
+        {
+          "line": 53,
+          "text": "t_start_all = time.perf_counter()"
+        },
+        {
+          "line": 60,
+          "text": "        \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+        },
+        {
+          "line": 63,
+          "text": "    t0 = time.perf_counter()"
+        },
+        {
+          "line": 64,
+          "text": "    audio = sess.run(None, feed)[0]"
+        },
+        {
+          "line": 65,
+          "text": "    synth_time = time.perf_counter() - t0"
+        },
+        {
+          "line": 68,
+          "text": "    dur = len(wave) / SR"
+        },
+        {
+          "line": 69,
+          "text": "    rtf = synth_time / dur if dur > 0 else float(\"nan\")"
+        },
+        {
+          "line": 72,
+          "text": "    wavfile.write(wav_path, SR, audio_float_to_int16(wave))"
+        },
+        {
+          "line": 74,
+          "text": "    utmosv2_score = float(utmosv2_model.predict(data=wave, sr=SR, device=\"cpu\"))"
+        },
+        {
+          "line": 76,
+          "text": "    asr_out = asr.transcribe(wav_path, language=\"en\", fp16=False)"
+        },
+        {
+          "line": 79,
+          "text": "    wer = jiwer.wer(ref, hyp, reference_transform=wer_transform, hypothesis_transform=wer_transform)"
+        },
+        {
+          "line": 83,
+          "text": "        \"synth_time_s\": synth_time, \"audio_duration_s\": dur, \"rtf\": rtf,"
+        },
+        {
+          "line": 84,
+          "text": "        \"utmosv2\": utmosv2_score, \"wer\": wer,"
+        },
+        {
+          "line": 88,
+          "text": "        elapsed = time.perf_counter() - t_start_all"
+        },
+        {
+          "line": 90,
+          "text": "        print(f\"[{i+1}/{len(samples)}] rtf={rtf:.3f} utmosv2={utmosv2_score:.2f} wer={wer:.3f} \""
+        },
+        {
+          "line": 100,
+          "text": "wers = np.array([r[\"wer\"] for r in results])"
+        },
+        {
+          "line": 103,
+          "text": "print(f\"RTF:      mean={rtfs.mean():.4f}  std={rtfs.std():.4f}  median={np.median(rtfs):.4f}\")"
+        },
+        {
+          "line": 104,
+          "text": "print(f\"UTMOSv2:  mean={u2.mean():.3f}  std={u2.std():.3f}  median={np.median(u2):.3f}\")"
+        },
+        {
+          "line": 105,
+          "text": "print(f\"WER:      mean={wers.mean():.4f}  std={wers.std():.4f}  median={np.median(wers):.4f}\")"
+        },
+        {
+          "line": 106,
+          "text": "total_time = time.perf_counter() - t_start_all"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_wer_cheap.py",
+      "exists": true,
+      "bytes": 2856,
+      "sha256": "29e88c096cfc567afe3acfe50ee4c43eb10741665b0ec855a592ced713b020d2",
+      "selected_lines": [
+        {
+          "line": 14,
+          "text": "import jiwer"
+        },
+        {
+          "line": 22,
+          "text": "    text = text.lower().strip()"
+        },
+        {
+          "line": 32,
+          "text": "    parser.add_argument(\"--seed\", type=int, default=123)"
+        },
+        {
+          "line": 35,
+          "text": "    random.seed(args.seed)"
+        },
+        {
+          "line": 42,
+          "text": "    test_entries = random.sample(entries, args.n_samples)"
+        },
+        {
+          "line": 46,
+          "text": "    whisper_model = whisper.load_model(\"base.en\")"
+        },
+        {
+          "line": 48,
+          "text": "    sess = ort.InferenceSession(args.model_path, providers=[\"CPUExecutionProvider\"])"
+        },
+        {
+          "line": 49,
+          "text": "    wers = []"
+        },
+        {
+          "line": 50,
+          "text": "    t_start = time.perf_counter()"
+        },
+        {
+          "line": 52,
+          "text": "    for i, e in enumerate(test_entries):"
+        },
+        {
+          "line": 57,
+          "text": "            \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+        },
+        {
+          "line": 60,
+          "text": "            audio = sess.run(None, feed)[0]"
+        },
+        {
+          "line": 63,
+          "text": "            wers.append(1.0)"
+        },
+        {
+          "line": 68,
+          "text": "            wers.append(1.0)"
+        },
+        {
+          "line": 71,
+          "text": "        whisper_result = whisper_model.transcribe(audio, language=\"en\", fp16=False)"
+        },
+        {
+          "line": 74,
+          "text": "        utt_wer = jiwer.wer(ref, hyp) if ref else 1.0"
+        },
+        {
+          "line": 75,
+          "text": "        wers.append(utt_wer)"
+        },
+        {
+          "line": 77,
+          "text": "    elapsed = time.perf_counter() - t_start"
+        },
+        {
+          "line": 78,
+          "text": "    result = {\"n\": len(wers), \"wer\": float(np.mean(wers)), \"elapsed_s\": elapsed}"
+        },
+        {
+          "line": 79,
+          "text": "    print(f\"RESULT {args.model_path}: n={result['n']} WER={result['wer']:.4f} ({elapsed:.0f}s)\", flush=True)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_mrf_final1500_500.py",
+      "exists": true,
+      "bytes": 4103,
+      "sha256": "59d81947b9151389b0cbb8803de829c0d8527547fc9ac12e13eba87246e18f54",
+      "selected_lines": [
+        {
+          "line": 16,
+          "text": "CKPT = \"<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt\""
+        },
+        {
+          "line": 21,
+          "text": "LABEL = \"mrf_111_run_500ep FINAL-1500 FP32 (epoch=1386/1500, val_loss_mel=18.7681, training done, RTF sach, seed=1234, test-set rieng MRF)\""
+        },
+        {
+          "line": 31,
+          "text": "model = VitsModel.load_from_checkpoint(CKPT, map_location=\"cpu\", dataset=[DATASET])"
+        },
+        {
+          "line": 37,
+          "text": "SR = model.hparams.sample_rate"
+        },
+        {
+          "line": 41,
+          "text": "utmosv2_model = utmosv2.create_model(pretrained=True, device=\"cpu\")"
+        },
+        {
+          "line": 45,
+          "text": "asr = whisper.load_model(\"small\", device=\"cpu\")"
+        },
+        {
+          "line": 47,
+          "text": "import jiwer"
+        },
+        {
+          "line": 48,
+          "text": "wer_transform = jiwer.Compose(["
+        },
+        {
+          "line": 49,
+          "text": "    jiwer.ToLowerCase(),"
+        },
+        {
+          "line": 50,
+          "text": "    jiwer.RemovePunctuation(),"
+        },
+        {
+          "line": 51,
+          "text": "    jiwer.RemoveMultipleSpaces(),"
+        },
+        {
+          "line": 52,
+          "text": "    jiwer.Strip(),"
+        },
+        {
+          "line": 53,
+          "text": "    jiwer.ReduceToListOfListOfWords(),"
+        },
+        {
+          "line": 56,
+          "text": "torch.manual_seed(1234)  # fixed seed for noise_scale/noise_scale_w stochastic sampling -- was previously unseeded, confounding cross-eval comparisons"
+        },
+        {
+          "line": 58,
+          "text": "t_start_all = time.perf_counter()"
+        },
+        {
+          "line": 64,
+          "text": "    t0 = time.perf_counter()"
+        },
+        {
+          "line": 67,
+          "text": "    synth_time = time.perf_counter() - t0"
+        },
+        {
+          "line": 70,
+          "text": "    dur = len(wave) / SR"
+        },
+        {
+          "line": 71,
+          "text": "    rtf = synth_time / dur if dur > 0 else float(\"nan\")"
+        },
+        {
+          "line": 74,
+          "text": "    wavfile.write(wav_path, SR, audio_float_to_int16(wave))"
+        },
+        {
+          "line": 76,
+          "text": "    utmosv2_score = float(utmosv2_model.predict(data=wave, sr=SR, device=\"cpu\"))"
+        },
+        {
+          "line": 78,
+          "text": "    asr_out = asr.transcribe(wav_path, language=\"en\", fp16=False)"
+        },
+        {
+          "line": 81,
+          "text": "    wer = jiwer.wer(ref, hyp, reference_transform=wer_transform, hypothesis_transform=wer_transform)"
+        },
+        {
+          "line": 85,
+          "text": "        \"synth_time_s\": synth_time, \"audio_duration_s\": dur, \"rtf\": rtf,"
+        },
+        {
+          "line": 86,
+          "text": "        \"utmosv2\": utmosv2_score, \"wer\": wer,"
+        },
+        {
+          "line": 90,
+          "text": "        elapsed = time.perf_counter() - t_start_all"
+        },
+        {
+          "line": 92,
+          "text": "        print(f\"[MRF_111 {i+1}/{len(samples)}] rtf={rtf:.3f} utmosv2={utmosv2_score:.2f} wer={wer:.3f} \""
+        },
+        {
+          "line": 102,
+          "text": "wers = np.array([r[\"wer\"] for r in results])"
+        },
+        {
+          "line": 105,
+          "text": "print(f\"RTF:      mean={rtfs.mean():.4f}  std={rtfs.std():.4f}  median={np.median(rtfs):.4f}\")"
+        },
+        {
+          "line": 106,
+          "text": "print(f\"UTMOSv2:  mean={u2.mean():.3f}  std={u2.std():.3f}  median={np.median(u2):.3f}\")"
+        },
+        {
+          "line": 107,
+          "text": "print(f\"WER:      mean={wers.mean():.4f}  std={wers.std():.4f}  median={np.median(wers):.4f}\")"
+        },
+        {
+          "line": 108,
+          "text": "total_time = time.perf_counter() - t_start_all"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/bench_vnni_baseline.py",
+      "exists": true,
+      "bytes": 2863,
+      "sha256": "f3ba5a64c7e123576fc5feab10142cbe9c18bb4558a50354557514a904ddf683",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "intra_op_num_threads, warmup + multiple timed runs).\"\"\""
+        },
+        {
+          "line": 12,
+          "text": "def make_session(path, num_threads):"
+        },
+        {
+          "line": 13,
+          "text": "    opts = ort.SessionOptions()"
+        },
+        {
+          "line": 14,
+          "text": "    opts.intra_op_num_threads = num_threads"
+        },
+        {
+          "line": 15,
+          "text": "    opts.inter_op_num_threads = 1"
+        },
+        {
+          "line": 16,
+          "text": "    opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL"
+        },
+        {
+          "line": 17,
+          "text": "    return ort.InferenceSession(path, sess_options=opts, providers=[\"CPUExecutionProvider\"])"
+        },
+        {
+          "line": 20,
+          "text": "def bench(path, ids, num_threads, n_warmup=3, n_runs=15):"
+        },
+        {
+          "line": 21,
+          "text": "    sess = make_session(path, num_threads)"
+        },
+        {
+          "line": 25,
+          "text": "        \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+        },
+        {
+          "line": 27,
+          "text": "    for _ in range(n_warmup):"
+        },
+        {
+          "line": 28,
+          "text": "        sess.run(None, feed)"
+        },
+        {
+          "line": 30,
+          "text": "    for _ in range(n_runs):"
+        },
+        {
+          "line": 31,
+          "text": "        t0 = time.perf_counter()"
+        },
+        {
+          "line": 32,
+          "text": "        out = sess.run(None, feed)"
+        },
+        {
+          "line": 33,
+          "text": "        times.append(time.perf_counter() - t0)"
+        },
+        {
+          "line": 35,
+          "text": "    audio_sec = out[0].shape[-1] / 22050"
+        },
+        {
+          "line": 36,
+          "text": "    return times.mean(), times.std(), audio_sec"
+        },
+        {
+          "line": 46,
+          "text": "    test_entries = [entries[i] for i in (10, 500, 2000, 5000, 9000)]"
+        },
+        {
+          "line": 54,
+          "text": "    for threads in (2, 1):"
+        },
+        {
+          "line": 55,
+          "text": "        print(f\"\\n=== intra_op_num_threads={threads} ===\")"
+        },
+        {
+          "line": 57,
+          "text": "        for e in test_entries:"
+        },
+        {
+          "line": 61,
+          "text": "                mean_t, std_t, audio_sec = bench(path, ids, threads)"
+        },
+        {
+          "line": 62,
+          "text": "                rtf = mean_t / audio_sec"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/bench_vnni_mrf.py",
+      "exists": true,
+      "bytes": 2739,
+      "sha256": "87048963a10227892b86e3cd577c99f6b06af026793990c3cb76c1e646b78f4b",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "intra_op_num_threads, warmup + multiple timed runs).\"\"\""
+        },
+        {
+          "line": 12,
+          "text": "def make_session(path, num_threads):"
+        },
+        {
+          "line": 13,
+          "text": "    opts = ort.SessionOptions()"
+        },
+        {
+          "line": 14,
+          "text": "    opts.intra_op_num_threads = num_threads"
+        },
+        {
+          "line": 15,
+          "text": "    opts.inter_op_num_threads = 1"
+        },
+        {
+          "line": 16,
+          "text": "    opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL"
+        },
+        {
+          "line": 17,
+          "text": "    return ort.InferenceSession(path, sess_options=opts, providers=[\"CPUExecutionProvider\"])"
+        },
+        {
+          "line": 20,
+          "text": "def bench(path, ids, num_threads, n_warmup=3, n_runs=15):"
+        },
+        {
+          "line": 21,
+          "text": "    sess = make_session(path, num_threads)"
+        },
+        {
+          "line": 25,
+          "text": "        \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+        },
+        {
+          "line": 27,
+          "text": "    for _ in range(n_warmup):"
+        },
+        {
+          "line": 28,
+          "text": "        sess.run(None, feed)"
+        },
+        {
+          "line": 30,
+          "text": "    for _ in range(n_runs):"
+        },
+        {
+          "line": 31,
+          "text": "        t0 = time.perf_counter()"
+        },
+        {
+          "line": 32,
+          "text": "        out = sess.run(None, feed)"
+        },
+        {
+          "line": 33,
+          "text": "        times.append(time.perf_counter() - t0)"
+        },
+        {
+          "line": 35,
+          "text": "    audio_sec = out[0].shape[-1] / 22050"
+        },
+        {
+          "line": 36,
+          "text": "    return times.mean(), times.std(), audio_sec"
+        },
+        {
+          "line": 46,
+          "text": "    test_entries = [entries[i] for i in (10, 500, 2000, 5000, 9000)]"
+        },
+        {
+          "line": 53,
+          "text": "    for threads in (2, 1):"
+        },
+        {
+          "line": 54,
+          "text": "        print(f\"\\n=== intra_op_num_threads={threads} ===\")"
+        },
+        {
+          "line": 56,
+          "text": "        for e in test_entries:"
+        },
+        {
+          "line": 60,
+          "text": "                mean_t, std_t, audio_sec = bench(path, ids, threads)"
+        },
+        {
+          "line": 61,
+          "text": "                rtf = mean_t / audio_sec"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/whisper/audio.py",
+      "exists": true,
+      "bytes": 4945,
+      "sha256": "36ed287b2de3eaf40207cd2a44a8d45d57ea5c212a39df07401d4fcb4d5a5a1a",
+      "selected_lines": [
+        {
+          "line": 13,
+          "text": "SAMPLE_RATE = 16000"
+        },
+        {
+          "line": 25,
+          "text": "def load_audio(file: str, sr: int = SAMPLE_RATE):"
+        },
+        {
+          "line": 53,
+          "text": "        \"-ar\", str(sr),"
+        },
+        {
+          "line": 107,
+          "text": "        return torch.from_numpy(f[f\"mel_{n_mels}\"]).to(device)"
+        },
+        {
+          "line": 122,
+          "text": "        The path to audio or either a NumPy array or Tensor containing the audio waveform in 16 kHz"
+        },
+        {
+          "line": 139,
+          "text": "        if isinstance(audio, str):"
+        },
+        {
+          "line": 140,
+          "text": "            audio = load_audio(audio)"
+        },
+        {
+          "line": 141,
+          "text": "        audio = torch.from_numpy(audio)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/whisper/transcribe.py",
+      "exists": true,
+      "bytes": 30366,
+      "sha256": "848b82877500d6fb8f0b91bee7a08ac67ef670a113591d11b494848d263ad0f6",
+      "selected_lines": [
+        {
+          "line": 43,
+          "text": "    temperature: Union[float, Tuple[float, ...]] = (0.0, 0.2, 0.4, 0.6, 0.8, 1.0),"
+        },
+        {
+          "line": 44,
+          "text": "    compression_ratio_threshold: Optional[float] = 2.4,"
+        },
+        {
+          "line": 45,
+          "text": "    logprob_threshold: Optional[float] = -1.0,"
+        },
+        {
+          "line": 47,
+          "text": "    condition_on_previous_text: bool = True,"
+        },
+        {
+          "line": 72,
+          "text": "    temperature: Union[float, Tuple[float, ...]]"
+        },
+        {
+          "line": 76,
+          "text": "    compression_ratio_threshold: float"
+        },
+        {
+          "line": 79,
+          "text": "    logprob_threshold: float"
+        },
+        {
+          "line": 86,
+          "text": "    condition_on_previous_text: bool"
+        },
+        {
+          "line": 139,
+          "text": "    mel = log_mel_spectrogram(audio, model.dims.n_mels, padding=N_SAMPLES)"
+        },
+        {
+          "line": 188,
+          "text": "        decode_result = None"
+        },
+        {
+          "line": 190,
+          "text": "        for t in temperatures:"
+        },
+        {
+          "line": 201,
+          "text": "            decode_result = model.decode(segment, options)"
+        },
+        {
+          "line": 203,
+          "text": "            needs_fallback = False"
+        },
+        {
+          "line": 208,
+          "text": "                needs_fallback = True  # too repetitive"
+        },
+        {
+          "line": 213,
+          "text": "                needs_fallback = True  # average log probability is too low"
+        },
+        {
+          "line": 220,
+          "text": "                needs_fallback = False  # silence"
+        },
+        {
+          "line": 221,
+          "text": "            if not needs_fallback:"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/whisper/decoding.py",
+      "exists": true,
+      "bytes": 32155,
+      "sha256": "94084fedc5af74cabf8e1883a85552700057081f00ea669ad49435ecb29039db",
+      "selected_lines": [
+        {
+          "line": 8,
+          "text": "from torch.distributions import Categorical"
+        },
+        {
+          "line": 89,
+          "text": "    temperature: float = 0.0"
+        },
+        {
+          "line": 126,
+          "text": "    temperature: float = np.nan"
+        },
+        {
+          "line": 273,
+          "text": "    def __init__(self, temperature: float, eot: int):"
+        },
+        {
+          "line": 274,
+          "text": "        self.temperature = temperature"
+        },
+        {
+          "line": 280,
+          "text": "        if self.temperature == 0:"
+        },
+        {
+          "line": 281,
+          "text": "            next_tokens = logits.argmax(dim=-1)"
+        },
+        {
+          "line": 283,
+          "text": "            next_tokens = Categorical(logits=logits / self.temperature).sample()"
+        },
+        {
+          "line": 551,
+          "text": "            self.decoder = GreedyDecoder(options.temperature, tokenizer.eot)"
+        },
+        {
+          "line": 575,
+          "text": "        if options.temperature == 0:"
+        },
+        {
+          "line": 783,
+          "text": "                temperature=self.options.temperature,"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/whisper/__init__.py",
+      "exists": true,
+      "bytes": 7432,
+      "sha256": "79ecbed714783b6230931a3dba6d5da6d386e2d44f9fc27256e4fc72751e1f62",
+      "selected_lines": [
+        {
+          "line": 20,
+          "text": "    \"base.en\": \"https://openaipublic.azureedge.net/main/whisper/models/25a8566e1d0c1e2231d1c762132cd20e0f96a85d16145c3a00adf5d1ac670ead/base.en.pt\","
+        },
+        {
+          "line": 23,
+          "text": "    \"small\": \"https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt\","
+        },
+        {
+          "line": 39,
+          "text": "    \"base.en\": b\"ABzY8;40c<0{>%RzzG;p*o+Vo09|#PsxSZm00\","
+        },
+        {
+          "line": 42,
+          "text": "    \"small\": b\"ABzY8DmU6=0{>%Rpa?J`kvJ6qF(V^F86#Xh7JUGMK}P<N0000\","
+        },
+        {
+          "line": 57,
+          "text": "    expected_sha256 = url.split(\"/\")[-2]"
+        },
+        {
+          "line": 66,
+          "text": "        if hashlib.sha256(model_bytes).hexdigest() == expected_sha256:"
+        },
+        {
+          "line": 90,
+          "text": "    if hashlib.sha256(model_bytes).hexdigest() != expected_sha256:"
+        },
+        {
+          "line": 131,
+          "text": "        device = \"cuda\" if torch.cuda.is_available() else \"cpu\""
+        },
+        {
+          "line": 134,
+          "text": "        download_root = os.path.join(os.getenv(\"XDG_CACHE_HOME\", default), \"whisper\")"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/whisper/version.py",
+      "exists": true,
+      "bytes": 25,
+      "sha256": "c4d27ecccdd52a9cded762f1a82da3152db12cbc0aa6ea781f945446a143cfaf",
+      "selected_lines": [
+        {
+          "line": 1,
+          "text": "__version__ = \"20250625\""
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/__init__.py",
+      "exists": true,
+      "bytes": 339,
+      "sha256": "9b576381cc3cee5261e0af9cc1a8692c44793b20dc850019f7d50785609f7d58",
+      "selected_lines": [
+        {
+          "line": 17,
+          "text": "__version__ = \"1.3.1.dev0\""
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/_core/create.py",
+      "exists": true,
+      "bytes": 3012,
+      "sha256": "fc4826f65e31da6eff6aec4bc71bc6f0f599707ec9e434701f7c4352fe433542",
+      "selected_lines": [
+        {
+          "line": 11,
+          "text": "from utmosv2._settings import configure_execution"
+        },
+        {
+          "line": 21,
+          "text": "    config: str = \"fusion_stage3\","
+        },
+        {
+          "line": 22,
+          "text": "    fold: int = 0,"
+        },
+        {
+          "line": 23,
+          "text": "    checkpoint_path: Path | str | None = None,"
+        },
+        {
+          "line": 24,
+          "text": "    seed: int = 42,"
+        },
+        {
+          "line": 37,
+          "text": "        checkpoint_path (Path | str | None):"
+        },
+        {
+          "line": 50,
+          "text": "        - If `pretrained` is True and `checkpoint_path` is not provided, the function attempts to download pretrained weights from GitHub."
+        },
+        {
+          "line": 58,
+          "text": "    configure_execution(cfg)"
+        },
+        {
+          "line": 60,
+          "text": "    model = UTMOSv2Model(cfg)"
+        },
+        {
+          "line": 63,
+          "text": "        if checkpoint_path is None:"
+        },
+        {
+          "line": 64,
+          "text": "            checkpoint_path = ("
+        },
+        {
+          "line": 68,
+          "text": "                / f\"fold{fold}_s{seed}_best_model.pth\""
+        },
+        {
+          "line": 70,
+          "text": "            if not checkpoint_path.exists():"
+        },
+        {
+          "line": 72,
+          "text": "        if isinstance(checkpoint_path, str):"
+        },
+        {
+          "line": 73,
+          "text": "            checkpoint_path = Path(checkpoint_path)"
+        },
+        {
+          "line": 74,
+          "text": "        if not checkpoint_path.exists():"
+        },
+        {
+          "line": 75,
+          "text": "            raise FileNotFoundError(f\"Checkpoint not found: {checkpoint_path}\")"
+        },
+        {
+          "line": 82,
+          "text": "        model.load_state_dict(torch.load(checkpoint_path, map_location=device))"
+        },
+        {
+          "line": 83,
+          "text": "        print(f\"Loaded checkpoint from {checkpoint_path}\")"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/_core/model/_common.py",
+      "exists": true,
+      "bytes": 11451,
+      "sha256": "dbc2030385ec724653bad25d89759fd9b25063b24bac3a5b7eccd653118568c4",
+      "selected_lines": [
+        {
+          "line": 38,
+          "text": "        sr: int = ...,"
+        },
+        {
+          "line": 41,
+          "text": "        predict_dataset: str = ...,"
+        },
+        {
+          "line": 43,
+          "text": "        num_workers: int = ...,"
+        },
+        {
+          "line": 45,
+          "text": "        num_repetitions: int = ...,"
+        },
+        {
+          "line": 46,
+          "text": "        remove_silent_section: bool = ...,"
+        },
+        {
+          "line": 56,
+          "text": "        predict_dataset: str = ...,"
+        },
+        {
+          "line": 58,
+          "text": "        num_workers: int = ...,"
+        },
+        {
+          "line": 60,
+          "text": "        num_repetitions: int = ...,"
+        },
+        {
+          "line": 61,
+          "text": "        remove_silent_section: bool = ...,"
+        },
+        {
+          "line": 71,
+          "text": "        predict_dataset: str = ...,"
+        },
+        {
+          "line": 73,
+          "text": "        num_workers: int = ...,"
+        },
+        {
+          "line": 75,
+          "text": "        num_repetitions: int = ...,"
+        },
+        {
+          "line": 76,
+          "text": "        remove_silent_section: bool = ...,"
+        },
+        {
+          "line": 83,
+          "text": "        sr: int = 16000,"
+        },
+        {
+          "line": 88,
+          "text": "        predict_dataset: str = \"sarulab\","
+        },
+        {
+          "line": 90,
+          "text": "        num_workers: int = 0,"
+        },
+        {
+          "line": 92,
+          "text": "        num_repetitions: int = 1,"
+        },
+        {
+          "line": 93,
+          "text": "        remove_silent_section: bool = True,"
+        },
+        {
+          "line": 154,
+          "text": "        dataset = get_dataset(self._cfg, data_internal, self._cfg.phase)"
+        },
+        {
+          "line": 157,
+          "text": "        dataloader = torch.utils.data.DataLoader("
+        },
+        {
+          "line": 160,
+          "text": "            shuffle=False,"
+        },
+        {
+          "line": 165,
+          "text": "        pred = self._predict_impl(dataloader, num_repetitions, device, verbose)"
+        },
+        {
+          "line": 181,
+          "text": "        sr: int,"
+        },
+        {
+          "line": 186,
+          "text": "        predict_dataset: str,"
+        },
+        {
+          "line": 197,
+          "text": "            if sr != self._cfg.sr:"
+        },
+        {
+          "line": 199,
+          "text": "                data = torchaudio.transforms.Resample("
+        },
+        {
+          "line": 200,
+          "text": "                    orig_freq=sr, new_freq=self._cfg.sr"
+        },
+        {
+          "line": 265,
+          "text": "    def _predict_impl("
+        },
+        {
+          "line": 267,
+          "text": "        dataloader: torch.utils.data.DataLoader,"
+        },
+        {
+          "line": 268,
+          "text": "        num_repetitions: int,"
+        },
+        {
+          "line": 272,
+          "text": "        self._model.eval().to(device)"
+        },
+        {
+          "line": 274,
+          "text": "        for i in range(num_repetitions):"
+        },
+        {
+          "line": 291,
+          "text": "                        output = self._model(*x).squeeze(1)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/_settings/_config.py",
+      "exists": true,
+      "bytes": 2580,
+      "sha256": "d865f90543c4c02decc37a52df9403542dd1efeb732707d3ad0b62e97d05771c",
+      "selected_lines": [
+        {
+          "line": 33,
+          "text": "    cfg.phase = \"train\"  # type: ignore"
+        },
+        {
+          "line": 54,
+          "text": "    cfg.phase = \"inference\"  # type: ignore"
+        },
+        {
+          "line": 62,
+          "text": "def configure_execution(cfg: Config) -> None:"
+        },
+        {
+          "line": 64,
+          "text": "    cfg.phase = \"prediction\"  # type: ignore"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/config/fusion_stage3.py",
+      "exists": true,
+      "bytes": 3316,
+      "sha256": "9e30618e51ddbcf77cb2d3bbd66e3f194833c06f3141abb626ba385eb38f1c05",
+      "selected_lines": [
+        {
+          "line": 13,
+          "text": "sr = 16000"
+        },
+        {
+          "line": 33,
+          "text": "    name=\"ssl_multispec_ext\","
+        },
+        {
+          "line": 73,
+          "text": "        num_frames=2, frame_sec=1.4, mixup_inner=True, mixup_alpha=0.4, extend=\"tile\""
+        },
+        {
+          "line": 76,
+          "text": "        duration=3,"
+        },
+        {
+          "line": 103,
+          "text": "    (SimpleNamespace(name=\"pairwize_diff\", margin=0.2, norm=\"l1\"), 0.7),"
+        },
+        {
+          "line": 104,
+          "text": "    (SimpleNamespace(name=\"mse\"), 0.2),"
+        },
+        {
+          "line": 107,
+          "text": "optimizer = SimpleNamespace(name=\"adamw\", lr=5e-5, weight_decay=1e-4)"
+        },
+        {
+          "line": 109,
+          "text": "scheduler = SimpleNamespace(name=\"cosine\", T_max=None, eta_min=1e-8)"
+        },
+        {
+          "line": 112,
+          "text": "    name=\"ssl_multispec_ext_v2\","
+        },
+        {
+          "line": 114,
+          "text": "        backbone=\"tf_efficientnetv2_s.in21k_ft_in1k\","
+        },
+        {
+          "line": 123,
+          "text": "        name=\"facebook/wav2vec2-base\","
+        },
+        {
+          "line": 137,
+          "text": "    mixup=True,"
+        },
+        {
+          "line": 138,
+          "text": "    mixup_alpha=0.4,"
+        },
+        {
+          "line": 149,
+          "text": "    num_tta=5,"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/utils/_task_dependents/initializers.py",
+      "exists": true,
+      "bytes": 6575,
+      "sha256": "07573ebdd7be372d39bfe614ba7a638b9c353edd0970b2cac68dc9335f38f984",
+      "selected_lines": [
+        {
+          "line": 54,
+          "text": "def get_dataset("
+        },
+        {
+          "line": 58,
+          "text": "        print(f\"Using dataset: {cfg.dataset.name}\")"
+        },
+        {
+          "line": 60,
+          "text": "    if cfg.dataset.name == \"multi_spec\":"
+        },
+        {
+          "line": 62,
+          "text": "    elif cfg.dataset.name == \"ssl\":"
+        },
+        {
+          "line": 64,
+          "text": "    elif cfg.dataset.name == \"sslext\":"
+        },
+        {
+          "line": 66,
+          "text": "    elif cfg.dataset.name == \"ssl_multispec_ext\":"
+        },
+        {
+          "line": 67,
+          "text": "        res = SSLLMultiSpecExtDataset(cfg, data, phase, cfg.transform)"
+        },
+        {
+          "line": 68,
+          "text": "    elif cfg.dataset.name == \"multi_spec_ext\":"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/dataset/ssl_multispec.py",
+      "exists": true,
+      "bytes": 2200,
+      "sha256": "57ea343bd156e58918297054f36c67985f29ddea3cebc3c4c38c94ccb263f378",
+      "selected_lines": [
+        {
+          "line": 44,
+          "text": "        self.ssl = SSLExtDataset(cfg, data, phase)"
+        },
+        {
+          "line": 45,
+          "text": "        self.multi_spec = MultiSpecDataset(cfg, data, phase, transform)"
+        },
+        {
+          "line": 58,
+          "text": "        x1, d, target = self.ssl[idx]"
+        },
+        {
+          "line": 59,
+          "text": "        x2, _ = self.multi_spec[idx]"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/dataset/ssl.py",
+      "exists": true,
+      "bytes": 2998,
+      "sha256": "94cf4e9a606253de37f02dd715b309991ac5303a6c1c5cf063726700154e59c8",
+      "selected_lines": [
+        {
+          "line": 9,
+          "text": "    extend_audio,"
+        },
+        {
+          "line": 10,
+          "text": "    select_random_start,"
+        },
+        {
+          "line": 46,
+          "text": "        length = int(self.cfg.dataset.ssl.duration * self.cfg.sr)"
+        },
+        {
+          "line": 47,
+          "text": "        y = extend_audio(y, length, method=\"tile\")"
+        },
+        {
+          "line": 48,
+          "text": "        y = select_random_start(y, length)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/dataset/multi_spec.py",
+      "exists": true,
+      "bytes": 5347,
+      "sha256": "5c43fb2cdd746609db59dc597adba12127c844ce332da5840362c9d319193fbc",
+      "selected_lines": [
+        {
+          "line": 12,
+          "text": "    select_random_start,"
+        },
+        {
+          "line": 49,
+          "text": "        length = int(self.cfg.dataset.spec_frames.frame_sec * self.cfg.sr)"
+        },
+        {
+          "line": 51,
+          "text": "        for _ in range(self.cfg.dataset.spec_frames.num_frames):"
+        },
+        {
+          "line": 52,
+          "text": "            y1 = select_random_start(y, length)"
+        },
+        {
+          "line": 55,
+          "text": "                if self.cfg.dataset.spec_frames.mixup_inner:"
+        },
+        {
+          "line": 56,
+          "text": "                    y2 = select_random_start(y, length)"
+        },
+        {
+          "line": 58,
+          "text": "                    lmd = np.random.beta("
+        },
+        {
+          "line": 66,
+          "text": "                phase = \"train\" if self.phase == \"train\" else \"valid\""
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/dataset/_utils.py",
+      "exists": true,
+      "bytes": 1531,
+      "sha256": "e3e28c3e0e2eb643846f400a7898afe932bfe4ed5cb705a2343e674abe01380a",
+      "selected_lines": [
+        {
+          "line": 18,
+          "text": "        y = librosa.resample(y, orig_sr=sr, target_sr=cfg.sr)"
+        },
+        {
+          "line": 35,
+          "text": "def select_random_start(y: np.ndarray, length: int) -> np.ndarray:"
+        },
+        {
+          "line": 36,
+          "text": "    start = np.random.randint(0, y.shape[0] - length)"
+        },
+        {
+          "line": 48,
+          "text": "            \"sarulab\": 1,"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/dataset/_base.py",
+      "exists": true,
+      "bytes": 2281,
+      "sha256": "68fcbfcda642855320dbff5c313149bb60d2ff437d0730bc9db48b99093f8ba7",
+      "selected_lines": [
+        {
+          "line": 11,
+          "text": "from utmosv2.preprocess._preprocess import remove_silent_section"
+        },
+        {
+          "line": 30,
+          "text": "        self.cfg = cfg"
+        },
+        {
+          "line": 35,
+          "text": "    def _get_audio_and_mos(self, idx: int) -> tuple[np.ndarray, torch.Tensor]:"
+        },
+        {
+          "line": 46,
+          "text": "        if getattr(self.cfg.dataset, \"remove_silent_section\", None):"
+        },
+        {
+          "line": 47,
+          "text": "            y = remove_silent_section(y)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2/utils/_constants.py",
+      "exists": true,
+      "bytes": 121,
+      "sha256": "9def1481bc0da33fd884dbf3ef424ccb79c52b4a698fb059cd915ba4990c89b1",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "_UTMOSV2_CHACHE = Path(os.getenv(\"UTMOSV2_CHACHE\", \"~/.cache/utmosv2\")).expanduser()"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/jiwer/transforms.py",
+      "exists": true,
+      "bytes": 17848,
+      "sha256": "1e4d1ab29591a84df4c040c33343110f7dd57d0c97c0f57d3e88ec852ba226bd",
+      "selected_lines": [
+        {
+          "line": 150,
+          "text": "class ReduceToListOfListOfWords(AbstractTransform):"
+        },
+        {
+          "line": 409,
+          "text": "def _get_punctuation_characters():"
+        },
+        {
+          "line": 413,
+          "text": "        chr(i) for i in codepoints if unicodedata.category(chr(i)).startswith(\"P\")"
+        },
+        {
+          "line": 418,
+          "text": "class RemovePunctuation(BaseRemoveTransform):"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/audio_utils.py",
+      "exists": true,
+      "bytes": 345,
+      "sha256": "c06c22422c3b5dae4c24412dd3cd244e09ca6913e5865a660612e38602bca892",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "_INT16_PEAK = 32767.0"
+        },
+        {
+          "line": 7,
+          "text": "def audio_float_to_int16(audio: np.ndarray) -> np.ndarray:"
+        },
+        {
+          "line": 8,
+          "text": "    peak = max(float(np.max(np.abs(audio))), 0.01)"
+        },
+        {
+          "line": 10,
+          "text": "    return np.clip(scaled, -_INT16_PEAK, _INT16_PEAK).astype(np.int16)"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_baseline_fp32_onnx_500.log",
+      "exists": true,
+      "bytes": 500465,
+      "sha256": "c53ced3b6923fc852fbf8004bfc5d597e070bd1d76e3c6a9feb0a22b80b153c0",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "Loaded ONNX model: <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx (intra_op_num_threads=2)"
+        },
+        {
+          "line": 23,
+          "text": "Loaded checkpoint from <WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth"
+        },
+        {
+          "line": 24,
+          "text": "Loading Whisper (small, CPU) ..."
+        },
+        {
+          "line": 5076,
+          "text": "=== FINAL SUMMARY: baseline FP32 (ONNX Runtime, VNNI, 2 threads) (n=500) ==="
+        },
+        {
+          "line": 5077,
+          "text": "RTF:      mean=0.0388  std=0.0013  median=0.0388"
+        },
+        {
+          "line": 5078,
+          "text": "UTMOSv2:  mean=3.132  std=0.282  median=3.132"
+        },
+        {
+          "line": 5079,
+          "text": "WER:      mean=0.1230  std=0.1327  median=0.0833"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_baseline_ptq_onnx_500.log",
+      "exists": true,
+      "bytes": 500504,
+      "sha256": "70447c44940259ad104f6be048c516379c1cf718ec3843ab952a452e2a417786",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "Loaded ONNX model: <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx (intra_op_num_threads=2)"
+        },
+        {
+          "line": 23,
+          "text": "Loaded checkpoint from <WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth"
+        },
+        {
+          "line": 24,
+          "text": "Loading Whisper (small, CPU) ..."
+        },
+        {
+          "line": 5076,
+          "text": "=== FINAL SUMMARY: baseline PTQ INT8 (flow+enc_p+dp, dec FP32, VNNI, 2 threads) (n=500) ==="
+        },
+        {
+          "line": 5077,
+          "text": "RTF:      mean=0.0345  std=0.0018  median=0.0344"
+        },
+        {
+          "line": 5078,
+          "text": "UTMOSv2:  mean=3.121  std=0.263  median=3.134"
+        },
+        {
+          "line": 5079,
+          "text": "WER:      mean=0.1135  std=0.1327  median=0.0714"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_mrf_fp32_onnx_500.log",
+      "exists": true,
+      "bytes": 500450,
+      "sha256": "fdc8c8a33ae1e9156f82eb936f7773a8e88656bba10943549c8f3902ce4bb979",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "Loaded ONNX model: <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx (intra_op_num_threads=2)"
+        },
+        {
+          "line": 23,
+          "text": "Loaded checkpoint from <WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth"
+        },
+        {
+          "line": 24,
+          "text": "Loading Whisper (small, CPU) ..."
+        },
+        {
+          "line": 5076,
+          "text": "=== FINAL SUMMARY: MRF FP32 (ONNX Runtime, VNNI, 2 threads) (n=500) ==="
+        },
+        {
+          "line": 5077,
+          "text": "RTF:      mean=0.0416  std=0.0021  median=0.0415"
+        },
+        {
+          "line": 5078,
+          "text": "UTMOSv2:  mean=3.537  std=0.221  median=3.543"
+        },
+        {
+          "line": 5079,
+          "text": "WER:      mean=0.1043  std=0.1279  median=0.0690"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_mrf_ptq_onnx_500_rerun.log",
+      "exists": true,
+      "bytes": 500517,
+      "sha256": "ed86dec5dbf643bd3418a4d58281a1c500d8837eb0df22593f6b4b7bfabf8502",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "Loaded ONNX model: <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx (intra_op_num_threads=2)"
+        },
+        {
+          "line": 23,
+          "text": "Loaded checkpoint from <WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth"
+        },
+        {
+          "line": 24,
+          "text": "Loading Whisper (small, CPU) ..."
+        },
+        {
+          "line": 5076,
+          "text": "=== FINAL SUMMARY: MRF PTQ INT8 (flow+enc_p+dp, dec FP32, VNNI, 2 threads) - RERUN CLEAN (n=500) ==="
+        },
+        {
+          "line": 5077,
+          "text": "RTF:      mean=0.0371  std=0.0023  median=0.0369"
+        },
+        {
+          "line": 5078,
+          "text": "UTMOSv2:  mean=3.490  std=0.228  median=3.506"
+        },
+        {
+          "line": 5079,
+          "text": "WER:      mean=0.1124  std=0.1485  median=0.0667"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_mrf_final1500_500.log",
+      "exists": true,
+      "bytes": 503794,
+      "sha256": "8cd890a01c84943c95554df9ed3e4d99e62a054040c6f15f33f129ab8f825046",
+      "selected_lines": [
+        {
+          "line": 25,
+          "text": "Loaded checkpoint from <WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth"
+        },
+        {
+          "line": 26,
+          "text": "Loading Whisper (small, CPU) ..."
+        },
+        {
+          "line": 5078,
+          "text": "=== FINAL SUMMARY: mrf_111_run_500ep FINAL-1500 FP32 (epoch=1386/1500, val_loss_mel=18.7681, training done, RTF sach, seed=1234, test-set rieng MRF) (n=500) ==="
+        },
+        {
+          "line": 5079,
+          "text": "RTF:      mean=0.0370  std=0.0066  median=0.0361"
+        },
+        {
+          "line": 5080,
+          "text": "UTMOSv2:  mean=3.651  std=0.227  median=3.665"
+        },
+        {
+          "line": 5081,
+          "text": "WER:      mean=0.0983  std=0.1218  median=0.0635"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/bench_vnni_mrf.log",
+      "exists": true,
+      "bytes": 3019,
+      "sha256": "d031675f8dccff3fe91ded2ae3fde8891c56b97b2d399494a1138c60e033b1a3",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "=== intra_op_num_threads=2 ==="
+        },
+        {
+          "line": 20,
+          "text": "  --- average speedup relative to FP32 ---"
+        },
+        {
+          "line": 24,
+          "text": "=== intra_op_num_threads=1 ==="
+        },
+        {
+          "line": 40,
+          "text": "  --- average speedup relative to FP32 ---"
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/bench_vnni_baseline_rerun.log",
+      "exists": true,
+      "bytes": 3895,
+      "sha256": "c40710ef453e0d96629459e1f97a1ca0d6ca676049caad3671bfbd14902fad43",
+      "selected_lines": [
+        {
+          "line": 4,
+          "text": "=== intra_op_num_threads=2 ==="
+        },
+        {
+          "line": 25,
+          "text": "  --- average speedup relative to FP32 ---"
+        },
+        {
+          "line": 30,
+          "text": "=== intra_op_num_threads=1 ==="
+        },
+        {
+          "line": 51,
+          "text": "  --- average speedup relative to FP32 ---"
+        }
+      ]
+    }
+  ],
+  "current_cached_weights": [
+    {
+      "path": "<WSL_USER_HOME>/.cache/utmosv2/models/fusion_stage3/fold0_s42_best_model.pth",
+      "exists": true,
+      "bytes": 818531314,
+      "sha256": "c8149d988e4bbf3f347e6966b5d769de347a5f8c59ffca1dc4bd4bf5b8585e57"
+    },
+    {
+      "path": "<WSL_USER_HOME>/.cache/whisper/small.pt",
+      "exists": true,
+      "bytes": 483617219,
+      "sha256": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794"
+    },
+    {
+      "path": "<WSL_USER_HOME>/.cache/whisper/base.en.pt",
+      "exists": true,
+      "bytes": 145261783,
+      "sha256": "25a8566e1d0c1e2231d1c762132cd20e0f96a85d16145c3a00adf5d1ac670ead"
+    }
+  ],
+  "current_installed_packages": [
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/jiwer-4.0.0.dist-info/METADATA",
+      "sha256": "62c6708f4862abdfe36e044cc50db8d4c9f302ea81b2ad4319d3c32bda5e76c1",
+      "identity": [
+        "Name: jiwer",
+        "Version: 4.0.0"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/torchaudio-2.11.0+cu130.dist-info/METADATA",
+      "sha256": "0afc122b8e192f4cc88863164de9e0cd3122db8851d47ead550d0a7c90b68ea2",
+      "identity": [
+        "Name: torchaudio",
+        "Version: 2.11.0+cu130"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/numpy-1.26.4.dist-info/METADATA",
+      "sha256": "b09734a7fed44e84b4c8161934ce532dff1e779ec6822d415644d117f6381070",
+      "identity": [
+        "Name: numpy",
+        "Version: 1.26.4"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/openai_whisper-20250625.dist-info/METADATA",
+      "sha256": "0fe3c19a1d04c1bee90a86098ff295f44ba71d6e7c932104ab31a863454509ed",
+      "identity": [
+        "Name: openai-whisper",
+        "Version: 20250625"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime-1.23.2.dist-info/METADATA",
+      "sha256": "0681c4f873cc6fdd4f27591efa63e630b79d09f0a00f4a211a1463b7c4893f23",
+      "identity": [
+        "Name: onnxruntime",
+        "Version: 1.23.2"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/torch-2.13.0+cu130.dist-info/METADATA",
+      "sha256": "7477a1e61a4ecc055e52577f79be3dcc6d4d2ef6d423089469c9366cf4191a80",
+      "identity": [
+        "Name: torch",
+        "Version: 2.13.0+cu130"
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/utmosv2-1.3.1.dev0.dist-info/METADATA",
+      "sha256": "3f6cdccde66c335a1f8985114cc9e08b1c94e55feba0be80cbb0cd318a851745",
+      "identity": [
+        "Name: utmosv2",
+        "Version: 1.3.1.dev0"
+      ]
+    }
+  ],
+  "saved_evaluation_recomputation": [
+    {
+      "path": "/tmp/eval_baseline_fp32_onnx_500_results.json",
+      "exists": true,
+      "bytes": 217967,
+      "sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105",
+      "rows": 500,
+      "keys": [
+        "idx",
+        "text",
+        "asr_text",
+        "synth_time_s",
+        "audio_duration_s",
+        "rtf",
+        "utmosv2",
+        "wer"
+      ],
+      "macro_wer_saved": 0.12300292237477181,
+      "macro_wer_recomputed": 0.12300292237477181,
+      "corpus_wer_from_saved_transcripts": 0.1158494073901929,
+      "reference_words": 8606,
+      "word_errors": 997,
+      "wer_mismatch_indices": [],
+      "utterance_mean_rtf": 0.03877565598301487,
+      "aggregate_rtf_sum_time_over_sum_duration": 0.039026863833613035
+    },
+    {
+      "path": "/tmp/eval_baseline_ptq_onnx_500_results.json",
+      "exists": true,
+      "bytes": 217590,
+      "sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f",
+      "rows": 500,
+      "keys": [
+        "idx",
+        "text",
+        "asr_text",
+        "synth_time_s",
+        "audio_duration_s",
+        "rtf",
+        "utmosv2",
+        "wer"
+      ],
+      "macro_wer_saved": 0.11350466735937649,
+      "macro_wer_recomputed": 0.11350466735937649,
+      "corpus_wer_from_saved_transcripts": 0.10690216128282594,
+      "reference_words": 8606,
+      "word_errors": 920,
+      "wer_mismatch_indices": [],
+      "utterance_mean_rtf": 0.03454040076413626,
+      "aggregate_rtf_sum_time_over_sum_duration": 0.03488047266151027
+    },
+    {
+      "path": "/tmp/eval_mrf_fp32_onnx_500_results.json",
+      "exists": true,
+      "bytes": 215295,
+      "sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292",
+      "rows": 500,
+      "keys": [
+        "idx",
+        "text",
+        "asr_text",
+        "synth_time_s",
+        "audio_duration_s",
+        "rtf",
+        "utmosv2",
+        "wer"
+      ],
+      "macro_wer_saved": 0.10427436892858724,
+      "macro_wer_recomputed": 0.10427436892858724,
+      "corpus_wer_from_saved_transcripts": 0.09319839962344081,
+      "reference_words": 8498,
+      "word_errors": 792,
+      "wer_mismatch_indices": [],
+      "utterance_mean_rtf": 0.04160499579865139,
+      "aggregate_rtf_sum_time_over_sum_duration": 0.04216631732671596
+    },
+    {
+      "path": "/tmp/eval_mrf_ptq_onnx_500_rerun_results.json",
+      "exists": true,
+      "bytes": 215394,
+      "sha256": "5e3b8f0291598086b265d331f9daed228253f929324df4ee5a714b9e1f7c915f",
+      "rows": 500,
+      "keys": [
+        "idx",
+        "text",
+        "asr_text",
+        "synth_time_s",
+        "audio_duration_s",
+        "rtf",
+        "utmosv2",
+        "wer"
+      ],
+      "macro_wer_saved": 0.11236192858829196,
+      "macro_wer_recomputed": 0.11236192858829196,
+      "corpus_wer_from_saved_transcripts": 0.09908213697340551,
+      "reference_words": 8498,
+      "word_errors": 842,
+      "wer_mismatch_indices": [],
+      "utterance_mean_rtf": 0.03705029402197336,
+      "aggregate_rtf_sum_time_over_sum_duration": 0.037702158198088614
+    }
+  ],
+  "saved_pairing": {
+    "baseline_fp32__baseline_ptq": {
+      "ordered_texts_equal": true,
+      "intersection_unique_texts": 500
+    },
+    "mrf_fp32__mrf_ptq": {
+      "ordered_texts_equal": true,
+      "intersection_unique_texts": 500
+    },
+    "baseline_fp32__mrf_fp32": {
+      "ordered_texts_equal": false,
+      "intersection_unique_texts": 21
+    }
+  },
+  "prior_static_random_node_evidence": {
+    "source": {
+      "path": "<WORKSPACE>/paper_revisions/thesis_ptq/round5_capstone_artifact_evidence.json",
+      "exists": true,
+      "bytes": 3579229,
+      "sha256": "dd4fa3fb261c83d1ba0680c57ece8fcdf6fb1e21e02d84ecde8b6a153c0385d2"
+    },
+    "graphs": [
+      {
+        "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx",
+        "sha256": "16a8943b14883faff727a64213ceddfdef402e980cba508dae81e225eeaa58e9",
+        "random_nodes": [
+          {
+            "name": "/dp/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          },
+          {
+            "name": "/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx",
+        "sha256": "6f02e2947f4e47cc802164d81f982cc692c65e0bac07303765161e3e3759527c",
+        "random_nodes": [
+          {
+            "name": "/dp/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          },
+          {
+            "name": "/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx",
+        "sha256": "8f89ebc4db3d0aa6e4955731f62d1bb145aa472a4e44d3a9cdca76debd762819",
+        "random_nodes": [
+          {
+            "name": "/dp/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          },
+          {
+            "name": "/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx",
+        "sha256": "28b69a5984af462de878c98b6b30832cce265141b055a4b24bf9092055381012",
+        "random_nodes": [
+          {
+            "name": "/dp/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          },
+          {
+            "name": "/RandomNormalLike",
+            "op_type": "RandomNormalLike",
+            "seed_attribute": null
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Present source/config/weight hashes do not prove historical runtime identity. UTMOS cache path is explicitly printed in saved run logs; its hash was not saved at execution.",
+    "Whisper small/base.en current hashes can be compared to installed package checksum mapping; saved logs name small but do not record the full historical hash.",
+    "No corrected model selection or newly rescored values are produced. Corpus WER and aggregate RTF here are arithmetic derived from existing records only."
+  ]
+}

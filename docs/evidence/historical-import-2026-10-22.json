@@ -1,0 +1,3886 @@
+{
+ "schema_version": 1,
+ "created_utc": "2026-10-21T17:05:59.112200+00:00",
+ "purpose": "consolidate the historical results of baseline-resblock2, Parallel-IR and Sequential-IR in hifi-mobiNet",
+ "redaction_rules": [
+  {
+   "replaced": "project workspace (WSL /mnt form, any separator)",
+   "replacement": "<WORKSPACE>/"
+  },
+  {
+   "replaced": "project workspace (Windows drive form, any separator)",
+   "replacement": "<WORKSPACE>/"
+  },
+  {
+   "replaced": "Windows user profile (WSL /mnt form, any separator)",
+   "replacement": "<WINDOWS_USER_HOME>/"
+  },
+  {
+   "replaced": "Windows user profile",
+   "replacement": "<WINDOWS_USER_HOME>/"
+  },
+  {
+   "replaced": "WSL project home (UNC form)",
+   "replacement": "<WSL_PROJECT_HOME>/"
+  },
+  {
+   "replaced": "WSL project account home",
+   "replacement": "<WSL_PROJECT_HOME>/"
+  },
+  {
+   "replaced": "WSL project home, cut off at a line end",
+   "replacement": "<WSL_PROJECT_HOME>"
+  },
+  {
+   "replaced": "WSL personal account home",
+   "replacement": "<WSL_USER_HOME>/"
+  },
+  {
+   "replaced": "Claude Code project directory name (the workspace path with separators replaced by '-')",
+   "replacement": "<CLAUDE_PROJECT_SLUG>"
+  },
+  {
+   "replaced": "Windows host name",
+   "replacement": "<HOST>"
+  },
+  {
+   "replaced": "e-mail address",
+   "replacement": "<EMAIL>"
+  }
+ ],
+ "private_originals": "<WSL_PROJECT_HOME>/hifimobinet-private/historical-import-2026-10-22/ (in WSL, outside OneDrive and Git; not for release)",
+ "out_of_scope": "Vocos experiments are not used: Vocos-only and mixed PTQ-sweep logs are referenced by hash only, and mixed PTQ-sweep JSON results are derived copies without Vocos entries",
+ "never_copied": [
+  ".wav",
+  ".ckpt",
+  ".onnx",
+  ".pt",
+  ".pth",
+  ".npz"
+ ],
+ "problems": [],
+ "records": [
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/JOURNAL_EVIDENCE_CONTEXT.md",
+   "source_bytes": 61453,
+   "source_sha256": "f733f3d73a9d07dcbbf50752159d7540d250a72129df94b4b63cce3be0a5ed9b",
+   "evidence_type": "package_documentation",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/JOURNAL_EVIDENCE_CONTEXT.md",
+   "destination_bytes": 61493,
+   "destination_sha256": "a40281c821d8baae6782701cfa025e7a83252a21fc36118ba1a630db9716bec3",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 10
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/claim-ledger.json",
+   "source_bytes": 31741,
+   "source_sha256": "533183b339fc9739ccf81d4e0ba9329e71d33d3eda1456f3bad17ede547853e2",
+   "evidence_type": "package_documentation",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/claim-ledger.json",
+   "destination_bytes": 31741,
+   "destination_sha256": "533183b339fc9739ccf81d4e0ba9329e71d33d3eda1456f3bad17ede547853e2",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence-manifest.csv",
+   "source_bytes": 31243,
+   "source_sha256": "681015f3fac122451ab29f11b299cab3a765224d354bdb2db93c1c247ae6b255",
+   "evidence_type": "package_documentation",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence-manifest.csv",
+   "destination_bytes": 28659,
+   "destination_sha256": "e884eb39dc51849d497bddec9a324213dd6da7f0367884114b9cea5516686b4b",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 45
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 29
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/claim_table.md",
+   "source_bytes": 17032,
+   "source_sha256": "66ef7202fe0a0dd30c220079d43c89924e198728b46a6c621c61d4a46bdab187",
+   "evidence_type": "package_documentation",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/claim_table.md",
+   "destination_bytes": 17032,
+   "destination_sha256": "66ef7202fe0a0dd30c220079d43c89924e198728b46a6c621c61d4a46bdab187",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/CHECKLIST_SUA_LUAN_VAN.md",
+   "source_bytes": 31069,
+   "source_sha256": "639f3a69187ab26a590605ec055e1e5bff2a4a0c21c057b4f682ec3414bc1ec5",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/CHECKLIST_SUA_LUAN_VAN.md",
+   "destination_bytes": 31079,
+   "destination_sha256": "b8e9b177769d63f2cc5fa917e467b64257456823068b509d4120b66f597579c8",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/CHECKLIST_UU_TIEN_PAPER_Q2.md",
+   "source_bytes": 18657,
+   "source_sha256": "2f7c1047f7c6f64d0da8e2d109d7f80a393ff67f44e5678c8c942d2a5be7beec",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/CHECKLIST_UU_TIEN_PAPER_Q2.md",
+   "destination_bytes": 18669,
+   "destination_sha256": "c1b8706f045a4fc8e39bb2eaf1066c7face817a640e13ebc76ac51e53922440d",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/MRF_vs_SEQ_comparison_Q2.md",
+   "source_bytes": 5644,
+   "source_sha256": "15b199751bbb0aea0524a34aa5330878fa7e65fbcb74d5c2e4350177cb16b7f6",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/MRF_vs_SEQ_comparison_Q2.md",
+   "destination_bytes": 5644,
+   "destination_sha256": "15b199751bbb0aea0524a34aa5330878fa7e65fbcb74d5c2e4350177cb16b7f6",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/Piper_VITS2_BanhmiTTS_differences.md",
+   "source_bytes": 15612,
+   "source_sha256": "2c2902181610accfc4aa5cacfec1953277c6c4cbe4060ce61b11cdb79fed187b",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/Piper_VITS2_BanhmiTTS_differences.md",
+   "destination_bytes": 15612,
+   "destination_sha256": "2c2902181610accfc4aa5cacfec1953277c6c4cbe4060ce61b11cdb79fed187b",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/Q03_CAU_HINH_VA_LICH_SU_HUAN_LUYEN.md",
+   "source_bytes": 46763,
+   "source_sha256": "b36ce8be1eec551fd3f72473e464e863565e447998fdd3df5214a3494aa15193",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/Q03_CAU_HINH_VA_LICH_SU_HUAN_LUYEN.md",
+   "destination_bytes": 46763,
+   "destination_sha256": "b36ce8be1eec551fd3f72473e464e863565e447998fdd3df5214a3494aa15193",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/Q04_PROTOCOL_DU_LIEU_VA_DANH_GIA.md",
+   "source_bytes": 24167,
+   "source_sha256": "feafb6b6205e16355982ca9446e907a974f61822070f8c454846a37b4b09b972",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/Q04_PROTOCOL_DU_LIEU_VA_DANH_GIA.md",
+   "destination_bytes": 24167,
+   "destination_sha256": "feafb6b6205e16355982ca9446e907a974f61822070f8c454846a37b4b09b972",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/author_notes/Q05_EXPORT_ONNX_VA_KIEM_CHUNG.md",
+   "source_bytes": 11551,
+   "source_sha256": "15932ce129a3886ccb3b2bf40eb1cdc6563a3c8de26e72f432bc62941a33b86e",
+   "evidence_type": "author_or_agent_note",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/author_notes/Q05_EXPORT_ONNX_VA_KIEM_CHUNG.md",
+   "destination_bytes": 11567,
+   "destination_sha256": "7df9825bf3a098adab07241500fea9712ee01fe7b7cf0f329040d0d554842b98",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/A_inventory/checkpoint_metadata_now.json",
+   "source_bytes": 20613,
+   "source_sha256": "c08937674b438ce865c3d36b93ad69014f380202df14adc3f326b3469f743e9d",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/A_inventory/checkpoint_metadata_now.json",
+   "destination_bytes": 20689,
+   "destination_sha256": "5c23bceb52e2f84ba335cfadb7b26ed742b73e2a94b356ac609054eb24cd829e",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 19
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/A_inventory/environment_now.json",
+   "source_bytes": 1811,
+   "source_sha256": "e566c78fb17e67ed64d6324b98fdb1c0b050d38b58a38d51a0a3dad43cef32ff",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/A_inventory/environment_now.json",
+   "destination_bytes": 1806,
+   "destination_sha256": "c5e657fc5cff1b59c0c388096d8e874cbeaf9020de34fe04c21d332347dce780",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    },
+    {
+     "rule": "Windows host name",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/A_inventory/misc_copies_and_checkpoint_stat.json",
+   "source_bytes": 32748,
+   "source_sha256": "dd6285c5bd4d86c7fa8f2aa211ccabd9cfd020e314d725925fe454f82e7fe88e",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/A_inventory/misc_copies_and_checkpoint_stat.json",
+   "destination_bytes": 30168,
+   "destination_sha256": "96750641343c3d08f712a3b2aae7bead6364d6e57c50b56820111324941a0bac",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 44
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 15
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/harvard_integrity_checks.json",
+   "source_bytes": 8471,
+   "source_sha256": "d2657c4c4c1da7fa6638908a2d2e40fdc0f4a1fbaf5166721c44f3078f2fd9fd",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/harvard_integrity_checks.json",
+   "destination_bytes": 8511,
+   "destination_sha256": "8e2c54b91f2bdb3dca37d3cafe33cfd55f34cbb149f5635073fe24cfa133485e",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 10
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/wav_inventory.csv",
+   "source_bytes": 540503,
+   "source_sha256": "d5741293a1d316c5904e1e65d0db06a8c9b8dcbcf912c231f62f8cdd85e2d4b6",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/wav_inventory.csv",
+   "destination_bytes": 552023,
+   "destination_sha256": "7b367a747c5e00b5ac4d0b8f1e57535f11eda8daf261b0501f23ffd6fcfa3c07",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2880
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard.html",
+   "source_bytes": 38643,
+   "source_sha256": "f8c981aed97020642fd2423de787b3ccd2a7233f32fe07ebd26d2279c195cb75",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard.html",
+   "destination_bytes": 38643,
+   "destination_sha256": "f8c981aed97020642fd2423de787b3ccd2a7233f32fe07ebd26d2279c195cb75",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_baseline_results.json",
+   "source_bytes": 211408,
+   "source_sha256": "84dd78739a2e54d7d137b4986735a0005b7dabe6afbdaae3279e530fd13452c7",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/harvard/harvard_baseline_results.json",
+   "destination_sha256": "84dd78739a2e54d7d137b4986735a0005b7dabe6afbdaae3279e530fd13452c7",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_baseline_synth.json",
+   "source_bytes": 191417,
+   "source_sha256": "3530d9d80d37eaaf27d4185ce380782bdc827767ab280cbaf2080edea2fdf22b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard_baseline_synth.json",
+   "destination_bytes": 194297,
+   "destination_sha256": "c65f4fb3dcdc8aab708de33eed178cc9d0c7bbb021214a91c669e0804258ceba",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 720
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_mrf_results.json",
+   "source_bytes": 210704,
+   "source_sha256": "e13f2b0a88352883429c8fc43c5c1679224ba3c24b02c4ff3781df8767493f8c",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/harvard/harvard_mrf_results.json",
+   "destination_sha256": "e13f2b0a88352883429c8fc43c5c1679224ba3c24b02c4ff3781df8767493f8c",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_mrf_synth.json",
+   "source_bytes": 187866,
+   "source_sha256": "a782c62625d01e1617e293c01bf1ffb1149760031809f722c96c18ee522d47f9",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard_mrf_synth.json",
+   "destination_bytes": 190746,
+   "destination_sha256": "cd6d7bae7f84e8e0655600dbfdfb76adfa2262590c13c66e2df6c3c102ed5196",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 720
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_piper_results.json",
+   "source_bytes": 212488,
+   "source_sha256": "74a9bbd3b8406d8885dbbc69665d966e194bc340723506383b1e667206ce9938",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/harvard/harvard_piper_results.json",
+   "destination_sha256": "74a9bbd3b8406d8885dbbc69665d966e194bc340723506383b1e667206ce9938",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_piper_synth.json",
+   "source_bytes": 189237,
+   "source_sha256": "ffc47c76935cd188e2a4bfad88bf9c23ced26b1d101852109b8a7714829d84c5",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard_piper_synth.json",
+   "destination_bytes": 192117,
+   "destination_sha256": "f5a2e8acefa90e046f2eda23ae08c317a54b4d1e91285ecd85a74cb1a900bade",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 720
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_run_all.log",
+   "source_bytes": 2819901,
+   "source_sha256": "76a3e4101d21b3feb2c186153a9b0c03de5b3be40ef77b43e79834f159aac729",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard_run_all.log",
+   "destination_bytes": 2854545,
+   "destination_sha256": "b8116739d086c276743d04ba9957d44c04d93fd0d9fe6045739f51b907d959ab",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 8655
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_seq_results.json",
+   "source_bytes": 211302,
+   "source_sha256": "06d71080a449af44bb0ae2082db7ca445ef8cfea25b47c3171e2db6d08914f20",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/harvard/harvard_seq_results.json",
+   "destination_sha256": "06d71080a449af44bb0ae2082db7ca445ef8cfea25b47c3171e2db6d08914f20",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_seq_synth.json",
+   "source_bytes": 188074,
+   "source_sha256": "767c75d710a34c88cefe7ca09cece710189d25a850884d2601a0c745f225b576",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/harvard_seq_synth.json",
+   "destination_bytes": 190954,
+   "destination_sha256": "cb63d07e80556ae22bbf6f7aab8a8a53c1a50c90c6cc3f18eba7096a82edd27c",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 720
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/harvard_testset_720.json",
+   "source_bytes": 802421,
+   "source_sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/manifests/harvard720.json",
+   "destination_sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/build_harvard_testset.py",
+   "source_bytes": 2103,
+   "source_sha256": "ec1bdee9c0db0a42d763f476c01cacadcdea738b4ff3a9ac4b53153af3a3d86c",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/build_harvard_testset.py",
+   "destination_bytes": 2107,
+   "destination_sha256": "542876d0551549cc87ae9f8c5beb958698771b87a21a02b28863abbf1a4f4efd",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/count_params.py",
+   "source_bytes": 2029,
+   "source_sha256": "b99362400bad34430de8a56745f72ed0f893bd861dfc4bd699376f0bd1fcd455",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/count_params.py",
+   "destination_bytes": 2045,
+   "destination_sha256": "77ed5d8ff6abcfb5b1b2f43de5a879a4246f69df135acacdeecab7656f547c96",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/run_all.sh",
+   "source_bytes": 718,
+   "source_sha256": "eabf4254adb4b19eb40433c178b6f68034b7845345aa05c72667d798e031aaf0",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/run_all.sh",
+   "destination_bytes": 746,
+   "destination_sha256": "176a602bdf0452f9fab4f965477961fb7c4038b0475237581428f614e608fc10",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 7
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/score.py",
+   "source_bytes": 1894,
+   "source_sha256": "1bdd3994e68902dd1998f7b4c5934b1034bfb3ac77468e8524d1b8c547291c87",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/score.py",
+   "destination_bytes": 1894,
+   "destination_sha256": "1bdd3994e68902dd1998f7b4c5934b1034bfb3ac77468e8524d1b8c547291c87",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/stats.py",
+   "source_bytes": 2450,
+   "source_sha256": "1854bd0d696bb828359cb6b8334ac692a1e5b253b53abb114348638204c795d1",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/stats.py",
+   "destination_bytes": 2450,
+   "destination_sha256": "1854bd0d696bb828359cb6b8334ac692a1e5b253b53abb114348638204c795d1",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/synth_banhmi.py",
+   "source_bytes": 2436,
+   "source_sha256": "23b2548d22689e180b4376708c87a804d136d45d4d62e2736ab483ee6de5d903",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/synth_banhmi.py",
+   "destination_bytes": 2448,
+   "destination_sha256": "5fb7c1ccb487425a6f622bfbc2b2400db0d136e449e625c136b0a09b0ef769df",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/raw/scripts_original/synth_piper.py",
+   "source_bytes": 2193,
+   "source_sha256": "4f40fe06e3d68a75c39bd181871080bd8eac736e454dd36bb152f8d5be77897e",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/raw/scripts_original/synth_piper.py",
+   "destination_bytes": 2141,
+   "destination_sha256": "743904dc8f3324f0d8fc1b9d78479b7eda494ae589903f74ebc9dd3329639876",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+   "source_bytes": 13703,
+   "source_sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/prior_audit/harvard_stats_recomputed.json",
+   "destination_sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/B_harvard/recomputed/harvard_stats_recomputed.md",
+   "source_bytes": 2544,
+   "source_sha256": "88dcac9feaa51e81d37f8cfacf3788858762219caab0415c8d635ed618db6a5d",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/B_harvard/recomputed/harvard_stats_recomputed.md",
+   "destination_bytes": 2544,
+   "destination_sha256": "88dcac9feaa51e81d37f8cfacf3788858762219caab0415c8d635ed618db6a5d",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "source_bytes": 1547236,
+   "source_sha256": "aea18304bb060613dadfaf7154ec4ecc57037fda148798ea07f3290757c8d277",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "destination_bytes": 1547240,
+   "destination_sha256": "0298172027d24c03a91689faae1599fd13ea8a69e771cd33b2989e8713314721",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/canonical_split.json",
+   "source_bytes": 1558950,
+   "source_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/manifests/canonical_split.json",
+   "destination_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/data_split_checks_recomputed.json",
+   "source_bytes": 16052,
+   "source_sha256": "83f654636cab447e03a333e719775ded5c28133fb2b40ca3300088b2afabfa89",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/data_split_checks_recomputed.json",
+   "destination_bytes": 15800,
+   "destination_sha256": "49b5a9198ea81446098710d67cc65a15da2700f3a824192e4ce1d8a80f268bbd",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 5
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 12
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/piper_MODEL_CARD",
+   "source_bytes": 517,
+   "source_sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_voices_ljspeech_medium_MODEL_CARD.txt",
+   "destination_sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/piper_config.json",
+   "source_bytes": 7089,
+   "source_sha256": "854155811f0334519486568b09d9d2d53f15b328eb22607aec35b25a8f37942f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/public_piper_lj_med_config.json",
+   "destination_sha256": "854155811f0334519486568b09d9d2d53f15b328eb22607aec35b25a8f37942f",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/piper_download_manifest.json",
+   "source_bytes": 1545,
+   "source_sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/public/piper_download_manifest_2026-09-30.json",
+   "destination_sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/build_mrf_testset.py",
+   "source_bytes": 1778,
+   "source_sha256": "9e155ae94cfdea4eec729143f9a40d7e1835e90a28a06d9ac5ad2ae81d075268",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/build_mrf_testset.py",
+   "destination_bytes": 1790,
+   "destination_sha256": "ce37e7733972f4adf1f5f4b57dcb9ac99fb382278b08ce6c5e42e5d71d28870f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_baseline_fp32_seeded_500.py",
+   "source_bytes": 4563,
+   "source_sha256": "4c0a12c5b6b51bedb28086bb16fc6cb1b455ec7839f160e229bd9afb2fc00bd8",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_baseline_fp32_seeded_500.py",
+   "destination_bytes": 4579,
+   "destination_sha256": "f554f18c6b24e48cf1be0e14691df7d2dd4f5733a32f18f03c42f8087858384a",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_baseline_fp32_seeded_500_results.json",
+   "source_bytes": 234894,
+   "source_sha256": "82324daf74ddf5bfc4f280df13e3e17a43f453a97737c221a1d2cc67da0a2ac1",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/lj500/eval_baseline_fp32_seeded_500_results.json",
+   "destination_sha256": "82324daf74ddf5bfc4f280df13e3e17a43f453a97737c221a1d2cc67da0a2ac1",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500.log",
+   "source_bytes": 503794,
+   "source_sha256": "8cd890a01c84943c95554df9ed3e4d99e62a054040c6f15f33f129ab8f825046",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500.log",
+   "destination_bytes": 509812,
+   "destination_sha256": "fa042a705d187762be6cea0818dd6cf7d51b1498988341ac42e21d5b2025a7ef",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500.py",
+   "source_bytes": 4103,
+   "source_sha256": "59d81947b9151389b0cbb8803de829c0d8527547fc9ac12e13eba87246e18f54",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500.py",
+   "destination_bytes": 4119,
+   "destination_sha256": "da201c50a86564b6110207afe86ff96c48b090f8b045ed873f4145a6a812befe",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500_results.json",
+   "source_bytes": 215318,
+   "source_sha256": "fa40e92fc8ec40581ca7a5ca113b0eeacdddcf3a756efdd5a386a0e682ae6359",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/lj500/eval_mrf_final1500_500_results.json",
+   "destination_sha256": "fa40e92fc8ec40581ca7a5ca113b0eeacdddcf3a756efdd5a386a0e682ae6359",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_mrf_fp32_seeded_500.py",
+   "source_bytes": 4029,
+   "source_sha256": "871e2390ed84227de8dcea408032c122b74e1df16192b664c56272dcb24f13a4",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_mrf_fp32_seeded_500.py",
+   "destination_bytes": 4045,
+   "destination_sha256": "966e750ba58cb355070eb945e72adf22a76e05a7b9f11b16e508cddada2f4db2",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_mrf_fp32_seeded_500_results.json",
+   "source_bytes": 215366,
+   "source_sha256": "45731335d0ef2518100e90e3887cb03aeebce50c2152d60060a77f3d75e3dc1a",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/lj500/eval_mrf_fp32_seeded_500_results.json",
+   "destination_sha256": "45731335d0ef2518100e90e3887cb03aeebce50c2152d60060a77f3d75e3dc1a",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_piper_original_500_full_results.json",
+   "source_bytes": 218464,
+   "source_sha256": "54d4b3b058af3bef292ab0d320b782edc5b0e8e4500cc596c4db980ceb52fbfb",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/lj500/eval_piper_original_500_full_results.json",
+   "destination_sha256": "54d4b3b058af3bef292ab0d320b782edc5b0e8e4500cc596c4db980ceb52fbfb",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500.log",
+   "source_bytes": 506077,
+   "source_sha256": "90fd99ecd9ef542254d31cf46b1c5e140bfff02a437fb23659cc95d17a650116",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500.log",
+   "destination_bytes": 512095,
+   "destination_sha256": "c6712ea4252f756cda76e5264f294868e856c189c7dabde2e229c2551e972a75",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500.py",
+   "source_bytes": 3991,
+   "source_sha256": "75250e8d164ab4de8c64d0470f74f9f7d9b39d9b99191064986347954f49bd79",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500.py",
+   "destination_bytes": 4007,
+   "destination_sha256": "14a93e1859c64b34d86cf9e4addd5cafa253c716caad02f19b36a910fc4a2f74",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500_results.json",
+   "source_bytes": 217720,
+   "source_sha256": "c2115a4c9d13e1e09434c6c649234d96c718321c1452918903859ec1423e51ac",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/lj500/eval_seq111_fp32_seeded_500_results.json",
+   "destination_sha256": "c2115a4c9d13e1e09434c6c649234d96c718321c1452918903859ec1423e51ac",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_baseline.json",
+   "source_bytes": 1001906,
+   "source_sha256": "72916b93d84a9ea7acc020da5af966a1fb6233b2af3594a95e62feff8838756e",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_baseline.json",
+   "destination_bytes": 1001906,
+   "destination_sha256": "72916b93d84a9ea7acc020da5af966a1fb6233b2af3594a95e62feff8838756e",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_mrf.json",
+   "source_bytes": 1952075,
+   "source_sha256": "01986a8e8b85aa2bcb7ff89f9cc9db33f0cafc13a7496c568ccad1c9da20b3c3",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_mrf.json",
+   "destination_bytes": 1952075,
+   "destination_sha256": "01986a8e8b85aa2bcb7ff89f9cc9db33f0cafc13a7496c568ccad1c9da20b3c3",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/piper_infer_batch.log",
+   "source_bytes": 1842,
+   "source_sha256": "e8efd8c674fb385f52cdc2501b79986d54f0a62c89062abc5c6e5a181c3f6064",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/piper_infer_batch.log",
+   "destination_bytes": 1850,
+   "destination_sha256": "13ad9d1c46a93d37a74a89abb93f4a9f141d5dae318273834e2727f786255b87",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/piper_infer_batch.py",
+   "source_bytes": 3048,
+   "source_sha256": "4309fbcfca2e53e4051f350381a6cd4424af913d32335174adb60fad3b1fcb55",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/piper_infer_batch.py",
+   "destination_bytes": 2996,
+   "destination_sha256": "05178ecca99109817b79d590c868a26a5987d88d9c46785e752d4d1fb4e173fd",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/score_piper_original.log",
+   "source_bytes": 493357,
+   "source_sha256": "d8247120700b3078827205202871d7a72470a4f7bd9603745948d495f514a104",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/score_piper_original.log",
+   "destination_bytes": 497367,
+   "destination_sha256": "8473b14425569bbf9b22d5dda4291ff919d2c6bd3cf7061ed69114be3390f9bf",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1001
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/lj500_results_historical/score_piper_original.py",
+   "source_bytes": 2620,
+   "source_sha256": "3f8bb70cffd74c8a6d00bd96865d4850b39ff3805ba535f31c1968f5595330b3",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/score_piper_original.py",
+   "destination_bytes": 2620,
+   "destination_sha256": "3f8bb70cffd74c8a6d00bd96865d4850b39ff3805ba535f31c1968f5595330b3",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/CANDIDATE_AUDIT_v0.2.json",
+   "source_bytes": 4862,
+   "source_sha256": "84164f8152f47d49394b3a9764867fbb5b1c50ca9e71d057372725ecdfdad595",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/CANDIDATE_AUDIT_v0.2.json",
+   "destination_bytes": 4870,
+   "destination_sha256": "a4b0aa113aa3dfaf02825ca3d24a95b009d88ef73b388a145d9f6b5c5f6aea23",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/FILE_TIMESTAMPS.json",
+   "source_bytes": 1982,
+   "source_sha256": "0cbbb1f853190b1cf161acd29688546fd05a9d9e125204e53b8f5ad14036db33",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/FILE_TIMESTAMPS.json",
+   "destination_bytes": 1994,
+   "destination_sha256": "33b57ffcfe821a98d6bc1e5c3faa69a528acfc086855f55a3b86309c6379b3bc",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "source_bytes": 1547236,
+   "source_sha256": "aea18304bb060613dadfaf7154ec4ecc57037fda148798ea07f3290757c8d277",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "destination_bytes": 1547240,
+   "destination_sha256": "0298172027d24c03a91689faae1599fd13ea8a69e771cd33b2989e8713314721",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/Q03_EVIDENCE.json",
+   "source_bytes": 959004,
+   "source_sha256": "208a16a60181b701aff0adebd4287e4e5fdf934d7325c9591456f046428b9501",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/Q03_EVIDENCE.json",
+   "destination_bytes": 958472,
+   "destination_sha256": "cc28fee5f1a59c7357594d6a6f80d6861fe68f9a680eab08e788d8f2c3d8e34b",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 24
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 227
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/REVIEW_CHECKS.json",
+   "source_bytes": 10988,
+   "source_sha256": "e605f7ebd3c197f8f014ab76e6fb46001da33e27ed15bf9e2bfdeba000a955e7",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/REVIEW_CHECKS.json",
+   "destination_bytes": 10898,
+   "destination_sha256": "455c5301eee6f6bcf2095e215ff5d7ffb83c79c5f5caea5ab9beecc0303b2321",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 18
+    },
+    {
+     "rule": "Windows host name",
+     "replacements": 18
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/SHA256SUMS",
+   "source_bytes": 652,
+   "source_sha256": "c775ef6187e2ced1cde6d387c5eb355f8e5b5fdf2d08dad5c0261bedde56541f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/SHA256SUMS",
+   "destination_bytes": 652,
+   "destination_sha256": "c775ef6187e2ced1cde6d387c5eb355f8e5b5fdf2d08dad5c0261bedde56541f",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/SOURCE_RECOVERY_SUMMARY.json",
+   "source_bytes": 63203,
+   "source_sha256": "8fcd7f4f9ddf82badf6fc194fa7f2206c1a66db23851538283eb53992b5a3a18",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/SOURCE_RECOVERY_SUMMARY.json",
+   "destination_bytes": 62735,
+   "destination_sha256": "14db70900e7f130059e9c93da3c276d23b5da381207dfc7fd7b251da8c59524f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 8
+    },
+    {
+     "rule": "Windows user profile",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 14
+    },
+    {
+     "rule": "Claude Code project directory name (the workspace path with separators replaced by '-')",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/TENSORBOARD_VAL_HEADS.json",
+   "source_bytes": 10990,
+   "source_sha256": "269a28250a95286894f352e85ec7cbfcda5a417ed5bbbd437d6c8a242df48bb9",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/TENSORBOARD_VAL_HEADS.json",
+   "destination_bytes": 10920,
+   "destination_sha256": "60fd9e03a9de2490d9eae22bddaef45b09ec7588763d5c3943b0620906ba5685",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 14
+    },
+    {
+     "rule": "Windows host name",
+     "replacements": 14
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/TRANSCRIPT_TIMELINE_TRAINING_WINDOWS.txt",
+   "source_bytes": 14807,
+   "source_sha256": "513ae8097dce2c9d5f088b53078cc723a6603c28268d87010433fd15b4c9ac94",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/TRANSCRIPT_TIMELINE_TRAINING_WINDOWS.txt",
+   "destination_bytes": 14249,
+   "destination_sha256": "29621bb7911d47ed3b9450f7f29ecd3e64f0efb8f09d73e7b2160b1fbf93d9a6",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 9
+    },
+    {
+     "rule": "Windows user profile (WSL /mnt form, any separator)",
+     "replacements": 4
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 36
+    },
+    {
+     "rule": "WSL project home, cut off at a line end",
+     "replacements": 2
+    },
+    {
+     "rule": "Claude Code project directory name (the workspace path with separators replaced by '-')",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/WINDOWS_CHECKPOINT_SEARCH.json",
+   "source_bytes": 3479,
+   "source_sha256": "fc172a6cbdd440a555817b9647fd78001de48e5270147dbdf0d44803ffd03715",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/WINDOWS_CHECKPOINT_SEARCH.json",
+   "destination_bytes": 2302,
+   "destination_sha256": "4dfd424f01750a7acc0fad0b36f943f9892a1e2a3b2d8024550398b6e93ca9be",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "project workspace (Windows drive form, any separator)",
+     "replacements": 14
+    },
+    {
+     "rule": "Windows user profile",
+     "replacements": 8
+    },
+    {
+     "rule": "Claude Code project directory name (the workspace path with separators replaced by '-')",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/WSL_CHECKPOINT_SEARCH.json",
+   "source_bytes": 13714,
+   "source_sha256": "b72f9416cf38003a1f1cb60db08f49ebc77746de9b612fd759b6e3369082e406",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/WSL_CHECKPOINT_SEARCH.json",
+   "destination_bytes": 14164,
+   "destination_sha256": "7cc8f0ef4f310e75afce032731eaee1063173c1c70b8d5e4576ffac88f9102c3",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 49
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 42
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/baseline_v0_to_baseline_v2_flows.py.diff",
+   "source_bytes": 1123,
+   "source_sha256": "9ee5e7a0c44b3d70c44e1dde9835c7e4341623e8af91545d4caa3403a0c34d1c",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/baseline_v0_to_baseline_v2_flows.py.diff",
+   "destination_bytes": 1123,
+   "destination_sha256": "9ee5e7a0c44b3d70c44e1dde9835c7e4341623e8af91545d4caa3403a0c34d1c",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/baseline_v0_to_baseline_v2_synthesizer.py.diff",
+   "source_bytes": 1571,
+   "source_sha256": "226820dd5bb6066f4d1ffae9e9ed92f35c61d623480c3772004616aa91cab0b2",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/baseline_v0_to_baseline_v2_synthesizer.py.diff",
+   "destination_bytes": 1571,
+   "destination_sha256": "226820dd5bb6066f4d1ffae9e9ed92f35c61d623480c3772004616aa91cab0b2",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/baseline_v2_to_mrf_v0_training.py.diff",
+   "source_bytes": 3505,
+   "source_sha256": "05e21d2484595cd08b945c5656713dbc7cc50cf6b4db71d9b93965084900e9b0",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/baseline_v2_to_mrf_v0_training.py.diff",
+   "destination_bytes": 3505,
+   "destination_sha256": "05e21d2484595cd08b945c5656713dbc7cc50cf6b4db71d9b93965084900e9b0",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/mrf_v0_to_seq_v0_training.py.diff",
+   "source_bytes": 12477,
+   "source_sha256": "4fa58e1ed22406114650f4df7a681719b915c74db8cc314ccdb2dc59cee4bb7b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/mrf_v0_to_seq_v0_training.py.diff",
+   "destination_bytes": 12477,
+   "destination_sha256": "4fa58e1ed22406114650f4df7a681719b915c74db8cc314ccdb2dc59cee4bb7b",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/reconstruct_mrf_split.py",
+   "source_bytes": 3581,
+   "source_sha256": "f5f1fa2e62e8bfd6ea0467cf5b8bc68799de08e3ba9b51d6984debd8599fdb30",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/reconstruct_mrf_split.py",
+   "destination_bytes": 3597,
+   "destination_sha256": "06c82caf8d372e1639271582458e6fede0204e5ff7b05e34d314694e5d6a1952",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/scan_transcripts.py",
+   "source_bytes": 2912,
+   "source_sha256": "2cd65214a544f3c2471b9ebef10cd1c234a55b11010a7fcc2c38de13c846c398",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/scan_transcripts.py",
+   "destination_bytes": 2866,
+   "destination_sha256": "a803e1c954dacabb2d1cf3e6cae1c9f2f4da03e7132242b6ffbf1c4bf1a4b3a8",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "Claude Code project directory name (the workspace path with separators replaced by '-')",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/C_data_split/prior_round_q03/tb_audio_tags.py",
+   "source_bytes": 5087,
+   "source_sha256": "11d11cb0c56a9b04a6a69a69d7a4986f79a4e4aeafaf203ab15e3d339b19e91f",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/prior_round_q03/tb_audio_tags.py",
+   "destination_bytes": 5087,
+   "destination_sha256": "11d11cb0c56a9b04a6a69a69d7a4986f79a4e4aeafaf203ab15e3d339b19e91f",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/D_architecture/code_excerpts.md",
+   "source_bytes": 72989,
+   "source_sha256": "e9d3a7408284fa8f8d2ce794f6408e8b47c2959070ce06389e7e233f406afc24",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/D_architecture/code_excerpts.md",
+   "destination_bytes": 72989,
+   "destination_sha256": "e9d3a7408284fa8f8d2ce794f6408e8b47c2959070ce06389e7e233f406afc24",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/D_architecture/code_excerpts_index.json",
+   "source_bytes": 3544,
+   "source_sha256": "5d69914030509786b9dd2a02ecfe3885192fa3e199b80fd3871bfd6efa715efc",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/D_architecture/code_excerpts_index.json",
+   "destination_bytes": 3544,
+   "destination_sha256": "5d69914030509786b9dd2a02ecfe3885192fa3e199b80fd3871bfd6efa715efc",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/D_architecture/counts_banhmi_recomputed.json",
+   "source_bytes": 4056,
+   "source_sha256": "e65450ba49e1d65d64bdac8ddb462afa129fb28ae6fad2f427fd0409c8815b36",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/D_architecture/counts_banhmi_recomputed.json",
+   "destination_bytes": 4068,
+   "destination_sha256": "f971c1e80e41584880f74d11ebf421b7b8dbec3e2a4a230d74ff8786d9ee8e01",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/D_architecture/counts_piper_recomputed.json",
+   "source_bytes": 1949,
+   "source_sha256": "e7d1f94740a71827181536c390f36bbca2db0d16e2319b981f78e5c58d77eb91",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/D_architecture/counts_piper_recomputed.json",
+   "destination_bytes": 1953,
+   "destination_sha256": "05beaa33bf6d287bd4325d3ebd198645885fd5e2bec5b07755bb24b039f8bb46",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/copied_files.json",
+   "source_bytes": 11094,
+   "source_sha256": "e5197ef0b35600ac3da3e136d16b7a2ddd1292b3dd96ef067c35f7ff17f23b81",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/copied_files.json",
+   "destination_bytes": 11158,
+   "destination_sha256": "54d762fcf7b3ac039c07b1bb12fa1ba7dc62ea1de220b9435e55e1661562bc35",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 16
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_calibration60_recomputed.json",
+   "source_bytes": 14350,
+   "source_sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/historical_calibration60_recomputed.json",
+   "destination_sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json",
+   "source_bytes": 66069,
+   "source_sha256": "86ae3c7488b35784441390d0f7c5d3c4bbff86316c41a9ec4d60e117af20a455",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json",
+   "destination_bytes": 66221,
+   "destination_sha256": "937bd85e891c6b5ec54c733ff9be5cc75930169f0dccef6e40318a3cafb72878",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 38
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_baseline_fp32_onnx_500_results.json",
+   "source_bytes": 217967,
+   "source_sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_baseline_fp32_onnx_500_results.json",
+   "destination_sha256": "8e108d075145783dfe4e3bfe2a40d0612c3116124f1da456847b49c098817105",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_baseline_ptq_onnx_500_results.json",
+   "source_bytes": 217590,
+   "source_sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_baseline_ptq_onnx_500_results.json",
+   "destination_sha256": "f8344dd03215b1b5d90e5c7aa79cd358f2668e26b5602217599ee9f20505dc0f",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_mrf_fp32_onnx_500_results.json",
+   "source_bytes": 215295,
+   "source_sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_mrf_fp32_onnx_500_results.json",
+   "destination_sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_mrf_ptq_onnx_500_rerun_results.json",
+   "source_bytes": 215394,
+   "source_sha256": "5e3b8f0291598086b265d331f9daed228253f929324df4ee5a714b9e1f7c915f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_mrf_ptq_onnx_500_rerun_results.json",
+   "destination_sha256": "5e3b8f0291598086b265d331f9daed228253f929324df4ee5a714b9e1f7c915f",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_mrf_ptq_onnx_500_results.json",
+   "source_bytes": 215483,
+   "source_sha256": "eb871965d516c063d216f32c0c5f3019a0e068e3a88e4211cef6a214a2a24021",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_mrf_ptq_onnx_500_results.json",
+   "destination_sha256": "eb871965d516c063d216f32c0c5f3019a0e068e3a88e4211cef6a214a2a24021",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_seq_final_fp32_onnx_results.json",
+   "source_bytes": 217399,
+   "source_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_seq_final_fp32_onnx_results.json",
+   "destination_sha256": "17325035848f65c407bc4865a8f18d1ef71fe59796d0a52c0db1dbc3c7fe1860",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/eval_seq_final_int8_onnx_results.json",
+   "source_bytes": 217790,
+   "source_sha256": "e9324326aad741ac7f2b3269e0982ef6c000111604694ca896480aa59e0e29f5",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/eval_seq_final_int8_onnx_results.json",
+   "destination_sha256": "e9324326aad741ac7f2b3269e0982ef6c000111604694ca896480aa59e0e29f5",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/rtf_compare__baseline_fp32_results.json",
+   "source_bytes": 151599,
+   "source_sha256": "22995fc3660eb7035dee6851b8ee91c5c8d971429c769ffbf2af3713d96044f6",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/rtf_compare__baseline_fp32_results.json",
+   "destination_sha256": "22995fc3660eb7035dee6851b8ee91c5c8d971429c769ffbf2af3713d96044f6",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/rtf_compare__baseline_int8_results.json",
+   "source_bytes": 151669,
+   "source_sha256": "40d07696ff92ae2a16e7140292904198206320166a586d1e62983a4bdda3c644",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/rtf_compare__baseline_int8_results.json",
+   "destination_sha256": "40d07696ff92ae2a16e7140292904198206320166a586d1e62983a4bdda3c644",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/rtf_compare__seq_fp32_results.json",
+   "source_bytes": 151630,
+   "source_sha256": "61abe96360ebd61d7df97e04e4af85bad3a62b757bfc135c248f73475d4922a7",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/rtf_compare__seq_fp32_results.json",
+   "destination_sha256": "61abe96360ebd61d7df97e04e4af85bad3a62b757bfc135c248f73475d4922a7",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/historical_results/rtf_compare__seq_int8_results.json",
+   "source_bytes": 151665,
+   "source_sha256": "e0d951f9d8fed8c1f456b4f84cb5fed011640b5fd503c0077d6e6a41b4cacac8",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "results/historical/onnx_historical/rtf_compare__seq_int8_results.json",
+   "destination_sha256": "e0d951f9d8fed8c1f456b4f84cb5fed011640b5fd503c0077d6e6a41b4cacac8",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round5_calibration_overlap.md",
+   "source_bytes": 6323,
+   "source_sha256": "ef6ab48e875965ad0de41f59bbb5843d4fbb299aa70b8f4aa654a46f02c0a99a",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round5_calibration_overlap.md",
+   "destination_bytes": 6359,
+   "destination_sha256": "9383d065f155b5895c5a33f946ca8a07ea5e38aea5e92c9532a82da4fd71a4e9",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 7
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round6_mrf_export_code.md",
+   "source_bytes": 6547,
+   "source_sha256": "8f5f27a88e2567b3b130bc13006f2b2eba9f52c44da7b21ab8be89b15164e0fd",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round6_mrf_export_code.md",
+   "destination_bytes": 6563,
+   "destination_sha256": "c104cb4edd862d3dc243e8d22de77722fc34b29df7fdc0352e02ff07704110c6",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round7_calibration_code.json",
+   "source_bytes": 108823,
+   "source_sha256": "1032745d472b55bec16d95085d2cf19e88ffe08630574a7c80d925b0b00371ed",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round7_calibration_code.json",
+   "destination_bytes": 109648,
+   "destination_sha256": "992c5144e23efbbff272bfcfc4d2ae7479bf0e940656332956f7d2c3c1c69263",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 2
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 236
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round7_calibration_code.md",
+   "source_bytes": 7952,
+   "source_sha256": "6ba26c932255c6bff51236265c827b35d9844a44c429185b16f46cdf3b60e46e",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round7_calibration_code.md",
+   "destination_bytes": 7962,
+   "destination_sha256": "c97f7f1a1149692a1114f179f690be532db9734dd33ec680d8a88795171fd799",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round7_evaluation_code.json",
+   "source_bytes": 56127,
+   "source_sha256": "dcd56960ecab632f4debaa332c5b6d8b22f6ad3dea595650559111f13fbbd206",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round7_evaluation_code.json",
+   "destination_bytes": 56303,
+   "destination_sha256": "9ab076438a3d076f2645ce272b0602b49f17f7f075354d3e5ab72439c216bdae",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 47
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 8
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_audits/round7_evaluation_code.md",
+   "source_bytes": 9958,
+   "source_sha256": "8757d5e848b1729e8b9e171c483824a21b9583b96cc7fd645321bfff506fe49f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_audits/round7_evaluation_code.md",
+   "destination_bytes": 10000,
+   "destination_sha256": "f4eae2937d3d889a2daae992d5765c321809b885f3c228461af8a9c9df25cf9d",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 9
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/EXPORT_CHECK_INPUTS.json",
+   "source_bytes": 19236,
+   "source_sha256": "b5bd09687df72d4f4a97e8ef0f9e4317d4926f485bb673f98cad698a8f2f1b0c",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/EXPORT_CHECK_INPUTS.json",
+   "destination_bytes": 19236,
+   "destination_sha256": "b5bd09687df72d4f4a97e8ef0f9e4317d4926f485bb673f98cad698a8f2f1b0c",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/FINAL_VERIFICATION.json",
+   "source_bytes": 31162,
+   "source_sha256": "2c229fc9d249ccd949a1821efbc15fe3b0564ef860cce7970084ec2c00fbc42b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/FINAL_VERIFICATION.json",
+   "destination_bytes": 31162,
+   "destination_sha256": "2c229fc9d249ccd949a1821efbc15fe3b0564ef860cce7970084ec2c00fbc42b",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/FP32_HANDOFF.json",
+   "source_bytes": 39532,
+   "source_sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/FP32_HANDOFF.json",
+   "destination_bytes": 39624,
+   "destination_sha256": "982a90ee01cb0c722a78160bcb36f7ead67b223b61d369bd0e90f4ef5ee876ae",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 23
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/LIVE_EXPORTER_FIX.json",
+   "source_bytes": 467,
+   "source_sha256": "856b186932441ac92ab50b80ed911523d099ac1b8b95e6f347d84ac0901a12bd",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/LIVE_EXPORTER_FIX.json",
+   "destination_bytes": 475,
+   "destination_sha256": "ef0660d88dc9ec07b0ec763ad0cb2c266c8180738b9c155b6531e0fa7a71a821",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/REPORT.json",
+   "source_bytes": 13575,
+   "source_sha256": "473020432016726c4e90fc495a89a22cddcdbff2c71d8acc25e382a553fa373b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/REPORT.json",
+   "destination_bytes": 13643,
+   "destination_sha256": "893c3e1be1e9c8d75736d12bf7809d35ce92b9d4ceb34714a414988476553f81",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 17
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/RUN_CONFIG.json",
+   "source_bytes": 4006,
+   "source_sha256": "e1e27d787834c9d68d668f1d071d6b608f37848ae7361da2e24c4b973575879d",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/RUN_CONFIG.json",
+   "destination_bytes": 4098,
+   "destination_sha256": "01dbba9d7192fc19fede0a24ca3f993c63d982c379a1ca19d64347a346994cfd",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 23
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/SOURCE_MANIFEST.json",
+   "source_bytes": 35908,
+   "source_sha256": "5d3f3869dcfcb95673743a8c96c1ee4971ff59bdf2711660441eecd917503389",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/prior_round_q05/SOURCE_MANIFEST.json",
+   "destination_bytes": 34060,
+   "destination_sha256": "01b0d7121834928df0765d7a8fe3661a4040c619c6e5836fca13bb1bb4e680e4",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 42
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 168
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/prior_round_q05/run_q05_model.executed.py",
+   "source_bytes": 15203,
+   "source_sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/q05/run_q05_model.py",
+   "destination_sha256": "006bbbac16b8f3ca544e287a8f9f9d968cd679fbeba0c0b65ff2e32d58ff1745",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/bench_rtf_4way.py",
+   "source_bytes": 3459,
+   "source_sha256": "83617966192b8df32348edbc1ab5b8d40cb2dff7f359b7f323b44bbe04a3d5ed",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/bench_rtf_4way.py",
+   "destination_bytes": 3459,
+   "destination_sha256": "83617966192b8df32348edbc1ab5b8d40cb2dff7f359b7f323b44bbe04a3d5ed",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_baseline.py",
+   "source_bytes": 2863,
+   "source_sha256": "f3ba5a64c7e123576fc5feab10142cbe9c18bb4558a50354557514a904ddf683",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_baseline.py",
+   "destination_bytes": 2879,
+   "destination_sha256": "234feaa86f7fb57c9e1f3be5a3a63363e53b9b97ec36c8d56d474d0b98c6a978",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_baseline_rerun.log",
+   "source_bytes": 3895,
+   "source_sha256": "c40710ef453e0d96629459e1f97a1ca0d6ca676049caad3671bfbd14902fad43",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_baseline_rerun.log",
+   "destination_bytes": 3899,
+   "destination_sha256": "2f224ad72390a2a5e7dabaef855c1ed7cb5253204c7e8b86cf025275284e4cf9",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_mrf.log",
+   "source_bytes": 3019,
+   "source_sha256": "d031675f8dccff3fe91ded2ae3fde8891c56b97b2d399494a1138c60e033b1a3",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_mrf.log",
+   "destination_bytes": 3023,
+   "destination_sha256": "47564896f2ff44bd9726b5b3c616ff83a78a1292b9ddc367abe49e6809197957",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_mrf.py",
+   "source_bytes": 2739,
+   "source_sha256": "87048963a10227892b86e3cd577c99f6b06af026793990c3cb76c1e646b78f4b",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/bench_vnni_mrf.py",
+   "destination_bytes": 2751,
+   "destination_sha256": "5f4afba61e9231b8d2c07acdf56b27459c9c9dfb8e06ea3ce907b566e6f9f8e7",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_baseline_fp32_onnx_500.log",
+   "source_bytes": 500465,
+   "source_sha256": "c53ced3b6923fc852fbf8004bfc5d597e070bd1d76e3c6a9feb0a22b80b153c0",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_baseline_fp32_onnx_500.log",
+   "destination_bytes": 506479,
+   "destination_sha256": "80c27c7837cafbed9bb9fff46eb9de8575e59fe45f87eb48470e1523725a6612",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1502
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_baseline_ptq_onnx_500.log",
+   "source_bytes": 500504,
+   "source_sha256": "70447c44940259ad104f6be048c516379c1cf718ec3843ab952a452e2a417786",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_baseline_ptq_onnx_500.log",
+   "destination_bytes": 506518,
+   "destination_sha256": "7b8ea2bb55d1ff03277f75cab17666c6109533206d6cc6e2b1e1d3c51e5d6ffe",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1502
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_fp32_onnx_500.log",
+   "source_bytes": 500450,
+   "source_sha256": "fdc8c8a33ae1e9156f82eb936f7773a8e88656bba10943549c8f3902ce4bb979",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_fp32_onnx_500.log",
+   "destination_bytes": 506464,
+   "destination_sha256": "1096323b15211aa918e0ce6c7c85282d10c967d680154b8fb24035f461e357da",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1502
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_ptq_onnx_500.log",
+   "source_bytes": 500489,
+   "source_sha256": "7918cbdff42528f97a15ef0a557ded355fe65bcb766bcc1fedffcd5d93139b0e",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_ptq_onnx_500.log",
+   "destination_bytes": 506503,
+   "destination_sha256": "0ddebd11580821ae17e5804886ac15e5f44e658a606ce77a5584638b8efcaa2a",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1502
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_ptq_onnx_500_rerun.log",
+   "source_bytes": 500517,
+   "source_sha256": "ed86dec5dbf643bd3418a4d58281a1c500d8837eb0df22593f6b4b7bfabf8502",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_ptq_onnx_500_rerun.log",
+   "destination_bytes": 506531,
+   "destination_sha256": "13c6decf2a32deb88e310c3e4f62d7f71b562220dc937daa5a12b2ac636d6497",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1502
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_onnx_ptq_500.py",
+   "source_bytes": 3615,
+   "source_sha256": "0e19eaf3eda8446395c4cf774a1a8dd99b2cbb784f80361217715f93ab537941",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_onnx_ptq_500.py",
+   "destination_bytes": 3619,
+   "destination_sha256": "e7b31cd912b7fa1bbfa4914cfa4643e6a26d057c5b6c319cec6e442f9ee8d0b9",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_seq_final_fp32_onnx.log",
+   "source_bytes": 500424,
+   "source_sha256": "76769d2ccc50329b172bff325614873a2f989e509c2f12e3a374ebfb3b36e48f",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_seq_final_fp32_onnx.log",
+   "destination_bytes": 506434,
+   "destination_sha256": "498a10695c3b7f96536be6e5b8d2ce589e77b19326c8da47a3a59704920927c6",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1501
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_seq_final_int8_onnx.log",
+   "source_bytes": 500420,
+   "source_sha256": "761fb6f8b1fb946b158b22cc07465a1a56b12937510b7dcd245976e7193d9136",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_seq_final_int8_onnx.log",
+   "destination_bytes": 506430,
+   "destination_sha256": "0986b7777876af17d729e90b91ae19840fde5637c4d88826a2c2b22cbb4d6b8e",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1501
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/eval_wer_cheap.py",
+   "source_bytes": 2856,
+   "source_sha256": "29e88c096cfc567afe3acfe50ee4c43eb10741665b0ec855a592ced713b020d2",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/eval_wer_cheap.py",
+   "destination_bytes": 2856,
+   "destination_sha256": "29e88c096cfc567afe3acfe50ee4c43eb10741665b0ec855a592ced713b020d2",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/export_and_quantize_onnx.py",
+   "source_bytes": 4903,
+   "source_sha256": "187b18b004b448e1bd25ffba870db812855bf3da317aa67a12538f3b1469946a",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/export_and_quantize_onnx.py",
+   "destination_bytes": 4919,
+   "destination_sha256": "b2f8556d32ca674a305ef2ab07eb753f495e4d20fbae1b8896a7814e62aaf223",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/export_onnx_fixed.py",
+   "source_bytes": 2087,
+   "source_sha256": "29acff6f245ddc5bb52d9af68d4756fa9def619e84f5adc6b06cc1e1212c8591",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/export_onnx_fixed.py",
+   "destination_bytes": 2091,
+   "destination_sha256": "d85241fcc9f9066057da348cf5b0b8db120c86e1a0aee819765ab23525f49c1c",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/onnx_ptq_evals_chain.log",
+   "source_bytes": 19,
+   "source_sha256": "10bd6587376c295c1694d47a763ba4b5f58d7768efcd539b51023594a42f484b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/onnx_ptq_evals_chain.log",
+   "destination_bytes": 19,
+   "destination_sha256": "10bd6587376c295c1694d47a763ba4b5f58d7768efcd539b51023594a42f484b",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/ptq_quantize.py",
+   "source_bytes": 5442,
+   "source_sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/claim-evidence-2026-10-07/scripts/historical/ptq_quantize.py",
+   "destination_sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/ptq_sweep_diag.txt",
+   "source_bytes": 909,
+   "source_sha256": "176e174f893c3b246040971f0f7efa66b00567f67dd5ea1057cfd9740916d5ad",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/ptq_sweep_diag.txt",
+   "destination_bytes": 937,
+   "destination_sha256": "9ff9768bf18d671b32103076c251baefccc25c3252002b7d549f891f48b82ce3",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 7
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/ptq_sweep_mrf.log",
+   "source_bytes": 17644,
+   "source_sha256": "372cf05be81a4e1edf7692ab286750e756185503c780d483bba7e4a62f0be96b",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/ptq_sweep_mrf.log",
+   "destination_bytes": 18256,
+   "destination_sha256": "e8fcbc61d628350627c5c64f5a0ba5b8f37bb76f6860485fdaacc4813ba50d0f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 153
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/E_onnx_ptq/scripts_and_logs/seq_stats.py",
+   "source_bytes": 2385,
+   "source_sha256": "7c8b546f76045d223085940562304024f28475d3c9d33798e5ffd040b9bed162",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/scripts_and_logs/seq_stats.py",
+   "destination_bytes": 2385,
+   "destination_sha256": "7c8b546f76045d223085940562304024f28475d3c9d33798e5ffd040b9bed162",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/F_device_listening/exploratory_desktop_profiling/bench_dec_vary_T.py",
+   "source_bytes": 2432,
+   "source_sha256": "b94f3186e71fa754b74d3223d0f795d8e7eb58bbc50348e3180a8599c79b6e1d",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/F_device_listening/exploratory_desktop_profiling/bench_dec_vary_T.py",
+   "destination_bytes": 2436,
+   "destination_sha256": "2d49405263bb3a7558471ad88a9c26e69160300be7cb3ba50179dc789dc936c8",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/F_device_listening/exploratory_desktop_profiling/bench_sequential_vary_T.py",
+   "source_bytes": 3014,
+   "source_sha256": "65ef1247ab79f1852fabd534cc11aced5b4543d6338bab500a8cfa79d05c13b4",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/F_device_listening/exploratory_desktop_profiling/bench_sequential_vary_T.py",
+   "destination_bytes": 3018,
+   "destination_sha256": "bec24968bc00e0c071b687c800ef9ecf02ab0cfc5658509dcc138c3a19d2cb73",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/F_device_listening/exploratory_desktop_profiling/export_and_bench_dec_only.py",
+   "source_bytes": 3414,
+   "source_sha256": "59149acf774d887b9f1f7263d969c41964973d8a3faca814dee75756a3710795",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/F_device_listening/exploratory_desktop_profiling/export_and_bench_dec_only.py",
+   "destination_bytes": 3418,
+   "destination_sha256": "f06b4d58210e04018e8ed988eb9ab50107234847c9f1db99b53039fe41a394cd",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/F_device_listening/exploratory_desktop_profiling/onnxruntime_profile__2026-09-19_23-36-08.json",
+   "source_bytes": 6999769,
+   "source_sha256": "7bc218768280677fd6760c472399b53e83e29816b23084f7fb668c41e69c0458",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/F_device_listening/exploratory_desktop_profiling/onnxruntime_profile__2026-09-19_23-36-08.json",
+   "destination_bytes": 6999769,
+   "destination_sha256": "7bc218768280677fd6760c472399b53e83e29816b23084f7fb668c41e69c0458",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/evidence/F_device_listening/exploratory_desktop_profiling/onnxruntime_profile__2026-09-19_23-36-10.json",
+   "source_bytes": 7204048,
+   "source_sha256": "f6df5e6c1fa20745090ba56c75299d3b2bc17ac6797dbce2a824ab232e63bba6",
+   "evidence_type": "package_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/F_device_listening/exploratory_desktop_profiling/onnxruntime_profile__2026-09-19_23-36-10.json",
+   "destination_bytes": 7204048,
+   "destination_sha256": "f6df5e6c1fa20745090ba56c75299d3b2bc17ac6797dbce2a824ab232e63bba6",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/build_ledger_and_manifest.py",
+   "source_bytes": 20462,
+   "source_sha256": "4c93668e6f4bdc38b919b1eaf8e18b1e2f9614ac9264222bcb7495c90df59a5e",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/build_ledger_and_manifest.py",
+   "destination_bytes": 20462,
+   "destination_sha256": "4c93668e6f4bdc38b919b1eaf8e18b1e2f9614ac9264222bcb7495c90df59a5e",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/collect_A_inventory.py",
+   "source_bytes": 5298,
+   "source_sha256": "3f6e1f96cc3465edc44e1c5483c80ff05ab6ce6dbb0ebf34da67399bcbeb8b64",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/collect_A_inventory.py",
+   "destination_bytes": 5322,
+   "destination_sha256": "0688619f207bbbff8c0d7da19e137a0f49eab6a5c6918040aee9235fbea175ce",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 6
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/collect_B_harvard.py",
+   "source_bytes": 4982,
+   "source_sha256": "c0bc044a0628b985197a9ff61afbf586d4aab40f11c1294af660f5d663b3dc5a",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/collect_B_harvard.py",
+   "destination_bytes": 4994,
+   "destination_sha256": "ef090e751aab8303369c69ebf6169bc6d993a53c548b65af83e55a312d11ce4d",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/collect_C_data_split.py",
+   "source_bytes": 6971,
+   "source_sha256": "86ce750c7477d48ce1a3e50a8dfe35fe38666863cfadddfe2bb43f71aad3868b",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/collect_C_data_split.py",
+   "destination_bytes": 6928,
+   "destination_sha256": "1887a8d4ca8aacb9074aa2488f956ea619864d61ce3756fa1ca72f9ca5767295",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/collect_E_onnx_ptq.py",
+   "source_bytes": 7650,
+   "source_sha256": "7a91116d38b157d9e0922060eea5b6d78d08a37873e96f369de64fcd2df4b63b",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/collect_E_onnx_ptq.py",
+   "destination_bytes": 7662,
+   "destination_sha256": "76c778b9bd6480930d99ab86d0e84acef816dd109168231a9c06cff94c679308",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 18
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/collect_misc.py",
+   "source_bytes": 5328,
+   "source_sha256": "33302abb75b39696035382816acdcfa20a66ecd133c1032962c88352681669b9",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/collect_misc.py",
+   "destination_bytes": 5305,
+   "destination_sha256": "6316d04ffcb169772759f16fb194feac252059e4f682bca93f3a61d4d0e2bbd2",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 9
+    }
+   ]
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/extract_code_excerpts.py",
+   "source_bytes": 3575,
+   "source_sha256": "d28c65a0ed6d874088fb52a46438ad4868906e998eb65ddafd2f4cf1c0a5777f",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/extract_code_excerpts.py",
+   "destination_bytes": 3575,
+   "destination_sha256": "d28c65a0ed6d874088fb52a46438ad4868906e998eb65ddafd2f4cf1c0a5777f",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/recompute_B_stats.py",
+   "source_bytes": 7561,
+   "source_sha256": "187e3c2c68bc3944ca33314d91c3ad9af09a4d754317fb5776051e49799b74a4",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "scripts/evaluation/original/recompute_B_stats.py",
+   "destination_sha256": "187e3c2c68bc3944ca33314d91c3ad9af09a4d754317fb5776051e49799b74a4",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "journal_evidence_package",
+   "source": "<WORKSPACE>/BanhmiTTS/journal-evidence-package/scripts/recompute_D_counts.py",
+   "source_bytes": 4972,
+   "source_sha256": "0534908c98955d1b3daf271209d1dafce762854380f7364de91a5a3d7fdaf4db",
+   "evidence_type": "script_record",
+   "note": "",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/scripts/recompute_D_counts.py",
+   "destination_bytes": 4932,
+   "destination_sha256": "342f10e8b171b2ee0fa62c43c4e9eea21e996173d814b6c5d20f95935e8fbaca",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 1
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 5
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/README.txt",
+   "source_bytes": 1513,
+   "source_sha256": "af27d3136ae0c11a55b80f9d30df42cdb2781d933246a53b98e5a60b6f46114a",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/README.txt",
+   "destination_bytes": 1517,
+   "destination_sha256": "06742b5024ecb01de27970e397f775186e8bc67866b81051b6f42daf0d8683d3",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/ARCHIVE_SUMMARY.json",
+   "source_bytes": 675,
+   "source_sha256": "72dab3ac9905300eabb0daa74c1a77a9a661bfa4959129b8f6d96fafc71ca500",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/ARCHIVE_SUMMARY.json",
+   "destination_bytes": 679,
+   "destination_sha256": "050c916b65905f1b445622973f977b504308fbf3cdd7b1901d219abee6089b17",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/RESULT_CATALOG.json",
+   "source_bytes": 49428,
+   "source_sha256": "ea8855e202972ff3a84cd123f71aa4b226adbc5a2c5571a16907ad13f72c3529",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/RESULT_CATALOG.json",
+   "destination_bytes": 49852,
+   "destination_sha256": "44425bf6c7863f1df6e47cc7895a82eba75dfa7392d29c7fbe0e743b747ad488",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 106
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/RESULT_SUMMARY.csv",
+   "source_bytes": 7778,
+   "source_sha256": "775eb87314ec8b808470c0e8b6b4e3e1574478ea986d726e78107513f6de88c1",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/RESULT_SUMMARY.csv",
+   "destination_bytes": 7854,
+   "destination_sha256": "7bd4fdc1b629478ea7e9a0a9437542cb6f27af72b318c1674af2461cb60b4945",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 19
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/PROVENANCE_GAPS.json",
+   "source_bytes": 2035,
+   "source_sha256": "3aa659e2733f475a7d24e9964e00a8bb96e70ab343f29ab37dd1eff3a268db1a",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/PROVENANCE_GAPS.json",
+   "destination_bytes": 2035,
+   "destination_sha256": "3aa659e2733f475a7d24e9964e00a8bb96e70ab343f29ab37dd1eff3a268db1a",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/CHECKPOINT_METADATA.json",
+   "source_bytes": 17403,
+   "source_sha256": "5737ba224f63ffcc0bdf513d9c2f997c8207ce0000769924b646c42f6ef2c21f",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/CHECKPOINT_METADATA.json",
+   "destination_bytes": 17507,
+   "destination_sha256": "18eb8e7b3e6ed12730bbe5b7b72aa7c303b130b4552abdbdb2061f215343d179",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 26
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/ENVIRONMENT_AT_ARCHIVE.json",
+   "source_bytes": 31565,
+   "source_sha256": "089893c538a5564e7f3beaa92f780714c127fbd1db31d41fb03aae80078c737d",
+   "evidence_type": "archive_record",
+   "note": "",
+   "destination": "docs/evidence/q01-archive-2026-10-04/ENVIRONMENT_AT_ARCHIVE.json",
+   "destination_bytes": 30988,
+   "destination_sha256": "dac524ff3dcb36c218d326cb4573d133e62eb014356b80179e86afbba7f1c89f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "project workspace (WSL /mnt form, any separator)",
+     "replacements": 10
+    },
+    {
+     "rule": "WSL project account home",
+     "replacements": 8
+    },
+    {
+     "rule": "Windows host name",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/AUDIO_MANIFEST.json",
+   "source_bytes": 4456972,
+   "source_sha256": "7e98019a76cdb67edd7987ff8dbd75091fbb19d011c4967bcb499e4c8ea8d675",
+   "evidence_type": "archive_record",
+   "destination": null,
+   "transformation": "not copied: large path/hash list with host paths; referenced by hash only"
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/COPY_JOURNAL.jsonl",
+   "source_bytes": 4120723,
+   "source_sha256": "542bf600f7a38500988f532e83f32eae884394ec3ad335cf9ea8a3903d0ab381",
+   "evidence_type": "archive_record",
+   "destination": null,
+   "transformation": "not copied: large path/hash list with host paths; referenced by hash only"
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/FILE_MANIFEST.json",
+   "source_bytes": 4673132,
+   "source_sha256": "0ea382ea865ee491762a63873b414db6c91fd5056590a114bb8d76096bd17677",
+   "evidence_type": "archive_record",
+   "destination": null,
+   "transformation": "not copied: large path/hash list with host paths; referenced by hash only"
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/PLAN.json",
+   "source_bytes": 1519176,
+   "source_sha256": "6e63b1f0aa6ad3a7b0a1a3d755ced38c4df979353dfb8520fa4193ad47b8ab24",
+   "evidence_type": "archive_record",
+   "destination": null,
+   "transformation": "not copied: large path/hash list with host paths; referenced by hash only"
+  },
+  {
+   "group": "q01_archive_catalog",
+   "source": "<WSL_PROJECT_HOME>/paper_evidence/q01_2026-10-03T220747Z/SHA256SUMS",
+   "source_bytes": 1297749,
+   "source_sha256": "81eea429f09a980b7476d3169032b83de26892c4aaf528fa85221ffec0d4711a",
+   "evidence_type": "archive_record",
+   "destination": null,
+   "transformation": "not copied: large path/hash list with host paths; referenced by hash only"
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_baseline_500_results.json",
+   "source_bytes": 234563,
+   "source_sha256": "dd507a22da428590c9287b7f57a3dec49bdc0534b151306bbd06217840388fc3",
+   "evidence_type": "historical_result",
+   "note": "baseline-resblock2; baseline_v2_noclip epoch 493",
+   "destination": "results/historical/lj500_development/eval_baseline_500_results.json",
+   "destination_bytes": 234563,
+   "destination_sha256": "dd507a22da428590c9287b7f57a3dec49bdc0534b151306bbd06217840388fc3",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_500.py",
+   "source_bytes": 4367,
+   "source_sha256": "a326988f35ffea0f95cf4c4679a9171f910b6c6cb77795c3f8d19b68163c80b6",
+   "evidence_type": "script_record",
+   "note": "baseline-resblock2; baseline_v2_noclip epoch 493",
+   "destination": "results/historical/lj500_development/records/eval_baseline_500.py",
+   "destination_bytes": 4383,
+   "destination_sha256": "19c5ebb7e34d9fc1e8d6ad168522b89919e107a58ed7acac227d4355bf149a60",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_500.log",
+   "source_bytes": 501537,
+   "source_sha256": "a5176b5d6c67454a5eefe6a69b176ec3be9e5b20521702c05e97cb6e4da3b69f",
+   "evidence_type": "run_log",
+   "note": "baseline-resblock2; baseline_v2_noclip epoch 493",
+   "destination": "results/historical/lj500_development/records/eval_baseline_500.log",
+   "destination_bytes": 507561,
+   "destination_sha256": "5e0c18a9225f2a72589fa5cd28b3e94c10b61b0976048aebeb429fb2a552face",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_baseline_best_500_results.json",
+   "source_bytes": 234893,
+   "source_sha256": "833d9f8120fd7112c14d95ce4141807b6955d58726bc187fedaeefe63de26dc4",
+   "evidence_type": "historical_result",
+   "note": "baseline-resblock2; baseline_v2_noclip epoch 1489 (selected checkpoint), unseeded run",
+   "destination": "results/historical/lj500_development/eval_baseline_best_500_results.json",
+   "destination_bytes": 234893,
+   "destination_sha256": "833d9f8120fd7112c14d95ce4141807b6955d58726bc187fedaeefe63de26dc4",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_best_500.py",
+   "source_bytes": 4393,
+   "source_sha256": "77c2dfeadcd46cafda1a6577f60fbe0dd90dbab929f4fac5849e7dd9df3ec8a4",
+   "evidence_type": "script_record",
+   "note": "baseline-resblock2; baseline_v2_noclip epoch 1489 (selected checkpoint), unseeded run",
+   "destination": "results/historical/lj500_development/records/eval_baseline_best_500.py",
+   "destination_bytes": 4409,
+   "destination_sha256": "acb192d2f6535086a3f920a0849f51a54c5a2a0e122c4e63d50027aa2e023c6c",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_baseline_best_500_CLEAN_results.json",
+   "source_bytes": 234597,
+   "source_sha256": "e1cece38fb665dff5aad3c28c38eb42163544ad4040807dde8dc451c3c6b07b3",
+   "evidence_type": "historical_result",
+   "note": "baseline-resblock2; epoch 1489; no script or log found",
+   "destination": "results/historical/lj500_development/eval_baseline_best_500_CLEAN_results.json",
+   "destination_bytes": 234597,
+   "destination_sha256": "e1cece38fb665dff5aad3c28c38eb42163544ad4040807dde8dc451c3c6b07b3",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_500_results.json",
+   "source_bytes": 218556,
+   "source_sha256": "21d311b044b0d3638f654943629d0b5406dd859ccb70067eabe0fbab98823fc2",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); mrf_111_run_500ep epoch 74",
+   "destination": "results/historical/lj500_development/eval_mrf_111_500_results.json",
+   "destination_bytes": 218556,
+   "destination_sha256": "21d311b044b0d3638f654943629d0b5406dd859ccb70067eabe0fbab98823fc2",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_500.py",
+   "source_bytes": 3897,
+   "source_sha256": "9def918b6b7224a2ec954a32f33f444310d513015932e33205afa47d8cb4474f",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); mrf_111_run_500ep epoch 74",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_500.py",
+   "destination_bytes": 3913,
+   "destination_sha256": "36430767cae8785afc238641a41e340491e2867b381aff61a4e7f49fd0151ee1",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_500.log",
+   "source_bytes": 500711,
+   "source_sha256": "201bdf555c59d9afc55642637fd80df6b4ee564c518c291abd47b17d88199cf7",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); mrf_111_run_500ep epoch 74",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_500.log",
+   "destination_bytes": 506729,
+   "destination_sha256": "9dcbb97fee7d5493df07699ffe8228c6ccf47785ec772124ef22c695a65f2670",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_ep216_500_results.json",
+   "source_bytes": 218378,
+   "source_sha256": "c0598f6175504fc618429b4035380d7ae0a5b24e5f4993d7e71d81a6cf2ab058",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 216",
+   "destination": "results/historical/lj500_development/eval_mrf_111_ep216_500_results.json",
+   "destination_bytes": 218378,
+   "destination_sha256": "c0598f6175504fc618429b4035380d7ae0a5b24e5f4993d7e71d81a6cf2ab058",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep216_500.py",
+   "source_bytes": 3911,
+   "source_sha256": "4662a57ae73231fcf632be2bebc78a9e78e43f327a7a482ec558cc4f98d824e5",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 216",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep216_500.py",
+   "destination_bytes": 3927,
+   "destination_sha256": "8b5f929a5fae3218e2d30c68427d5e51aba00a93e8691fcbe934838301501e8e",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep216_500.log",
+   "source_bytes": 503714,
+   "source_sha256": "992eb7fc7ccd2551b7464899ad29d36464f02164c156a9360d3f82d436733975",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 216",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep216_500.log",
+   "destination_bytes": 509732,
+   "destination_sha256": "ced59576c88594da69c5132d38372477b95fc42ac7d1a3576da723b25e70f699",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_ep353_500_results.json",
+   "source_bytes": 217384,
+   "source_sha256": "af1230c637714ac13266de236d291793edfda23c8cc2cbb1c73731e91228efcf",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 353",
+   "destination": "results/historical/lj500_development/eval_mrf_111_ep353_500_results.json",
+   "destination_bytes": 217384,
+   "destination_sha256": "af1230c637714ac13266de236d291793edfda23c8cc2cbb1c73731e91228efcf",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep353_500.py",
+   "source_bytes": 3911,
+   "source_sha256": "a5a507e0b3651cc91da0d3dd4adcb23fb003e2ffabef4b662bf29a73d9c8cfa3",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 353",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep353_500.py",
+   "destination_bytes": 3927,
+   "destination_sha256": "fd6ed63778eaa69629d0ee9a3aa21b4fc7f2b58af287160e4d788f5643f12bb2",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep353_500.log",
+   "source_bytes": 503715,
+   "source_sha256": "f194f561924ac333f32cb7c1ff5d51e993a747c9105ad1c8493307e2c485b483",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 353",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep353_500.log",
+   "destination_bytes": 509733,
+   "destination_sha256": "d7d7675b2b997b57ad3d811bb672610f327838b6eb0a0e45ed76bbae407258d5",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_final_500_results.json",
+   "source_bytes": 217612,
+   "source_sha256": "3633744d41decce08d3076f0de2a4485d14a1cbe9041e8127a63ee83d1b7ee70",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 480 (end of the 500-epoch phase)",
+   "destination": "results/historical/lj500_development/eval_mrf_111_final_500_results.json",
+   "destination_bytes": 217612,
+   "destination_sha256": "3633744d41decce08d3076f0de2a4485d14a1cbe9041e8127a63ee83d1b7ee70",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_final_500.py",
+   "source_bytes": 4109,
+   "source_sha256": "6c891b9d65499ff7f97c195e739790b8ee2a8885b24c9ef7f109235c67b3be94",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 480 (end of the 500-epoch phase)",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_final_500.py",
+   "destination_bytes": 4125,
+   "destination_sha256": "030d0ec5dc2ec4416c7131dbdee929202c74adc5cf7affb7e4b5aac796470680",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_final_500.log",
+   "source_bytes": 503797,
+   "source_sha256": "2053d14cf7acb466f8bccbf080c4b98ac8dc697f53de25c4f258380c1c75aec4",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 480 (end of the 500-epoch phase)",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_final_500.log",
+   "destination_bytes": 509815,
+   "destination_sha256": "361c56f595fd5caba2100fbdf8e467d6ec366d59fdaf13f69d968891377baaf8",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_ep836_500_results.json",
+   "source_bytes": 217431,
+   "source_sha256": "ef12772ea6bfaf017bfe0ad1931a0aa72dabde547e7ff0d8b3d44749f2e2f889",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 836",
+   "destination": "results/historical/lj500_development/eval_mrf_111_ep836_500_results.json",
+   "destination_bytes": 217431,
+   "destination_sha256": "ef12772ea6bfaf017bfe0ad1931a0aa72dabde547e7ff0d8b3d44749f2e2f889",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep836_500.py",
+   "source_bytes": 3916,
+   "source_sha256": "aa0c0ff66a4d6f09eb6604359eeab5478091f4e0dc93b4b013fbd89927735fb4",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 836",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep836_500.py",
+   "destination_bytes": 3932,
+   "destination_sha256": "67e3c438dffd5d627b6ab884e5197090ee1a5ac11cfd08de8a173f1e525c34a1",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_ep836_500.log",
+   "source_bytes": 503725,
+   "source_sha256": "fea6daa34062fa3ccbf709e8c636707357318fe39a1f959efbe17767883d7b6e",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 836",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_ep836_500.log",
+   "destination_bytes": 509743,
+   "destination_sha256": "60e72a470e9ed021a9ce9351cc99b45fe14b5775c6a71d3f0c68d140e8a335aa",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_111_final1000_500_results.json",
+   "source_bytes": 217504,
+   "source_sha256": "c2da820e7bf6660b270e93b68791c7e8ad7e19853c34d85838fcb4a45ceaeddd",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 836 again (best of the 1000-epoch phase)",
+   "destination": "results/historical/lj500_development/eval_mrf_111_final1000_500_results.json",
+   "destination_bytes": 217504,
+   "destination_sha256": "c2da820e7bf6660b270e93b68791c7e8ad7e19853c34d85838fcb4a45ceaeddd",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_final1000_500.py",
+   "source_bytes": 3987,
+   "source_sha256": "351db667b3fe9589a99e76b1d284a48089414d3a7914c4d3c488669434624913",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 836 again (best of the 1000-epoch phase)",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_final1000_500.py",
+   "destination_bytes": 4003,
+   "destination_sha256": "6f3c67cfe7d5d244297282c6d0d2241b653d187abb93c3dd7f712395c1876a2f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_111_final1000_500.log",
+   "source_bytes": 505795,
+   "source_sha256": "d0bb6f672d0170f33afefcfb104f1e9e92829a6049ac8095cb938d3ec99fe569",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 836 again (best of the 1000-epoch phase)",
+   "destination": "results/historical/lj500_development/records/eval_mrf_111_final1000_500.log",
+   "destination_bytes": 511813,
+   "destination_sha256": "4d4f0ba0f9851200015a4e6dca20366ac64ed4f1cd8157b3101cae33d55772dc",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mrf_ep1170_seeded_500_results.json",
+   "source_bytes": 215012,
+   "source_sha256": "59c85f4aabb26ddc8fcb5a2319f2b9ff6b670e2b0c14ce2f5cbd586e0dbfd0f0",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR (MRF); epoch 1170, seeded, MRF test manifest",
+   "destination": "results/historical/lj500_development/eval_mrf_ep1170_seeded_500_results.json",
+   "destination_bytes": 215012,
+   "destination_sha256": "59c85f4aabb26ddc8fcb5a2319f2b9ff6b670e2b0c14ce2f5cbd586e0dbfd0f0",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_ep1170_seeded_500.py",
+   "source_bytes": 4070,
+   "source_sha256": "0d0e4fa4d8d622a1963a5d16ff3a527dee0bfe16a9292ed396005d91b2180dc6",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR (MRF); epoch 1170, seeded, MRF test manifest",
+   "destination": "results/historical/lj500_development/records/eval_mrf_ep1170_seeded_500.py",
+   "destination_bytes": 4086,
+   "destination_sha256": "33b3e6a472b6d0f2d737310e9702f7997d3ea5348ceac33de30980ec10c54cd9",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_ep1170_seeded_500.log",
+   "source_bytes": 505723,
+   "source_sha256": "26097a141b3d64b504c7917b26486dc42dc543cb4ed6a7595702ce102ec9ae5d",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR (MRF); epoch 1170, seeded, MRF test manifest",
+   "destination": "results/historical/lj500_development/records/eval_mrf_ep1170_seeded_500.log",
+   "destination_bytes": 511741,
+   "destination_sha256": "c817bf2bf51cfc9e3fc1185932bc919c471a256df0a5482f598cc22037128a73",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mbconv_441_500_results.json",
+   "source_bytes": 218502,
+   "source_sha256": "3257371cfd5f3fb50591134cd8436c6ff35137fa8be83de922bcd126c6077abf",
+   "evidence_type": "historical_result",
+   "note": "Sequential-IR precursor (mbconv); mbconv_441_run_100ep epoch 12; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/eval_mbconv_441_500_results.json",
+   "destination_bytes": 218502,
+   "destination_sha256": "3257371cfd5f3fb50591134cd8436c6ff35137fa8be83de922bcd126c6077abf",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mbconv_441_500.py",
+   "source_bytes": 3904,
+   "source_sha256": "40f3af0992a315646bcd68c1e101a04bd6068cf7afbd9499f778c258fb444845",
+   "evidence_type": "script_record",
+   "note": "Sequential-IR precursor (mbconv); mbconv_441_run_100ep epoch 12; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/records/eval_mbconv_441_500.py",
+   "destination_bytes": 3920,
+   "destination_sha256": "96efc9c72cb593420f42e97f45ba9944c5ca3fe307dcea6e880ae7eb1dcc67ff",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mbconv_441_500.log",
+   "source_bytes": 502362,
+   "source_sha256": "a94bbdd998f9c43abb0795832c1fff1387c56e8e30ac604bc7cc3f8ac7b0c9a9",
+   "evidence_type": "run_log",
+   "note": "Sequential-IR precursor (mbconv); mbconv_441_run_100ep epoch 12; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/records/eval_mbconv_441_500.log",
+   "destination_bytes": 508380,
+   "destination_sha256": "e141c2dfa0c88f9fb72cd1fe5ac610546d2f9354c00e1e692824add0c6d406d4",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_mbconv_mrd_500_results.json",
+   "source_bytes": 217393,
+   "source_sha256": "cc934b8b130c89a52b29f0e621cb527e33ea87af04cceadaa60305a59a64dea6",
+   "evidence_type": "historical_result",
+   "note": "Sequential-IR precursor (mbconv + MRD); mbconv_mrd_run_100ep epoch 74; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/eval_mbconv_mrd_500_results.json",
+   "destination_bytes": 217393,
+   "destination_sha256": "cc934b8b130c89a52b29f0e621cb527e33ea87af04cceadaa60305a59a64dea6",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mbconv_mrd_500.py",
+   "source_bytes": 3913,
+   "source_sha256": "43177f6f51e7ccaee69030c9fb8a288c43319b230b09e81b39bb1fda134591f0",
+   "evidence_type": "script_record",
+   "note": "Sequential-IR precursor (mbconv + MRD); mbconv_mrd_run_100ep epoch 74; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/records/eval_mbconv_mrd_500.py",
+   "destination_bytes": 3929,
+   "destination_sha256": "03fb6847d7ad2ce91a8abed981c35d2c0961ad4846a32d6c45e0d949b63b358f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mbconv_mrd_500.log",
+   "source_bytes": 502376,
+   "source_sha256": "79389d245517f20f4b335b404ae0e1809a6099a81e1ad4bb0dff126550f2d452",
+   "evidence_type": "run_log",
+   "note": "Sequential-IR precursor (mbconv + MRD); mbconv_mrd_run_100ep epoch 74; checkpoint no longer on disk",
+   "destination": "results/historical/lj500_development/records/eval_mbconv_mrd_500.log",
+   "destination_bytes": 508394,
+   "destination_sha256": "f38c3108470f3ab5a7ad6fddc4f22dd9d8e5460d65266a49acc857763635d678",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_overnight_500_results.json",
+   "source_bytes": 231387,
+   "source_sha256": "a51284c376de3a260fa682fb1cb0ace94f5af06e8a84e03aace995741b298e5c",
+   "evidence_type": "historical_result",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD + BigVGAN (development); overnight_run_full epoch 1992",
+   "destination": "results/historical/lj500_development/eval_overnight_500_results.json",
+   "destination_bytes": 231387,
+   "destination_sha256": "a51284c376de3a260fa682fb1cb0ace94f5af06e8a84e03aace995741b298e5c",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_overnight_500.py",
+   "source_bytes": 4386,
+   "source_sha256": "3ea0f734f6799e8c4d92e035f2396133697ea5d5420d4eebf191603452987bb3",
+   "evidence_type": "script_record",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD + BigVGAN (development); overnight_run_full epoch 1992",
+   "destination": "results/historical/lj500_development/records/eval_overnight_500.py",
+   "destination_bytes": 4402,
+   "destination_sha256": "885a1855cb77219eedcfb237c19b7d16d04c701634b6ffbd129f38cbaf2c06c2",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_overnight_500.log",
+   "source_bytes": 502053,
+   "source_sha256": "ff6fe10ee0f4066c2ae3c9c17fba8b49f19528e8d92aa1a77c30e9facac82b42",
+   "evidence_type": "run_log",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD + BigVGAN (development); overnight_run_full epoch 1992",
+   "destination": "results/historical/lj500_development/records/eval_overnight_500.log",
+   "destination_bytes": 508077,
+   "destination_sha256": "06078d24a6fca12246de90dc3b73efb8a6a46cdaa9d6ed1b5e939e68f9733cd5",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_gradclip_500_results.json",
+   "source_bytes": 231425,
+   "source_sha256": "a7b2bb95968e1bb269bb5c944592650d8a65403f1dcf697f3df1f83c0352c2da",
+   "evidence_type": "historical_result",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_gradclip_test last.ckpt",
+   "destination": "results/historical/lj500_development/eval_gradclip_500_results.json",
+   "destination_bytes": 231425,
+   "destination_sha256": "a7b2bb95968e1bb269bb5c944592650d8a65403f1dcf697f3df1f83c0352c2da",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_gradclip_500.py",
+   "source_bytes": 4332,
+   "source_sha256": "ce6a27aa464c4a4923d1c6ac3fab4daab35bb70325555b1690b04e5e55f03ce6",
+   "evidence_type": "script_record",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_gradclip_test last.ckpt",
+   "destination": "results/historical/lj500_development/records/eval_gradclip_500.py",
+   "destination_bytes": 4348,
+   "destination_sha256": "5f1481ca05acfb1575cc75607a571a9321cd84c0688f374816b86adcccd66c9b",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_gradclip_500.log",
+   "source_bytes": 501499,
+   "source_sha256": "468fa0dfbffcdf9138107c32ccab7664a2f2850b3adacbd32052224c00fa16c4",
+   "evidence_type": "run_log",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_gradclip_test last.ckpt",
+   "destination": "results/historical/lj500_development/records/eval_gradclip_500.log",
+   "destination_bytes": 507523,
+   "destination_sha256": "2546322be354c2b54b56528b9b7647cddbed48fc9e10c82b9e1d51bbcc20a16a",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_snakebeta_500_results.json",
+   "source_bytes": 231327,
+   "source_sha256": "8025090db6f80ff7cb9a6f10546eb3533dc51d40690c601164a83621a63b8ee8",
+   "evidence_type": "historical_result",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_snakebeta_test last.ckpt",
+   "destination": "results/historical/lj500_development/eval_snakebeta_500_results.json",
+   "destination_bytes": 231327,
+   "destination_sha256": "8025090db6f80ff7cb9a6f10546eb3533dc51d40690c601164a83621a63b8ee8",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_snakebeta_500.py",
+   "source_bytes": 4335,
+   "source_sha256": "fcadacc4cc76b2d927b9acdaa3808b8a79fe895c1469d59ba1c97f5c44b108db",
+   "evidence_type": "script_record",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_snakebeta_test last.ckpt",
+   "destination": "results/historical/lj500_development/records/eval_snakebeta_500.py",
+   "destination_bytes": 4351,
+   "destination_sha256": "b31e9f912f85880296087721b125f2d00da39244ae77c12bc0e8ca6fc40d337d",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_snakebeta_500.log",
+   "source_bytes": 502001,
+   "source_sha256": "d6f5085319accf3980d9d7d9e0a3ff8cbb77ba9647c928b0c6d667e8cbc8833a",
+   "evidence_type": "run_log",
+   "note": "BanhmiTTS ResBlock2 + Snake + MRD (development); overnight_snakebeta_test last.ckpt",
+   "destination": "results/historical/lj500_development/records/eval_snakebeta_500.log",
+   "destination_bytes": 508025,
+   "destination_sha256": "4e8c963b35ac4e63fb0e3b9880fa55252236bfdc75c27c518050f97a0e821ede",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1503
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_baseline_qat_final_500_results.json",
+   "source_bytes": 217051,
+   "source_sha256": "6b9204e7e17377d33ac00ce06b7a40659955fa68bbc79458fe7783ad85268ec5",
+   "evidence_type": "historical_result",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144",
+   "destination": "results/historical/qat/eval_baseline_qat_final_500_results.json",
+   "destination_bytes": 217051,
+   "destination_sha256": "6b9204e7e17377d33ac00ce06b7a40659955fa68bbc79458fe7783ad85268ec5",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_qat_final_500.py",
+   "source_bytes": 4731,
+   "source_sha256": "1da4a4b716214f6ce26068da5f0905d1a46c968734f0ab9567d6e537b7bc0397",
+   "evidence_type": "script_record",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144",
+   "destination": "results/historical/qat/records/eval_baseline_qat_final_500.py",
+   "destination_bytes": 4743,
+   "destination_sha256": "d62981f98d14390a6c93dc4e3448c2b848819719e342bcd8809504328f650cc5",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_qat_final_500.log",
+   "source_bytes": 713249,
+   "source_sha256": "3c47be8cd95dcaee79a71bcacbf2919a022f42ff9e0079e62c8cceae26835b0e",
+   "evidence_type": "run_log",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144",
+   "destination": "results/historical/qat/records/eval_baseline_qat_final_500.log",
+   "destination_bytes": 719275,
+   "destination_sha256": "3ddcfb8401200f7aa4d350267497a705ede9a4a308b7b8a5aa67548628532bfe",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_baseline_qat_seeded_500_results.json",
+   "source_bytes": 216871,
+   "source_sha256": "83bd08d4bbb72b8912f730c14ef7c6fbc922598bf35d7c5b03720bf65f93db76",
+   "evidence_type": "historical_result",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144, seeded",
+   "destination": "results/historical/qat/eval_baseline_qat_seeded_500_results.json",
+   "destination_bytes": 216871,
+   "destination_sha256": "83bd08d4bbb72b8912f730c14ef7c6fbc922598bf35d7c5b03720bf65f93db76",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_qat_seeded_500.py",
+   "source_bytes": 4682,
+   "source_sha256": "12a43f9998f176f26749aa24b51282c21a73c22f32e93334f9228b3a1adf3a25",
+   "evidence_type": "script_record",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144, seeded",
+   "destination": "results/historical/qat/records/eval_baseline_qat_seeded_500.py",
+   "destination_bytes": 4694,
+   "destination_sha256": "aaf68cbb0d44db1d2f5f0281f6b244b762af6a040c8c9da467c80456e7c9c06d",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_baseline_qat_seeded_500.log",
+   "source_bytes": 713646,
+   "source_sha256": "20a7b594e1fdfb2dd2e7192da4f7128d7d176ae6c27cad5d0f948e375058d969",
+   "evidence_type": "run_log",
+   "note": "baseline-resblock2, QAT; baseline_qat_flow_enc_p_dp epoch 144, seeded",
+   "destination": "results/historical/qat/records/eval_baseline_qat_seeded_500.log",
+   "destination_bytes": 719672,
+   "destination_sha256": "e23212a188897e82dba9bf64ce9ed058670b1e691b79eb2d5131656852f4217a",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_mrf_qat_ep97_500_results.json",
+   "source_bytes": 217509,
+   "source_sha256": "9539c8fecb3ccd15dd43f07172c381ae94d977a06adefd806a3a1eca3ef76d71",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/eval_mrf_qat_ep97_500_results.json",
+   "destination_bytes": 217509,
+   "destination_sha256": "9539c8fecb3ccd15dd43f07172c381ae94d977a06adefd806a3a1eca3ef76d71",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_ep97_500.py",
+   "source_bytes": 4547,
+   "source_sha256": "88a5f8f27563ecaa3360925111f14ac82febb6a459a0384ed3c5798ff2151f4e",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/records/eval_mrf_qat_ep97_500.py",
+   "destination_bytes": 4559,
+   "destination_sha256": "f5536f25272b9048656f5a9a67d125a393a1123c510ab42d671db642b3c631dc",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_ep97_500.log",
+   "source_bytes": 711300,
+   "source_sha256": "56a06faa852268c1c35f8c09d6fcdfd9ae0d08c8dafb4d896322a8be8700b0b5",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/records/eval_mrf_qat_ep97_500.log",
+   "destination_bytes": 717326,
+   "destination_sha256": "9859a811ebee4191656ce9c9f0b95a4bab553e0923045372b3244a14394d38ca",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_mrf_qat_final_500_results.json",
+   "source_bytes": 217113,
+   "source_sha256": "159da1f365e889544819c241c41a9b28e5fbc358871a0c417d8856752e6eeb08",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/eval_mrf_qat_final_500_results.json",
+   "destination_bytes": 217113,
+   "destination_sha256": "159da1f365e889544819c241c41a9b28e5fbc358871a0c417d8856752e6eeb08",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_final_500.py",
+   "source_bytes": 4743,
+   "source_sha256": "4b7ef65d17b728a01af29bb8649d623accb6812bb14a68c46e4ccf600ec3983b",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/records/eval_mrf_qat_final_500.py",
+   "destination_bytes": 4755,
+   "destination_sha256": "42dd0689bc49b514f73788ce72af9318e76f720e1f12c49972220bc93c19a666",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_final_500.log",
+   "source_bytes": 712174,
+   "source_sha256": "f7e0325e59040c528e158784b120d47a1f0c994dc16882b328858b1844097ac7",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97",
+   "destination": "results/historical/qat/records/eval_mrf_qat_final_500.log",
+   "destination_bytes": 718200,
+   "destination_sha256": "62f33503ca80b746d4bc80a027f5f16ff54fa46b70be043d1cb5b093bf88a4d9",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_mrf_qat_seeded_500_results.json",
+   "source_bytes": 215132,
+   "source_sha256": "5a1dbf8f99544e2a0a89c449652f4d7b21bbab31f8b06e3a367b2306a10037f9",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97, seeded, MRF manifest",
+   "destination": "results/historical/qat/eval_mrf_qat_seeded_500_results.json",
+   "destination_bytes": 215132,
+   "destination_sha256": "5a1dbf8f99544e2a0a89c449652f4d7b21bbab31f8b06e3a367b2306a10037f9",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_seeded_500.py",
+   "source_bytes": 4664,
+   "source_sha256": "86d085083c99de505944036c37a512b73e1f91bd92b6dc8b512f236f247244bd",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97, seeded, MRF manifest",
+   "destination": "results/historical/qat/records/eval_mrf_qat_seeded_500.py",
+   "destination_bytes": 4676,
+   "destination_sha256": "b9bec18a47b9264cf3e5a0948da1ba504f611b7fc0165b9597b63d11ff09ef3b",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat_seeded_500.log",
+   "source_bytes": 712522,
+   "source_sha256": "539928fd1ce3081c453aee3caf1d46c7fec8fbc763a3fed017d1ac07709e4617",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR, QAT; mrf_111_qat_flow_enc_p_dp epoch 97, seeded, MRF manifest",
+   "destination": "results/historical/qat/records/eval_mrf_qat_seeded_500.log",
+   "destination_bytes": 718548,
+   "destination_sha256": "17db2a19c5d29aec39ee031fc631151c540710df74e641eb5aef96875d56a5ef",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "wsl:/tmp/eval_mrf_qat1500_ep97_500_results.json",
+   "source_bytes": 215308,
+   "source_sha256": "4f04128ebce3976f8fa28a3d8663029bec56b7f5a780df23489abbe2da0315bf",
+   "evidence_type": "historical_result",
+   "note": "Parallel-IR, QAT on the 1500-epoch model; mrf_111_1500_qat_flow_enc_p_dp epoch 97, MRF manifest",
+   "destination": "results/historical/qat/eval_mrf_qat1500_ep97_500_results.json",
+   "destination_bytes": 215308,
+   "destination_sha256": "4f04128ebce3976f8fa28a3d8663029bec56b7f5a780df23489abbe2da0315bf",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat1500_ep97_500.py",
+   "source_bytes": 4749,
+   "source_sha256": "052168eacbe0bcf8da05f117058e8665e32330eae1eeb0e6d1f3e545725c3022",
+   "evidence_type": "script_record",
+   "note": "Parallel-IR, QAT on the 1500-epoch model; mrf_111_1500_qat_flow_enc_p_dp epoch 97, MRF manifest",
+   "destination": "results/historical/qat/records/eval_mrf_qat1500_ep97_500.py",
+   "destination_bytes": 4761,
+   "destination_sha256": "0fcf8876dadcaf5e402eee0ef87b877cc59c895b5044ae98fd60e5542f46bfd1",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 3
+    }
+   ]
+  },
+  {
+   "group": "qat",
+   "source": "<WSL_PROJECT_HOME>/scripts/eval_mrf_qat1500_ep97_500.log",
+   "source_bytes": 713679,
+   "source_sha256": "8ad83c9ef225b57bc2e13b7b2697711089f3be31cf6000e58309dc7f5c7ebe57",
+   "evidence_type": "run_log",
+   "note": "Parallel-IR, QAT on the 1500-epoch model; mrf_111_1500_qat_flow_enc_p_dp epoch 97, MRF manifest",
+   "destination": "results/historical/qat/records/eval_mrf_qat1500_ep97_500.log",
+   "destination_bytes": 719705,
+   "destination_sha256": "4bcb34da52ad8a361b71f531b2b087b5c0335ec1c26506c84ca0309826b3291c",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 1505
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 1
+    }
+   ]
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_true_testset_500_baseline.json",
+   "source_bytes": 1001906,
+   "source_sha256": "72916b93d84a9ea7acc020da5af966a1fb6233b2af3594a95e62feff8838756e",
+   "evidence_type": "test_manifest",
+   "note": "LJ-500 sentence manifest used by the tables above",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_baseline.json",
+   "destination_sha256": "72916b93d84a9ea7acc020da5af966a1fb6233b2af3594a95e62feff8838756e",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_true_testset_500_mrf.json",
+   "source_bytes": 1952075,
+   "source_sha256": "01986a8e8b85aa2bcb7ff89f9cc9db33f0cafc13a7496c568ccad1c9da20b3c3",
+   "evidence_type": "test_manifest",
+   "note": "LJ-500 sentence manifest used by the tables above",
+   "destination": "docs/evidence/journal-evidence-package-2026-10-04/evidence/C_data_split/lj500_results_historical/eval_true_testset_500_mrf.json",
+   "destination_sha256": "01986a8e8b85aa2bcb7ff89f9cc9db33f0cafc13a7496c568ccad1c9da20b3c3",
+   "transformation": "already tracked (identical bytes); not copied"
+  },
+  {
+   "group": "lj500_development",
+   "source": "wsl:/tmp/eval_true_testset_500_overnight.json",
+   "source_bytes": 977457,
+   "source_sha256": "3e8a0497acce13553262d01e3bcb0b9286befa4298d1bff138f1a043d617ddf8",
+   "evidence_type": "test_manifest",
+   "note": "LJ-500 sentence manifest used by the tables above",
+   "destination": "results/historical/lj500_development/manifests/eval_true_testset_500_overnight.json",
+   "destination_bytes": 977457,
+   "destination_sha256": "3e8a0497acce13553262d01e3bcb0b9286befa4298d1bff138f1a043d617ddf8",
+   "transformation": "byte copy",
+   "redactions": []
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm.log",
+   "source_bytes": 94856,
+   "source_sha256": "597b897fefbf49af0e0d26258ccdb17ced170600fe354feca86909c12cc49c72",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm_baseline_everything.log",
+   "source_bytes": 23684,
+   "source_sha256": "cb20c931b8610b593d596b28c83cd8f73155197c1f061f4a0905c8af8caad973",
+   "evidence_type": "run_log",
+   "note": "",
+   "destination": "results/historical/ptq_sweep/confirm_baseline_everything.log",
+   "destination_bytes": 23712,
+   "destination_sha256": "e378b5717640b475b0b3438c8895032ef49d690814f3900d56036828cf9ddd35",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm_baseline_qat93_real.log",
+   "source_bytes": 23695,
+   "source_sha256": "a2e943d1f0508b78798eb7e09ee18d1f9e226afc8b77ebbefcc9170a218f32c1",
+   "evidence_type": "run_log",
+   "note": "",
+   "destination": "results/historical/ptq_sweep/confirm_baseline_qat93_real.log",
+   "destination_bytes": 23723,
+   "destination_sha256": "ac62a26022c1847a06da4ea9976df5f900e22566969178facf463c38f9bf27f4",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm_baseline_qat_epoch93.log",
+   "source_bytes": 23677,
+   "source_sha256": "ad75f99e5c358c9e9a5b852e350c0369c4fd7de1d79cb9b593982ab07f2c6994",
+   "evidence_type": "run_log",
+   "note": "",
+   "destination": "results/historical/ptq_sweep/confirm_baseline_qat_epoch93.log",
+   "destination_bytes": 23705,
+   "destination_sha256": "4849e21a4ecfe138ec2256d7e694ad5869c6404d576df3759f4f66618d20e73f",
+   "transformation": "host-path redaction; original kept privately in WSL",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 4
+    },
+    {
+     "rule": "WSL personal account home",
+     "replacements": 2
+    }
+   ]
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm_results.json",
+   "source_bytes": 3093,
+   "source_sha256": "dfc6567a7c1722e051f1dc17eb6c353521056f312b93ac07e9a8d99100d18f21",
+   "evidence_type": "derived_result",
+   "note": "",
+   "derived": "entries whose key names Vocos removed; all other entries unchanged",
+   "destination": "results/historical/ptq_sweep/confirm_results.without_vocos.json",
+   "destination_bytes": 1633,
+   "destination_sha256": "49e07333b93c95fb017d808e9a4db986b30ef2adc7cb63f26c1034ebf78d29e1",
+   "transformation": "derived copy (entries whose key names Vocos removed; all other entries unchanged)",
+   "redactions": []
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/confirm_vocos_flowencpdp.log",
+   "source_bytes": 23697,
+   "source_sha256": "3d6c8c225af87b7406bd13ca7d999fbbf0638e9f45d8fcc3a5fa66e5c96370b4",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/final500_vocos98.log",
+   "source_bytes": 108274,
+   "source_sha256": "976e576cae565a75547915635681d3c9606efd3c9302907bb16de5850f9df136",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/final_all_shared500.log",
+   "source_bytes": 433057,
+   "source_sha256": "e8af855c39c57a6f3574e9cc08c5dacc060fd07a1966081c891538e4b3d2dc50",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/shared500_eval.log",
+   "source_bytes": 216557,
+   "source_sha256": "00d7b60daf87af0cb7c3fd8f95f26f0ca2c4b0833a0f1398214759e8128c1672",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/sweep.log",
+   "source_bytes": 22732,
+   "source_sha256": "54fbca6e6935fdbdb05ac898550d17cb98ace255f32e59bd60ddec50170c7703",
+   "evidence_type": "run_log",
+   "destination": null,
+   "transformation": "not copied: contains Vocos runs (out of scope); referenced by hash only"
+  },
+  {
+   "group": "ptq_sweep",
+   "source": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/sweep_results.json",
+   "source_bytes": 11765,
+   "source_sha256": "e06f60d0b381da0a3e1a9cd5f590dddc4235421cb5a7388a2b3383a12d33205a",
+   "evidence_type": "derived_result",
+   "note": "",
+   "derived": "entries whose key names Vocos removed; all other entries unchanged",
+   "destination": "results/historical/ptq_sweep/sweep_results.without_vocos.json",
+   "destination_bytes": 9078,
+   "destination_sha256": "c6cdd09378a3947403fe3f16b163713d45fdc6cfca2bd4ae04033b59978be5f5",
+   "transformation": "derived copy (entries whose key names Vocos removed; all other entries unchanged); host-path redaction",
+   "redactions": [
+    {
+     "rule": "WSL project account home",
+     "replacements": 16
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+--- baseline_v0/banhmi_train/vits/modules/synthesizer.py
++++ baseline_v2/banhmi_train/vits/modules/synthesizer.py
+@@ -207,7 +207,19 @@
+         g = self._speaker_embedding(sid)
+ 
+         logw = self.dp(x, x_mask, g=g, reverse=True, noise_scale=noise_scale_w)
+-        w_ceil = torch.ceil(torch.exp(logw) * x_mask * length_scale)
++        # Same guard/bound as flows.py's Log._EXP_CLAMP_MAX: clamp before
++        # exp() rather than only handling the fallout after. This exp() was
++        # previously unguarded -- observed root-causing a full model_g/
++        # model_d NaN collapse (StochasticDurationPredictor's reverse-mode
++        # sampling, called every validation epoch via _log_audio_samples):
++        # an unclamped logw let exp(logw) reach a very large but still-finite
++        # value that survived this line, then blew up further downstream
++        # (mask multiply, w_ceil sum, sequence_mask) into inf/NaN. Clamping
++        # logw itself keeps w_ceil bounded to a generous-but-sane frame
++        # count (exp(10) ~= 22000 frames) instead of merely reacting to
++        # non-finite values after the fact (see the nan_to_num/degenerate
++        # handling below, which stays as a second line of defense).
++        w_ceil = torch.ceil(torch.exp(logw.clamp(max=10.0)) * x_mask * length_scale)
+         # An undertrained/unstable duration predictor can occasionally emit a
+         # non-finite logw (exp() overflow -> inf, or NaN) -> casting inf/NaN
+         # to long is undefined (observed: wraps to a large negative number),

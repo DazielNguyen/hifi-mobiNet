@@ -1,0 +1,657 @@
+{
+ "dataset_jsonl": "<WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl",
+ "dataset_jsonl_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+ "n_ljspeech_utterances_checked": 13100,
+ "n_harvard": 720,
+ "exact_sentence_overlap_alnum_lower": 0,
+ "harvard_internal_duplicates_alnum_lower": 0,
+ "exact_sentence_overlap_wer_normalization": 0,
+ "harvard_internal_duplicates_wer_normalization": 0,
+ "harvard_sentences_sharing_any_4gram": 37,
+ "examples_4gram": [
+  "It's easy to tell the depth of a well.",
+  "The source of the huge river is the clear spring.",
+  "The small pup gnawed a hole in the sock.",
+  "The beauty of the view stunned the young boy.",
+  "The dune rose from the edge of the water.",
+  "The glow deepened in the eyes of the sweet girl.",
+  "Mud was spattered on the front of his white shirt.",
+  "The cigar burned a hole in the desk top.",
+  "The pirates seized the crew of the lost ship.",
+  "The jacket hung on the back of the wide chair."
+ ],
+ "harvard_sentences_sharing_any_5gram": 7,
+ "examples_5gram": [
+  "The glow deepened in the eyes of the sweet girl.",
+  "The jacket hung on the back of the wide chair.",
+  "The houses are built of red clay bricks.",
+  "He offered proof in the form of a large chart.",
+  "In the rear of the ground floor was a large passage.",
+  "He wrote his name boldly at the top of the sheet.",
+  "It was a bad error on the part of the new judge."
+ ],
+ "harvard_sentences_sharing_any_6gram": 0,
+ "exact_phoneme_id_sequence_overlap": 0,
+ "scope_note": "Checked only against the 13,100 LJSpeech transcripts in BanhmiTTS dataset.jsonl. Not checked: Piper's own training transcripts, audio-level similarity, the scorers' (Whisper/UTMOSv2) training data, or any other corpus. Exact/n-gram non-overlap is not proof that no model saw related data.",
+ "split_overlap": {
+  "train_canonical_intersect_train_mrf": 11930,
+  "denominator_train_size": 12500,
+  "fraction": 0.9544,
+  "formula": "|train_canonical ∩ train_MRF_reconstructed| / 12,500",
+  "canonical_test_in_mrf": {
+   "train": 473,
+   "val": 6,
+   "test": 21
+  },
+  "mrf_test_in_canonical": {
+   "train": 478,
+   "val": 1,
+   "test": 21
+  },
+  "canonical_val_in_mrf": {
+   "train": 97,
+   "val": 2,
+   "test": 1
+  },
+  "sources": {
+   "canonical": "canonical_split.json (current file; birth=ctime=mtime 2026-09-19T21:55Z)",
+   "mrf": "reconstructed split, corroborated by TensorBoard val heads and the 2026-09-15 test manifest"
+  }
+ },
+ "piper_checkpoint_hash": {
+  "wsl_copy": "<WSL_PROJECT_HOME>/piper_original/lj-med_1000.ckpt",
+  "wsl_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+  "windows_download": "<WORKSPACE>/piper/download/checkpoints/en_US-ljspeech-medium/lj-med_1000.ckpt",
+  "windows_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+  "identical": true
+ },
+ "copies": [
+  {
+   "source": "<WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/canonical_split.json",
+   "copy": "evidence/C_data_split/canonical_split.json",
+   "sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d"
+  },
+  {
+   "source": "<WORKSPACE>/BanhmiTTS/docs/evidence/q03_bosung_2026-10-04/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "copy": "evidence/C_data_split/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+   "sha256": "aea18304bb060613dadfaf7154ec4ecc57037fda148798ea07f3290757c8d277"
+  },
+  {
+   "source": "<WORKSPACE>/piper/download/checkpoints/en_US-ljspeech-medium/MODEL_CARD",
+   "copy": "evidence/C_data_split/piper_MODEL_CARD",
+   "sha256": "fbee1529c89d36b3fe76d7e9f3f832dce17f44900a52d76a9bda735654766b4d"
+  },
+  {
+   "source": "<WORKSPACE>/piper/download/checkpoints/en_US-ljspeech-medium/config.json",
+   "copy": "evidence/C_data_split/piper_config.json",
+   "sha256": "854155811f0334519486568b09d9d2d53f15b328eb22607aec35b25a8f37942f"
+  },
+  {
+   "source": "<WORKSPACE>/piper/download/checkpoints/en_US-ljspeech-medium/download_manifest.json",
+   "copy": "evidence/C_data_split/piper_download_manifest.json",
+   "sha256": "20b036543f9fec41ceb60c53e6176936d4fa4699861b91d80c11683cd16d62e9"
+  }
+ ],
+ "hparams_from_checkpoints": {
+  "baseline (HiFi-GAN ResBlock2)": {
+   "resblock": "2",
+   "resblock_kernel_sizes": [
+    3,
+    5,
+    7
+   ],
+   "resblock_dilation_sizes": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     12
+    ]
+   ],
+   "mb_expansion": "<absent>",
+   "upsample_rates": [
+    8,
+    8,
+    4
+   ],
+   "upsample_kernel_sizes": [
+    16,
+    16,
+    8
+   ],
+   "upsample_initial_channel": 256,
+   "hidden_channels": 192,
+   "inter_channels": 192,
+   "filter_channels": 768,
+   "n_layers": 6,
+   "n_heads": 2,
+   "kernel_size": 3,
+   "p_dropout": 0.1,
+   "flow_n_flows": 4,
+   "flow_kernel_size": 5,
+   "flow_dilation_rate": 1,
+   "posterior_encoder_layers": 16,
+   "mas_noise_scale_initial": 0.01,
+   "mas_noise_scale_decay": 2e-06,
+   "c_mel": 45,
+   "c_kl": 1.0,
+   "learning_rate": 0.0002,
+   "betas": [
+    0.8,
+    0.99
+   ],
+   "eps": 1e-09,
+   "weight_decay": "<absent>",
+   "lr_decay": 0.999875,
+   "precision": "bf16",
+   "batch_size": 16,
+   "devices": "2",
+   "strategy": "ddp",
+   "seed": 1234,
+   "gradient_clip_val": 1.0,
+   "max_epochs": 1500,
+   "num_val_examples": 100,
+   "num_test_examples": 500,
+   "validation_split": "<absent>",
+   "max_phoneme_ids": null,
+   "segment_size": 8192,
+   "sample_rate": 22050,
+   "use_snake": false,
+   "use_mrd": false,
+   "use_vocos": false,
+   "use_f0": "<absent>",
+   "num_workers": 8,
+   "dataset": [
+    "training_output/ljspeech/medium/dataset.jsonl"
+   ],
+   "_epoch": 1489,
+   "_global_step": 1168160,
+   "_pl_version": "1.7.7",
+   "_optimizer_param_groups": [
+    {
+     "lr": 0.00016601127785806932,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.00016601127785806932,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "_lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1490,
+     "_last_lr": [
+      0.00016601127785806932
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1490,
+     "_last_lr": [
+      0.00016601127785806932
+     ]
+    }
+   ],
+   "_callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(19.7882)",
+     "best_model_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+     "current_score": "tensor(19.7882)",
+     "dirpath": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/last.ckpt"
+    }
+   },
+   "_sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2"
+  },
+  "MRF (Parallel-IR)": {
+   "resblock": "mrf",
+   "resblock_kernel_sizes": [
+    3,
+    5,
+    7
+   ],
+   "resblock_dilation_sizes": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     12
+    ]
+   ],
+   "mb_expansion": [
+    1,
+    1,
+    1
+   ],
+   "upsample_rates": [
+    8,
+    8,
+    4
+   ],
+   "upsample_kernel_sizes": [
+    16,
+    16,
+    8
+   ],
+   "upsample_initial_channel": 256,
+   "hidden_channels": 192,
+   "inter_channels": 192,
+   "filter_channels": 768,
+   "n_layers": 6,
+   "n_heads": 2,
+   "kernel_size": 3,
+   "p_dropout": 0.1,
+   "flow_n_flows": 4,
+   "flow_kernel_size": 5,
+   "flow_dilation_rate": 1,
+   "posterior_encoder_layers": 16,
+   "mas_noise_scale_initial": 0.01,
+   "mas_noise_scale_decay": 2e-06,
+   "c_mel": 45,
+   "c_kl": 1.0,
+   "learning_rate": 0.0002,
+   "betas": [
+    0.8,
+    0.99
+   ],
+   "eps": 1e-09,
+   "weight_decay": "<absent>",
+   "lr_decay": 0.999875,
+   "precision": "bf16",
+   "batch_size": 16,
+   "devices": "2",
+   "strategy": "ddp",
+   "seed": 1234,
+   "gradient_clip_val": null,
+   "max_epochs": 1500,
+   "num_val_examples": 100,
+   "num_test_examples": 500,
+   "validation_split": "<absent>",
+   "max_phoneme_ids": null,
+   "segment_size": 8192,
+   "sample_rate": 22050,
+   "use_snake": true,
+   "use_mrd": true,
+   "use_vocos": false,
+   "use_f0": false,
+   "num_workers": 1,
+   "dataset": [
+    "training_output/ljspeech/medium/dataset.jsonl"
+   ],
+   "_epoch": 1386,
+   "_global_step": 1087408,
+   "_pl_version": "1.7.7",
+   "_optimizer_param_groups": [
+    {
+     "lr": 0.0001681626271133652,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.0001681626271133652,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "_lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1387,
+     "_last_lr": [
+      0.0001681626271133652
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1387,
+     "_last_lr": [
+      0.0001681626271133652
+     ]
+    }
+   ],
+   "_callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(18.7681)",
+     "best_model_path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt",
+     "current_score": "tensor(18.7681)",
+     "dirpath": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/last.ckpt"
+    }
+   },
+   "_sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466"
+  },
+  "SEQ (Sequential-IR)": {
+   "resblock": "mb",
+   "resblock_kernel_sizes": [
+    3,
+    5,
+    7
+   ],
+   "resblock_dilation_sizes": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     12
+    ]
+   ],
+   "mb_expansion": [
+    1,
+    1,
+    1
+   ],
+   "upsample_rates": [
+    8,
+    8,
+    4
+   ],
+   "upsample_kernel_sizes": [
+    16,
+    16,
+    8
+   ],
+   "upsample_initial_channel": 256,
+   "hidden_channels": 192,
+   "inter_channels": 192,
+   "filter_channels": 768,
+   "n_layers": 6,
+   "n_heads": 2,
+   "kernel_size": 3,
+   "p_dropout": 0.1,
+   "flow_n_flows": 4,
+   "flow_kernel_size": 5,
+   "flow_dilation_rate": 1,
+   "posterior_encoder_layers": 16,
+   "mas_noise_scale_initial": 0.01,
+   "mas_noise_scale_decay": 2e-06,
+   "c_mel": 45,
+   "c_kl": 1.0,
+   "learning_rate": 0.0002,
+   "betas": [
+    0.8,
+    0.99
+   ],
+   "eps": 1e-09,
+   "weight_decay": "<absent>",
+   "lr_decay": 0.999875,
+   "precision": "bf16",
+   "batch_size": 16,
+   "devices": "2",
+   "strategy": "ddp",
+   "seed": 1234,
+   "gradient_clip_val": null,
+   "max_epochs": 1500,
+   "num_val_examples": 100,
+   "num_test_examples": 500,
+   "validation_split": "<absent>",
+   "max_phoneme_ids": null,
+   "segment_size": 8192,
+   "sample_rate": 22050,
+   "use_snake": true,
+   "use_mrd": true,
+   "use_vocos": false,
+   "use_f0": false,
+   "num_workers": 1,
+   "dataset": [
+    "training_output/ljspeech/medium/dataset.jsonl"
+   ],
+   "_epoch": 1442,
+   "_global_step": 1131312,
+   "_pl_version": "1.7.7",
+   "_optimizer_param_groups": [
+    {
+     "lr": 0.00016698952604741614,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.00016698952604741614,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "_lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1443,
+     "_last_lr": [
+      0.00016698952604741614
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1443,
+     "_last_lr": [
+      0.00016698952604741614
+     ]
+    }
+   ],
+   "_callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(19.0136)",
+     "best_model_path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/best-epoch=1442-val_loss_mel=19.0136.ckpt",
+     "current_score": "tensor(19.0136)",
+     "dirpath": "<WSL_PROJECT_HOME>/seq111_final/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/last.ckpt"
+    }
+   },
+   "_sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385"
+  },
+  "Piper (external published checkpoint)": {
+   "resblock": "2",
+   "resblock_kernel_sizes": [
+    3,
+    5,
+    7
+   ],
+   "resblock_dilation_sizes": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     12
+    ]
+   ],
+   "mb_expansion": "<absent>",
+   "upsample_rates": [
+    8,
+    8,
+    4
+   ],
+   "upsample_kernel_sizes": [
+    16,
+    16,
+    8
+   ],
+   "upsample_initial_channel": 256,
+   "hidden_channels": 192,
+   "inter_channels": 192,
+   "filter_channels": 768,
+   "n_layers": 6,
+   "n_heads": 2,
+   "kernel_size": 3,
+   "p_dropout": 0.1,
+   "flow_n_flows": "<absent>",
+   "flow_kernel_size": "<absent>",
+   "flow_dilation_rate": "<absent>",
+   "posterior_encoder_layers": "<absent>",
+   "mas_noise_scale_initial": "<absent>",
+   "mas_noise_scale_decay": "<absent>",
+   "c_mel": 45,
+   "c_kl": 1.0,
+   "learning_rate": 0.0002,
+   "betas": [
+    0.8,
+    0.99
+   ],
+   "eps": 1e-09,
+   "weight_decay": "<absent>",
+   "lr_decay": 0.999875,
+   "precision": 32,
+   "batch_size": 22,
+   "devices": "1",
+   "strategy": null,
+   "seed": 1234,
+   "gradient_clip_val": null,
+   "max_epochs": 1000,
+   "num_val_examples": "<absent>",
+   "num_test_examples": 0,
+   "validation_split": 0.05,
+   "max_phoneme_ids": 400,
+   "segment_size": 8192,
+   "sample_rate": 22050,
+   "use_snake": "<absent>",
+   "use_mrd": "<absent>",
+   "use_vocos": "<absent>",
+   "use_f0": "<absent>",
+   "num_workers": 1,
+   "dataset": [
+    "training/lj-med/dataset.jsonl"
+   ],
+   "_epoch": 999,
+   "_global_step": 1114000,
+   "_pl_version": "1.9.5",
+   "_optimizer_param_groups": [
+    {
+     "lr": 0.0001764980015059695,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": null
+    },
+    {
+     "lr": 0.0001764980015059695,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": null
+    }
+   ],
+   "_lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1000,
+     "_last_lr": [
+      0.0001764980015059695
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1000,
+     "_last_lr": [
+      0.0001764980015059695
+     ]
+    }
+   ],
+   "_callbacks": {
+    "ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}": {
+     "monitor": null,
+     "best_model_score": null,
+     "best_model_path": "training/lj-med/lightning_logs/version_1/checkpoints/epoch=999-step=1114000.ckpt",
+     "current_score": null,
+     "dirpath": "training/lj-med/lightning_logs/version_1/checkpoints",
+     "last_model_path": ""
+    }
+   },
+   "_sha256": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c"
+  }
+ }
+}

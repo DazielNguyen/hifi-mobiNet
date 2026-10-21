@@ -1,0 +1,817 @@
+{
+ "schema_version": 1,
+ "project_id": "hifi-mobinet-journal-evidence-2026-10-04",
+ "claims": [
+  {
+   "id": "J-E001",
+   "statement": "Harvard-720: the four per-sentence result files (baseline, MRF, SEQ, Piper) contain 720 rows each with identical idx 0..719, text and order as harvard_testset_720.json; 0 non-finite UTMOSv2/WER/RTF, 0 audio <0.2 s, 0 empty ASR text; WAV durations match JSON.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/harvard_integrity_checks.json",
+     "sha256": "d2657c4c4c1da7fa6638908a2d2e40fdc0f4a1fbaf5166721c44f3078f2fd9fd",
+     "locator": "checks.*",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/B_harvard/raw/harvard_testset_720.json",
+     "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272",
+     "locator": "whole file",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Checked: IDs/text/order, finiteness, WAV headers vs JSON durations, log has no Traceback. Not checked: audio content quality beyond scores."
+   },
+   "limitations": "PyTorch CPU synthesis, Harvard-720, single draw per sentence."
+  },
+  {
+   "id": "J-E002",
+   "statement": "Harvard-720 mean per-sentence RTF (PyTorch CPU): HiFi-GAN ResBlock2 0.04177, Parallel-IR 0.03388, Sequential-IR 0.03081, Piper 0.03916.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "per_model.*.mean_rtf_per_sentence",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/B_harvard/raw/scripts_original/synth_banhmi.py",
+     "sha256": "23b2548d22689e180b4376708c87a804d136d45d4d62e2736ab483ee6de5d903",
+     "locator": "timer around model_g.infer only",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/B_harvard/raw/scripts_original/synth_piper.py",
+     "sha256": "4f40fe06e3d68a75c39bd181871080bd8eac736e454dd36bb152f8d5be77897e",
+     "locator": "timer around model(...) only",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Recomputed from per-sentence JSON. Timer = infer call only (excludes model load, phonemization, WAV write); RTF = time/duration per sentence then mean. Not controlled: no warm-up, one timing pass, torch threads not recorded at run time (default 12 observed now), Piper ran under torch 2.14.1 vs 2.13.0, an idle TensorBoard server was running."
+   },
+   "limitations": "i7-14700, WSL Ubuntu 24.04, PyTorch CPU FP32; single run."
+  },
+  {
+   "id": "J-E003",
+   "statement": "Sequential-IR is 9% faster than Parallel-IR on Harvard-720 (p=7e-37).",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "paired_tests.seq_vs_mrf_rtf",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "9.08% = RTF reduction 1-mean(SEQ)/mean(MRF); throughput gain 9.98%; ratio-of-sums reduction 9.34%. Wilcoxon (scipy default, two-sided, zero_method=wilcox) p=7.0e-37 replicates. Variation measured is between sentences only; benchmark repetition and training-run variance unmeasured; no warm-up."
+   },
+   "limitations": "PyTorch CPU only; not ONNX/edge."
+  },
+  {
+   "id": "J-E004",
+   "statement": "On Harvard-720, Sequential-IR UTMOSv2 is lower than Parallel-IR by about 0.02 (p about 0.05).",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "paired_tests.seq_vs_mrf_utmosv2",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Mean diff -0.0237; Wilcoxon p=0.0471; MWU p=0.039; Holm over 15 tests p=0.094 (exploratory); paired bootstrap 95% [-0.0458, -0.0010] (exploratory). UTMOSv2 is a predicted score with unseeded random crops, one pass."
+   },
+   "limitations": "UTMOSv2 predicted quality, not human MOS."
+  },
+  {
+   "id": "J-E005",
+   "statement": "On Harvard-720, the WER difference between Sequential-IR and Parallel-IR is not statistically significant.",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "paired_tests.seq_vs_mrf_wer",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Mean diff +0.0149 (WER fraction; SEQ worse). Wilcoxon p=0.0523 after dropping 323/720 zero differences; MWU p=0.080. Exploratory paired bootstrap CI [+0.0019, +0.0277] excludes 0. 'Not significant' is literally true for the reported test but does not imply equivalence."
+   },
+   "limitations": "Whisper-small macro WER."
+  },
+  {
+   "id": "J-E006",
+   "statement": "Sequential-IR and Parallel-IR have comparable/equivalent speech quality.",
+   "kind": "inference",
+   "status": "UNSUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "paired_tests.seq_vs_mrf_*",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "No equivalence/non-inferiority margin was pre-specified; both point estimates favour Parallel-IR; WER bootstrap CI excludes 0."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E007",
+   "statement": "On Harvard-720, Sequential-IR vs Piper: 21% faster, UTMOSv2 +0.09, WER -0.05, all p<1e-10.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "paired_tests.seq_vs_piper_*",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "21.33% RTF reduction (27.1% throughput gain); UTMOSv2 +0.0936; WER -0.0525 as macro WER fraction = 5.25 percentage points absolute; Wilcoxon p = 8.1e-98 / 2.9e-13 / 4.7e-11. System-level comparison: different backbone, decoder, precision, data split, torch build."
+   },
+   "limitations": "PyTorch CPU; Piper published checkpoint."
+  },
+  {
+   "id": "J-E008",
+   "statement": "Harvard-720 was not used to select checkpoints or the historical PTQ scope.",
+   "kind": "inference",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/A_inventory/checkpoint_metadata_now.json",
+     "sha256": "c08937674b438ce865c3d36b93ad69014f380202df14adc3f326b3469f743e9d",
+     "locator": "*.stored_in_checkpoint.callbacks",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/B_harvard/harvard_integrity_checks.json",
+     "sha256": "d2657c4c4c1da7fa6638908a2d2e40fdc0f4a1fbaf5166721c44f3078f2fd9fd",
+     "locator": "copied[].source_mtime_utc",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Earliest 'harvard' mention in the inspected transcripts 2026-10-03T18:50:53Z; all Harvard files dated 2026-10-03/04; checkpoint callbacks finished 2026-09-02/09-17/09-29; PTQ graphs dated 2026-09-07..09-30. Not covered: activity outside the inspected sessions. Harvard results DID inform the Q02 claim wording proposed in this conversation."
+   },
+   "limitations": "Inspected records only."
+  },
+  {
+   "id": "J-E009",
+   "statement": "Harvard-720 sentences do not overlap the LJSpeech training transcripts.",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/data_split_checks_recomputed.json",
+     "sha256": "83f654636cab447e03a333e719775ded5c28133fb2b40ca3300088b2afabfa89",
+     "locator": "exact_sentence_overlap_*, harvard_sentences_sharing_any_*gram, exact_phoneme_id_sequence_overlap",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "0 exact matches under two normalizations; 0 shared 6-grams; 0 identical phoneme-ID sequences; 37 sentences share a 4-gram and 7 a 5-gram (common phrases). Only against the 13,100 transcripts in dataset.jsonl; Piper's own training transcripts, audio similarity and scorer training data unchecked."
+   },
+   "limitations": "Text-level only."
+  },
+  {
+   "id": "J-E010",
+   "statement": "HiFi-GAN ResBlock2 and Sequential-IR were trained on the canonical 12,500/100/500 partition; Parallel-IR on a different random partition sharing 11,930/12,500 (95.44%) training utterances.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/data_split_checks_recomputed.json",
+     "sha256": "83f654636cab447e03a333e719775ded5c28133fb2b40ca3300088b2afabfa89",
+     "locator": "split_overlap",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/C_data_split/prior_round_q03/TENSORBOARD_VAL_HEADS.json",
+     "sha256": "269a28250a95286894f352e85ec7cbfcda5a417ed5bbbd437d6c8a242df48bb9",
+     "locator": "distinct_tag_sequences",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/C_data_split/MRF_SPLIT_RECONSTRUCTED_VALIDATED.json",
+     "sha256": "aea18304bb060613dadfaf7154ec4ecc57037fda148798ea07f3290757c8d277",
+     "locator": "checks",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Canonical corroborated by TensorBoard validation heads (9 phases) and kernel timestamps; MRF split reconstructed and corroborated against logged validation heads and the 2026-09-15 test manifest. Not a contemporaneous full-manifest hash."
+   },
+   "limitations": "Training data membership."
+  },
+  {
+   "id": "J-E011",
+   "statement": "Selected checkpoints are epoch 1489 (baseline), 1386 (MRF), 1442 (SEQ), chosen by ModelCheckpoint on val_loss_mel (min); Piper lj-med_1000 is epoch 999 with monitor=None.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/A_inventory/checkpoint_metadata_now.json",
+     "sha256": "c08937674b438ce865c3d36b93ad69014f380202df14adc3f326b3469f743e9d",
+     "locator": "*.stored_in_checkpoint.epoch / callbacks",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Epochs are zero-based metadata. Selection by validation mel L1 (x45), not by UTMOS/WER."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E012",
+   "statement": "HiFi-GAN ResBlock2 baseline used gradient clipping 1.0 in its final phases; Parallel-IR and Sequential-IR used none.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/A_inventory/checkpoint_metadata_now.json",
+     "sha256": "c08937674b438ce865c3d36b93ad69014f380202df14adc3f326b3469f743e9d",
+     "locator": "baseline.hyper_parameters.gradient_clip_val",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/C_data_split/prior_round_q03/Q03_EVIDENCE.json",
+     "sha256": "208a16a60181b701aff0adebd4287e4e5fdf934d7325c9591456f046428b9501",
+     "locator": "phases",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Baseline v0 null, v1/v2 1.0 (hparams per session, Q03)."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E013",
+   "statement": "The baseline's SDP Log-flow exp clamp was changed from 30 to 10 (and an inference logw clamp added) before resuming from epoch 870.",
+   "kind": "method",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/prior_round_q03/baseline_v0_to_baseline_v2_flows.py.diff",
+     "sha256": "9ee5e7a0c44b3d70c44e1dde9835c7e4341623e8af91545d4caa3403a0c34d1c",
+     "locator": "hunk @@ -16,10",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/C_data_split/prior_round_q03/TRANSCRIPT_TIMELINE_TRAINING_WINDOWS.txt",
+     "sha256": "513ae8097dce2c9d5f088b53078cc723a6603c28268d87010433fd15b4c9ac94",
+     "locator": "2026-08-31T21:07-21:08",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Recovered editor source + transcript timeline + resume log line; no runtime source hash."
+   },
+   "limitations": "Baseline only."
+  },
+  {
+   "id": "J-E014",
+   "statement": "Sequential-IR training code differs from Parallel-IR's: non-finite-gradient update skipping, SDP inference-health gating of best-checkpoint eligibility, duration-predictor edits, canonical split loader.",
+   "kind": "method",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/prior_round_q03/mrf_v0_to_seq_v0_training.py.diff",
+     "sha256": "4fa58e1ed22406114650f4df7a681719b915c74db8cc314ccdb2dc59cee4bb7b",
+     "locator": "whole diff",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Recovered source diff; SEQ logs contain skip messages (Q03). Confounder for any MRF-vs-SEQ causal attribution."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E015",
+   "statement": "Decoder parameters: Sequential-IR 1.11M, Parallel-IR 1.15M, HiFi-GAN ResBlock2 1.66M.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/counts_banhmi_recomputed.json",
+     "sha256": "e65450ba49e1d65d64bdac8ddb462afa129fb28ae6fad2f427fd0409c8815b36",
+     "locator": "*.decoder_params_folded_state_dict",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Exact 1,107,968 / 1,154,560 / 1,662,976; weight-norm folded; equals live count after remove_weight_norm."
+   },
+   "limitations": "model_g.dec only."
+  },
+  {
+   "id": "J-E016",
+   "statement": "Decoder compute: Sequential-IR 0.98 and Parallel-IR 1.23 GFLOPs per second of audio.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/counts_banhmi_recomputed.json",
+     "sha256": "e65450ba49e1d65d64bdac8ddb462afa129fb28ae6fad2f427fd0409c8815b36",
+     "locator": "*.decoder_gflops_T86 / per_exact_second",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Convention: Conv1d/ConvTranspose1d MACs x2 only (no activations/bias); T=86 frames (0.998 s): 0.9846 / 1.2306; per exact second 0.9861 / 1.2325. Baseline and Piper 3.90."
+   },
+   "limitations": "Decoder only, batch 1."
+  },
+  {
+   "id": "J-E017",
+   "statement": "The Sequential-IR decoder is 33% smaller than Piper's; total inference parameters are 3.9% larger.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/counts_banhmi_recomputed.json",
+     "sha256": "e65450ba49e1d65d64bdac8ddb462afa129fb28ae6fad2f427fd0409c8815b36",
+     "locator": "SEQ",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/D_architecture/counts_piper_recomputed.json",
+     "sha256": "e7d1f94740a71827181536c390f36bbca2db0d16e2319b981f78e5c58d77eb91",
+     "locator": "Piper",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "1-1,107,968/1,662,976 = 33.37%; 17,052,464/16,412,464-1 = 3.90%; boundary enc_p+dp+flow+dec, enc_q and discriminators excluded."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E018",
+   "statement": "The HiFi-GAN ResBlock2 baseline decoder is identical to Piper's decoder.",
+   "kind": "result",
+   "status": "CONTRADICTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/code_excerpts.md",
+     "sha256": "e9d3a7408284fa8f8d2ce794f6408e8b47c2959070ce06389e7e233f406afc24",
+     "locator": "normalization.py L25-38; piper models.py L364",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/D_architecture/counts_piper_recomputed.json",
+     "sha256": "e7d1f94740a71827181536c390f36bbca2db0d16e2319b981f78e5c58d77eb91",
+     "locator": "decoder",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Same parameter count/shapes and MACs, but the activation before conv_post differs: LeakyReLU slope 0.1 (BanhmiTTS) vs F.leaky_relu default 0.01 (Piper)."
+   },
+   "limitations": "Forward semantics."
+  },
+  {
+   "id": "J-E019",
+   "statement": "Parallel-IR uses three parallel inverted-residual branches (depthwise kernels 3/5/7) averaged per stage; Sequential-IR uses two serial blocks (kernel 3, expansion 1) per stage; upsampling strides 8/8/4, kernels 16/16/8, channels 128/64/32.",
+   "kind": "method",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/code_excerpts.md",
+     "sha256": "e9d3a7408284fa8f8d2ce794f6408e8b47c2959070ce06389e7e233f406afc24",
+     "locator": "generator.py L74-169",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/A_inventory/checkpoint_metadata_now.json",
+     "sha256": "c08937674b438ce865c3d36b93ad69014f380202df14adc3f326b3469f743e9d",
+     "locator": "hyper_parameters",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Current code + checkpoint hparams + state shapes (Q03 §3). Current code is not a runtime hash of training source."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E020",
+   "statement": "The normalizing flow has 4 TransformerCouplingLayer+Flip pairs, each with a 1-layer 2-head self-attention (residual) before a 4-layer WaveNet (kernel 5), mean-only shift, run in reverse at inference; 8.29M params vs Piper 7.09M (Piper flow has no attention).",
+   "kind": "method",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/D_architecture/code_excerpts.md",
+     "sha256": "e9d3a7408284fa8f8d2ce794f6408e8b47c2959070ce06389e7e233f406afc24",
+     "locator": "flow_block.py L14-122; synthesizer.py flow construction/infer",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/D_architecture/counts_piper_recomputed.json",
+     "sha256": "e7d1f94740a71827181536c390f36bbca2db0d16e2319b981f78e5c58d77eb91",
+     "locator": "params_folded_by_module.model_g.flow",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Backbone description; not a novel contribution and not flow matching."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E021",
+   "statement": "Historical ONNX Runtime FP32 RTF: Parallel-IR 0.0416 vs HiFi-GAN ResBlock2 0.0388 (Parallel-IR slower).",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/historical_results/eval_mrf_fp32_onnx_500_results.json",
+     "sha256": "ce262b192ff276cd001a6e725cc74a27e2f82ce3b4cbbaec431476dba382d292",
+     "locator": "mean rtf",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/E_onnx_ptq/scripts_and_logs/eval_mrf_fp32_onnx_500.log",
+     "sha256": "fdc8c8a33ae1e9156f82eb936f7773a8e88656bba10943549c8f3902ce4bb979",
+     "locator": "line 2",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/E_onnx_ptq/prior_round_q05/FP32_HANDOFF.json",
+     "sha256": "62673445e1af9c6bcc715f540bc8fc6f3f55cac52951aeddbe47cd2169a553cb",
+     "locator": "historical graph check",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Numbers reproduce, but mrf_fp32.onnx does not match checkpoint 1386 (Q05: 0/478 tensors) and MRF used its own 500-sentence manifest (21/500 shared). Cannot be attributed to MRF-1386."
+   },
+   "limitations": "Historical; 2 threads."
+  },
+  {
+   "id": "J-E022",
+   "statement": "Sequential-IR's speed advantage holds across PyTorch, ONNX FP32 and INT8.",
+   "kind": "inference",
+   "status": "UNSUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/onnx_inventory_inspected_now.json",
+     "sha256": "86ae3c7488b35784441390d0f7c5d3c4bbff86316c41a9ec4d60e117af20a455",
+     "locator": "seq_final_int8 vs *_flow_enc_p_dp",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "No final runs on the Q05 graphs; historical MRF graph source unknown; historical INT8 scopes differ (SEQ adds 40 QLinearMatMul)."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E023",
+   "statement": "In the inspected INT8 graphs the decoder remains FP32.",
+   "kind": "result",
+   "status": "SUPPORTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/onnx_inventory_inspected_now.json",
+     "sha256": "86ae3c7488b35784441390d0f7c5d3c4bbff86316c41a9ec4d60e117af20a455",
+     "locator": "any_quantized_op_under_dec",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "No quantized op under /dec/ in baseline/MRF flow_enc_p_dp and SEQ int8 graphs. Does not show INT8 robustness of the decoder."
+   },
+   "limitations": "Graph structure only."
+  },
+  {
+   "id": "J-E024",
+   "statement": "The PTQ scope quantizes Conv layers of enc_p, dp and flow.",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/onnx_inventory_inspected_now.json",
+     "sha256": "86ae3c7488b35784441390d0f7c5d3c4bbff86316c41a9ec4d60e117af20a455",
+     "locator": "quantized_ops_by_prefix",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/E_onnx_ptq/scripts_and_logs/ptq_quantize.py",
+     "sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+     "locator": "L64-118",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Baseline/MRF historical: 133 QLinearConv (enc_p 37, dp 32, flow 64), no QLinearMatMul. SEQ final INT8 and the 09-21 rtf_compare graphs also have 40 QLinearMatMul (op-types Conv,ConvTranspose,MatMul). Static QOperator, int8 per-channel weights, uint8 activations."
+   },
+   "limitations": "Historical graphs."
+  },
+  {
+   "id": "J-E025",
+   "statement": "The 60 PTQ calibration sentences were drawn from training data only.",
+   "kind": "result",
+   "status": "CONTRADICTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/historical_calibration60_recomputed.json",
+     "sha256": "41154000e3430b0e26fbc7810d7e1538d54b3b4736f16be24e3d540da41403fa",
+     "locator": "membership",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Recomputed from ptq_quantize.py's own rule (Random(42).sample over all dataset.jsonl rows): 3 in canonical/LJ-500-baseline test, 1 in MRF test manifest, 2 in MRF validation, 0 Harvard."
+   },
+   "limitations": "Historical PTQ."
+  },
+  {
+   "id": "J-E026",
+   "statement": "The historical PTQ scope was selected with a validated evaluator.",
+   "kind": "result",
+   "status": "CONTRADICTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/prior_round_audits/round7_evaluation_code.md",
+     "sha256": "8757d5e848b1729e8b9e171c483824a21b9583b96cc7fd645321bfff506fe49f",
+     "locator": "Main findings 1-2",
+     "kind": "author-note"
+    },
+    {
+     "path": "evidence/E_onnx_ptq/scripts_and_logs/eval_wer_cheap.py",
+     "sha256": "29e88c096cfc567afe3acfe50ee4c43eb10741665b0ec855a592ced713b020d2",
+     "locator": "line 71",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Cheap selector passed 22.05 kHz arrays to Whisper (expects 16 kHz), used base.en and different normalization; no rerun of the selection exists."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E027",
+   "statement": "Q05 FP32 ONNX graphs match PyTorch within NRMSE<=1e-3 and max-abs<=5e-3 on 10 cases per model.",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/E_onnx_ptq/prior_round_q05/FINAL_VERIFICATION.json",
+     "sha256": "2c229fc9d249ccd949a1821efbc15fe3b0564ef860cce7970084ec2c00fbc42b",
+     "locator": "checks",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/E_onnx_ptq/prior_round_q05/RUN_CONFIG.json",
+     "sha256": "e1e27d787834c9d68d668f1d071d6b608f37848ae7361da2e24c4b973575879d",
+     "locator": "thresholds",
+     "kind": "protocol"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Evidence produced by a prior round with saved NPZ in WSL; copied here but not re-executed in this round."
+   },
+   "limitations": "ORT 1.23.2 CPU, 2 threads, given inputs."
+  },
+  {
+   "id": "J-E028",
+   "statement": "RTF/latency measurements on Intel N150 and Raspberry Pi 5.",
+   "kind": "result",
+   "status": "UNSUPPORTED",
+   "manuscript_locations": [],
+   "sources": [],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "NOT AVAILABLE: only planning documents and desktop i7-14700 measurements exist."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E029",
+   "statement": "Human listening test results.",
+   "kind": "result",
+   "status": "UNSUPPORTED",
+   "manuscript_locations": [],
+   "sources": [],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "NOT AVAILABLE: no protocol, responses or approvals found. UTMOSv2 is not a substitute."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E030",
+   "statement": "MRF_vs_SEQ_comparison_Q2.md §2 'PyTorch FP32' row for baseline and MRF.",
+   "kind": "author-note",
+   "status": "CONTRADICTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/author_notes/MRF_vs_SEQ_comparison_Q2.md",
+     "sha256": "15b199751bbb0aea0524a34aa5330878fa7e65fbcb74d5c2e4350177cb16b7f6",
+     "locator": "§2 table",
+     "kind": "author-note"
+    },
+    {
+     "path": "evidence/C_data_split/lj500_results_historical/eval_baseline_fp32_seeded_500_results.json",
+     "sha256": "82324daf74ddf5bfc4f280df13e3e17a43f453a97737c221a1d2cc67da0a2ac1",
+     "locator": "means",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500_results.json",
+     "sha256": "fa40e92fc8ec40581ca7a5ca113b0eeacdddcf3a756efdd5a386a0e682ae6359",
+     "locator": "means",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Baseline RTF 0.0434 is PyTorch but UTMOSv2 3.132/WER 0.1230 are the ONNX values (PyTorch: 3.125/0.1230); MRF RTF 0.0370 is PyTorch-1386 but 3.537/0.1043 are from the unverified ONNX graph (PyTorch-1386: 3.651/0.0983) on the MRF manifest."
+   },
+   "limitations": "Historical LJ-500."
+  },
+  {
+   "id": "J-E031",
+   "statement": "Sequential-IR has higher UTMOSv2 than Parallel-IR (LJSpeech-500 tables).",
+   "kind": "result",
+   "status": "CONTRADICTED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/lj500_results_historical/eval_seq111_fp32_seeded_500_results.json",
+     "sha256": "c2115a4c9d13e1e09434c6c649234d96c718321c1452918903859ec1423e51ac",
+     "locator": "means",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/C_data_split/lj500_results_historical/eval_mrf_final1500_500_results.json",
+     "sha256": "fa40e92fc8ec40581ca7a5ca113b0eeacdddcf3a756efdd5a386a0e682ae6359",
+     "locator": "means",
+     "kind": "result"
+    },
+    {
+     "path": "evidence/B_harvard/recomputed/harvard_stats_recomputed.json",
+     "sha256": "932161a4295f63c407f53459adb22b7ec7cbcbe510c8a25e93026bd002dc45fe",
+     "locator": "seq_vs_mrf_utmosv2",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "LJ-500 rows use different manifests for MRF vs SEQ (21/500 shared); on the shared Harvard-720 set SEQ is lower (-0.024)."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E032",
+   "statement": "Piper has seen most of the canonical LJ-500 test sentences during training.",
+   "kind": "inference",
+   "status": "NOT_CHECKED",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/C_data_split/data_split_checks_recomputed.json",
+     "sha256": "83f654636cab447e03a333e719775ded5c28133fb2b40ca3300088b2afabfa89",
+     "locator": "hparams_from_checkpoints.Piper (validation_split, num_test_examples)",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Plausible from validation_split=0.05 and num_test_examples=0, but Piper's split is unknown; not measurable."
+   },
+   "limitations": "—"
+  },
+  {
+   "id": "J-E033",
+   "statement": "Scorer identity: Whisper small and UTMOSv2 fusion_stage3 fold0 s42 with the stated hashes were used for Harvard scoring.",
+   "kind": "result",
+   "status": "PARTIAL",
+   "manuscript_locations": [],
+   "sources": [
+    {
+     "path": "evidence/B_harvard/raw/scripts_original/score.py",
+     "sha256": "1bdd3994e68902dd1998f7b4c5934b1034bfb3ac77468e8524d1b8c547291c87",
+     "locator": "whisper.load_model('small'); utmosv2.create_model(pretrained=True)",
+     "kind": "protocol"
+    },
+    {
+     "path": "evidence/A_inventory/environment_now.json",
+     "sha256": "e566c78fb17e67ed64d6324b98fdb1c0b050d38b58a38d51a0a3dad43cef32ff",
+     "locator": "main_env.packages",
+     "kind": "result"
+    }
+   ],
+   "verification": {
+    "by": "ai",
+    "checked_at": "2026-10-04",
+    "rationale": "Script names the models; weights hashes (Whisper 9ecf7799..., UTMOSv2 c8149d98...) and package versions are current observations (Q04), not recorded at run time."
+   },
+   "limitations": "—"
+  }
+ ]
+}

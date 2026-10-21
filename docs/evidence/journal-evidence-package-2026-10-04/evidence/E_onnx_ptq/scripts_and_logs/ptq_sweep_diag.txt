@@ -1,0 +1,8 @@
+bg_pid: 504531
+    PID STAT CMD
+ 504531 Ssl  <WSL_PROJECT_HOME>/env/bin/python run_ptq_sweep.py both
+---log tail---
+<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/pytorch_lightning/utilities/imports.py:22: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+=== BASELINE SWEEP (Conv/ConvTranspose only) ===
+$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_none.onnx --submodules __none__ --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60

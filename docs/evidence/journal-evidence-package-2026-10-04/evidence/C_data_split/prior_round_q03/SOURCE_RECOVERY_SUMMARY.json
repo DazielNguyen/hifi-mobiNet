@@ -1,0 +1,1269 @@
+{
+  "created_utc": "2026-10-03T23:40:41.100099+00:00",
+  "source_index_sha256": "e1481dba3f5d49332bd90915eeab03a5b1b6852b07db847b4a7ca99d11c891a1",
+  "session_count": 4,
+  "scope": "Four top-level captured sessions only; no claim to cover all activity or subagent histories.",
+  "edit_count": 153,
+  "recovered_post_edit_count": 152,
+  "missing_or_error_results": [
+    {
+      "tool_use_id": "toolu_012Jray3LNQ9ZAiuofwvpUjy",
+      "timestamp": "2026-08-20T04:16:29.806Z",
+      "file": "BanhmiTTS/banhmi_train/vits/modules/flow_block.py"
+    }
+  ],
+  "unrecovered_successful_edits": [],
+  "verified_text_objects": 218,
+  "parse_errors": [],
+  "replay_disagreements": [],
+  "command_count": 207,
+  "matched_command_result_count": 207,
+  "selected_sync_outcomes": [
+    {
+      "tool_use_id": "toolu_0185ipttmqixAokUB5hUa5XM",
+      "timestamp": "2026-08-26T17:42:13.340Z",
+      "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+      "line": 12913,
+      "uuid": "5c28135d-de33-4897-bccc-d787d32effea",
+      "name": "Bash",
+      "input": {
+        "command": "wsl -e bash -lc \"cp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/utils/flows.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/utils/flows.py && <WSL_PROJECT_HOME>/env/bin/python -c \\\"\nimport sys\nsys.path.insert(0, '<WSL_PROJECT_HOME>/BanhmiTTS')\nimport torch\nfrom banhmi_train.vits.utils.flows import Log, ElementwiseAffine\n\ntorch.manual_seed(0)\n\n# --- Test 1: normal small values (should behave ~identically to unclamped) ---\nlog_flow = Log()\nx = torch.rand(2, 2, 10) * 3 + 0.1\nmask = torch.ones(2, 1, 10)\ny, logdet = log_flow(x, mask, reverse=False)\nx_back = log_flow(y, mask, reverse=True)\nprint('Log forward/inverse roundtrip max diff (normal values):', (x_back - x).abs().max().item())\nassert not torch.isnan(y).any() and not torch.isnan(x_back).any()\n\n# --- Test 2: extreme values that would overflow WITHOUT the clamp ---\nx_extreme = torch.full((2, 2, 10), 1000.0)  # exp(1000) would be inf unclamped\nout_extreme = log_flow(x_extreme, mask, reverse=True)\nprint('Log reverse with x=1000 (would overflow unclamped): has_nan=', torch.isnan(out_extreme).any().item(), 'has_inf=', torch.isinf(out_extreme).any().item(), 'max=', out_extreme.max().item())\nassert not torch.isnan(out_extreme).any() and not torch.isinf(out_extreme).any()\n\n# --- Test 3: ElementwiseAffine with normal logs (should be ~unchanged) ---\nea = ElementwiseAffine(2)\nwith torch.no_grad():\n    ea.logs.fill_(0.5)  # normal small value\nxx = torch.randn(2, 2, 10)\ny2, logdet2 = ea(xx, mask, reverse=False)\nx2_back = ea(y2, mask, reverse=True)\nprint('ElementwiseAffine roundtrip max diff (normal logs=0.5):', (x2_back - xx).abs().max().item())\nassert not torch.isnan(y2).any()\n\n# --- Test 4: ElementwiseAffine with EXTREME logs (would overflow unclamped) ---\nwith torch.no_grad():\n    ea.logs.fill_(500.0)  # exp(500) would be inf unclamped\ny3, logdet3 = ea(xx, mask, reverse=False)\nx3_back = ea(y3, mask, reverse=True)\nprint('ElementwiseAffine forward with logs=500 (would overflow unclamped): has_nan=', torch.isnan(y3).any().item(), 'has_inf=', torch.isinf(y3).any().item())\nprint('ElementwiseAffine reverse with logs=500: has_nan=', torch.isnan(x3_back).any().item(), 'has_inf=', torch.isinf(x3_back).any().item())\nassert not torch.isnan(y3).any() and not torch.isinf(y3).any()\nassert not torch.isnan(x3_back).any() and not torch.isinf(x3_back).any()\n\nwith torch.no_grad():\n    ea.logs.fill_(-500.0)  # exp(-500) underflows to 0 (safe), exp(500) in reverse would overflow\ny4, _ = ea(xx, mask, reverse=False)\nx4_back = ea(y4, mask, reverse=True)\nprint('ElementwiseAffine with logs=-500: forward has_nan=', torch.isnan(y4).any().item(), ' reverse has_nan=', torch.isnan(x4_back).any().item(), ' reverse has_inf=', torch.isinf(x4_back).any().item())\nassert not torch.isnan(y4).any() and not torch.isnan(x4_back).any() and not torch.isinf(x4_back).any()\n\nprint('ALL CHECKS PASSED')\n\\\"\" 2>&1 | grep -v pkg_resources",
+        "description": "Numerically verify the flows.py fix handles both normal and extreme values without NaN/Inf",
+        "timeout": 60000
+      },
+      "result": {
+        "timestamp": "2026-08-26T17:42:20.410Z",
+        "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+        "line": 12917,
+        "uuid": "c4c3c579-5c94-4afa-8211-b22acddf5a53",
+        "is_error": false,
+        "content": "Log forward/inverse roundtrip max diff (normal values): 1.4901161193847656e-08\nLog reverse with x=1000 (would overflow unclamped): has_nan= False has_inf= False max= 10686474223616.0\nElementwiseAffine roundtrip max diff (normal logs=0.5): 5.960464477539063e-08\nElementwiseAffine forward with logs=500 (would overflow unclamped): has_nan= False has_inf= False\nElementwiseAffine reverse with logs=500: has_nan= False has_inf= False\nElementwiseAffine with logs=-500: forward has_nan= False  reverse has_nan= False  reverse has_inf= False\nALL CHECKS PASSED",
+        "structured_result": {
+          "stdout": "Log forward/inverse roundtrip max diff (normal values): 1.4901161193847656e-08\nLog reverse with x=1000 (would overflow unclamped): has_nan= False has_inf= False max= 10686474223616.0\nElementwiseAffine roundtrip max diff (normal logs=0.5): 5.960464477539063e-08\nElementwiseAffine forward with logs=500 (would overflow unclamped): has_nan= False has_inf= False\nElementwiseAffine reverse with logs=500: has_nan= False has_inf= False\nElementwiseAffine with logs=-500: forward has_nan= False  reverse has_nan= False  reverse has_inf= False\nALL CHECKS PASSED",
+          "stderr": "",
+          "interrupted": false,
+          "isImage": false,
+          "noOutputExpected": false
+        }
+      }
+    },
+    {
+      "tool_use_id": "toolu_01RLaK8UMQ3QG6agkYYEFnAL",
+      "timestamp": "2026-08-31T21:07:51.719Z",
+      "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+      "line": 14861,
+      "uuid": "8af37f21-249d-426c-9557-63c7667e8083",
+      "name": "Bash",
+      "input": {
+        "command": "wsl.exe bash -c \"cp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/utils/flows.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/utils/flows.py && cp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/modules/synthesizer.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/modules/synthesizer.py && grep -n '_EXP_CLAMP_MAX = ' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/utils/flows.py && grep -n 'logw.clamp' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/modules/synthesizer.py\"",
+        "description": "Sync tightened clamp fixes to WSL and verify"
+      },
+      "result": {
+        "timestamp": "2026-08-31T21:07:53.793Z",
+        "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+        "line": 14862,
+        "uuid": "69574549-2f56-42c7-8116-28b23f592dbc",
+        "is_error": false,
+        "content": "27:    _EXP_CLAMP_MAX = 10.0\r\n222:        w_ceil = torch.ceil(torch.exp(logw.clamp(max=10.0)) * x_mask * length_scale)",
+        "structured_result": {
+          "stdout": "27:    _EXP_CLAMP_MAX = 10.0\r\n222:        w_ceil = torch.ceil(torch.exp(logw.clamp(max=10.0)) * x_mask * length_scale)",
+          "stderr": "",
+          "interrupted": false,
+          "isImage": false,
+          "noOutputExpected": false
+        }
+      }
+    },
+    {
+      "tool_use_id": "toolu_01JQ1wXDmoQa5LoMqZ5HnQpF",
+      "timestamp": "2026-09-10T18:40:49.198Z",
+      "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+      "line": 24840,
+      "uuid": "f67416c2-d917-4d6a-ad9d-ce8c4936e037",
+      "name": "Bash",
+      "input": {
+        "command": "wsl -e bash -lc \"\ncp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/modules/generator.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/modules/generator.py\ncp '<WORKSPACE>/BanhmiTTS/configs/banhmi_mrf.yaml' <WSL_PROJECT_HOME>/BanhmiTTS/configs/banhmi_mrf.yaml\necho OK\n\"",
+        "description": "Sync updated generator.py and new banhmi_mrf.yaml config to WSL",
+        "timeout": 20000
+      },
+      "result": {
+        "timestamp": "2026-09-10T18:40:50.784Z",
+        "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+        "line": 24841,
+        "uuid": "2e765c49-ff55-4dfe-8e50-83411783f912",
+        "is_error": false,
+        "content": "OK",
+        "structured_result": {
+          "stdout": "OK",
+          "stderr": "",
+          "interrupted": false,
+          "isImage": false,
+          "noOutputExpected": false
+        }
+      }
+    },
+    {
+      "tool_use_id": "toolu_01CzDrTdi2eDe4XQqkV2mY6m",
+      "timestamp": "2026-09-19T21:55:36.719Z",
+      "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+      "line": 29302,
+      "uuid": "e0e83b4c-5b1a-4b40-bcc3-c9f9e39422eb",
+      "name": "Bash",
+      "input": {
+        "command": "wsl -e bash -lc \"cp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/training.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/training.py && echo OK\"",
+        "description": "Sync updated training.py with canonical split loading to WSL",
+        "timeout": 15000
+      },
+      "result": {
+        "timestamp": "2026-09-19T21:55:38.255Z",
+        "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+        "line": 29308,
+        "uuid": "c552f205-16ff-4afd-a843-36d60c51f29a",
+        "is_error": false,
+        "content": "OK",
+        "structured_result": {
+          "stdout": "OK",
+          "stderr": "",
+          "interrupted": false,
+          "isImage": false,
+          "noOutputExpected": false
+        }
+      }
+    },
+    {
+      "tool_use_id": "toolu_01Q2ipkj8YSSEt6zMrKSuP93",
+      "timestamp": "2026-09-23T16:48:46.715Z",
+      "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+      "line": 31188,
+      "uuid": "fc3fa710-caf7-437c-9fba-c431f86c897e",
+      "name": "Bash",
+      "input": {
+        "command": "wsl -e bash -lc \"\ncp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/training.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/training.py\ncp '<WORKSPACE>/BanhmiTTS/banhmi_train/vits/modules/duration_predictor.py' <WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/modules/duration_predictor.py\ncd <WSL_PROJECT_HOME>/BanhmiTTS\n<WSL_PROJECT_HOME>/env/bin/python -c 'import ast; [ast.parse(open(f).read()) for f in [\\\"banhmi_train/vits/training.py\\\",\\\"banhmi_train/vits/modules/duration_predictor.py\\\"]]' && echo 'SYNTAX OK'\n\"\n",
+        "description": "Sync fixes to WSL and verify syntax",
+        "timeout": 30000
+      },
+      "result": {
+        "timestamp": "2026-09-23T16:48:51.527Z",
+        "session": "e735f766-5eed-4505-86cd-77ec3a53ef24.jsonl",
+        "line": 31189,
+        "uuid": "ec1b9683-9495-46c4-9d6c-d4102870b230",
+        "is_error": false,
+        "content": "SYNTAX OK\ntone/env/lib/python3.10/site-packages/pytorch_lightning/utilities/imports.py:22: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources",
+        "structured_result": {
+          "stdout": "SYNTAX OK\ntone/env/lib/python3.10/site-packages/pytorch_lightning/utilities/imports.py:22: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources",
+          "stderr": "",
+          "interrupted": false,
+          "isImage": false,
+          "noOutputExpected": false
+        }
+      }
+    }
+  ],
+  "phase_source_candidates": {
+    "baseline_v0": {
+      "launch_utc": "2026-08-26T17:44:31Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-08-19T16:29:41.720Z",
+          "tool_use_id": "toolu_01HrHXZZkTEuhz2zdRGmBZv9",
+          "post_text": {
+            "sha256_utf8_text": "c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460",
+            "path": "recovered_source/c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460.py",
+            "bytes": 33738
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-08-19T16:51:54.630Z",
+          "tool_use_id": "toolu_01GBCtzvbYnMyb7ANLBjHxBN",
+          "post_text": {
+            "sha256_utf8_text": "f65f961745f5b9feb319ce880798c7a49b6b0c2370bb336881a9021b870c11fe",
+            "path": "recovered_source/f65f961745f5b9feb319ce880798c7a49b6b0c2370bb336881a9021b870c11fe.py",
+            "bytes": 11233
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-26T17:41:47.673Z",
+          "tool_use_id": "toolu_01BS9Mg6ja7qiQyysUqYDNe5",
+          "post_text": {
+            "sha256_utf8_text": "384027b0b45d4f71981876f1ccd64e7c4809236014c6506f04f0bb2402a5ba8d",
+            "path": "recovered_source/384027b0b45d4f71981876f1ccd64e7c4809236014c6506f04f0bb2402a5ba8d.py",
+            "bytes": 5458
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "baseline_v1": {
+      "launch_utc": "2026-08-27T03:59:42Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-08-19T16:29:41.720Z",
+          "tool_use_id": "toolu_01HrHXZZkTEuhz2zdRGmBZv9",
+          "post_text": {
+            "sha256_utf8_text": "c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460",
+            "path": "recovered_source/c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460.py",
+            "bytes": 33738
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-08-19T16:51:54.630Z",
+          "tool_use_id": "toolu_01GBCtzvbYnMyb7ANLBjHxBN",
+          "post_text": {
+            "sha256_utf8_text": "f65f961745f5b9feb319ce880798c7a49b6b0c2370bb336881a9021b870c11fe",
+            "path": "recovered_source/f65f961745f5b9feb319ce880798c7a49b6b0c2370bb336881a9021b870c11fe.py",
+            "bytes": 11233
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-26T17:41:47.673Z",
+          "tool_use_id": "toolu_01BS9Mg6ja7qiQyysUqYDNe5",
+          "post_text": {
+            "sha256_utf8_text": "384027b0b45d4f71981876f1ccd64e7c4809236014c6506f04f0bb2402a5ba8d",
+            "path": "recovered_source/384027b0b45d4f71981876f1ccd64e7c4809236014c6506f04f0bb2402a5ba8d.py",
+            "bytes": 5458
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "baseline_v2": {
+      "launch_utc": "2026-08-31T21:08:00Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-08-19T16:29:41.720Z",
+          "tool_use_id": "toolu_01HrHXZZkTEuhz2zdRGmBZv9",
+          "post_text": {
+            "sha256_utf8_text": "c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460",
+            "path": "recovered_source/c06b0f7d1e069e19a225ff95d4fe16f37541dd5c185fb2b93d7a879e0fc2f460.py",
+            "bytes": 33738
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-08-31T21:07:46.305Z",
+          "tool_use_id": "toolu_01PVXeynMzoFetTgNegwh3bX",
+          "post_text": {
+            "sha256_utf8_text": "e643fa10aac05416b19ccd415cb2f76c2c23e1f8d85be7a6889ef002fea583d7",
+            "path": "recovered_source/e643fa10aac05416b19ccd415cb2f76c2c23e1f8d85be7a6889ef002fea583d7.py",
+            "bytes": 12134
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "mrf_v0": {
+      "launch_utc": "2026-09-10T18:42:04Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-10T09:17:04.035Z",
+          "tool_use_id": "toolu_01LsMDgdvU8c5cLdNiCS2yDH",
+          "post_text": {
+            "sha256_utf8_text": "986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5",
+            "path": "recovered_source/986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5.py",
+            "bytes": 34912
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "mrf_v1": {
+      "launch_utc": "2026-09-12T21:03:19Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-10T09:17:04.035Z",
+          "tool_use_id": "toolu_01LsMDgdvU8c5cLdNiCS2yDH",
+          "post_text": {
+            "sha256_utf8_text": "986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5",
+            "path": "recovered_source/986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5.py",
+            "bytes": 34912
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "mrf_v2": {
+      "launch_utc": "2026-09-16T03:22:15Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-10T09:17:04.035Z",
+          "tool_use_id": "toolu_01LsMDgdvU8c5cLdNiCS2yDH",
+          "post_text": {
+            "sha256_utf8_text": "986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5",
+            "path": "recovered_source/986f783586b6931aa877c9c082dd895019eb9d8301a8d46d97624ae0cb1309c5.py",
+            "bytes": 34912
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "seq_v0": {
+      "launch_utc": "2026-09-23T16:56:02Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-23T16:48:39.562Z",
+          "tool_use_id": "toolu_0152RKAPf1tMZLSXC2q3o7A4",
+          "post_text": {
+            "sha256_utf8_text": "633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce",
+            "path": "recovered_source/633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce.py",
+            "bytes": 43019
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/duration_predictor.py": {
+          "edit_timestamp": "2026-09-23T16:47:30.731Z",
+          "tool_use_id": "toolu_01622xkJFMWh3sUQh2gwZwkh",
+          "post_text": {
+            "sha256_utf8_text": "c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074",
+            "path": "recovered_source/c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074.py",
+            "bytes": 5875
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "seq_v1": {
+      "launch_utc": "2026-09-28T12:44:07Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-23T16:48:39.562Z",
+          "tool_use_id": "toolu_0152RKAPf1tMZLSXC2q3o7A4",
+          "post_text": {
+            "sha256_utf8_text": "633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce",
+            "path": "recovered_source/633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce.py",
+            "bytes": 43019
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/duration_predictor.py": {
+          "edit_timestamp": "2026-09-23T16:47:30.731Z",
+          "tool_use_id": "toolu_01622xkJFMWh3sUQh2gwZwkh",
+          "post_text": {
+            "sha256_utf8_text": "c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074",
+            "path": "recovered_source/c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074.py",
+            "bytes": 5875
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    },
+    "seq_v2": {
+      "launch_utc": "2026-09-29T15:33:25Z",
+      "core_editor_candidates": {
+        "BanhmiTTS/banhmi_train/train.py": {
+          "edit_timestamp": "2026-08-19T16:36:11.801Z",
+          "tool_use_id": "toolu_01C5ouwk6PTNUjqT2bYhJoW1",
+          "post_text": {
+            "sha256_utf8_text": "86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918",
+            "path": "recovered_source/86b0ca9b88b48031e43f8910942e1139955b7021a1802587f6a37b94f25ef918.py",
+            "bytes": 10155
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/training.py": {
+          "edit_timestamp": "2026-09-23T16:48:39.562Z",
+          "tool_use_id": "toolu_0152RKAPf1tMZLSXC2q3o7A4",
+          "post_text": {
+            "sha256_utf8_text": "633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce",
+            "path": "recovered_source/633cf472dceaafa95c812b5a39b8abc429a8dd0723039193e0c9adaa8e143fce.py",
+            "bytes": 43019
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/synthesizer.py": {
+          "edit_timestamp": "2026-09-10T09:16:34.024Z",
+          "tool_use_id": "toolu_01DhCetucrDQYbZ8kDBWTL6y",
+          "post_text": {
+            "sha256_utf8_text": "a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248",
+            "path": "recovered_source/a73e6d9526d640223c8769df0d9c0bb9f9c10d0e816d118cafacbe6f16687248.py",
+            "bytes": 15631
+          },
+          "recovery_status": "replay_from_prior_recovered_state"
+        },
+        "BanhmiTTS/banhmi_train/vits/utils/flows.py": {
+          "edit_timestamp": "2026-08-31T21:07:31.532Z",
+          "tool_use_id": "toolu_01W34gmGBaZ95HBjhNi22m2S",
+          "post_text": {
+            "sha256_utf8_text": "1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01",
+            "path": "recovered_source/1f3ac3e8ddeb9351a9ce2b01ae3efb582fbaed02d2b92879938c1adb5a694c01.py",
+            "bytes": 5844
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/generator.py": {
+          "edit_timestamp": "2026-09-10T18:40:06.752Z",
+          "tool_use_id": "toolu_01X6GZQjSsn7YxvDMQ1SXwiK",
+          "post_text": {
+            "sha256_utf8_text": "c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984",
+            "path": "recovered_source/c1548539c13353dc4bbe990a3055714123b1e651d1d459e1446c337773105984.py",
+            "bytes": 8573
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        },
+        "BanhmiTTS/banhmi_train/vits/modules/duration_predictor.py": {
+          "edit_timestamp": "2026-09-23T16:47:30.731Z",
+          "tool_use_id": "toolu_01622xkJFMWh3sUQh2gwZwkh",
+          "post_text": {
+            "sha256_utf8_text": "c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074",
+            "path": "recovered_source/c36d6ca4e7509999410fe1a0aa2f97aa9263e61618115d4f71a019439731e074.py",
+            "bytes": 5875
+          },
+          "recovery_status": "originalFile_from_tool_result"
+        }
+      },
+      "linux_runtime_identity_verified": false
+    }
+  },
+  "diffs": [
+    {
+      "path": "source_diffs/baseline_v0_to_baseline_v2_flows.py.diff",
+      "sha256": "9ee5e7a0c44b3d70c44e1dde9835c7e4341623e8af91545d4caa3403a0c34d1c"
+    },
+    {
+      "path": "source_diffs/baseline_v0_to_baseline_v2_synthesizer.py.diff",
+      "sha256": "226820dd5bb6066f4d1ffae9e9ed92f35c61d623480c3772004616aa91cab0b2"
+    },
+    {
+      "path": "source_diffs/baseline_v2_to_mrf_v0_training.py.diff",
+      "sha256": "05e21d2484595cd08b945c5656713dbc7cc50cf6b4db71d9b93965084900e9b0"
+    },
+    {
+      "path": "source_diffs/mrf_v0_to_seq_v0_training.py.diff",
+      "sha256": "4fa58e1ed22406114650f4df7a681719b915c74db8cc314ccdb2dc59cee4bb7b"
+    }
+  ],
+  "archives": [
+    {
+      "source": "<WINDOWS_USER_HOME>/AppData\\Local\\Temp\\claude\\<CLAUDE_PROJECT_SLUG>\\e735f766-5eed-4505-86cd-77ec3a53ef24\\scratchpad\\banhmi_head.tar",
+      "sha256": "ef4211b2c954b6a466a57e8233eb201c08b42d07f65f7e937ebe3cbe87d7ef0f",
+      "members": [
+        {
+          "name": "banhmi_train",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/BigVGan",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/BigVGan/__init__.py",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "saved_as": "archive_source/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/activations.py",
+          "size": 3342,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "400704e84856a4b2af98ebd304eb44cdc3c1eeb4269294a9ed8a85520171ba57",
+          "saved_as": "archive_source/400704e84856a4b2af98ebd304eb44cdc3c1eeb4269294a9ed8a85520171ba57.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/alias_free_torch",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/BigVGan/alias_free_torch/__init__.py",
+          "size": 424,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "dea2a7655e017de1f9f00b4a2f44bb8242910ce62b5bfcea9bae3976eb37749b",
+          "saved_as": "archive_source/dea2a7655e017de1f9f00b4a2f44bb8242910ce62b5bfcea9bae3976eb37749b.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/alias_free_torch/act.py",
+          "size": 1258,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "9ea4721c2c0e8d363bed6b8c37a79cfdf1163e63ac1090ccce53f2a83bd2e4f2",
+          "saved_as": "archive_source/9ea4721c2c0e8d363bed6b8c37a79cfdf1163e63ac1090ccce53f2a83bd2e4f2.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/alias_free_torch/filter.py",
+          "size": 3648,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "b1d8028cb73e5aeba462990bf2af9026226509fe924187ff83105c560cf19106",
+          "saved_as": "archive_source/b1d8028cb73e5aeba462990bf2af9026226509fe924187ff83105c560cf19106.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/alias_free_torch/resample.py",
+          "size": 1975,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "140d60209f95d959aa73166e606b6aaa34f98a8892d1cf499079875d50714aab",
+          "saved_as": "archive_source/140d60209f95d959aa73166e606b6aaa34f98a8892d1cf499079875d50714aab.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/amp_block.py",
+          "size": 4172,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "8d424b81789b112826a361cb800dc46de2ec4b07a3f482f48b0c5e36606bd9f5",
+          "saved_as": "archive_source/8d424b81789b112826a361cb800dc46de2ec4b07a3f482f48b0c5e36606bd9f5.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/discriminators.py",
+          "size": 7499,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "08e7e0476f122cdb1846e86cae1899cbacec4463e401c18fde8f671e5d11ed71",
+          "saved_as": "archive_source/08e7e0476f122cdb1846e86cae1899cbacec4463e401c18fde8f671e5d11ed71.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/generator.py",
+          "size": 4003,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "0df20284b2e6fd16383b5a8e884155bcbfed1f46d2e4acf609ecfebbbb011648",
+          "saved_as": "archive_source/0df20284b2e6fd16383b5a8e884155bcbfed1f46d2e4acf609ecfebbbb011648.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/generator_lite.py",
+          "size": 4419,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "087391963bf82a7e522ba060949b8a0a88ac3b05bc5a353339a8b536e5a42faa",
+          "saved_as": "archive_source/087391963bf82a7e522ba060949b8a0a88ac3b05bc5a353339a8b536e5a42faa.py"
+        },
+        {
+          "name": "banhmi_train/BigVGan/utils.py",
+          "size": 556,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "8c08d4dd5b0f3f452b9753de57cd5da401aefa4862d6f8c21db2e8aefaef42a1",
+          "saved_as": "archive_source/8c08d4dd5b0f3f452b9753de57cd5da401aefa4862d6f8c21db2e8aefaef42a1.py"
+        },
+        {
+          "name": "banhmi_train/VERSION",
+          "size": 7,
+          "mtime": 1790603356,
+          "type": "0"
+        },
+        {
+          "name": "banhmi_train/Vocos",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/Vocos/__init__.py",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "saved_as": "archive_source/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/convnext.py",
+          "size": 4800,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "22897f602ed3821f3bbb5a502769f313d317a845012d772177b3594764daae29",
+          "saved_as": "archive_source/22897f602ed3821f3bbb5a502769f313d317a845012d772177b3594764daae29.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/discriminators.py",
+          "size": 7803,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "8bf2a2a858af57a27d1a2882a234c68543b9f056a088564865c0e77b2cf440d7",
+          "saved_as": "archive_source/8bf2a2a858af57a27d1a2882a234c68543b9f056a088564865c0e77b2cf440d7.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/generator.py",
+          "size": 2719,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "09ac6afbb7d942619b4722b76db7f25d927be9b5384503b8b37b95f917cd10ca",
+          "saved_as": "archive_source/09ac6afbb7d942619b4722b76db7f25d927be9b5384503b8b37b95f917cd10ca.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/heads.py",
+          "size": 8758,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "c928840a7e3ec29a56469873dacfa4ed2a0d3da91c5300532cb36b391cfdf2ed",
+          "saved_as": "archive_source/c928840a7e3ec29a56469873dacfa4ed2a0d3da91c5300532cb36b391cfdf2ed.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/losses.py",
+          "size": 2681,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "660a6d201b321a679e8354352f14b2757e3ed03b63a4a0238a5067c72562f171",
+          "saved_as": "archive_source/660a6d201b321a679e8354352f14b2757e3ed03b63a4a0238a5067c72562f171.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/stage_a.py",
+          "size": 3672,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "99a91498c10b38f680515aa7fd8291f6887bdd246bfd0b88cd2cce03a9e6c9bf",
+          "saved_as": "archive_source/99a91498c10b38f680515aa7fd8291f6887bdd246bfd0b88cd2cce03a9e6c9bf.py"
+        },
+        {
+          "name": "banhmi_train/Vocos/stage_b.py",
+          "size": 3348,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "a0dc6acf28528ed8bc18e2d29b7fac1f760ddfaeaae8ae4ef3370ddb9c2e199c",
+          "saved_as": "archive_source/a0dc6acf28528ed8bc18e2d29b7fac1f760ddfaeaae8ae4ef3370ddb9c2e199c.py"
+        },
+        {
+          "name": "banhmi_train/__init__.py",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "saved_as": "archive_source/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.py"
+        },
+        {
+          "name": "banhmi_train/audio_utils.py",
+          "size": 345,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "c06c22422c3b5dae4c24412dd3cd244e09ca6913e5865a660612e38602bca892",
+          "saved_as": "archive_source/c06c22422c3b5dae4c24412dd3cd244e09ca6913e5865a660612e38602bca892.py"
+        },
+        {
+          "name": "banhmi_train/export_onnx.py",
+          "size": 3295,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "68bc2bca253893cddc15521a5b6d0ceaac770b48c1e5c3f6a28cd53ec559481c",
+          "saved_as": "archive_source/68bc2bca253893cddc15521a5b6d0ceaac770b48c1e5c3f6a28cd53ec559481c.py"
+        },
+        {
+          "name": "banhmi_train/mel_processing.py",
+          "size": 3520,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "f3ea735eb6d501493c07ae6984a1eb6884713c9a3590c62b15ac3a7b21eb1d53",
+          "saved_as": "archive_source/f3ea735eb6d501493c07ae6984a1eb6884713c9a3590c62b15ac3a7b21eb1d53.py"
+        },
+        {
+          "name": "banhmi_train/mixed_lang.py",
+          "size": 10529,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "45373698d7e3bdbc0ee93cfa5a3b4f61abaa9cd5135f99e5f10c6ffaee69e288",
+          "saved_as": "archive_source/45373698d7e3bdbc0ee93cfa5a3b4f61abaa9cd5135f99e5f10c6ffaee69e288.py"
+        },
+        {
+          "name": "banhmi_train/preprocess",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/preprocess/__init__.py",
+          "size": 177,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "256202c00056a742fecd5fe9f1a89dd19105056b7d62a3e25c9c259a58a94596",
+          "saved_as": "archive_source/256202c00056a742fecd5fe9f1a89dd19105056b7d62a3e25c9c259a58a94596.py"
+        },
+        {
+          "name": "banhmi_train/preprocess/__main__.py",
+          "size": 5615,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "96c815fc36a107400a8f26a785d1afafd14f1074d68890442c841f8e8ac57e43",
+          "saved_as": "archive_source/96c815fc36a107400a8f26a785d1afafd14f1074d68890442c841f8e8ac57e43.py"
+        },
+        {
+          "name": "banhmi_train/preprocess/config.py",
+          "size": 1072,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "d80f91538d4c78a627462fa41338b9a5cd561d0d9cd66bc1856644497920a9be",
+          "saved_as": "archive_source/d80f91538d4c78a627462fa41338b9a5cd561d0d9cd66bc1856644497920a9be.py"
+        },
+        {
+          "name": "banhmi_train/preprocess/dataset.py",
+          "size": 3095,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "c75d086b23a45786f42c74193271428935f4a7c0c534da742c1f8f8e23239d37",
+          "saved_as": "archive_source/c75d086b23a45786f42c74193271428935f4a7c0c534da742c1f8f8e23239d37.py"
+        },
+        {
+          "name": "banhmi_train/preprocess/norm_audio.py",
+          "size": 4272,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "13354823affe0de64d16bedef32b7894cdbdba94a250d39fc4924fa617e2a882",
+          "saved_as": "archive_source/13354823affe0de64d16bedef32b7894cdbdba94a250d39fc4924fa617e2a882.py"
+        },
+        {
+          "name": "banhmi_train/preprocess/worker.py",
+          "size": 2476,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "0ef69a257724f20a6e2005897d70d5f6c0d85da3c8d359a99475174d7d3db891",
+          "saved_as": "archive_source/0ef69a257724f20a6e2005897d70d5f6c0d85da3c8d359a99475174d7d3db891.py"
+        },
+        {
+          "name": "banhmi_train/quantize_qat.py",
+          "size": 11888,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "a9a9c755a6a6def1346b7e8695b4fafafec42c42678ca3118897b870e6f709ea",
+          "saved_as": "archive_source/a9a9c755a6a6def1346b7e8695b4fafafec42c42678ca3118897b870e6f709ea.py"
+        },
+        {
+          "name": "banhmi_train/say.py",
+          "size": 3700,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "82517c098f123a81a446d452dec389cdcd29e01ff79d21bdf5dfc46a88c8f516",
+          "saved_as": "archive_source/82517c098f123a81a446d452dec389cdcd29e01ff79d21bdf5dfc46a88c8f516.py"
+        },
+        {
+          "name": "banhmi_train/train.py",
+          "size": 10369,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "25e6c3e93e8ac9ef64348c44a8bd1903127ef2cd6600c129904c60263b71641d",
+          "saved_as": "archive_source/25e6c3e93e8ac9ef64348c44a8bd1903127ef2cd6600c129904c60263b71641d.py"
+        },
+        {
+          "name": "banhmi_train/vits",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/vits/__init__.py",
+          "size": 760,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "475a402bce7288fb54bdadd857eb29bc22d15d95a7d8d1fe177c2679baff7e55",
+          "saved_as": "archive_source/475a402bce7288fb54bdadd857eb29bc22d15d95a7d8d1fe177c2679baff7e55.py"
+        },
+        {
+          "name": "banhmi_train/vits/dataset.py",
+          "size": 6096,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "8248f83202177a5ebf9b5b799bdf7fb0a3ed29b68970ce1480ba07172e06e9a2",
+          "saved_as": "archive_source/8248f83202177a5ebf9b5b799bdf7fb0a3ed29b68970ce1480ba07172e06e9a2.py"
+        },
+        {
+          "name": "banhmi_train/vits/length_bucket_sampler.py",
+          "size": 4529,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "f53467922ee680326f7feaaafdf85539430656d7e5611f10d7c71445500d9e26",
+          "saved_as": "archive_source/f53467922ee680326f7feaaafdf85539430656d7e5611f10d7c71445500d9e26.py"
+        },
+        {
+          "name": "banhmi_train/vits/losses.py",
+          "size": 1780,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "80f470ae903ff2defbb06212ea6738f3c99427f1921aff6dcbec13e1ca836627",
+          "saved_as": "archive_source/80f470ae903ff2defbb06212ea6738f3c99427f1921aff6dcbec13e1ca836627.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/vits/modules/__init__.py",
+          "size": 270,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "dd6b85e428aa94ee43e0260238aa91e6ab4c8036be8ee12bb839ff840af99f10",
+          "saved_as": "archive_source/dd6b85e428aa94ee43e0260238aa91e6ab4c8036be8ee12bb839ff840af99f10.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/discriminators.py",
+          "size": 7107,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "1345013d6d27f8ecdbed62eb3a6f2acdec00e83784976752c73e062abb49e5d9",
+          "saved_as": "archive_source/1345013d6d27f8ecdbed62eb3a6f2acdec00e83784976752c73e062abb49e5d9.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/duration_discriminator.py",
+          "size": 2548,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "9dd037790c8c9a0d9040a9b5c22903f80d6dfdd391b28a4fbf25c2d252ee8f54",
+          "saved_as": "archive_source/9dd037790c8c9a0d9040a9b5c22903f80d6dfdd391b28a4fbf25c2d252ee8f54.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/duration_predictor.py",
+          "size": 6018,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "0858ce94c5a89a983f817cb27ded98fad817a12e4ce67963d4e9e2710340a0b7",
+          "saved_as": "archive_source/0858ce94c5a89a983f817cb27ded98fad817a12e4ce67963d4e9e2710340a0b7.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/f0_predictor.py",
+          "size": 1736,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "d88b163734c65f71dcb3831c44fe025ef000e2191dc7f41a3132076afc36cae6",
+          "saved_as": "archive_source/d88b163734c65f71dcb3831c44fe025ef000e2191dc7f41a3132076afc36cae6.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/flow_block.py",
+          "size": 4604,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "e25469c5747d7c106da112c505a752e52468280ef1e940e2336d04aec30e7fd9",
+          "saved_as": "archive_source/e25469c5747d7c106da112c505a752e52468280ef1e940e2336d04aec30e7fd9.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/generator.py",
+          "size": 8750,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "a4682beec2d6d54bdf3c6633b13ca71d703042cb358bec0e8867df702d163659",
+          "saved_as": "archive_source/a4682beec2d6d54bdf3c6633b13ca71d703042cb358bec0e8867df702d163659.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/posterior_encoder.py",
+          "size": 1414,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "44c55c22a82331c6a23d7f9de9e3e73cc94b690c7d8fec7a20c05d3dfa0f724b",
+          "saved_as": "archive_source/44c55c22a82331c6a23d7f9de9e3e73cc94b690c7d8fec7a20c05d3dfa0f724b.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/synthesizer.py",
+          "size": 15957,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "26b2773991f45c1f04ec668983b732d92a69ea71719ac3e6ec465f4730388682",
+          "saved_as": "archive_source/26b2773991f45c1f04ec668983b732d92a69ea71719ac3e6ec465f4730388682.py"
+        },
+        {
+          "name": "banhmi_train/vits/modules/text_encoder.py",
+          "size": 1595,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "80e47395cf1f14a71cfb4d1bf39e45decbacae00dd7151e22cb387fe2ea8cb92",
+          "saved_as": "archive_source/80e47395cf1f14a71cfb4d1bf39e45decbacae00dd7151e22cb387fe2ea8cb92.py"
+        },
+        {
+          "name": "banhmi_train/vits/quantize.py",
+          "size": 9527,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "e4447758923e9bfd145cb271cf6af0511e9fdb3d90a16cf93bd2231f6aa73239",
+          "saved_as": "archive_source/e4447758923e9bfd145cb271cf6af0511e9fdb3d90a16cf93bd2231f6aa73239.py"
+        },
+        {
+          "name": "banhmi_train/vits/training.py",
+          "size": 43833,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "1164fae3cfa9c163ca990eaa24472c64458e162a85a1b87a77e0e62d526f926e",
+          "saved_as": "archive_source/1164fae3cfa9c163ca990eaa24472c64458e162a85a1b87a77e0e62d526f926e.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/vits/utils/__init__.py",
+          "size": 203,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "775f0a8d0722c05730179ec0734dcb15316bedff5ff3651b6ac5052e3a8faf8a",
+          "saved_as": "archive_source/775f0a8d0722c05730179ec0734dcb15316bedff5ff3651b6ac5052e3a8faf8a.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/attention.py",
+          "size": 7900,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "334739158efc809c7491b52b4eb860ba4ca65a4840d13b28009c072af374db93",
+          "saved_as": "archive_source/334739158efc809c7491b52b4eb860ba4ca65a4840d13b28009c072af374db93.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/commons.py",
+          "size": 2972,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "bda1cc33fa003b3004561ad991a9711505e4011c075adf17e9692d47ed328c98",
+          "saved_as": "archive_source/bda1cc33fa003b3004561ad991a9711505e4011c075adf17e9692d47ed328c98.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/dds_conv.py",
+          "size": 1702,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "fa52cfa39d2c9c353b284e1c545ac0553d2abce544a836da9b2bda7713133d11",
+          "saved_as": "archive_source/fa52cfa39d2c9c353b284e1c545ac0553d2abce544a836da9b2bda7713133d11.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/flows.py",
+          "size": 5978,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "b1a9288187dc1401e3178781f6b67721d61719330890d873a0b29c401aadfa05",
+          "saved_as": "archive_source/b1a9288187dc1401e3178781f6b67721d61719330890d873a0b29c401aadfa05.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/monotonic_align",
+          "size": 0,
+          "mtime": 1790603356,
+          "type": "5"
+        },
+        {
+          "name": "banhmi_train/vits/utils/monotonic_align/__init__.py",
+          "size": 1174,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "5b85b6c95be1f4f190cbd6b535189d3a2bb643a1bdd0c904e54e0d480c28a84b",
+          "saved_as": "archive_source/5b85b6c95be1f4f190cbd6b535189d3a2bb643a1bdd0c904e54e0d480c28a84b.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/monotonic_align/core.pyx",
+          "size": 1978,
+          "mtime": 1790603356,
+          "type": "0"
+        },
+        {
+          "name": "banhmi_train/vits/utils/monotonic_align/setup.py",
+          "size": 854,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "fa4fdd1659678aa94fb0b63b76f29d5547a1bdca1b3c66f133f3fb070008bda5",
+          "saved_as": "archive_source/fa4fdd1659678aa94fb0b63b76f29d5547a1bdca1b3c66f133f3fb070008bda5.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/normalization.py",
+          "size": 3683,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "088b21067ae592cecbe96f0afd3aa23d3884563a50ce9aa00a435d5b4569ec3a",
+          "saved_as": "archive_source/088b21067ae592cecbe96f0afd3aa23d3884563a50ce9aa00a435d5b4569ec3a.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/resblocks.py",
+          "size": 6546,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "6c5c9422529a056a733a84d47739076ecb70dbbee3e84a6f6a9ee3a93444efe5",
+          "saved_as": "archive_source/6c5c9422529a056a733a84d47739076ecb70dbbee3e84a6f6a9ee3a93444efe5.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/transforms.py",
+          "size": 10183,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "bae6ebacb60e1071e2bdcc4661285c261b4ad09ce4b7a9af769d55bab68fcd26",
+          "saved_as": "archive_source/bae6ebacb60e1071e2bdcc4661285c261b4ad09ce4b7a9af769d55bab68fcd26.py"
+        },
+        {
+          "name": "banhmi_train/vits/utils/wavenet.py",
+          "size": 3181,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "b0d0a7dd2ba22d9ba2661224bf1410d417e4fb003d538250a64ba71dad10bb41",
+          "saved_as": "archive_source/b0d0a7dd2ba22d9ba2661224bf1410d417e4fb003d538250a64ba71dad10bb41.py"
+        },
+        {
+          "name": "banhmi_train/warm_length_cache.py",
+          "size": 3104,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "b7342ad35db85e843e6037374a20ea63f282a9b8a8c1e39ef8f419adbc5747d0",
+          "saved_as": "archive_source/b7342ad35db85e843e6037374a20ea63f282a9b8a8c1e39ef8f419adbc5747d0.py"
+        },
+        {
+          "name": "banhmi_train/wavfile.py",
+          "size": 537,
+          "mtime": 1790603356,
+          "type": "0",
+          "sha256": "bbfc8bbe3fe3630939d5ee37679e898be3cc4ee241d822a117f312ddb13cc271",
+          "saved_as": "archive_source/bbfc8bbe3fe3630939d5ee37679e898be3cc4ee241d822a117f312ddb13cc271.py"
+        }
+      ],
+      "run_time_identity_verified": false
+    }
+  ],
+  "user_information": {
+    "date_local": "2026-10-04",
+    "quote": "hầu như chắc đã được ghi đè vào last của nó rồi thì phải",
+    "interpretation": "User considers overwriting likely; no confirmation that all copies are lost or that best-epoch files were overwritten.",
+    "resume_hash_recovery_status": "Unavailable in checked locations; cannot derive historical bytes from current last.ckpt."
+  },
+  "limits": [
+    "Tool outcomes do not prove that every later Linux run used these bytes.",
+    "Commands are evidence only and were never executed by this recovery script.",
+    "No complete guarantee of changes outside captured sessions.",
+    "Replayed text hashes do not establish original file encoding/line endings."
+  ]
+}

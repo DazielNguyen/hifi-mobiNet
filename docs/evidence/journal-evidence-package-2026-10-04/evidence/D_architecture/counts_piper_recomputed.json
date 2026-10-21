@@ -1,0 +1,36 @@
+{
+ "mode": "piper",
+ "torch": "2.14.1+cu130",
+ "convention": "RECOMPUTED parameter and decoder FLOP counts from the four checkpoints.\n\nParameter boundary: generator state_dict (model_g.*), weight-norm pairs folded\n(weight_g dropped, weight_v counted once) = the tensors an inference export carries.\nBuffers are not in the counts below unless they are state_dict entries; discriminators listed separately.\n\nFLOP convention (same as the historical /tmp/count_flops_seq.py, re-implemented):\n  MACs(Conv1d) = out_elements * in_channels/groups * kernel\n  MACs(ConvTranspose1d) = in_elements * out_channels/groups * kernel\n  FLOPs = 2 * MACs. Elementwise ops (SnakeBeta, LeakyReLU, tanh, adds, bias) are NOT counted.\n  Decoder only (model_g.dec), batch 1, input latent [1, 192, T].\n  Reported for T=86 frames (historical convention: 86*256 = 22016 samples = 0.99846 s)\n  and per exact second of audio (MACs per frame * 22050/256).\nUsage:\n  main env : recompute_D_counts.py banhmi <out.json>\n  piper env: recompute_D_counts.py piper  <out.json>\n",
+ "Piper (external published checkpoint)": {
+  "checkpoint": "<WSL_PROJECT_HOME>/piper_original/lj-med_1000.ckpt",
+  "params_folded_by_module": {
+   "model_g.enc_p": 6341760,
+   "model_g.dec": 1662976,
+   "model_g.enc_q": 7225920,
+   "model_g.flow": 7090560,
+   "model_g.dp": 1317168,
+   "model_d": 46730118
+  },
+  "inference_params_enc_p_dp_flow_dec": 16412464,
+  "decoder_params_folded_state_dict": 1662976,
+  "decoder_params_live_after_remove_weight_norm": 1662976,
+  "posterior_encoder_training_only": 7225920,
+  "discriminators_training_only": {
+   "model_d": 46730118
+  },
+  "decoder_macs_T86": 1950793728,
+  "decoder_macs_T86_parts": {
+   "conv1d": 1725349888,
+   "convtranspose1d": 225443840
+  },
+  "decoder_output_shape_T86": [
+   1,
+   1,
+   22016
+  ],
+  "decoder_gflops_T86": 3.901587456,
+  "decoder_macs_per_frame_T1000": 22683648.0,
+  "decoder_gflops_per_exact_second": 3.9076128
+ }
+}

@@ -1,0 +1,2989 @@
+{
+  "date": "2026-09-29",
+  "method": "Static source, metadata, JSON and project-file inventory only; no imports of ML runtimes, model construction, inference, export, quantization, training, or source/checkpoint modification.",
+  "records": [
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/ptq_quantize.py",
+      "bytes": 5442,
+      "sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+      "excerpts": [
+        {
+          "start": 29,
+          "end": 60,
+          "lines": [
+            {
+              "line": 29,
+              "text": "from onnxruntime.quantization import CalibrationDataReader, QuantFormat, QuantType, quantize_static"
+            },
+            {
+              "line": 30,
+              "text": ""
+            },
+            {
+              "line": 31,
+              "text": "# Present in both architectures identically (SynthesizerTrn.infer()'s"
+            },
+            {
+              "line": 32,
+              "text": "# attn-expansion matmuls for m_p/logs_p -- no learned weights)."
+            },
+            {
+              "line": 33,
+              "text": "ALWAYS_EXCLUDE_EXACT = {\"/MatMul\", \"/MatMul_1\"}"
+            },
+            {
+              "line": 34,
+              "text": "# Vocos-only: ISTFTHead's fixed identity-scatter overlap-add kernels."
+            },
+            {
+              "line": 35,
+              "text": "ALWAYS_EXCLUDE_VOCOS = {\"/dec/head/ConvTranspose\", \"/dec/head/ConvTranspose_1\"}"
+            },
+            {
+              "line": 36,
+              "text": ""
+            },
+            {
+              "line": 37,
+              "text": ""
+            },
+            {
+              "line": 38,
+              "text": "class JsonlCalibReader(CalibrationDataReader):"
+            },
+            {
+              "line": 39,
+              "text": "    def __init__(self, dataset_jsonl: Path, n_samples: int, seed: int = 42):"
+            },
+            {
+              "line": 40,
+              "text": "        entries = []"
+            },
+            {
+              "line": 41,
+              "text": "        with open(dataset_jsonl, \"r\", encoding=\"utf-8\") as f:"
+            },
+            {
+              "line": 42,
+              "text": "            for line in f:"
+            },
+            {
+              "line": 43,
+              "text": "                line = line.strip()"
+            },
+            {
+              "line": 44,
+              "text": "                if line:"
+            },
+            {
+              "line": 45,
+              "text": "                    entries.append(json.loads(line))"
+            },
+            {
+              "line": 46,
+              "text": "        rng = random.Random(seed)"
+            },
+            {
+              "line": 47,
+              "text": "        self.samples = rng.sample(entries, min(n_samples, len(entries)))"
+            },
+            {
+              "line": 48,
+              "text": "        self.i = 0"
+            },
+            {
+              "line": 49,
+              "text": ""
+            },
+            {
+              "line": 50,
+              "text": "    def get_next(self):"
+            },
+            {
+              "line": 51,
+              "text": "        if self.i >= len(self.samples):"
+            },
+            {
+              "line": 52,
+              "text": "            return None"
+            },
+            {
+              "line": 53,
+              "text": "        entry = self.samples[self.i]"
+            },
+            {
+              "line": 54,
+              "text": "        self.i += 1"
+            },
+            {
+              "line": 55,
+              "text": "        ids = np.array(entry[\"phoneme_ids\"], dtype=np.int64)[None, :]"
+            },
+            {
+              "line": 56,
+              "text": "        return {"
+            },
+            {
+              "line": 57,
+              "text": "            \"input\": ids,"
+            },
+            {
+              "line": 58,
+              "text": "            \"input_lengths\": np.array([ids.shape[1]], dtype=np.int64),"
+            },
+            {
+              "line": 59,
+              "text": "            \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+            },
+            {
+              "line": 60,
+              "text": "        }"
+            }
+          ]
+        },
+        {
+          "start": 63,
+          "end": 115,
+          "lines": [
+            {
+              "line": 63,
+              "text": "def main():"
+            },
+            {
+              "line": 64,
+              "text": "    parser = argparse.ArgumentParser()"
+            },
+            {
+              "line": 65,
+              "text": "    parser.add_argument(\"fp32_onnx\")"
+            },
+            {
+              "line": 66,
+              "text": "    parser.add_argument(\"output_onnx\")"
+            },
+            {
+              "line": 67,
+              "text": "    parser.add_argument(\"--submodules\", required=True, help=\"Comma-separated: enc_p,dp,flow,dec (which to QUANTIZE)\")"
+            },
+            {
+              "line": 68,
+              "text": "    parser.add_argument(\"--op-types\", required=True, help=\"Comma-separated: e.g. Conv,ConvTranspose or Conv,ConvTranspose,MatMul\")"
+            },
+            {
+              "line": 69,
+              "text": "    parser.add_argument(\"--exclude-leaf-substrings\", default=\"\", help=\"Comma-separated substrings; matching nodes skip quantization (e.g. conv_post or head/out)\")"
+            },
+            {
+              "line": 70,
+              "text": "    parser.add_argument(\"--is-vocos\", action=\"store_true\", help=\"Also apply the Vocos-specific always-exclude (fixed ISTFT ConvTranspose nodes)\")"
+            },
+            {
+              "line": 71,
+              "text": "    parser.add_argument(\"--calibration-dataset\", required=True)"
+            },
+            {
+              "line": 72,
+              "text": "    parser.add_argument(\"--calibration-sentences\", type=int, default=60)"
+            },
+            {
+              "line": 73,
+              "text": "    args = parser.parse_args()"
+            },
+            {
+              "line": 74,
+              "text": ""
+            },
+            {
+              "line": 75,
+              "text": "    submodules = tuple(s.strip() for s in args.submodules.split(\",\") if s.strip())"
+            },
+            {
+              "line": 76,
+              "text": "    op_types = tuple(s.strip() for s in args.op_types.split(\",\") if s.strip())"
+            },
+            {
+              "line": 77,
+              "text": "    exclude_substrings = tuple(s.strip() for s in args.exclude_leaf_substrings.split(\",\") if s.strip())"
+            },
+            {
+              "line": 78,
+              "text": ""
+            },
+            {
+              "line": 79,
+              "text": "    always_exclude = set(ALWAYS_EXCLUDE_EXACT)"
+            },
+            {
+              "line": 80,
+              "text": "    if args.is_vocos:"
+            },
+            {
+              "line": 81,
+              "text": "        always_exclude |= ALWAYS_EXCLUDE_VOCOS"
+            },
+            {
+              "line": 82,
+              "text": ""
+            },
+            {
+              "line": 83,
+              "text": "    model = onnx.load(args.fp32_onnx)"
+            },
+            {
+              "line": 84,
+              "text": "    all_target_type_nodes = [n.name for n in model.graph.node if n.op_type in op_types]"
+            },
+            {
+              "line": 85,
+              "text": ""
+            },
+            {
+              "line": 86,
+              "text": "    def in_scope(name: str) -> bool:"
+            },
+            {
+              "line": 87,
+              "text": "        return any(name.startswith(f\"/{sm}/\") for sm in submodules)"
+            },
+            {
+              "line": 88,
+              "text": ""
+            },
+            {
+              "line": 89,
+              "text": "    nodes_to_quantize_candidates = [n for n in all_target_type_nodes if in_scope(n)]"
+            },
+            {
+              "line": 90,
+              "text": "    exclude_nodes = [n for n in all_target_type_nodes if not in_scope(n)]"
+            },
+            {
+              "line": 91,
+              "text": "    # exclude_leaf_substrings further removes matches from the in-scope set"
+            },
+            {
+              "line": 92,
+              "text": "    exclude_nodes += ["
+            },
+            {
+              "line": 93,
+              "text": "        n for n in nodes_to_quantize_candidates"
+            },
+            {
+              "line": 94,
+              "text": "        if any(sub in n for sub in exclude_substrings)"
+            },
+            {
+              "line": 95,
+              "text": "    ]"
+            },
+            {
+              "line": 96,
+              "text": "    exclude_nodes += [n for n in all_target_type_nodes if n in always_exclude]"
+            },
+            {
+              "line": 97,
+              "text": "    exclude_nodes = sorted(set(exclude_nodes))"
+            },
+            {
+              "line": 98,
+              "text": ""
+            },
+            {
+              "line": 99,
+              "text": "    n_quantized = len(all_target_type_nodes) - len(exclude_nodes)"
+            },
+            {
+              "line": 100,
+              "text": "    print(f\"Quantizing {n_quantized}/{len(all_target_type_nodes)} target-type nodes \""
+            },
+            {
+              "line": 101,
+              "text": "          f\"(submodules={submodules}, op_types={op_types}, exclude_substrings={exclude_substrings})\")"
+            },
+            {
+              "line": 102,
+              "text": ""
+            },
+            {
+              "line": 103,
+              "text": "    calib_reader = JsonlCalibReader(Path(args.calibration_dataset), args.calibration_sentences)"
+            },
+            {
+              "line": 104,
+              "text": ""
+            },
+            {
+              "line": 105,
+              "text": "    quantize_static("
+            },
+            {
+              "line": 106,
+              "text": "        args.fp32_onnx,"
+            },
+            {
+              "line": 107,
+              "text": "        args.output_onnx,"
+            },
+            {
+              "line": 108,
+              "text": "        calibration_data_reader=calib_reader,"
+            },
+            {
+              "line": 109,
+              "text": "        quant_format=QuantFormat.QOperator,"
+            },
+            {
+              "line": 110,
+              "text": "        weight_type=QuantType.QInt8,"
+            },
+            {
+              "line": 111,
+              "text": "        activation_type=QuantType.QUInt8,"
+            },
+            {
+              "line": 112,
+              "text": "        op_types_to_quantize=list(op_types),"
+            },
+            {
+              "line": 113,
+              "text": "        nodes_to_exclude=exclude_nodes,"
+            },
+            {
+              "line": 114,
+              "text": "        per_channel=True,"
+            },
+            {
+              "line": 115,
+              "text": "    )"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/run_ptq_sweep.py",
+      "bytes": 5207,
+      "sha256": "f41705aefb1964d75682afb9acd38e5aac64a1a1da79309098b9ac35e418984e",
+      "excerpts": [
+        {
+          "start": 15,
+          "end": 37,
+          "lines": [
+            {
+              "line": 15,
+              "text": "SCRIPTS = Path(\"<WSL_PROJECT_HOME>/scripts\")"
+            },
+            {
+              "line": 16,
+              "text": "OUT_DIR = Path(\"<WSL_PROJECT_HOME>/quantized_models/ptq_sweep\")"
+            },
+            {
+              "line": 17,
+              "text": "PYTHON = \"<WSL_PROJECT_HOME>/env/bin/python\""
+            },
+            {
+              "line": 18,
+              "text": "DATASET = \"<WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl\""
+            },
+            {
+              "line": 19,
+              "text": "RESULTS_JSON = OUT_DIR / \"sweep_results.json\""
+            },
+            {
+              "line": 20,
+              "text": ""
+            },
+            {
+              "line": 21,
+              "text": "# (config_name, submodules_to_quantize, exclude_leaf_substrings)"
+            },
+            {
+              "line": 22,
+              "text": "CONFIGS = ["
+            },
+            {
+              "line": 23,
+              "text": "    (\"none\", \"\", \"\"),"
+            },
+            {
+              "line": 24,
+              "text": "    (\"flow_only\", \"flow\", \"\"),"
+            },
+            {
+              "line": 25,
+              "text": "    (\"flow_finallayer\", \"flow\", \"conv_post,head/out\"),"
+            },
+            {
+              "line": 26,
+              "text": "    (\"dp_only\", \"dp\", \"\"),"
+            },
+            {
+              "line": 27,
+              "text": "    (\"dec_only\", \"dec\", \"\"),"
+            },
+            {
+              "line": 28,
+              "text": "    (\"enc_p_only\", \"enc_p\", \"\"),"
+            },
+            {
+              "line": 29,
+              "text": "    (\"flow_enc_p\", \"flow,enc_p\", \"\"),"
+            },
+            {
+              "line": 30,
+              "text": "    (\"flow_dp\", \"flow,dp\", \"\"),"
+            },
+            {
+              "line": 31,
+              "text": "    (\"flow_dec\", \"flow,dec\", \"\"),"
+            },
+            {
+              "line": 32,
+              "text": "    (\"flow_enc_p_dp\", \"flow,enc_p,dp\", \"\"),"
+            },
+            {
+              "line": 33,
+              "text": "    (\"enc_p_dp\", \"enc_p,dp\", \"\"),"
+            },
+            {
+              "line": 34,
+              "text": "    (\"enc_p_dp_finallayer\", \"enc_p,dp\", \"conv_post,head/out\"),"
+            },
+            {
+              "line": 35,
+              "text": "    (\"everything\", \"enc_p,dp,flow,dec\", \"\"),"
+            },
+            {
+              "line": 36,
+              "text": "    (\"everything_except_finallayer\", \"enc_p,dp,flow,dec\", \"conv_post,head/out\"),"
+            },
+            {
+              "line": 37,
+              "text": "]"
+            }
+          ]
+        },
+        {
+          "start": 46,
+          "end": 106,
+          "lines": [
+            {
+              "line": 46,
+              "text": "def sweep_model(model_label: str, fp32_onnx: str, op_types: str, is_vocos: bool):"
+            },
+            {
+              "line": 47,
+              "text": "    results = {}"
+            },
+            {
+              "line": 48,
+              "text": "    if RESULTS_JSON.exists():"
+            },
+            {
+              "line": 49,
+              "text": "        results = json.loads(RESULTS_JSON.read_text())"
+            },
+            {
+              "line": 50,
+              "text": ""
+            },
+            {
+              "line": 51,
+              "text": "    for name, submodules, exclude_subs in CONFIGS:"
+            },
+            {
+              "line": 52,
+              "text": "        key = f\"{model_label}::{name}\""
+            },
+            {
+              "line": 53,
+              "text": "        if key in results:"
+            },
+            {
+              "line": 54,
+              "text": "            print(f\"SKIP (already done) {key}\", flush=True)"
+            },
+            {
+              "line": 55,
+              "text": "            continue"
+            },
+            {
+              "line": 56,
+              "text": ""
+            },
+            {
+              "line": 57,
+              "text": "        int8_path = OUT_DIR / f\"{model_label}_{name}.onnx\""
+            },
+            {
+              "line": 58,
+              "text": "        quant_cmd = ["
+            },
+            {
+              "line": 59,
+              "text": "            PYTHON, str(SCRIPTS / \"ptq_quantize.py\"),"
+            },
+            {
+              "line": 60,
+              "text": "            fp32_onnx, str(int8_path),"
+            },
+            {
+              "line": 61,
+              "text": "            \"--submodules\", submodules if submodules else \"__none__\","
+            },
+            {
+              "line": 62,
+              "text": "            \"--op-types\", op_types,"
+            },
+            {
+              "line": 63,
+              "text": "            \"--exclude-leaf-substrings\", exclude_subs,"
+            },
+            {
+              "line": 64,
+              "text": "            \"--calibration-dataset\", DATASET,"
+            },
+            {
+              "line": 65,
+              "text": "            \"--calibration-sentences\", \"60\","
+            },
+            {
+              "line": 66,
+              "text": "        ]"
+            },
+            {
+              "line": 67,
+              "text": "        if is_vocos:"
+            },
+            {
+              "line": 68,
+              "text": "            quant_cmd.append(\"--is-vocos\")"
+            },
+            {
+              "line": 69,
+              "text": ""
+            },
+            {
+              "line": 70,
+              "text": "        t0 = time.time()"
+            },
+            {
+              "line": 71,
+              "text": "        r = run(quant_cmd)"
+            },
+            {
+              "line": 72,
+              "text": "        quant_time = time.time() - t0"
+            },
+            {
+              "line": 73,
+              "text": "        if r.returncode != 0:"
+            },
+            {
+              "line": 74,
+              "text": "            print(f\"QUANTIZE FAILED {key}:\\n{r.stderr[-2000:]}\", flush=True)"
+            },
+            {
+              "line": 75,
+              "text": "            results[key] = {\"error\": \"quantize_failed\", \"stderr_tail\": r.stderr[-1000:]}"
+            },
+            {
+              "line": 76,
+              "text": "            RESULTS_JSON.write_text(json.dumps(results, indent=2))"
+            },
+            {
+              "line": 77,
+              "text": "            continue"
+            },
+            {
+              "line": 78,
+              "text": "        print(r.stdout.strip().splitlines()[-1] if r.stdout.strip() else \"(no stdout)\", flush=True)"
+            },
+            {
+              "line": 79,
+              "text": ""
+            },
+            {
+              "line": 80,
+              "text": "        eval_cmd = ["
+            },
+            {
+              "line": 81,
+              "text": "            PYTHON, str(SCRIPTS / \"eval_wer_cheap.py\"),"
+            },
+            {
+              "line": 82,
+              "text": "            str(int8_path), \"--dataset\", DATASET, \"--n-samples\", \"25\","
+            },
+            {
+              "line": 83,
+              "text": "        ]"
+            },
+            {
+              "line": 84,
+              "text": "        t0 = time.time()"
+            },
+            {
+              "line": 85,
+              "text": "        r = run(eval_cmd)"
+            },
+            {
+              "line": 86,
+              "text": "        eval_time = time.time() - t0"
+            },
+            {
+              "line": 87,
+              "text": "        if r.returncode != 0:"
+            },
+            {
+              "line": 88,
+              "text": "            print(f\"EVAL FAILED {key}:\\n{r.stderr[-2000:]}\", flush=True)"
+            },
+            {
+              "line": 89,
+              "text": "            results[key] = {\"error\": \"eval_failed\", \"stderr_tail\": r.stderr[-1000:]}"
+            },
+            {
+              "line": 90,
+              "text": "            RESULTS_JSON.write_text(json.dumps(results, indent=2))"
+            },
+            {
+              "line": 91,
+              "text": "            continue"
+            },
+            {
+              "line": 92,
+              "text": ""
+            },
+            {
+              "line": 93,
+              "text": "        wer = None"
+            },
+            {
+              "line": 94,
+              "text": "        for line in r.stdout.strip().splitlines():"
+            },
+            {
+              "line": 95,
+              "text": "            if line.startswith(\"{\"):"
+            },
+            {
+              "line": 96,
+              "text": "                wer = json.loads(line)[\"wer\"]"
+            },
+            {
+              "line": 97,
+              "text": "        size_mb = int8_path.stat().st_size / (1024 * 1024)"
+            },
+            {
+              "line": 98,
+              "text": "        results[key] = {"
+            },
+            {
+              "line": 99,
+              "text": "            \"submodules\": submodules, \"exclude_subs\": exclude_subs,"
+            },
+            {
+              "line": 100,
+              "text": "            \"wer\": wer, \"size_mb\": round(size_mb, 1),"
+            },
+            {
+              "line": 101,
+              "text": "            \"quant_time_s\": round(quant_time, 1), \"eval_time_s\": round(eval_time, 1),"
+            },
+            {
+              "line": 102,
+              "text": "        }"
+            },
+            {
+              "line": 103,
+              "text": "        print(f\"DONE {key}: wer={wer} size={size_mb:.1f}MB\", flush=True)"
+            },
+            {
+              "line": 104,
+              "text": "        RESULTS_JSON.write_text(json.dumps(results, indent=2))"
+            },
+            {
+              "line": 105,
+              "text": "        # Free disk: sweep is 14 configs x ~model_size each; keep only if small"
+            },
+            {
+              "line": 106,
+              "text": "        # enough to matter -- leave files in place for now, disk has room."
+            }
+          ]
+        },
+        {
+          "start": 109,
+          "end": 130,
+          "lines": [
+            {
+              "line": 109,
+              "text": "def main():"
+            },
+            {
+              "line": 110,
+              "text": "    OUT_DIR.mkdir(parents=True, exist_ok=True)"
+            },
+            {
+              "line": 111,
+              "text": "    which = sys.argv[1] if len(sys.argv) > 1 else \"both\""
+            },
+            {
+              "line": 112,
+              "text": ""
+            },
+            {
+              "line": 113,
+              "text": "    if which in (\"both\", \"baseline\"):"
+            },
+            {
+              "line": 114,
+              "text": "        print(\"=== BASELINE SWEEP (Conv/ConvTranspose only) ===\", flush=True)"
+            },
+            {
+              "line": 115,
+              "text": "        sweep_model("
+            },
+            {
+              "line": 116,
+              "text": "            \"baseline\", str(OUT_DIR / \"baseline_fp32.onnx\"),"
+            },
+            {
+              "line": 117,
+              "text": "            op_types=\"Conv,ConvTranspose\", is_vocos=False,"
+            },
+            {
+              "line": 118,
+              "text": "        )"
+            },
+            {
+              "line": 119,
+              "text": "    if which in (\"both\", \"mrf\"):"
+            },
+            {
+              "line": 120,
+              "text": "        print(\"=== MRF SWEEP (Conv/ConvTranspose only) ===\", flush=True)"
+            },
+            {
+              "line": 121,
+              "text": "        sweep_model("
+            },
+            {
+              "line": 122,
+              "text": "            \"mrf\", str(OUT_DIR / \"mrf_fp32.onnx\"),"
+            },
+            {
+              "line": 123,
+              "text": "            op_types=\"Conv,ConvTranspose\", is_vocos=False,"
+            },
+            {
+              "line": 124,
+              "text": "        )"
+            },
+            {
+              "line": 125,
+              "text": "    if which in (\"both\", \"vocos_small\"):"
+            },
+            {
+              "line": 126,
+              "text": "        print(\"=== VOCOS_SMALL SWEEP (Conv+ConvTranspose+MatMul) ===\", flush=True)"
+            },
+            {
+              "line": 127,
+              "text": "        sweep_model("
+            },
+            {
+              "line": 128,
+              "text": "            \"vocos_small\", str(OUT_DIR / \"vocos_small_fp32.onnx\"),"
+            },
+            {
+              "line": 129,
+              "text": "            op_types=\"Conv,ConvTranspose,MatMul\", is_vocos=True,"
+            },
+            {
+              "line": 130,
+              "text": "        )"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/eval_wer_cheap.py",
+      "bytes": 2856,
+      "sha256": "29e88c096cfc567afe3acfe50ee4c43eb10741665b0ec855a592ced713b020d2",
+      "excerpts": [
+        {
+          "start": 18,
+          "end": 24,
+          "lines": [
+            {
+              "line": 18,
+              "text": "_NORM_RE = re.compile(r\"[^a-z0-9' ]+\")"
+            },
+            {
+              "line": 19,
+              "text": ""
+            },
+            {
+              "line": 20,
+              "text": ""
+            },
+            {
+              "line": 21,
+              "text": "def normalize(text: str) -> str:"
+            },
+            {
+              "line": 22,
+              "text": "    text = text.lower().strip()"
+            },
+            {
+              "line": 23,
+              "text": "    text = _NORM_RE.sub(\" \", text)"
+            },
+            {
+              "line": 24,
+              "text": "    return re.sub(r\"\\s+\", \" \", text).strip()"
+            }
+          ]
+        },
+        {
+          "start": 27,
+          "end": 80,
+          "lines": [
+            {
+              "line": 27,
+              "text": "def main():"
+            },
+            {
+              "line": 28,
+              "text": "    parser = argparse.ArgumentParser()"
+            },
+            {
+              "line": 29,
+              "text": "    parser.add_argument(\"model_path\")"
+            },
+            {
+              "line": 30,
+              "text": "    parser.add_argument(\"--dataset\", required=True)"
+            },
+            {
+              "line": 31,
+              "text": "    parser.add_argument(\"--n-samples\", type=int, default=25)"
+            },
+            {
+              "line": 32,
+              "text": "    parser.add_argument(\"--seed\", type=int, default=123)"
+            },
+            {
+              "line": 33,
+              "text": "    args = parser.parse_args()"
+            },
+            {
+              "line": 34,
+              "text": ""
+            },
+            {
+              "line": 35,
+              "text": "    random.seed(args.seed)"
+            },
+            {
+              "line": 36,
+              "text": "    entries = []"
+            },
+            {
+              "line": 37,
+              "text": "    with open(args.dataset, encoding=\"utf-8\") as f:"
+            },
+            {
+              "line": 38,
+              "text": "        for line in f:"
+            },
+            {
+              "line": 39,
+              "text": "            line = line.strip()"
+            },
+            {
+              "line": 40,
+              "text": "            if line:"
+            },
+            {
+              "line": 41,
+              "text": "                entries.append(json.loads(line))"
+            },
+            {
+              "line": 42,
+              "text": "    test_entries = random.sample(entries, args.n_samples)"
+            },
+            {
+              "line": 43,
+              "text": ""
+            },
+            {
+              "line": 44,
+              "text": "    print(\"Loading Whisper (base.en) ...\", flush=True)"
+            },
+            {
+              "line": 45,
+              "text": "    import whisper"
+            },
+            {
+              "line": 46,
+              "text": "    whisper_model = whisper.load_model(\"base.en\")"
+            },
+            {
+              "line": 47,
+              "text": ""
+            },
+            {
+              "line": 48,
+              "text": "    sess = ort.InferenceSession(args.model_path, providers=[\"CPUExecutionProvider\"])"
+            },
+            {
+              "line": 49,
+              "text": "    wers = []"
+            },
+            {
+              "line": 50,
+              "text": "    t_start = time.perf_counter()"
+            },
+            {
+              "line": 51,
+              "text": ""
+            },
+            {
+              "line": 52,
+              "text": "    for i, e in enumerate(test_entries):"
+            },
+            {
+              "line": 53,
+              "text": "        ids = np.array(e[\"phoneme_ids\"], dtype=np.int64)[None, :]"
+            },
+            {
+              "line": 54,
+              "text": "        feed = {"
+            },
+            {
+              "line": 55,
+              "text": "            \"input\": ids,"
+            },
+            {
+              "line": 56,
+              "text": "            \"input_lengths\": np.array([ids.shape[1]], dtype=np.int64),"
+            },
+            {
+              "line": 57,
+              "text": "            \"scales\": np.array([0.667, 1.0, 0.8], dtype=np.float32),"
+            },
+            {
+              "line": 58,
+              "text": "        }"
+            },
+            {
+              "line": 59,
+              "text": "        try:"
+            },
+            {
+              "line": 60,
+              "text": "            audio = sess.run(None, feed)[0]"
+            },
+            {
+              "line": 61,
+              "text": "        except Exception as ex:"
+            },
+            {
+              "line": 62,
+              "text": "            print(f\"  [{i+1}] INFERENCE FAILED: {type(ex).__name__}: {str(ex)[:200]}\", flush=True)"
+            },
+            {
+              "line": 63,
+              "text": "            wers.append(1.0)"
+            },
+            {
+              "line": 64,
+              "text": "            continue"
+            },
+            {
+              "line": 65,
+              "text": "        audio = np.squeeze(audio).astype(np.float32)"
+            },
+            {
+              "line": 66,
+              "text": "        if audio.ndim == 0 or audio.size < 1000 or not np.isfinite(audio).all():"
+            },
+            {
+              "line": 67,
+              "text": "            print(f\"  [{i+1}] DEGENERATE OUTPUT (shape={audio.shape})\", flush=True)"
+            },
+            {
+              "line": 68,
+              "text": "            wers.append(1.0)"
+            },
+            {
+              "line": 69,
+              "text": "            continue"
+            },
+            {
+              "line": 70,
+              "text": ""
+            },
+            {
+              "line": 71,
+              "text": "        whisper_result = whisper_model.transcribe(audio, language=\"en\", fp16=False)"
+            },
+            {
+              "line": 72,
+              "text": "        hyp = normalize(whisper_result[\"text\"])"
+            },
+            {
+              "line": 73,
+              "text": "        ref = normalize(e[\"text\"])"
+            },
+            {
+              "line": 74,
+              "text": "        utt_wer = jiwer.wer(ref, hyp) if ref else 1.0"
+            },
+            {
+              "line": 75,
+              "text": "        wers.append(utt_wer)"
+            },
+            {
+              "line": 76,
+              "text": ""
+            },
+            {
+              "line": 77,
+              "text": "    elapsed = time.perf_counter() - t_start"
+            },
+            {
+              "line": 78,
+              "text": "    result = {\"n\": len(wers), \"wer\": float(np.mean(wers)), \"elapsed_s\": elapsed}"
+            },
+            {
+              "line": 79,
+              "text": "    print(f\"RESULT {args.model_path}: n={result['n']} WER={result['wer']:.4f} ({elapsed:.0f}s)\", flush=True)"
+            },
+            {
+              "line": 80,
+              "text": "    print(json.dumps(result))"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/training.py",
+      "bytes": 43833,
+      "sha256": "1164fae3cfa9c163ca990eaa24472c64458e162a85a1b87a77e0e62d526f926e",
+      "excerpts": [
+        {
+          "start": 40,
+          "end": 48,
+          "lines": [
+            {
+              "line": 40,
+              "text": "_LOGGER = logging.getLogger(\"banhmi_train.vits.training\")"
+            },
+            {
+              "line": 41,
+              "text": ""
+            },
+            {
+              "line": 42,
+              "text": "# Dedicated seed for the train/val/test split only -- deliberately separate"
+            },
+            {
+              "line": 43,
+              "text": "# from --seed (which governs weight init/dropout/etc, and can legitimately"
+            },
+            {
+              "line": 44,
+              "text": "# differ run to run) so every architecture ever trained on this dataset"
+            },
+            {
+              "line": 45,
+              "text": "# gets the exact same split. See VitsModel._load_dataset's use of this."
+            },
+            {
+              "line": 46,
+              "text": "_DATASET_SPLIT_SEED = 20260101"
+            },
+            {
+              "line": 47,
+              "text": ""
+            },
+            {
+              "line": 48,
+              "text": "_N_SPEAKERS = 1"
+            }
+          ]
+        },
+        {
+          "start": 233,
+          "end": 239,
+          "lines": [
+            {
+              "line": 233,
+              "text": "        self._train_dataset: Optional[Dataset] = None"
+            },
+            {
+              "line": 234,
+              "text": "        self._val_dataset: Optional[Dataset] = None"
+            },
+            {
+              "line": 235,
+              "text": "        self._test_dataset: Optional[Dataset] = None"
+            },
+            {
+              "line": 236,
+              "text": "        self._audio_sample_dataset: Optional[Dataset] = None"
+            },
+            {
+              "line": 237,
+              "text": "        self._train_batch_sampler: Optional[LengthBucketBatchSampler] = None"
+            },
+            {
+              "line": 238,
+              "text": "        self._load_datasets(num_val_examples, num_test_examples, num_audio_samples, max_phoneme_ids)"
+            },
+            {
+              "line": 239,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "start": 253,
+          "end": 315,
+          "lines": [
+            {
+              "line": 253,
+              "text": "        self._last_batch_fingerprint = None"
+            },
+            {
+              "line": 254,
+              "text": ""
+            },
+            {
+              "line": 255,
+              "text": "    def _load_datasets("
+            },
+            {
+              "line": 256,
+              "text": "        self,"
+            },
+            {
+              "line": 257,
+              "text": "        num_val_examples: int,"
+            },
+            {
+              "line": 258,
+              "text": "        num_test_examples: int,"
+            },
+            {
+              "line": 259,
+              "text": "        num_audio_samples: int,"
+            },
+            {
+              "line": 260,
+              "text": "        max_phoneme_ids: Optional[int],"
+            },
+            {
+              "line": 261,
+              "text": "    ):"
+            },
+            {
+              "line": 262,
+              "text": "        if not self.hparams.dataset:"
+            },
+            {
+              "line": 263,
+              "text": "            _LOGGER.debug(\"No dataset to load\")"
+            },
+            {
+              "line": 264,
+              "text": "            return"
+            },
+            {
+              "line": 265,
+              "text": ""
+            },
+            {
+              "line": 266,
+              "text": "        full_dataset = VitsDataset(self.hparams.dataset[0], max_phoneme_ids=max_phoneme_ids)"
+            },
+            {
+              "line": 267,
+              "text": "        train_size = len(full_dataset) - num_val_examples - num_test_examples"
+            },
+            {
+              "line": 268,
+              "text": "        if train_size <= 0:"
+            },
+            {
+              "line": 269,
+              "text": "            raise ValueError("
+            },
+            {
+              "line": 270,
+              "text": "                f\"num_val_examples ({num_val_examples}) + num_test_examples ({num_test_examples}) \""
+            },
+            {
+              "line": 271,
+              "text": "                f\">= dataset size ({len(full_dataset)}) -- nothing left to train on\""
+            },
+            {
+              "line": 272,
+              "text": "            )"
+            },
+            {
+              "line": 273,
+              "text": ""
+            },
+            {
+              "line": 274,
+              "text": "        # Fixed, architecture-independent generator for the split -- using"
+            },
+            {
+              "line": 275,
+              "text": "        # the ambient global RNG here (seeded once via --seed, then advanced"
+            },
+            {
+              "line": 276,
+              "text": "        # by however many random draws model weight-init consumed) made the"
+            },
+            {
+              "line": 277,
+              "text": "        # train/val/test split silently depend on the model's own param"
+            },
+            {
+              "line": 278,
+              "text": "        # count: two architectures with the same --seed but different"
+            },
+            {
+              "line": 279,
+              "text": "        # numbers of randomly-initialized weights reach this call with the"
+            },
+            {
+              "line": 280,
+              "text": "        # global RNG in different states, producing DIFFERENT splits (and"
+            },
+            {
+              "line": 281,
+              "text": "        # therefore train/test leakage when one model's \"held-out\" test"
+            },
+            {
+              "line": 282,
+              "text": "        # utterances turn out to be in the other's training set -- see"
+            },
+            {
+              "line": 283,
+              "text": "        # docs/mrf_full_investigation_report.md SS8.2). A dedicated"
+            },
+            {
+              "line": 284,
+              "text": "        # generator seeded with a constant, independent of --seed and of"
+            },
+            {
+              "line": 285,
+              "text": "        # anything consumed before this line, makes the split identical"
+            },
+            {
+              "line": 286,
+              "text": "        # across every architecture trained on this dataset from now on."
+            },
+            {
+              "line": 287,
+              "text": "        #"
+            },
+            {
+              "line": 288,
+              "text": "        # Preferred path: a canonical_split.json next to the dataset, listing"
+            },
+            {
+              "line": 289,
+              "text": "        # each utterance's audio_norm_path per partition -- lets a NEW"
+            },
+            {
+              "line": 290,
+              "text": "        # architecture reuse an EXISTING model's exact already-trained split"
+            },
+            {
+              "line": 291,
+              "text": "        # (e.g. baseline's) without retraining that existing model, which"
+            },
+            {
+              "line": 292,
+              "text": "        # the generator-seed fallback below cannot do (a fixed seed only"
+            },
+            {
+              "line": 293,
+              "text": "        # guarantees new runs match EACH OTHER, not a specific past run that"
+            },
+            {
+              "line": 294,
+              "text": "        # was itself produced by the old architecture-dependent mechanism)."
+            },
+            {
+              "line": 295,
+              "text": "        canonical_split_path = Path(self.hparams.dataset[0]).parent / \"canonical_split.json\""
+            },
+            {
+              "line": 296,
+              "text": "        if canonical_split_path.exists():"
+            },
+            {
+              "line": 297,
+              "text": "            with open(canonical_split_path, \"r\", encoding=\"utf-8\") as split_file:"
+            },
+            {
+              "line": 298,
+              "text": "                canonical_split = json.load(split_file)"
+            },
+            {
+              "line": 299,
+              "text": "            path_to_index = {str(u.audio_norm_path): i for i, u in enumerate(full_dataset.utterances)}"
+            },
+            {
+              "line": 300,
+              "text": "            train_idx = [path_to_index[p] for p in canonical_split[\"train\"]]"
+            },
+            {
+              "line": 301,
+              "text": "            val_idx = [path_to_index[p] for p in canonical_split[\"val\"]]"
+            },
+            {
+              "line": 302,
+              "text": "            test_idx = [path_to_index[p] for p in canonical_split[\"test\"]]"
+            },
+            {
+              "line": 303,
+              "text": "            self._train_dataset = Subset(full_dataset, train_idx)"
+            },
+            {
+              "line": 304,
+              "text": "            self._val_dataset = Subset(full_dataset, val_idx)"
+            },
+            {
+              "line": 305,
+              "text": "            self._test_dataset = Subset(full_dataset, test_idx)"
+            },
+            {
+              "line": 306,
+              "text": "            _LOGGER.info(\"Loaded canonical train/val/test split from %s\", canonical_split_path)"
+            },
+            {
+              "line": 307,
+              "text": "        else:"
+            },
+            {
+              "line": 308,
+              "text": "            split_generator = torch.Generator().manual_seed(_DATASET_SPLIT_SEED)"
+            },
+            {
+              "line": 309,
+              "text": "            self._train_dataset, self._val_dataset, self._test_dataset = random_split("
+            },
+            {
+              "line": 310,
+              "text": "                full_dataset, [train_size, num_val_examples, num_test_examples], generator=split_generator"
+            },
+            {
+              "line": 311,
+              "text": "            )"
+            },
+            {
+              "line": 312,
+              "text": "        # A handful of *validation* utterances (never the held-out test set)"
+            },
+            {
+              "line": 313,
+              "text": "        # purely for logging listenable audio samples during training."
+            },
+            {
+              "line": 314,
+              "text": "        num_audio_samples = min(num_audio_samples, len(self._val_dataset))"
+            },
+            {
+              "line": 315,
+              "text": "        self._audio_sample_dataset = Subset(self._val_dataset, range(num_audio_samples))"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/scripts/check_split_baseline.py",
+      "bytes": 1668,
+      "sha256": "316f69ff5a03afe8419fc693decfc38d859e2821b42a392c91d2fdfe7578a8c4",
+      "excerpts": [
+        {
+          "start": 10,
+          "end": 24,
+          "lines": [
+            {
+              "line": 10,
+              "text": "from banhmi_train.vits.training import VitsModel"
+            },
+            {
+              "line": 11,
+              "text": ""
+            },
+            {
+              "line": 12,
+              "text": "DATASET = \"<WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl\""
+            },
+            {
+              "line": 13,
+              "text": ""
+            },
+            {
+              "line": 14,
+              "text": "torch.manual_seed(1234)"
+            },
+            {
+              "line": 15,
+              "text": ""
+            },
+            {
+              "line": 16,
+              "text": "model = VitsModel("
+            },
+            {
+              "line": 17,
+              "text": "    num_symbols=256,"
+            },
+            {
+              "line": 18,
+              "text": "    sample_rate=22050,"
+            },
+            {
+              "line": 19,
+              "text": "    dataset=[DATASET],"
+            },
+            {
+              "line": 20,
+              "text": "    batch_size=16,"
+            },
+            {
+              "line": 21,
+              "text": "    num_workers=8,"
+            },
+            {
+              "line": 22,
+              "text": "    num_val_examples=100,"
+            },
+            {
+              "line": 23,
+              "text": "    num_test_examples=500,"
+            },
+            {
+              "line": 24,
+              "text": "    num_audio_samples=5,"
+            }
+          ]
+        },
+        {
+          "start": 49,
+          "end": 61,
+          "lines": [
+            {
+              "line": 49,
+              "text": ")"
+            },
+            {
+              "line": 50,
+              "text": ""
+            },
+            {
+              "line": 51,
+              "text": "test_indices = set(model._test_dataset.indices)"
+            },
+            {
+              "line": 52,
+              "text": "print(f\"Real held-out test set size: {len(test_indices)}\")"
+            },
+            {
+              "line": 53,
+              "text": ""
+            },
+            {
+              "line": 54,
+              "text": "full_entries = []"
+            },
+            {
+              "line": 55,
+              "text": "with open(DATASET) as f:"
+            },
+            {
+              "line": 56,
+              "text": "    for line in f:"
+            },
+            {
+              "line": 57,
+              "text": "        full_entries.append(json.loads(line))"
+            },
+            {
+              "line": 58,
+              "text": "true_test_entries = [full_entries[i] for i in sorted(test_indices)]"
+            },
+            {
+              "line": 59,
+              "text": "with open(\"/tmp/eval_true_testset_500_baseline.json\", \"w\") as f:"
+            },
+            {
+              "line": 60,
+              "text": "    json.dump(true_test_entries, f)"
+            },
+            {
+              "line": 61,
+              "text": "print(f\"Saved {len(true_test_entries)} true held-out entries -> /tmp/eval_true_testset_500_baseline.json\")"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/quantize.py",
+      "bytes": 52856,
+      "sha256": "493df927961550e143cfa0b59041b2865df16fc3848e52207514a082ed4bbe83",
+      "excerpts": [
+        {
+          "start": 479,
+          "end": 495,
+          "lines": [
+            {
+              "line": 479,
+              "text": "def quantize_static("
+            },
+            {
+              "line": 480,
+              "text": "    model_input: str | Path | onnx.ModelProto,"
+            },
+            {
+              "line": 481,
+              "text": "    model_output: str | Path,"
+            },
+            {
+              "line": 482,
+              "text": "    calibration_data_reader: CalibrationDataReader,"
+            },
+            {
+              "line": 483,
+              "text": "    quant_format=QuantFormat.QDQ,"
+            },
+            {
+              "line": 484,
+              "text": "    op_types_to_quantize=None,"
+            },
+            {
+              "line": 485,
+              "text": "    per_channel=False,"
+            },
+            {
+              "line": 486,
+              "text": "    reduce_range=False,"
+            },
+            {
+              "line": 487,
+              "text": "    activation_type=QuantType.QInt8,"
+            },
+            {
+              "line": 488,
+              "text": "    weight_type=QuantType.QInt8,"
+            },
+            {
+              "line": 489,
+              "text": "    nodes_to_quantize=None,"
+            },
+            {
+              "line": 490,
+              "text": "    nodes_to_exclude=None,"
+            },
+            {
+              "line": 491,
+              "text": "    use_external_data_format=False,"
+            },
+            {
+              "line": 492,
+              "text": "    calibrate_method=CalibrationMethod.MinMax,"
+            },
+            {
+              "line": 493,
+              "text": "    calibration_providers=None,"
+            },
+            {
+              "line": 494,
+              "text": "    extra_options=None,"
+            },
+            {
+              "line": 495,
+              "text": "):"
+            }
+          ]
+        },
+        {
+          "start": 702,
+          "end": 734,
+          "lines": [
+            {
+              "line": 702,
+              "text": "    updated_model = update_opset_version(model, weight_type)"
+            },
+            {
+              "line": 703,
+              "text": "    is_model_updated = updated_model is not model"
+            },
+            {
+              "line": 704,
+              "text": "    if is_model_updated:"
+            },
+            {
+              "line": 705,
+              "text": "        model = updated_model"
+            },
+            {
+              "line": 706,
+              "text": ""
+            },
+            {
+              "line": 707,
+              "text": "    with tempfile.TemporaryDirectory(prefix=\"ort.quant.\") as quant_tmp_dir:"
+            },
+            {
+              "line": 708,
+              "text": "        if is_model_updated:"
+            },
+            {
+              "line": 709,
+              "text": "            # Update model_input and avoid to use the original one"
+            },
+            {
+              "line": 710,
+              "text": "            model_input = copy.deepcopy(model)"
+            },
+            {
+              "line": 711,
+              "text": ""
+            },
+            {
+              "line": 712,
+              "text": "        if isinstance(model_input, onnx.ModelProto):"
+            },
+            {
+              "line": 713,
+              "text": "            output_path = Path(quant_tmp_dir).joinpath(\"model_input.onnx\").as_posix()"
+            },
+            {
+              "line": 714,
+              "text": "            onnx.save_model("
+            },
+            {
+              "line": 715,
+              "text": "                model_input,"
+            },
+            {
+              "line": 716,
+              "text": "                output_path,"
+            },
+            {
+              "line": 717,
+              "text": "                save_as_external_data=True,"
+            },
+            {
+              "line": 718,
+              "text": "            )"
+            },
+            {
+              "line": 719,
+              "text": "            model_input = output_path"
+            },
+            {
+              "line": 720,
+              "text": ""
+            },
+            {
+              "line": 721,
+              "text": "        calibrator = create_calibrator("
+            },
+            {
+              "line": 722,
+              "text": "            Path(model_input),"
+            },
+            {
+              "line": 723,
+              "text": "            op_types_to_quantize,"
+            },
+            {
+              "line": 724,
+              "text": "            augmented_model_path=Path(quant_tmp_dir).joinpath(\"augmented_model.onnx\").as_posix(),"
+            },
+            {
+              "line": 725,
+              "text": "            calibrate_method=calibrate_method,"
+            },
+            {
+              "line": 726,
+              "text": "            use_external_data_format=use_external_data_format,"
+            },
+            {
+              "line": 727,
+              "text": "            providers=calibration_providers,"
+            },
+            {
+              "line": 728,
+              "text": "            extra_options=calib_extra_options,"
+            },
+            {
+              "line": 729,
+              "text": "        )"
+            },
+            {
+              "line": 730,
+              "text": ""
+            },
+            {
+              "line": 731,
+              "text": "        stride = extra_options.get(\"CalibStridedMinMax\", None)"
+            },
+            {
+              "line": 732,
+              "text": "        if stride:"
+            },
+            {
+              "line": 733,
+              "text": "            total_data_size = len(calibration_data_reader)"
+            },
+            {
+              "line": 734,
+              "text": "            if total_data_size % stride != 0:"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime/quantization/calibrate.py",
+      "bytes": 52768,
+      "sha256": "7c8d44468191cc1c8d7df91b06512dcad21229c646d9d0180e7c0d3ab6cbe32e",
+      "excerpts": [
+        {
+          "start": 213,
+          "end": 239,
+          "lines": [
+            {
+              "line": 213,
+              "text": "        self.augmented_model_path = augmented_model_path"
+            },
+            {
+              "line": 214,
+              "text": "        self.symmetric = symmetric"
+            },
+            {
+              "line": 215,
+              "text": "        self.use_external_data_format = use_external_data_format"
+            },
+            {
+              "line": 216,
+              "text": "        self.per_channel = per_channel"
+            },
+            {
+              "line": 217,
+              "text": ""
+            },
+            {
+              "line": 218,
+              "text": "        self.augment_model = None"
+            },
+            {
+              "line": 219,
+              "text": "        self.infer_session = None"
+            },
+            {
+              "line": 220,
+              "text": "        self.execution_providers = [\"CPUExecutionProvider\"]"
+            },
+            {
+              "line": 221,
+              "text": ""
+            },
+            {
+              "line": 222,
+              "text": "    def set_execution_providers(self, execution_providers=[\"CPUExecutionProvider\"]):  # noqa: B006"
+            },
+            {
+              "line": 223,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 224,
+              "text": "        reset the execution providers to execute the collect_data. It triggers to re-creating inference session."
+            },
+            {
+              "line": 225,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 226,
+              "text": "        self.execution_providers = execution_providers"
+            },
+            {
+              "line": 227,
+              "text": "        self.create_inference_session()"
+            },
+            {
+              "line": 228,
+              "text": ""
+            },
+            {
+              "line": 229,
+              "text": "    def create_inference_session(self):"
+            },
+            {
+              "line": 230,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 231,
+              "text": "        create an OnnxRuntime InferenceSession."
+            },
+            {
+              "line": 232,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 233,
+              "text": "        sess_options = onnxruntime.SessionOptions()"
+            },
+            {
+              "line": 234,
+              "text": "        sess_options.graph_optimization_level = onnxruntime.GraphOptimizationLevel.ORT_DISABLE_ALL"
+            },
+            {
+              "line": 235,
+              "text": "        self.infer_session = onnxruntime.InferenceSession("
+            },
+            {
+              "line": 236,
+              "text": "            self.augmented_model_path,"
+            },
+            {
+              "line": 237,
+              "text": "            sess_options=sess_options,"
+            },
+            {
+              "line": 238,
+              "text": "            providers=self.execution_providers,"
+            },
+            {
+              "line": 239,
+              "text": "        )"
+            }
+          ]
+        },
+        {
+          "start": 297,
+          "end": 320,
+          "lines": [
+            {
+              "line": 297,
+              "text": "class MinMaxCalibrater(CalibraterBase):"
+            },
+            {
+              "line": 298,
+              "text": "    def __init__("
+            },
+            {
+              "line": 299,
+              "text": "        self,"
+            },
+            {
+              "line": 300,
+              "text": "        model_path: str | Path,"
+            },
+            {
+              "line": 301,
+              "text": "        op_types_to_calibrate: Sequence[str] | None = None,"
+            },
+            {
+              "line": 302,
+              "text": "        augmented_model_path=\"augmented_model.onnx\","
+            },
+            {
+              "line": 303,
+              "text": "        symmetric=False,"
+            },
+            {
+              "line": 304,
+              "text": "        use_external_data_format=False,"
+            },
+            {
+              "line": 305,
+              "text": "        moving_average=False,"
+            },
+            {
+              "line": 306,
+              "text": "        averaging_constant=0.01,"
+            },
+            {
+              "line": 307,
+              "text": "        max_intermediate_outputs=None,"
+            },
+            {
+              "line": 308,
+              "text": "        per_channel=False,"
+            },
+            {
+              "line": 309,
+              "text": "    ):"
+            },
+            {
+              "line": 310,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 311,
+              "text": "        :param model_path: ONNX model to calibrate. It is a model path"
+            },
+            {
+              "line": 312,
+              "text": "        :param op_types_to_calibrate: operator types to calibrate. By default, calibrate all the float32/float16 tensors."
+            },
+            {
+              "line": 313,
+              "text": "        :param augmented_model_path: save augmented model to this path."
+            },
+            {
+              "line": 314,
+              "text": "        :param symmetric: make range of tensor symmetric (central point is 0)."
+            },
+            {
+              "line": 315,
+              "text": "        :param use_external_data_format: use external data format to store model which size is >= 2Gb"
+            },
+            {
+              "line": 316,
+              "text": "        :param moving_average: compute the moving average of the minimum and maximum values instead of the global minimum and maximum."
+            },
+            {
+              "line": 317,
+              "text": "        :param averaging_constant: constant smoothing factor to use when computing the moving average."
+            },
+            {
+              "line": 318,
+              "text": "        :param max_intermediate_outputs: maximum number of intermediate outputs before an intermediate range is computed."
+            },
+            {
+              "line": 319,
+              "text": "        :param per_channel: whether to compute ranges per each channel."
+            },
+            {
+              "line": 320,
+              "text": "        \"\"\""
+            }
+          ]
+        },
+        {
+          "start": 484,
+          "end": 508,
+          "lines": [
+            {
+              "line": 484,
+              "text": "        for d in output_dicts_list:"
+            },
+            {
+              "line": 485,
+              "text": "            for k, v in d.items():"
+            },
+            {
+              "line": 486,
+              "text": "                merged_output_dict.setdefault(k, []).append(v)"
+            },
+            {
+              "line": 487,
+              "text": "        added_output_names = output_names[self.num_model_outputs :]"
+            },
+            {
+              "line": 488,
+              "text": "        calibrate_tensor_names = ["
+            },
+            {
+              "line": 489,
+              "text": "            added_output_names[i].rpartition(\"_\")[0] for i in range(0, len(added_output_names), 2)"
+            },
+            {
+              "line": 490,
+              "text": "        ]  # output names"
+            },
+            {
+              "line": 491,
+              "text": ""
+            },
+            {
+              "line": 492,
+              "text": "        merged_added_output_dict = {"
+            },
+            {
+              "line": 493,
+              "text": "            i: merged_output_dict[i] for i in merged_output_dict if i not in self.model_original_outputs"
+            },
+            {
+              "line": 494,
+              "text": "        }"
+            },
+            {
+              "line": 495,
+              "text": ""
+            },
+            {
+              "line": 496,
+              "text": "        pairs = []"
+            },
+            {
+              "line": 497,
+              "text": "        for i in range(0, len(added_output_names), 2):"
+            },
+            {
+              "line": 498,
+              "text": "            if self.moving_average:"
+            },
+            {
+              "line": 499,
+              "text": "                min_value_array = np.nanmean(merged_added_output_dict[added_output_names[i]], axis=0)"
+            },
+            {
+              "line": 500,
+              "text": "                max_value_array = np.nanmean(merged_added_output_dict[added_output_names[i + 1]], axis=0)"
+            },
+            {
+              "line": 501,
+              "text": "            else:"
+            },
+            {
+              "line": 502,
+              "text": "                min_value_array = np.nanmin(merged_added_output_dict[added_output_names[i]], axis=0)"
+            },
+            {
+              "line": 503,
+              "text": "                max_value_array = np.nanmax(merged_added_output_dict[added_output_names[i + 1]], axis=0)"
+            },
+            {
+              "line": 504,
+              "text": ""
+            },
+            {
+              "line": 505,
+              "text": "            if self.symmetric:"
+            },
+            {
+              "line": 506,
+              "text": "                max_absolute_value = np.nanmax([np.abs(min_value_array), np.abs(max_value_array)], axis=0)"
+            },
+            {
+              "line": 507,
+              "text": "                pairs.append((-max_absolute_value, max_absolute_value))"
+            },
+            {
+              "line": 508,
+              "text": "            else:"
+            }
+          ]
+        },
+        {
+          "start": 1176,
+          "end": 1202,
+          "lines": [
+            {
+              "line": 1176,
+              "text": "    op_types_to_calibrate: Sequence[str] | None = None,"
+            },
+            {
+              "line": 1177,
+              "text": "    augmented_model_path=\"augmented_model.onnx\","
+            },
+            {
+              "line": 1178,
+              "text": "    calibrate_method=CalibrationMethod.MinMax,"
+            },
+            {
+              "line": 1179,
+              "text": "    use_external_data_format=False,"
+            },
+            {
+              "line": 1180,
+              "text": "    providers=None,"
+            },
+            {
+              "line": 1181,
+              "text": "    extra_options={},  # noqa: B006"
+            },
+            {
+              "line": 1182,
+              "text": "):"
+            },
+            {
+              "line": 1183,
+              "text": "    calibrator = None"
+            },
+            {
+              "line": 1184,
+              "text": "    if calibrate_method == CalibrationMethod.MinMax:"
+            },
+            {
+              "line": 1185,
+              "text": "        # default settings for min-max algorithm"
+            },
+            {
+              "line": 1186,
+              "text": "        symmetric = extra_options.get(\"symmetric\", False)"
+            },
+            {
+              "line": 1187,
+              "text": "        moving_average = extra_options.get(\"moving_average\", False)"
+            },
+            {
+              "line": 1188,
+              "text": "        averaging_constant = extra_options.get(\"averaging_constant\", 0.01)"
+            },
+            {
+              "line": 1189,
+              "text": "        max_intermediate_outputs = extra_options.get(\"max_intermediate_outputs\", None)"
+            },
+            {
+              "line": 1190,
+              "text": "        per_channel = extra_options.get(\"per_channel\", False)"
+            },
+            {
+              "line": 1191,
+              "text": "        calibrator = MinMaxCalibrater("
+            },
+            {
+              "line": 1192,
+              "text": "            model,"
+            },
+            {
+              "line": 1193,
+              "text": "            op_types_to_calibrate,"
+            },
+            {
+              "line": 1194,
+              "text": "            augmented_model_path,"
+            },
+            {
+              "line": 1195,
+              "text": "            use_external_data_format=use_external_data_format,"
+            },
+            {
+              "line": 1196,
+              "text": "            symmetric=symmetric,"
+            },
+            {
+              "line": 1197,
+              "text": "            moving_average=moving_average,"
+            },
+            {
+              "line": 1198,
+              "text": "            averaging_constant=averaging_constant,"
+            },
+            {
+              "line": 1199,
+              "text": "            max_intermediate_outputs=max_intermediate_outputs,"
+            },
+            {
+              "line": 1200,
+              "text": "            per_channel=per_channel,"
+            },
+            {
+              "line": 1201,
+              "text": "        )"
+            },
+            {
+              "line": 1202,
+              "text": "    elif calibrate_method == CalibrationMethod.Entropy:"
+            }
+          ]
+        },
+        {
+          "start": 1245,
+          "end": 1250,
+          "lines": [
+            {
+              "line": 1245,
+              "text": "    if calibrator:"
+            },
+            {
+              "line": 1246,
+              "text": "        calibrator.augment_graph()"
+            },
+            {
+              "line": 1247,
+              "text": "        if providers:"
+            },
+            {
+              "line": 1248,
+              "text": "            calibrator.execution_providers = providers"
+            },
+            {
+              "line": 1249,
+              "text": "        calibrator.create_inference_session()"
+            },
+            {
+              "line": 1250,
+              "text": "        return calibrator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WORKSPACE>/BanhmiTTS/docs/TODO.md",
+      "bytes": 11011,
+      "sha256": "f36e79f53334122aeb0a24e24dfbfb3a42d5d0d18f4b46e74531d44656320674",
+      "excerpts": [
+        {
+          "start": 22,
+          "end": 33,
+          "lines": [
+            {
+              "line": 22,
+              "text": ""
+            },
+            {
+              "line": 23,
+              "text": "**Việc cần làm**:"
+            },
+            {
+              "line": 24,
+              "text": "1. Train SEQ(1,1,1) đủ 1500 epoch (giống lịch MRF(1,1,1) đã làm)."
+            },
+            {
+              "line": 25,
+              "text": "2. Dùng đúng `canonical_split.json` (giống hệt tập train/val/test của"
+            },
+            {
+              "line": 26,
+              "text": "   baseline, xây bằng cách load lại checkpoint baseline thật — xem"
+            },
+            {
+              "line": 27,
+              "text": "   `mrf_full_investigation_report.md` §8.2 cho bối cảnh lỗi leakage gốc)."
+            },
+            {
+              "line": 28,
+              "text": "3. Eval đầy đủ: PyTorch (seed cố định) + PTQ + ONNX Runtime/VNNI (seed đã"
+            },
+            {
+              "line": 29,
+              "text": "   biết không kiểm soát được ở tầng ONNX, dùng n=500 để trung bình ổn định)."
+            },
+            {
+              "line": 30,
+              "text": "4. Kiểm định thống kê (Mann-Whitney U hoặc Wilcoxon paired vì cùng test-set"
+            },
+            {
+              "line": 31,
+              "text": "   với baseline) so với baseline, giống MRF(1,1,1) đã làm."
+            },
+            {
+              "line": 32,
+              "text": "5. Cập nhật `paper_ready_report.md` nếu kết quả tốt hơn MRF(1,1,1) ở RTF mà"
+            },
+            {
+              "line": 33,
+              "text": "   không đánh đổi chất lượng — có thể trở thành kết quả chính thay vì"
+            }
+          ]
+        },
+        {
+          "start": 109,
+          "end": 118,
+          "lines": [
+            {
+              "line": 109,
+              "text": "  ban đầu tưởng do resblock tuần tự kém ổn định hơn song song, nhưng `dp`"
+            },
+            {
+              "line": 110,
+              "text": "  hoàn toàn không phụ thuộc `dec` nên giả thuyết đó vô lý — kiểm tra lại"
+            },
+            {
+              "line": 111,
+              "text": "  bằng cách tái tạo đúng cơ chế `random_split` gốc (trước khi có"
+            },
+            {
+              "line": 112,
+              "text": "  `canonical_split.json`) cho MRF, thấy **tập train của MRF khác 570/12500"
+            },
+            {
+              "line": 113,
+              "text": "  câu (4.6%) so với tập baseline/SEQ đang dùng** (MRF train trước khi"
+            },
+            {
+              "line": 114,
+              "text": "  `canonical_split.json` tồn tại). Baseline và SEQ dùng đúng cùng 1 tập —"
+            },
+            {
+              "line": 115,
+              "text": "  và cả 2 đều từng cần clip; MRF dùng tập khác — chưa từng cần. Nhiều khả"
+            },
+            {
+              "line": 116,
+              "text": "  năng có 1-vài câu trong 570 câu khác biệt đó gây alignment/MAS cực đoan"
+            },
+            {
+              "line": 117,
+              "text": "  (phoneme bị gán độ dài gần-0), dẫn tới spline-bin gần-0 dễ triệt tiêu số"
+            },
+            {
+              "line": 118,
+              "text": "  học dưới bf16 hơn — không phải do kiến trúc resblock."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "<WORKSPACE>/BanhmiTTS/docs/mrf_full_investigation_report.md",
+      "bytes": 20981,
+      "sha256": "791e6cd08996012c8fc06c8c7957169421611f607452a0246abbc2c3fba635ed",
+      "excerpts": [
+        {
+          "start": 258,
+          "end": 301,
+          "lines": [
+            {
+              "line": 258,
+              "text": ""
+            },
+            {
+              "line": 259,
+              "text": "### 8.1. Chưa cố định random seed cho suy luận ngẫu nhiên"
+            },
+            {
+              "line": 260,
+              "text": ""
+            },
+            {
+              "line": 261,
+              "text": "`noise_scale=0.667`/`noise_scale_w=0.8` (khác 0) khiến mỗi lần gọi"
+            },
+            {
+              "line": 262,
+              "text": "`infer()` lấy mẫu ngẫu nhiên thật từ prior — không có `torch.manual_seed()`"
+            },
+            {
+              "line": 263,
+              "text": "nào trước vòng lặp eval trong BẤT KỲ script eval nào của session này. Nghĩa"
+            },
+            {
+              "line": 264,
+              "text": "là 2 lần eval cùng 1 checkpoint có thể ra WER khác nhau chỉ vì may rủi lấy"
+            },
+            {
+              "line": 265,
+              "text": "mẫu, không phải model thật sự khác. **Sửa**: thêm"
+            },
+            {
+              "line": 266,
+              "text": "`torch.manual_seed(1234)` ngay trước vòng lặp suy luận trong cả 4 script"
+            },
+            {
+              "line": 267,
+              "text": "eval cuối cùng."
+            },
+            {
+              "line": 268,
+              "text": ""
+            },
+            {
+              "line": 269,
+              "text": "### 8.2. Rò rỉ dữ liệu train/test giữa baseline và MRF (nghiêm trọng hơn)"
+            },
+            {
+              "line": 270,
+              "text": ""
+            },
+            {
+              "line": 271,
+              "text": "`VitsModel.__init__` gọi `random_split()` để chia train/val/test **SAU KHI**"
+            },
+            {
+              "line": 272,
+              "text": "đã khởi tạo `SynthesizerTrn` (random-init toàn bộ trọng số). Vì baseline và"
+            },
+            {
+              "line": 273,
+              "text": "MRF có **số lượng tham số random-init khác nhau** (kiến trúc khác hẳn),"
+            },
+            {
+              "line": 274,
+              "text": "cùng `--seed 1234` nhưng trạng thái RNG lúc gọi `random_split` đã lệch pha"
+            },
+            {
+              "line": 275,
+              "text": "giữa 2 model → **split train/val/test khác nhau thật**."
+            },
+            {
+              "line": 276,
+              "text": ""
+            },
+            {
+              "line": 277,
+              "text": "Kiểm chứng thực nghiệm (tái tạo đúng seed + đúng hparams thật của từng"
+            },
+            {
+              "line": 278,
+              "text": "checkpoint):"
+            },
+            {
+              "line": 279,
+              "text": "- Test-set của baseline và MRF chỉ trùng **21/500** utterance."
+            },
+            {
+              "line": 280,
+              "text": "- File `/tmp/eval_true_testset_500_baseline.json` (dùng cho **mọi** eval MRF"
+            },
+            {
+              "line": 281,
+              "text": "  trong suốt session) khớp 100% với test-set thật của baseline."
+            },
+            {
+              "line": 282,
+              "text": "- **473/500 (94.6%)** utterance trong file đó nằm trong **tập TRAIN thật"
+            },
+            {
+              "line": 283,
+              "text": "  của MRF**."
+            },
+            {
+              "line": 284,
+              "text": ""
+            },
+            {
+              "line": 285,
+              "text": "→ Toàn bộ số liệu WER/UTMOSv2 của MRF (mọi checkpoint, cả FP32 lẫn QAT)"
+            },
+            {
+              "line": 286,
+              "text": "báo cáo *trước khi phát hiện lỗi này* đều bị nhiễm test-leakage nghiêm"
+            },
+            {
+              "line": 287,
+              "text": "trọng — MRF được \"test\" trên gần như chính dữ liệu nó đã học thuộc."
+            },
+            {
+              "line": 288,
+              "text": ""
+            },
+            {
+              "line": 289,
+              "text": "**Sửa**: xây lại `/tmp/eval_true_testset_500_mrf.json` — tái tạo đúng split"
+            },
+            {
+              "line": 290,
+              "text": "thật của MRF (cùng seed, cùng hparams thật từ checkpoint), xác nhận **0/500"
+            },
+            {
+              "line": 291,
+              "text": "leakage** vào tập train của MRF. Từ đó: baseline eval dùng test-set của"
+            },
+            {
+              "line": 292,
+              "text": "baseline, MRF eval dùng test-set của MRF — mỗi model được đo đúng trên dữ"
+            },
+            {
+              "line": 293,
+              "text": "liệu nó chưa từng thấy. Không cần train lại gì — đây thuần tuý là lỗi ở"
+            },
+            {
+              "line": 294,
+              "text": "bước tạo test-set/eval, không ảnh hưởng trọng số đã train."
+            },
+            {
+              "line": 295,
+              "text": ""
+            },
+            {
+              "line": 296,
+              "text": "*Đánh đổi*: 2 test-set giờ không còn trùng khớp từng câu (~21/500 chung),"
+            },
+            {
+              "line": 297,
+              "text": "nên so sánh không còn là paired-test tuyệt đối — nhưng mỗi số liệu tự nó"
+            },
+            {
+              "line": 298,
+              "text": "trở nên đáng tin cậy (không còn leakage), và đây là điều quan trọng nhất."
+            },
+            {
+              "line": 299,
+              "text": ""
+            },
+            {
+              "line": 300,
+              "text": "---"
+            },
+            {
+              "line": 301,
+              "text": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "runtime_metadata": [
+    {
+      "path": "<WSL_PROJECT_HOME>/env/lib/python3.10/site-packages/onnxruntime-1.23.2.dist-info/METADATA",
+      "sha256": "0681c4f873cc6fdd4f27591efa63e630b79d09f0a00f4a211a1463b7c4893f23",
+      "version": "1.23.2"
+    }
+  ],
+  "canonical_integrity": {
+    "dataset_entries": 13100,
+    "dataset_unique_paths": 13100,
+    "dataset_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "canonical_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+    "canonical_counts": {
+      "train": 12500,
+      "val": 100,
+      "test": 500
+    },
+    "canonical_unique_counts": {
+      "train": 12500,
+      "val": 100,
+      "test": 500
+    },
+    "canonical_pairwise_overlap": {
+      "train_val": 0,
+      "train_test": 0,
+      "val_test": 0
+    },
+    "canonical_missing_from_dataset": 0,
+    "dataset_missing_from_canonical": 0,
+    "reconstructed_calibration_membership": {
+      "train": 57,
+      "val": 0,
+      "test": 3
+    },
+    "reconstructed_tuning_membership": {
+      "train": 23,
+      "val": 1,
+      "test": 1
+    }
+  },
+  "sweep": {
+    "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/sweep_results.json",
+    "sha256": "e06f60d0b381da0a3e1a9cd5f590dddc4235421cb5a7388a2b3383a12d33205a",
+    "summary": {
+      "baseline": {
+        "candidate_count": 14,
+        "successful_count": 14,
+        "failed": {},
+        "minimum_saved_cheap_wer": {
+          "candidate": "baseline::flow_enc_p_dp",
+          "record": {
+            "submodules": "flow,enc_p,dp",
+            "exclude_subs": "",
+            "wer": 0.12146554666523705,
+            "size_mb": 23.0,
+            "quant_time_s": 20.0,
+            "eval_time_s": 12.3
+          }
+        },
+        "selection_status": "minimum computed by audit; sweep code stores candidates but no automatic choice, threshold, or chosen-candidate manifest"
+      },
+      "mrf": {
+        "candidate_count": 14,
+        "successful_count": 10,
+        "failed": {
+          "mrf::dec_only": "quantize_failed",
+          "mrf::flow_dec": "quantize_failed",
+          "mrf::everything": "quantize_failed",
+          "mrf::everything_except_finallayer": "quantize_failed"
+        },
+        "minimum_saved_cheap_wer": {
+          "candidate": "mrf::flow_enc_p_dp",
+          "record": {
+            "submodules": "flow,enc_p,dp",
+            "exclude_subs": "",
+            "wer": 0.10777548818570488,
+            "size_mb": 21.1,
+            "quant_time_s": 23.3,
+            "eval_time_s": 13.0
+          }
+        },
+        "selection_status": "minimum computed by audit; sweep code stores candidates but no automatic choice, threshold, or chosen-candidate manifest"
+      }
+    }
+  },
+  "verified_calibration_configuration": {
+    "sampling": "random.Random(42).sample(all nonempty dataset JSONL entries, min(60, number of entries))",
+    "partition_enforcement": false,
+    "input": {
+      "input": "int64[1,L] phoneme_ids",
+      "input_lengths": "int64[1]",
+      "scales": "float32[3]: [0.667, 1.0, 0.8]"
+    },
+    "reference_audio_used": false,
+    "labels_used": false,
+    "explicit_quantizer_arguments": {
+      "quant_format": "QOperator",
+      "weight_type": "QInt8",
+      "activation_type": "QUInt8",
+      "per_channel": true,
+      "op_types": [
+        "Conv",
+        "ConvTranspose"
+      ]
+    },
+    "installed_runtime_defaults": {
+      "calibrate_method": "MinMax",
+      "reduce_range": false,
+      "calibration_provider": "CPUExecutionProvider",
+      "moving_average": false,
+      "symmetric_calibration_range": false
+    },
+    "selected_historical_scope": "flow,enc_p,dp; decoder excluded",
+    "sampling_seed_controls_onnx_random_nodes": false,
+    "source_hash_and_sample_ids_recorded_by_script": false
+  },
+  "search": {
+    "root": "<WSL_PROJECT_HOME>/",
+    "excluded_directory_names": [
+      ".cache",
+      ".git",
+      ".venv",
+      "__pycache__",
+      "cache",
+      "env",
+      "node_modules",
+      "site-packages",
+      "venv",
+      "wandb",
+      "wavs"
+    ],
+    "max_scanned_text_bytes": 2000000,
+    "scanned_text_file_count": 442,
+    "calibration_split_manifest_named_files": [
+      {
+        "path": "<WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/canonical_split.json",
+        "bytes": 1558950,
+        "sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d"
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/check_split_baseline.py",
+        "bytes": 1668,
+        "sha256": "316f69ff5a03afe8419fc693decfc38d859e2821b42a392c91d2fdfe7578a8c4"
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/check_split_overlap.py",
+        "bytes": 2539,
+        "sha256": "f3b1d2c667638c64f6d47c15074117245430e1c7ed9c2984cb231d0d1659f44a"
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/check_split_overnight.py",
+        "bytes": 2097,
+        "sha256": "5c59126856bae721f4c848360583ddebb2e4e3e45586c7b7fa24f2ed75e1f33d"
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/check_split_vocos_f0.py",
+        "bytes": 2107,
+        "sha256": "89f5668f76137e4411ed4f27662082371dc89f513aa66d41aab7e6c464bda5c2"
+      }
+    ],
+    "source_and_log_matches": [
+      {
+        "path": "<WSL_PROJECT_HOME>/BanhmiTTS/configs/banhmi_mb_sequential_111.yaml",
+        "sha256": "be01ae0db1daa48eaafe0c84790b6d98ddbeb3d080e9d21d0abada45d0c22a8a",
+        "hits": [
+          {
+            "line": 12,
+            "text": "# Uses canonical_split.json (training_output/ljspeech/medium/) so this run"
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/BanhmiTTS/banhmi_train/vits/training.py",
+        "sha256": "1164fae3cfa9c163ca990eaa24472c64458e162a85a1b87a77e0e62d526f926e",
+        "hits": [
+          {
+            "line": 288,
+            "text": "        # Preferred path: a canonical_split.json next to the dataset, listing"
+          },
+          {
+            "line": 295,
+            "text": "        canonical_split_path = Path(self.hparams.dataset[0]).parent / \"canonical_split.json\""
+          },
+          {
+            "line": 296,
+            "text": "        if canonical_split_path.exists():"
+          },
+          {
+            "line": 297,
+            "text": "            with open(canonical_split_path, \"r\", encoding=\"utf-8\") as split_file:"
+          },
+          {
+            "line": 298,
+            "text": "                canonical_split = json.load(split_file)"
+          },
+          {
+            "line": 300,
+            "text": "            train_idx = [path_to_index[p] for p in canonical_split[\"train\"]]"
+          },
+          {
+            "line": 301,
+            "text": "            val_idx = [path_to_index[p] for p in canonical_split[\"val\"]]"
+          },
+          {
+            "line": 302,
+            "text": "            test_idx = [path_to_index[p] for p in canonical_split[\"test\"]]"
+          },
+          {
+            "line": 306,
+            "text": "            _LOGGER.info(\"Loaded canonical train/val/test split from %s\", canonical_split_path)"
+          },
+          {
+            "line": 575,
+            "text": "            # Stashed so validation_step can log a *validation-only*"
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/quantized_models/ptq_sweep/sweep.log",
+        "sha256": "54fbca6e6935fdbdb05ac898550d17cb98ace255f32e59bd60ddec50170c7703",
+        "hits": [
+          {
+            "line": 4,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_none.onnx --submodules __none__ --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 8,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_only.onnx --submodules flow --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 12,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_finallayer.onnx --submodules flow --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 16,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_dp_only.onnx --submodules dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 20,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_dec_only.onnx --submodules dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 24,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_enc_p_only.onnx --submodules enc_p --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 28,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p.onnx --submodules flow,enc_p --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 32,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_dp.onnx --submodules flow,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 36,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_dec.onnx --submodules flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 40,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_flow_enc_p_dp.onnx --submodules flow,enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 44,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_enc_p_dp.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 48,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_enc_p_dp_finallayer.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 52,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_everything.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 56,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/baseline_everything_except_finallayer.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 61,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_none.onnx --submodules __none__ --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 65,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_only.onnx --submodules flow --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 69,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_finallayer.onnx --submodules flow --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 73,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_dp_only.onnx --submodules dp --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 77,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_dec_only.onnx --submodules dec --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 81,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_enc_p_only.onnx --submodules enc_p --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 85,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_enc_p.onnx --submodules flow,enc_p --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 89,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_dp.onnx --submodules flow,dp --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 93,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_dec.onnx --submodules flow,dec --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 97,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_flow_enc_p_dp.onnx --submodules flow,enc_p,dp --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 101,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_enc_p_dp.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 105,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_enc_p_dp_finallayer.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 109,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_everything.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          },
+          {
+            "line": 113,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/vocos_small_everything_except_finallayer.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose,MatMul --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60 --is-vocos"
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/ptq_sweep_mrf.log",
+        "sha256": "372cf05be81a4e1edf7692ab286750e756185503c780d483bba7e4a62f0be96b",
+        "hits": [
+          {
+            "line": 4,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_none.onnx --submodules __none__ --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 8,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_only.onnx --submodules flow --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 12,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_finallayer.onnx --submodules flow --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 16,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_dp_only.onnx --submodules dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 20,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_dec_only.onnx --submodules dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 44,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_enc_p_only.onnx --submodules enc_p --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 48,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p.onnx --submodules flow,enc_p --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 52,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_dp.onnx --submodules flow,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 56,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_dec.onnx --submodules flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 80,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_flow_enc_p_dp.onnx --submodules flow,enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 84,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_enc_p_dp.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 88,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_enc_p_dp_finallayer.onnx --submodules enc_p,dp --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 92,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_everything.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings  --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          },
+          {
+            "line": 116,
+            "text": "$ <WSL_PROJECT_HOME>/env/bin/python <WSL_PROJECT_HOME>/scripts/ptq_quantize.py <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_fp32.onnx <WSL_PROJECT_HOME>/quantized_models/ptq_sweep/mrf_everything_except_finallayer.onnx --submodules enc_p,dp,flow,dec --op-types Conv,ConvTranspose --exclude-leaf-substrings conv_post,head/out --calibration-dataset <WSL_PROJECT_HOME>/BanhmiTTS/training_output/ljspeech/medium/dataset.jsonl --calibration-sentences 60"
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/run_ptq_sweep.py",
+        "sha256": "f41705aefb1964d75682afb9acd38e5aac64a1a1da79309098b9ac35e418984e",
+        "hits": [
+          {
+            "line": 64,
+            "text": "            \"--calibration-dataset\", DATASET,"
+          }
+        ]
+      },
+      {
+        "path": "<WSL_PROJECT_HOME>/scripts/ptq_quantize.py",
+        "sha256": "392ca92c1b7e1f81f3f4f3c18435b7d6455475500e6e8282e6346fe3281de5ab",
+        "hits": [
+          {
+            "line": 71,
+            "text": "    parser.add_argument(\"--calibration-dataset\", required=True)"
+          }
+        ]
+      }
+    ],
+    "temporary_saved_test_manifests": [
+      {
+        "path": "/tmp/eval_true_testset_500_vocos_f0.json",
+        "bytes": 994379,
+        "sha256": "3b068ea679de81db4c8b08fd76fe981f096a111825a363146f413bef57489240"
+      },
+      {
+        "path": "/tmp/eval_true_testset_500_overnight.json",
+        "bytes": 977457,
+        "sha256": "3e8a0497acce13553262d01e3bcb0b9286befa4298d1bff138f1a043d617ddf8"
+      },
+      {
+        "path": "/tmp/eval_true_testset_500_mrf.json",
+        "bytes": 1952075,
+        "sha256": "01986a8e8b85aa2bcb7ff89f9cc9db33f0cafc13a7496c568ccad1c9da20b3c3"
+      },
+      {
+        "path": "/tmp/eval_true_testset_500_baseline.json",
+        "bytes": 1001906,
+        "sha256": "72916b93d84a9ea7acc020da5af966a1fb6233b2af3594a95e62feff8838756e"
+      },
+      {
+        "path": "/tmp/eval_true_testset_500.json",
+        "bytes": 1004210,
+        "sha256": "7aa40b6c8ab2ce84768e2e315756bd0f63298945e2e37a100ae3fb09558539ee"
+      }
+    ]
+  },
+  "limitations": [
+    "Filesystem search cannot prove no such file ever existed; no clean train-only calibration/validation-only tuning manifest was recovered within the inspected scope.",
+    "Present canonical split and current loader are not proof that an earlier MRF checkpoint trained with that split.",
+    "Reconstructed calibration IDs assume historical dataset/source content and ordering match current versions.",
+    "Installed runtime defaults describe current installed source; historical environment was not independently locked by a recorded environment hash."
+  ]
+}

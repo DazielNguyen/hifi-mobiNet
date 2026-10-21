@@ -1,0 +1,863 @@
+{
+ "note": "Fields under 'stored_in_checkpoint' were written by the training process; sha256/size/mtime are measured now.",
+ "baseline (HiFi-GAN ResBlock2)": {
+  "path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+  "size_bytes": 867027556,
+  "sha256_now": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+  "stored_in_checkpoint": {
+   "epoch": 1489,
+   "global_step": 1168160,
+   "pytorch_lightning_version": "1.7.7",
+   "callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(19.7882)",
+     "best_model_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=1489-val_loss_mel=19.7882.ckpt",
+     "current_score": "tensor(19.7882)",
+     "dirpath": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/last.ckpt"
+    }
+   },
+   "optimizer_param_groups": [
+    {
+     "lr": 0.00016601127785806932,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.00016601127785806932,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1490,
+     "_last_lr": [
+      0.00016601127785806932
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1490,
+     "_last_lr": [
+      0.00016601127785806932
+     ]
+    }
+   ],
+   "hyper_parameters": {
+    "num_symbols": 256,
+    "resblock": "2",
+    "resblock_kernel_sizes": [
+     3,
+     5,
+     7
+    ],
+    "resblock_dilation_sizes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      12
+     ]
+    ],
+    "upsample_rates": [
+     8,
+     8,
+     4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+     16,
+     16,
+     8
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "use_spectral_norm": false,
+    "segment_size": 8192,
+    "posterior_encoder_kernel_size": 5,
+    "posterior_encoder_dilation_rate": 1,
+    "posterior_encoder_layers": 16,
+    "flow_kernel_size": 5,
+    "flow_dilation_rate": 1,
+    "flow_n_flows": 4,
+    "mas_noise_scale_initial": 0.01,
+    "mas_noise_scale_decay": 2e-06,
+    "use_snake": false,
+    "use_mrd": false,
+    "use_vocos": false,
+    "vocos_dim": 512,
+    "vocos_intermediate_dim": 1536,
+    "vocos_num_layers": 8,
+    "vocos_mrd_loss_coeff": 0.1,
+    "dataset": [
+     "training_output/ljspeech/medium/dataset.jsonl"
+    ],
+    "learning_rate": 0.0002,
+    "betas": [
+     0.8,
+     0.99
+    ],
+    "eps": 1e-09,
+    "batch_size": 16,
+    "lr_decay": 0.999875,
+    "c_mel": 45,
+    "c_kl": 1.0,
+    "num_workers": 8,
+    "seed": 1234,
+    "num_val_examples": 100,
+    "num_test_examples": 500,
+    "num_audio_samples": 5,
+    "max_phoneme_ids": null,
+    "dataset_dir": "training_output/ljspeech/medium",
+    "checkpoint_epochs": 1,
+    "quality": "medium",
+    "config": "configs/default.yaml",
+    "use_bigvgan": null,
+    "logger": true,
+    "enable_checkpointing": true,
+    "default_root_dir": "<WSL_PROJECT_HOME>/baseline_v2_noclip",
+    "gradient_clip_val": 1.0,
+    "gradient_clip_algorithm": null,
+    "num_nodes": 1,
+    "num_processes": null,
+    "devices": "2",
+    "gpus": null,
+    "auto_select_gpus": false,
+    "tpu_cores": null,
+    "ipus": null,
+    "enable_progress_bar": true,
+    "overfit_batches": 0.0,
+    "track_grad_norm": -1,
+    "check_val_every_n_epoch": 1,
+    "fast_dev_run": false,
+    "accumulate_grad_batches": null,
+    "max_epochs": 1500,
+    "min_epochs": null,
+    "max_steps": -1,
+    "min_steps": null,
+    "max_time": null,
+    "limit_train_batches": null,
+    "limit_val_batches": null,
+    "limit_test_batches": null,
+    "limit_predict_batches": null,
+    "val_check_interval": null,
+    "log_every_n_steps": 50,
+    "accelerator": "gpu",
+    "strategy": "ddp",
+    "sync_batchnorm": false,
+    "precision": "bf16",
+    "enable_model_summary": true,
+    "weights_save_path": null,
+    "num_sanity_val_steps": 2,
+    "resume_from_checkpoint": "<WSL_PROJECT_HOME>/baseline_v2_noclip/checkpoints/best-epoch=870-val_loss_mel=20.1505.ckpt",
+    "profiler": null,
+    "benchmark": null,
+    "deterministic": null,
+    "reload_dataloaders_every_n_epochs": 0,
+    "auto_lr_find": false,
+    "replace_sampler_ddp": false,
+    "detect_anomaly": false,
+    "auto_scale_batch_size": false,
+    "plugins": null,
+    "amp_backend": "native",
+    "amp_level": null,
+    "move_metrics_to_cpu": false,
+    "multiple_trainloader_mode": "max_size_cycle"
+   },
+   "state_dict_top_modules": [
+    "model_d",
+    "model_d_dur",
+    "model_g.dec",
+    "model_g.dp",
+    "model_g.enc_p",
+    "model_g.enc_q",
+    "model_g.flow"
+   ]
+  }
+ },
+ "MRF (Parallel-IR)": {
+  "path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt",
+  "size_bytes": 864465901,
+  "sha256_now": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+  "stored_in_checkpoint": {
+   "epoch": 1386,
+   "global_step": 1087408,
+   "pytorch_lightning_version": "1.7.7",
+   "callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(18.7681)",
+     "best_model_path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/best-epoch=1386-val_loss_mel=18.7681.ckpt",
+     "current_score": "tensor(18.7681)",
+     "dirpath": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/last.ckpt"
+    }
+   },
+   "optimizer_param_groups": [
+    {
+     "lr": 0.0001681626271133652,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.0001681626271133652,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1387,
+     "_last_lr": [
+      0.0001681626271133652
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1387,
+     "_last_lr": [
+      0.0001681626271133652
+     ]
+    }
+   ],
+   "hyper_parameters": {
+    "num_symbols": 256,
+    "resblock": "mrf",
+    "resblock_kernel_sizes": [
+     3,
+     5,
+     7
+    ],
+    "resblock_dilation_sizes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      12
+     ]
+    ],
+    "upsample_rates": [
+     8,
+     8,
+     4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+     16,
+     16,
+     8
+    ],
+    "mb_expansion": [
+     1,
+     1,
+     1
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "use_spectral_norm": false,
+    "segment_size": 8192,
+    "posterior_encoder_kernel_size": 5,
+    "posterior_encoder_dilation_rate": 1,
+    "posterior_encoder_layers": 16,
+    "flow_kernel_size": 5,
+    "flow_dilation_rate": 1,
+    "flow_n_flows": 4,
+    "mas_noise_scale_initial": 0.01,
+    "mas_noise_scale_decay": 2e-06,
+    "use_snake": true,
+    "use_mrd": true,
+    "use_vocos": false,
+    "vocos_dim": 512,
+    "vocos_intermediate_dim": 1536,
+    "vocos_num_layers": 8,
+    "vocos_mrd_loss_coeff": 0.1,
+    "dataset": [
+     "training_output/ljspeech/medium/dataset.jsonl"
+    ],
+    "learning_rate": 0.0002,
+    "betas": [
+     0.8,
+     0.99
+    ],
+    "eps": 1e-09,
+    "batch_size": 16,
+    "lr_decay": 0.999875,
+    "c_mel": 45,
+    "c_kl": 1.0,
+    "num_workers": 1,
+    "seed": 1234,
+    "num_val_examples": 100,
+    "num_test_examples": 500,
+    "num_audio_samples": 5,
+    "max_phoneme_ids": null,
+    "dataset_dir": "training_output/ljspeech/medium",
+    "checkpoint_epochs": 1,
+    "quality": "medium",
+    "config": "configs/banhmi_mrf.yaml",
+    "use_bigvgan": null,
+    "logger": true,
+    "enable_checkpointing": true,
+    "default_root_dir": "<WSL_PROJECT_HOME>/mrf_111_run_500ep",
+    "gradient_clip_val": null,
+    "gradient_clip_algorithm": null,
+    "num_nodes": 1,
+    "num_processes": null,
+    "devices": "2",
+    "gpus": null,
+    "auto_select_gpus": false,
+    "tpu_cores": null,
+    "ipus": null,
+    "enable_progress_bar": true,
+    "overfit_batches": 0.0,
+    "track_grad_norm": -1,
+    "check_val_every_n_epoch": 1,
+    "fast_dev_run": false,
+    "accumulate_grad_batches": null,
+    "max_epochs": 1500,
+    "min_epochs": null,
+    "max_steps": -1,
+    "min_steps": null,
+    "max_time": null,
+    "limit_train_batches": null,
+    "limit_val_batches": null,
+    "limit_test_batches": null,
+    "limit_predict_batches": null,
+    "val_check_interval": null,
+    "log_every_n_steps": 50,
+    "accelerator": "gpu",
+    "strategy": "ddp",
+    "sync_batchnorm": false,
+    "precision": "bf16",
+    "enable_model_summary": true,
+    "weights_save_path": null,
+    "num_sanity_val_steps": 2,
+    "resume_from_checkpoint": "<WSL_PROJECT_HOME>/mrf_111_run_500ep/checkpoints/last.ckpt",
+    "profiler": null,
+    "benchmark": null,
+    "deterministic": null,
+    "reload_dataloaders_every_n_epochs": 0,
+    "auto_lr_find": false,
+    "replace_sampler_ddp": false,
+    "detect_anomaly": false,
+    "auto_scale_batch_size": false,
+    "plugins": null,
+    "amp_backend": "native",
+    "amp_level": null,
+    "move_metrics_to_cpu": false,
+    "multiple_trainloader_mode": "max_size_cycle",
+    "use_f0": false
+   },
+   "state_dict_top_modules": [
+    "model_d",
+    "model_d_dur",
+    "model_d_mrd",
+    "model_g.dec",
+    "model_g.dp",
+    "model_g.enc_p",
+    "model_g.enc_q",
+    "model_g.flow"
+   ]
+  }
+ },
+ "SEQ (Sequential-IR)": {
+  "path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/best-epoch=1442-val_loss_mel=19.0136.ckpt",
+  "size_bytes": 863851145,
+  "sha256_now": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+  "stored_in_checkpoint": {
+   "epoch": 1442,
+   "global_step": 1131312,
+   "pytorch_lightning_version": "1.7.7",
+   "callbacks": {
+    "ModelCheckpoint{'monitor': 'val_loss_mel', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None, 'save_on_train_epoch_end': True}": {
+     "monitor": "val_loss_mel",
+     "best_model_score": "tensor(19.0136)",
+     "best_model_path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/best-epoch=1442-val_loss_mel=19.0136.ckpt",
+     "current_score": "tensor(19.0136)",
+     "dirpath": "<WSL_PROJECT_HOME>/seq111_final/checkpoints",
+     "last_model_path": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/last.ckpt"
+    }
+   },
+   "optimizer_param_groups": [
+    {
+     "lr": 0.00016698952604741614,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    },
+    {
+     "lr": 0.00016698952604741614,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": true
+    }
+   ],
+   "lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1443,
+     "_last_lr": [
+      0.00016698952604741614
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1443,
+     "_last_lr": [
+      0.00016698952604741614
+     ]
+    }
+   ],
+   "hyper_parameters": {
+    "num_symbols": 256,
+    "resblock": "mb",
+    "resblock_kernel_sizes": [
+     3,
+     5,
+     7
+    ],
+    "resblock_dilation_sizes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      12
+     ]
+    ],
+    "upsample_rates": [
+     8,
+     8,
+     4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+     16,
+     16,
+     8
+    ],
+    "mb_expansion": [
+     1,
+     1,
+     1
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "use_spectral_norm": false,
+    "segment_size": 8192,
+    "posterior_encoder_kernel_size": 5,
+    "posterior_encoder_dilation_rate": 1,
+    "posterior_encoder_layers": 16,
+    "flow_kernel_size": 5,
+    "flow_dilation_rate": 1,
+    "flow_n_flows": 4,
+    "mas_noise_scale_initial": 0.01,
+    "mas_noise_scale_decay": 2e-06,
+    "use_snake": true,
+    "use_mrd": true,
+    "use_vocos": false,
+    "vocos_dim": 512,
+    "vocos_intermediate_dim": 1536,
+    "vocos_num_layers": 8,
+    "vocos_mrd_loss_coeff": 0.1,
+    "dataset": [
+     "training_output/ljspeech/medium/dataset.jsonl"
+    ],
+    "learning_rate": 0.0002,
+    "betas": [
+     0.8,
+     0.99
+    ],
+    "eps": 1e-09,
+    "batch_size": 16,
+    "lr_decay": 0.999875,
+    "c_mel": 45,
+    "c_kl": 1.0,
+    "num_workers": 1,
+    "seed": 1234,
+    "num_val_examples": 100,
+    "num_test_examples": 500,
+    "num_audio_samples": 5,
+    "max_phoneme_ids": null,
+    "dataset_dir": "training_output/ljspeech/medium",
+    "checkpoint_epochs": 1,
+    "quality": "medium",
+    "config": "configs/banhmi_mb_sequential_111.yaml",
+    "use_bigvgan": null,
+    "logger": true,
+    "enable_checkpointing": true,
+    "default_root_dir": "<WSL_PROJECT_HOME>/seq111_final",
+    "gradient_clip_val": null,
+    "gradient_clip_algorithm": null,
+    "num_nodes": 1,
+    "num_processes": null,
+    "devices": "2",
+    "gpus": null,
+    "auto_select_gpus": false,
+    "tpu_cores": null,
+    "ipus": null,
+    "enable_progress_bar": true,
+    "overfit_batches": 0.0,
+    "track_grad_norm": -1,
+    "check_val_every_n_epoch": 1,
+    "fast_dev_run": false,
+    "accumulate_grad_batches": null,
+    "max_epochs": 1500,
+    "min_epochs": null,
+    "max_steps": -1,
+    "min_steps": null,
+    "max_time": null,
+    "limit_train_batches": null,
+    "limit_val_batches": null,
+    "limit_test_batches": null,
+    "limit_predict_batches": null,
+    "val_check_interval": null,
+    "log_every_n_steps": 50,
+    "accelerator": "gpu",
+    "strategy": "ddp",
+    "sync_batchnorm": false,
+    "precision": "bf16",
+    "enable_model_summary": true,
+    "weights_save_path": null,
+    "num_sanity_val_steps": 2,
+    "resume_from_checkpoint": "<WSL_PROJECT_HOME>/seq111_final/checkpoints/last.ckpt",
+    "profiler": null,
+    "benchmark": null,
+    "deterministic": null,
+    "reload_dataloaders_every_n_epochs": 0,
+    "auto_lr_find": false,
+    "replace_sampler_ddp": false,
+    "detect_anomaly": false,
+    "auto_scale_batch_size": false,
+    "plugins": null,
+    "amp_backend": "native",
+    "amp_level": null,
+    "move_metrics_to_cpu": false,
+    "multiple_trainloader_mode": "max_size_cycle",
+    "use_f0": false
+   },
+   "state_dict_top_modules": [
+    "model_d",
+    "model_d_dur",
+    "model_d_mrd",
+    "model_g.dec",
+    "model_g.dp",
+    "model_g.enc_p",
+    "model_g.enc_q",
+    "model_g.flow"
+   ]
+  }
+ },
+ "Piper (external published checkpoint)": {
+  "path": "<WSL_PROJECT_HOME>/piper_original/lj-med_1000.ckpt",
+  "size_bytes": 845889993,
+  "sha256_now": "dcf2449bdbdaad09256a08dfac211c59f6b36ce8d3f244fd844a9eb1d7384c7c",
+  "stored_in_checkpoint": {
+   "epoch": 999,
+   "global_step": 1114000,
+   "pytorch_lightning_version": "1.9.5",
+   "callbacks": {
+    "ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}": {
+     "monitor": null,
+     "best_model_score": null,
+     "best_model_path": "training/lj-med/lightning_logs/version_1/checkpoints/epoch=999-step=1114000.ckpt",
+     "current_score": null,
+     "dirpath": "training/lj-med/lightning_logs/version_1/checkpoints",
+     "last_model_path": ""
+    }
+   },
+   "optimizer_param_groups": [
+    {
+     "lr": 0.0001764980015059695,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": null
+    },
+    {
+     "lr": 0.0001764980015059695,
+     "initial_lr": 0.0002,
+     "betas": [
+      0.8,
+      0.99
+     ],
+     "eps": 1e-09,
+     "weight_decay": 0.01,
+     "fused": null
+    }
+   ],
+   "lr_schedulers": [
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1000,
+     "_last_lr": [
+      0.0001764980015059695
+     ]
+    },
+    {
+     "gamma": 0.999875,
+     "base_lrs": [
+      0.0002
+     ],
+     "last_epoch": 1000,
+     "_last_lr": [
+      0.0001764980015059695
+     ]
+    }
+   ],
+   "hyper_parameters": {
+    "num_symbols": 256,
+    "num_speakers": 1,
+    "resblock": "2",
+    "resblock_kernel_sizes": [
+     3,
+     5,
+     7
+    ],
+    "resblock_dilation_sizes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      12
+     ]
+    ],
+    "upsample_rates": [
+     8,
+     8,
+     4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+     16,
+     16,
+     8
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "sample_bytes": 2,
+    "channels": 1,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "n_layers_q": 3,
+    "use_spectral_norm": false,
+    "gin_channels": 0,
+    "use_sdp": true,
+    "segment_size": 8192,
+    "dataset": [
+     "training/lj-med/dataset.jsonl"
+    ],
+    "learning_rate": 0.0002,
+    "betas": [
+     0.8,
+     0.99
+    ],
+    "eps": 1e-09,
+    "batch_size": 22,
+    "lr_decay": 0.999875,
+    "init_lr_ratio": 1.0,
+    "warmup_epochs": 0,
+    "c_mel": 45,
+    "c_kl": 1.0,
+    "grad_clip": null,
+    "num_workers": 1,
+    "seed": 1234,
+    "num_test_examples": 0,
+    "validation_split": 0.05,
+    "max_phoneme_ids": 400,
+    "dataset_dir": "training/lj-med",
+    "checkpoint_epochs": 1,
+    "quality": "medium",
+    "resume_from_single_speaker_checkpoint": null,
+    "logger": true,
+    "enable_checkpointing": true,
+    "default_root_dir": "training/lj-med",
+    "gradient_clip_val": null,
+    "gradient_clip_algorithm": null,
+    "num_nodes": 1,
+    "num_processes": null,
+    "devices": "1",
+    "gpus": null,
+    "auto_select_gpus": null,
+    "tpu_cores": null,
+    "ipus": null,
+    "enable_progress_bar": true,
+    "overfit_batches": 0.0,
+    "track_grad_norm": -1,
+    "check_val_every_n_epoch": 1,
+    "fast_dev_run": false,
+    "accumulate_grad_batches": null,
+    "max_epochs": 1000,
+    "min_epochs": null,
+    "max_steps": -1,
+    "min_steps": null,
+    "max_time": null,
+    "limit_train_batches": null,
+    "limit_val_batches": null,
+    "limit_test_batches": null,
+    "limit_predict_batches": null,
+    "val_check_interval": null,
+    "log_every_n_steps": 50,
+    "accelerator": "gpu",
+    "strategy": null,
+    "sync_batchnorm": false,
+    "precision": 32,
+    "enable_model_summary": true,
+    "num_sanity_val_steps": 2,
+    "resume_from_checkpoint": null,
+    "profiler": null,
+    "benchmark": null,
+    "reload_dataloaders_every_n_epochs": 0,
+    "auto_lr_find": false,
+    "replace_sampler_ddp": true,
+    "detect_anomaly": false,
+    "auto_scale_batch_size": false,
+    "plugins": null,
+    "amp_backend": null,
+    "amp_level": null,
+    "move_metrics_to_cpu": false,
+    "multiple_trainloader_mode": "max_size_cycle",
+    "inference_mode": true
+   },
+   "state_dict_top_modules": [
+    "model_d",
+    "model_g.dec",
+    "model_g.dp",
+    "model_g.enc_p",
+    "model_g.enc_q",
+    "model_g.flow"
+   ]
+  }
+ }
+}
