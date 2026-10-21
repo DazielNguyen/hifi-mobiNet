@@ -78,6 +78,68 @@ The RTF column comes from one session and is comparable only within it. The cont
 slower than in its own 2026-10-10 session (0.0421), so neither that value nor the historical
 RTF table above can be set beside these values.
 
+## Seven-model comparison
+
+All seven models on Harvard-720 (720 sentences, 5,742 reference words), with the same
+synthesis and scoring protocol (`docs/evaluation.md`). Every value is copied from the records
+named under the table; nothing was re-measured for it. **Bold** marks the best value in a
+row. For RTF, the best is marked within each group of timings only (note 3).
+
+| Metric | Piper_no_VITS2_cpn | Piper-ParIR | Piper-SeqIR | Baseline ResBlock2 | Parallel-IR (MRF) | Sequential-IR (SEQ) | Piper (external) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ***Model*** | | | | | | | |
+| Decoder | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 |
+| Backbone / recipe | Config A, no VITS2 | Config A, no VITS2 | Config A, no VITS2 | VITS2 baseline | VITS2 baseline | VITS2 baseline | published Piper |
+| Selected epoch | 1403 | 1486 | 1455 | 1489 | 1386 | 1442 | 999 |
+| Validation `val_loss_mel` ¹ | 19.7719 | **19.0069** | 19.0332 | 19.7882 | (18.7681) | (19.0136) | — |
+| ***Quality*** | | | | | | | |
+| UTMOSv2, mean (predicted) ² | 3.517 | 3.530 | 3.493 | 3.026 | **3.568** | 3.544 | 3.451 |
+| UTMOSv2, SD | 0.250 | 0.251 | 0.267 | 0.303 | 0.236 | 0.246 | 0.259 |
+| Macro WER | **0.0612** | 0.0726 | 0.0696 | 0.1476 | 0.1073 | 0.1222 | 0.1747 |
+| Corpus WER | **0.0596** | 0.0707 | 0.0665 | 0.1437 | 0.1033 | 0.1186 | 0.1696 |
+| Substitutions / deletions / insertions | **283** / **46** / **13** | 321 / 71 / 14 | 292 / 76 / 14 | 681 / 101 / 43 | 467 / 109 / 17 | 531 / 111 / 39 | 812 / 112 / 50 |
+| Sentences with WER 0 (of 720) | **502** | 464 | 476 | 318 | 381 | 351 | 228 |
+| Scoring session | 2026-10-10 | 2026-10-16 | 2026-10-21 | historical | historical | historical | historical |
+| ***Speed (PyTorch FP32, CPU, 12 threads)*** ³ | | | | | | | |
+| Mean RTF | 0.0510 | 0.0392 | **0.0340** | 0.0418 | 0.0339 | **0.0308** | 0.0392 |
+| Median RTF | 0.0490 | 0.0374 | **0.0320** | 0.0412 | 0.0329 | **0.0296** | 0.0379 |
+| Mean RTF relative to the ResBlock2 model of the same group | — | −23.2% | −33.3% | — | −18.9% | −26.2% | (−6.2%) |
+| Timing session | 2026-10-21 | 2026-10-21 | 2026-10-21 | historical | historical | historical | historical |
+| ***Size*** ⁴ | | | | | | | |
+| Parameters (Q05 definition) | 16,425,776 | 15,918,032 | **15,870,768** | 17,620,784 | 17,113,040 | 17,065,776 | 16,425,776 |
+| Parameters used at inference | 15,663,771 | 15,156,027 | **15,108,763** | — | — | — | — |
+| Decoder parameters | 1,664,768 | 1,157,024 | **1,109,760** | — | — | — | — |
+| FP32 weights | 65.7 MB | 63.7 MB | **63.5 MB** | 70.5 MB | 68.5 MB | 68.3 MB | 65.7 MB |
+| ONNX FP32 file | not exported | not exported | not exported | 68.5 MB | 66.5 MB | 66.3 MB | **63.5 MB** |
+| Training checkpoint | 845.9 MB | 843.4 MB | **842.7 MB** | 867.0 MB | 864.5 MB | 863.9 MB | 845.9 MB |
+
+Notes:
+1. **Validation loss** is comparable only between the three Config A models and the baseline. Those four use the same 100 canonical validation utterances.
+   - MRF was trained on a different (reconstructed) split.
+   - SEQ's validation set was not verified to be the same.
+   - Their values, taken from the checkpoint file names, are in parentheses.
+   - The published Piper checkpoint has no validation record here.
+2. **UTMOSv2** is a predicted score, not human MOS. Its random cropping is not seeded, so a model's mean moves by about ±0.01–0.02 between scoring sessions.
+   - In the 2026-10-21 session, the stored WAVs of Piper_no_VITS2_cpn and ParIR were rescored next to SeqIR. They scored 3.508 and 3.526, against SeqIR's 3.493.
+   - The WER values reproduce exactly between sessions.
+   - Paired tests with confidence intervals are in each model's README.
+3. **RTF** comes from two groups of measurements that cannot be compared with each other.
+   - The three Config A models were timed back to back in one session on 2026-10-21.
+   - The four historical values come from their original runs. These were not shown to be one session, and Piper ran on a different PyTorch version from the internal models, hence the parentheses.
+   - The 2026-10-21 control ran 1.21× slower than in its own 2026-10-10 session. On 2026-10-10 the baseline itself ran 8.3% slower than its historical value.
+   - So compare RTF only within a group. The "relative" row does this, using the ResBlock2 model of the same group as the reference.
+4. **Size:** definitions and the record are in the "Model size" section below (`model_parameters.json`; MB = 10^6 bytes).
+   - The ONNX file holds only the inference graph, so it is smaller than the FP32 weights.
+   - The training checkpoint also holds the posterior encoder, discriminators and optimizer state.
+
+Sources:
+- quality: `piper-seqir-no-vits2-cpn/comparison.json`, which has summaries of all seven result files;
+- RTF: `piper-ir-timing-session/` and the historical result files;
+- epochs and validation: each model's `selected_checkpoint.json` or `models/manifest.json`;
+- size: `model_parameters.json`.
+
+Every model has one training run and one synthesis draw per sentence.
+
 ## Model size
 
 `model_parameters.json` (2026-10-21) records parameter counts and sizes for all seven
