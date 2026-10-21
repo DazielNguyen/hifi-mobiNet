@@ -334,6 +334,319 @@
       "limits": [
         "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
       ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/selected_checkpoint.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "739852b23c09f31c572f3bc661716d0248b6937f5c732652b1829797d96115f6",
+      "classification": "run_record",
+      "n": null,
+      "limits": [
+        "Lowest validation val_loss_mel on 100 utterances; a noise-selected minimum."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/training_summary.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "3e128a30a9c7c3b2df93043ffffb75bc3eb4af9be9a0b652a447fa6d63c35f6f",
+      "classification": "new_summary_of_run_logs",
+      "n": 1500,
+      "limits": [
+        "Lowest validation val_loss_mel on 100 utterances; a noise-selected minimum.",
+        "One DDP resume at epoch 1222 without RNG restore."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/harvard720_synth_record.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "99616e520a6efe5aefce25e898f5250f9dd1007826bb8100c8667dbb15d2c86c",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Timing fields were recorded while Piper-SeqIR trained on the GPUs; do not use them (same-session RTF: results/piper-ir-timing-session/)."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_results.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "d21f57d74aea2e1987362396ac9f3488be78c15445f9411446c59889ab0f12ab",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Decoder-bundle comparison (IR blocks, SnakeBeta and MRD together), not a single-component ablation (docs/training/piper-ir-protocol.md).",
+        "The rtf field is from the loaded 2026-10-16 session; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/score_record.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "aa8e876f0a5a80f8a8ac19afc95c31b33dadfdccf07df6d49ec40d5284d2ac6c",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/comparison.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "271363ff5ac4e57cfb675435f77c76d23bec272d84886c6b99d1d7e85cb99900",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Decoder-bundle comparison (IR blocks, SnakeBeta and MRD together), not a single-component ablation (docs/training/piper-ir-protocol.md).",
+        "UTMOSv2 and WER only; Holm over 10 tests, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/comparison_same_session_utmosv2.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "2ba40f44c2712dce35395facbaee20cea5713de705e6fe68c7992c9e65809ccd",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 only; the Piper_no_VITS2_cpn reference is a same-session rescoring.",
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/harvard_piper_no_vits2_cpn_rescored_results.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "6c9634ff7740e0bc72f148b9182bd9f6e331bdff13514f1def956555c67f09f1",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "Rescoring of the 2026-10-10 WAVs; rtf fields are from 2026-10-10.",
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/piper_no_vits2_cpn_rescore_record.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "602e9657e006a1827095ada4712273bcbbf970400032efcb3eedd60176b21d4c",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-parir-no-vits2-cpn/scorer_control.json",
+      "source": "new run in this repository (2026-10-11/16); see results/piper-parir-no-vits2-cpn/README.md",
+      "sha256": "9e7eed5eac7bea77ed700b339bb3dddc4016453b16e42061b7ddf0dc048e6102",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/selected_checkpoint.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "dbd75fd9622c7cff4d9068bae70cfe3b0faa730a894e5bb9be2bbbdfe1770592",
+      "classification": "run_record",
+      "n": null,
+      "limits": [
+        "Lowest validation val_loss_mel on 100 utterances; a noise-selected minimum."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/training_summary.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "35afee016642736e076aae9532c0b01ce2e95e59329fce30b89a3ed8a665e96b",
+      "classification": "new_summary_of_run_logs",
+      "n": 1500,
+      "limits": [
+        "Lowest validation val_loss_mel on 100 utterances; a noise-selected minimum."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/harvard720_synth_record.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "0a7527991e78e12895cefc7ce3de4447083559b7f7c01771a34f74c053c3b532",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; fixed order control, ParIR, SeqIR; PyTorch CPU under WSL, not ONNX or edge.",
+        "The control ran 1.21x slower than in its own 2026-10-10 session; compare RTF only within this session.",
+        "Synthesized once; determinism not checked by a second synthesis."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/harvard_piper_seqir_no_vits2_cpn_results.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "55789e6b29e5b787a32e20f80c71021fe703cd265164e1ded0835c8448660e84",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Decoder-bundle comparison (IR blocks, SnakeBeta and MRD together), not a single-component ablation (docs/training/piper-ir-protocol.md).",
+        "RTF from the 2026-10-21 session; compare only within that session."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/score_record.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "76862fba5a2e04e8aa31447c84eef22cff8ed921d33e105b83991fe89e5c5ff2",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/comparison.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "3304a56bd8c15084640048a3dc286aed3f344460ba66bb3bf487389b4f2bb5fb",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "Decoder-bundle comparison (IR blocks, SnakeBeta and MRD together), not a single-component ablation (docs/training/piper-ir-protocol.md).",
+        "UTMOSv2 and WER only; Holm over 12 tests, exploratory.",
+        "RTF summaries of the reference rows come from other sessions and were not tested."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/comparison_same_session_utmosv2.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "55faa3d3550d82e0f34993abce0506954319c1079d55698c2fae335571e8638c",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 only; the Piper_no_VITS2_cpn and ParIR references are same-session rescorings.",
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/harvard_piper_no_vits2_cpn_rescored_results.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "2e2bee2b1d65028c34f3aa6bb43d858fd9b9ff70c92dd3ddc7c3648c5bf86000",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "Rescoring of the 2026-10-10 WAVs in the 2026-10-21 session; rtf fields are from 2026-10-10.",
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/piper_no_vits2_cpn_rescore_record.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "85125d4b5251d8593951a69cba74fa16ada2877ef3e6e48772100cfa3c1b3253",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_rescored_results.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "3b485bb3cb7f9acfca1bec32ff2cbefbc13bdc8ad946880b1c126498464d2696",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "Rescoring of the 2026-10-16 WAVs in the 2026-10-21 session; rtf fields are from the loaded 2026-10-16 session, do not use them.",
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/parir_rescore_record.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "224adfd9700689becfd5594330f5f6ec2e478ceabfc4e56bf4c424951fe14faf",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/scorer_control.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "38966fab6711befa855fe2e926fd630375245f36f202b8dfefd6def116c6b82a",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-seqir-no-vits2-cpn/scorer_control_parir.json",
+      "source": "new run in this repository (2026-10-16/21); see results/piper-seqir-no-vits2-cpn/README.md",
+      "sha256": "0df1ae498b5b4dce8332cfe5dc0b76b9e98a5b109909a2e8f9576ac73f12a585",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "UTMOSv2 random cropping is not seeded; per-sentence variation is expected."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/piper_no_vits2_cpn_ctrl_synth_record.json",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "e76f2b8a0ac7cca067f3e1443e0747b92afd6821945db3337dc7caac5f7ba46c",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; fixed order control, ParIR, SeqIR; PyTorch CPU under WSL, not ONNX or edge.",
+        "The control ran 1.21x slower than in its own 2026-10-10 session; compare RTF only within this session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/piper_parir_timing_synth_record.json",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "c2eb7401b0ad5b6c3f2be2c9d41c1fa0ba4edb962a6c4ce27ebe21f650a95a37",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; fixed order control, ParIR, SeqIR; PyTorch CPU under WSL, not ONNX or edge.",
+        "The control ran 1.21x slower than in its own 2026-10-10 session; compare RTF only within this session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/session_control_parir.json",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "362d9b4ad03aeac829b2b384f81edfd1c5cc6c27ab7707e99dd18ef762ecb357",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; fixed order control, ParIR, SeqIR; PyTorch CPU under WSL, not ONNX or edge.",
+        "The control ran 1.21x slower than in its own 2026-10-10 session; compare RTF only within this session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/session_control_seqir.json",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "3824cc09f1a2a7f46a3d10f0f163aded82d8e6d7228c79983d80c3de914cd842",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; fixed order control, ParIR, SeqIR; PyTorch CPU under WSL, not ONNX or edge.",
+        "The control ran 1.21x slower than in its own 2026-10-10 session; compare RTF only within this session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/parir_determinism.json",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "8d08e15e32d148f8d28e610ea3ba403848397dbe281f9b87face3f809ac10946",
+      "classification": "new_control",
+      "n": 720,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-timing-session/machine_state_before.txt",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "7075505259a31332cacfd4a4b60ad9a37207614dd1f7e6c5fbb4575fc9b8b383",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot of load, GPU use and top processes inside WSL; the Windows host state was not recorded."
+      ]
+    },
+    {
+      "file": "results/piper-ir-timing-session/machine_state_after.txt",
+      "source": "new idle-machine timing session (2026-10-21); see results/piper-seqir-no-vits2-cpn/README.md, section 4",
+      "sha256": "99c709c0a5406b9f8fc2eb0bc53bf858e54807afb72a4d1eafb60db50c27000f",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot of load and top processes inside WSL; the Windows host state was not recorded."
+      ]
     }
   ],
   "status": "historical_observations_and_new_measurements",
