@@ -100,3 +100,15 @@ Loading is the same as in `scripts/evaluation/harvard/synthesize.py`:
 - One round, no sweep. If a check fails, the failure is reported and the round stops.
 - Graphs, WAVs and logs stay outside Git, under `training_output/onnx-ptq/`.
 - Records are copied to `results/piper-ir-onnx-ptq/`, with README.md and README.vi.md, and listed in `results/manifest.json`.
+
+## 7. Deviation found after the round (recorded 2026-10-22)
+
+Section 1 says the decoder's weight norm is removed, as in `harvard/synthesize.py`. The flow's weight norm was not removed.
+- **Effect on the graphs:** EdgeTTS's flow coupling layers (`WN`) keep their weight norm, so their 32 convolution weights are computed in the graph at every run.
+- **Effect on the recipe of section 3:**
+  - `quantize_static` could not quantize those weights as constants. It quantized them at run time, per tensor, as UINT8.
+  - The declared recipe (static QInt8 per channel) therefore holds for only 8 of the 40 flow convolutions, and for all of enc_p and dp.
+  - The INT8 graphs keep 27.8 MB of FP32 flow weights.
+- **Not affected:** none of the declared checks failed, because none of them tested this.
+- **Correction for a repeat round** (implemented, not yet run; `docs/plan-onnx-ptq-v2.md`): call `remove_weight_norm()` on each flow coupling layer's `WN` before export, and add checks that every in-scope QLinearConv has a constant per-channel INT8 weight and that no `ReduceL2` (weight-norm) node remains.
+- **Records:** the current results stay as they are, labelled with this deviation (`results/README.md`, `results/piper-ir-onnx-ptq/README.md`).
