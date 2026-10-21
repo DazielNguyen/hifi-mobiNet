@@ -3,18 +3,22 @@
 # (protocol: docs/evaluation-onnx-ptq.md). Run from the training clone root:
 #
 #   SPY=<python with torch+onnx+onnxruntime+scorers> TPY=<training venv python> \
-#   RESULTS=<repository>/results/piper-ir-onnx-ptq bash <repository>/scripts/evaluation/onnx/run_round.sh
+#   OUT=training_output/onnx-ptq-<round> RESULTS=<repository>/results/piper-ir-onnx-ptq-<round> \
+#   bash <repository>/scripts/evaluation/onnx/run_round.sh
+#
+# OUT and RESULTS are required and must be new for each round: an existing OUT resumes that
+# round from its stage markers (round 1 used OUT=training_output/onnx-ptq). Since round 2,
+# export.py folds the flow's weight norm (docs/plan-onnx-ptq-v2.md).
 #
 # Stages leave markers in $OUT/stages, so a re-run resumes after the last finished stage.
 # A failed check stops the round (set -e on every stage command). Nothing here trains,
 # commits or deletes. Graphs, WAVs and logs stay in $OUT (outside Git); records are copied
 # to $RESULTS at the end.
 set -uo pipefail
-: "${SPY:?set SPY}" "${TPY:?set TPY}" "${RESULTS:?set RESULTS}"
+: "${SPY:?set SPY}" "${TPY:?set TPY}" "${RESULTS:?set RESULTS}" "${OUT:?set OUT (a new directory per round)}"
 SD=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)          # scripts/evaluation/onnx
 REPO=$(cd "$SD/../../.." && pwd)
 H=$REPO/scripts/evaluation/harvard
-OUT=${OUT:-training_output/onnx-ptq}
 DATASET=${DATASET:-data/ljspeech-medium/training_output/ljspeech/medium/dataset.jsonl}
 export CUDA_VISIBLE_DEVICES=""
 LABELS=(piper-no-vits2-cpn piper-parir-no-vits2-cpn piper-seqir-no-vits2-cpn)

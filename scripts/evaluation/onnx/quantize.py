@@ -134,6 +134,14 @@ def main(argv=None) -> int:
                                     "op_counts": dict(sorted(Counter(n.op_type for n in int8.graph.node).items()))}
         check("every_in_scope_conv_quantized", dict(qconv) == record["recipe"]["conv_in_scope_by_module"],
               qlinearconv=dict(qconv))
+        # the declared recipe (static, per-channel INT8 weights) must hold for every quantized conv;
+        # the first round missed this because the flow's weight norm was not folded (protocol section 7)
+        kinds = C.qlinearconv_weight_kinds(int8)
+        record["int8_structure"]["qlinearconv_weight_kinds"] = kinds
+        folded = json.loads((a.fp32.parent / "export_record.json").read_text(encoding="utf-8")).get("flow_weight_norm_folded", 0)
+        if folded:
+            check("every_qlinearconv_weight_constant_per_channel_int8",
+                  all(set(k) == {"constant int8 per-channel"} for k in kinds.values()), kinds=kinds)
         check("no_quantized_node_under_dec",
               not any(C.module_of(n.name) == "dec" and ("QLinear" in n.op_type or "Quantize" in n.op_type)
                       for n in int8.graph.node))

@@ -95,6 +95,31 @@ def nan_to_num(x, nan: float, posinf: float, neginf: float):
     return torch.where(x == -math.inf, torch.full_like(x, neginf), x)
 
 
+FOLD_TOLERANCE = {"nrmse_max": 1e-5, "max_abs_error_max": 1e-4}
+
+
+def fold_flow_weight_norm(model_g) -> int:
+    """Fold the weight norm of every flow coupling layer's ``WN`` (EdgeTTS ``WN.remove_weight_norm``).
+
+    The first ONNX/PTQ round (2026-10-21) left it in place: the 32 ``WN`` convolutions of the flow
+    then compute weight_g * weight_v / ||weight_v|| in the graph at every run (``ReduceL2``), and
+    ``quantize_static`` can only quantize such weights at run time, per tensor, as UINT8
+    (protocol docs/evaluation-onnx-ptq.md, section 7). Folding is the same function up to float
+    rounding; callers check the outputs before and after against ``FOLD_TOLERANCE``.
+    Returns the number of ``WN`` modules folded.
+    """
+    folded = 0
+    for layer in model_g.flow.flows:
+        enc = getattr(layer, "enc", None)
+        if enc is not None and hasattr(enc, "remove_weight_norm"):
+            enc.remove_weight_norm()
+            folded += 1
+    left = [n for n, _ in model_g.flow.named_parameters() if n.endswith(("weight_g", "weight_v"))]
+    if left:
+        raise SystemExit(f"weight norm left in the flow after folding: {left[:4]}")
+    return folded
+
+
 def export_wrapper(model_g):
     """An ``nn.Module`` whose forward equals EdgeTTS ``SynthesizerTrn.infer()`` (Config A path).
 
@@ -312,6 +337,30 @@ def without_random_nodes(model):
     del out.graph.node[:]
     out.graph.node.extend(kept)
     return out
+
+
+def qlinearconv_weight_kinds(model) -> dict:
+    """Per module, how each QLinearConv gets its weight: a constant INT8 initializer with a
+    per-channel (or per-tensor) scale, or a tensor produced at run time (e.g. a QuantizeLinear of
+    a weight computed in the graph). Used to check that the declared PTQ recipe was applied."""
+    import numpy as np
+    from onnx import numpy_helper
+
+    inits = {i.name: i for i in model.graph.initializer}
+    kinds: dict = {}
+    for n in model.graph.node:
+        if n.op_type != "QLinearConv":
+            continue
+        w, w_scale = n.input[3], n.input[4]
+        if w in inits:
+            arr = numpy_helper.to_array(inits[w])
+            scale = numpy_helper.to_array(inits[w_scale]) if w_scale in inits else np.zeros(0)
+            kind = f"constant {arr.dtype} " + ("per-channel" if scale.size > 1 else "per-tensor")
+        else:
+            kind = "computed at run time"
+        mod = kinds.setdefault(module_of(n.name) or "other", {})
+        mod[kind] = mod.get(kind, 0) + 1
+    return kinds
 
 
 def module_of(node_name: str) -> str:

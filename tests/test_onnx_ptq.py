@@ -134,6 +134,41 @@ class TorchHelpers(unittest.TestCase):
         names = {n for n, _ in wrapper.named_modules() if n.count(".") == 0 and n}
         self.assertEqual(names, {"enc_p", "dp", "flow", "dec"})
 
+    @unittest.skipUnless(EDGETTS_MAS_BUILT, "EdgeTTS MAS extension not built")
+    def test_fold_flow_weight_norm_changes_only_rounding(self):
+        import numpy as np
+        import torch
+
+        sys.path.insert(0, str(ROOT / "src"))
+        from hifimobinet.training.vendor import vendor_module
+
+        models = vendor_module("edgetts_vits", "models")
+        torch.manual_seed(0)
+        g = models.SynthesizerTrn(
+            n_vocab=12, spec_channels=33, segment_size=8, inter_channels=8, hidden_channels=8, filter_channels=16,
+            n_heads=2, n_layers=1, kernel_size=3, p_dropout=0.0, resblock="2", resblock_kernel_sizes=(3,),
+            resblock_dilation_sizes=((1, 2),), upsample_rates=(4, 4), upsample_initial_channel=16,
+            upsample_kernel_sizes=(8, 8), n_speakers=1, gin_channels=0, use_sdp=True, use_snake=False, use_f0=False,
+            use_transformer_flows=False).eval()
+        x, xl = torch.LongTensor([[1, 3, 5, 7, 2, 4, 6]]), torch.LongTensor([7])
+
+        def run():
+            torch.manual_seed(1)
+            with torch.no_grad():
+                return g.infer(x, xl, noise_scale=0.667, length_scale=1.0, noise_scale_w=0.8)[0].numpy()
+
+        before = run()
+        coupling = sum(hasattr(layer, "enc") for layer in g.flow.flows)
+        self.assertEqual(C.fold_flow_weight_norm(g), coupling)
+        self.assertGreater(coupling, 0)
+        self.assertFalse(any(n.endswith(("weight_g", "weight_v")) for n, _ in g.flow.named_parameters()))
+        after = run()
+        self.assertEqual(before.shape, after.shape)
+        err = np.abs(before.astype(np.float64) - after)
+        nrmse = float(np.sqrt(np.mean(err ** 2)) / max(np.sqrt(np.mean(before.astype(np.float64) ** 2)), 1e-12))
+        self.assertLessEqual(nrmse, C.FOLD_TOLERANCE["nrmse_max"])
+        self.assertLessEqual(float(err.max()), C.FOLD_TOLERANCE["max_abs_error_max"])
+
 
 @unittest.skipUnless(HAS["onnx"] and HAS["numpy"], "onnx missing")
 class GraphSurgery(unittest.TestCase):
@@ -162,6 +197,28 @@ class GraphSurgery(unittest.TestCase):
         self.assertFalse(any(n.op_type.startswith("Random") for n in matched.graph.node))
         self.assertEqual(C.strip_matched_noise(matched).SerializeToString(),
                          C.without_random_nodes(model).SerializeToString())
+
+    def test_qlinearconv_weight_kinds_detects_run_time_weights(self):
+        import numpy as np
+        from onnx import TensorProto, helper, numpy_helper
+
+        inits = [numpy_helper.from_array(np.ones((2, 1, 1), np.int8), "w_const"),
+                 numpy_helper.from_array(np.array([0.1, 0.2], np.float32), "w_scale_pc"),
+                 numpy_helper.from_array(np.zeros(2, np.int8), "w_zero_pc"),
+                 numpy_helper.from_array(np.array(0.1, np.float32), "s"),
+                 numpy_helper.from_array(np.array(0, np.uint8), "z")]
+        q = ["xq", "s", "z"]
+        nodes = [
+            helper.make_node("QLinearConv", q + ["w_const", "w_scale_pc", "w_zero_pc", "s", "z"], ["y1"],
+                             name="/enc_p/Conv_quant"),
+            helper.make_node("QuantizeLinear", ["w_float", "s", "z"], ["w_rt"], name="/flow/w_quant"),
+            helper.make_node("QLinearConv", q + ["w_rt", "s", "z", "s", "z"], ["y2"], name="/flow/Conv_quant"),
+        ]
+        graph = helper.make_graph(nodes, "kinds", [helper.make_tensor_value_info("xq", TensorProto.UINT8, [1, 1, 4]),
+                                                   helper.make_tensor_value_info("w_float", TensorProto.FLOAT, [2, 1, 1])],
+                                  [helper.make_tensor_value_info("y1", TensorProto.UINT8, [1, 2, 4])], initializer=inits)
+        kinds = C.qlinearconv_weight_kinds(helper.make_model(graph))
+        self.assertEqual(kinds, {"enc_p": {"constant int8 per-channel": 1}, "flow": {"computed at run time": 1}})
 
     def test_random_nodes_requires_two(self):
         from onnx import helper

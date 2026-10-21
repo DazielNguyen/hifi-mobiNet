@@ -38,6 +38,8 @@ def main(argv=None) -> int:
     p.add_argument("--checkpoint", required=True, type=Path)
     p.add_argument("--manifest", default=Path("results/manifests/harvard720.json"), type=Path)
     p.add_argument("--out-dir", required=True, type=Path)
+    p.add_argument("--keep-flow-weight-norm", action="store_true",
+                   help="reproduce the first round (2026-10-21): leave the flow's weight norm unfolded")
     a = p.parse_args(argv)
     if a.out_dir.exists() and any(a.out_dir.iterdir()):
         p.error("output directory exists and is not empty; choose a new one")
@@ -83,25 +85,37 @@ def main(argv=None) -> int:
             with torch.no_grad():
                 return module(x, xl, list(C.SCALES))
 
-        # 1. infer() before the int64 cast of the WN buffers, infer() after it, and the wrapper:
-        #    all three must be identical (same seed, same ops)
+        # 1. infer() before the int64 cast of the WN buffers and after it must be identical;
+        #    folding the flow's weight norm may only change float rounding (FOLD_TOLERANCE);
+        #    the wrapper must equal infer() of the final module exactly (same seed, same ops)
         check_rows = samples[:3]
         before = [infer(s) for s in check_rows]
         wrapper, cast = C.export_wrapper(g)
         record["wn_n_channels_buffers_cast_to_int64"] = cast
-        after = [infer(s) for s in check_rows]
+        after_cast = [infer(s) for s in check_rows]
+        check("int64_cast_leaves_infer_unchanged", all(torch.equal(b, c) for b, c in zip(before, after_cast)),
+              sentences=[s["idx"] for s in check_rows], buffers_cast=cast)
+        if a.keep_flow_weight_norm:
+            record["flow_weight_norm_folded"] = 0
+            final = after_cast
+        else:
+            folded = C.fold_flow_weight_norm(g)
+            record["flow_weight_norm_folded"] = folded
+            final = [infer(s) for s in check_rows]
+            close = [C.parity(b.numpy(), f.numpy()) for b, f in zip(before, final)]
+            ok = all(c["same_shape"] and c["nrmse"] <= C.FOLD_TOLERANCE["nrmse_max"]
+                     and c["max_abs_error"] <= C.FOLD_TOLERANCE["max_abs_error_max"] for c in close)
+            check("flow_weight_norm_fold_changes_only_rounding", ok and folded > 0, wn_modules_folded=folded,
+                  tolerance=C.FOLD_TOLERANCE, nrmse=[c.get("nrmse") for c in close],
+                  max_abs_error=[c.get("max_abs_error") for c in close])
         wrapped = []
         for s in check_rows:
             x, xl, sc = tensors(s)
             torch.manual_seed(C.SEED)
             with torch.no_grad():
                 wrapped.append(wrapper(x, xl, sc))
-        check("int64_cast_leaves_infer_unchanged", all(torch.equal(b, c) for b, c in zip(before, after)),
-              sentences=[s["idx"] for s in check_rows], buffers_cast=cast)
-        check("wrapper_equals_infer", all(torch.equal(b, w) for b, w in zip(before, wrapped)),
+        check("wrapper_equals_infer", all(torch.equal(f, w) for f, w in zip(final, wrapped)),
               sentences=[s["idx"] for s in check_rows])
-        record["flow_weight_norm_removed"] = False  # EdgeTTS ResidualCouplingBlock has no remove_weight_norm
-        check("flow_has_no_remove_weight_norm", not hasattr(g.flow, "remove_weight_norm"))
 
         # 2. export the deployment graph
         deploy = a.out_dir / f"{a.label}_fp32.onnx"
@@ -123,6 +137,12 @@ def main(argv=None) -> int:
         check("no_enc_q_initializer", not any("enc_q" in i.name for i in graph.graph.initializer))
         check("no_quantized_node", not any("QuantizeLinear" in n.op_type or "QLinear" in n.op_type for n in graph.graph.node))
         check("no_fp16_initializer", not any(i.data_type == TensorProto.FLOAT16 for i in graph.graph.initializer))
+        weight_norm_ops = Counter(C.module_of(n.name) or "other" for n in graph.graph.node if n.op_type == "ReduceL2")
+        record["weight_norm_ops_in_graph"] = dict(weight_norm_ops)
+        if not a.keep_flow_weight_norm:
+            # every in-scope convolution must have a constant weight, or static PTQ cannot apply its recipe
+            check("no_weight_norm_ops_in_ptq_scope", not any(weight_norm_ops.get(m) for m in C.PTQ_SCOPE),
+                  reduce_l2_by_module=dict(weight_norm_ops))
         duration, acoustic = C.random_nodes(graph.graph)
         ops = Counter(n.op_type for n in graph.graph.node)
         record["graph"] = {"file": deploy.name, "sha256": C.sha256(deploy), "bytes": deploy.stat().st_size,
