@@ -78,6 +78,21 @@ The RTF column comes from one session and is comparable only within it. The cont
 slower than in its own 2026-10-10 session (0.0421), so neither that value nor the historical
 RTF table above can be set beside these values.
 
+`piper-ir-onnx-ptq/` (README: [piper-ir-onnx-ptq/README.md](piper-ir-onnx-ptq/README.md), 2026-10-21)
+holds the ONNX FP32 export and static INT8 PTQ of the three Config A models. The protocol is
+`docs/evaluation-onnx-ptq.md`. It includes the Harvard-720 quality of all six graphs and an
+ONNX Runtime timing session.
+- **Export:** lossless. All 720 sentences pass parity, and WER is identical to PyTorch.
+- **INT8 size and speed:** graphs are 32–33% smaller and 4–17% faster than FP32.
+- **INT8 quality:** no detectable change for Piper_no_VITS2_cpn and ParIR. SeqIR loses 0.036 in UTMOSv2.
+- **Decoder speed:** on ORT with 12 threads, the IR decoders are not faster than ResBlock2.
+
+| Model, ONNX INT8 | UTMOSv2 (predicted) | Macro WER | Graph size | ORT RTF, 2 threads | ORT RTF, 12 threads |
+|---|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 3.503 | 0.0620 | 43.3 MB | 0.0376 | 0.0277 |
+| Piper_ParIR_no_VITS2_cpn | 3.524 | 0.0772 | 41.3 MB | 0.0341 | 0.0366 |
+| Piper_SeqIR_no_VITS2_cpn | 3.459 | 0.0739 | 41.1 MB | 0.0269 | 0.0297 |
+
 ## Seven-model comparison
 
 All seven models on Harvard-720 (720 sentences, 5,742 reference words), with the same

@@ -659,6 +659,647 @@
         "FP32 bytes are computed (4 bytes per parameter), not file sizes; the new models have no ONNX export.",
         "Historical counts are copied from the Q05 reports, not recounted."
       ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "950d03334bc17ea6dfd52ac2e1b31f753f4542a1b4d8791bdebac7c299cc4d7f",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "895a4f392416389d2f3d0941299063a2eb57e4d9ce64de6b96115f4c6e740554",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "0a538e7a40405d3620c478e36885c28e4b2e3090b7c866231f3fdecfc3a0f0f5",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "5c835ccd226db440c65538759c69a46128cb6a388ba8888b4d7a9c17741f182a",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/harvard_piper_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "ce320bfd2ccf99254df0bf28bfedcb96437e7a27e79f10112cadacd2e52f3926",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/harvard_piper_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "d021a3648751a62c958f355aa2a13305f337cf6a579e09c02c2dae65db313042",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "44d51f87af8ef34f3ecefde44392d0d5ff1e2714876760e06b8ed9e226f6b4b3",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "051cdf51cf2397704bdfa3fea0e50e833b5d7f3a48aa0050243c5563ef4ac18c",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/piper-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "c0c93428c5d8b78672faa2fda6c94f2f0ff0daaaa5fd3b3d929b6e2a6c10b8b4",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/piper-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "387d10bbb4b3d939f93070d4555d73ec5b0c16200ceb4fe2539a943ae16de67d",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "933d91c505cd3e2308daed051a0d0966c838381cd2567a92cc58cb6d0dacd3eb",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "1cea269cad95cefdfe59a8348d737cd8836aca7d337f724af5ddb19ff3c88737",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "f1de23e2b87410b06c869362e242bf5ec17fae4e9e8b95b42dcaedd08dc8c4bc",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "42b41aba94180efc99cb0633bfdc5bafc5dc187adbdde1c1156edeee0aaa436b",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "2995406a32374b400c5242a2d2c33c5d78554fb9a41eecd87c132e5bfefe1023",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "c2bf012e46547bd21e58becda9d8fb09a627e80f894e6e6e870c91289e14c58a",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "6ebc2471631b04d53a83165c95c3c88120039fd8f4995da8f2a9336d43c30021",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "2ff5dda37b8e7586d71c16efe21ce3e6f3472eece8c3c3997659f286e8dd78a4",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "37c56c0a8adf553ad621420c3f0a064fb932c138414c39a30f5a2ff6d2453cd3",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "8d40360242796e95ab52fb6db7c0a67b6a5d3982d69e994ef9e18843af19a501",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "bec64a40bfdc50eff3d27df8fd91e151bbfb44b00f35c8b6b07324bd884646b5",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-parir-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "ed2530bb56aa4a7a75f4a08b07b981c405a717d416cb493fdbd37e40fd14df90",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "b326cb524900066091f5b9eda749414957e07f7d037196da6e1b977cfae20241",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "022deed3a16e0d3a704d7de00d2067673adf64ad6d637f7c47bc68d14834ddc3",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "025a0ee9c538079f9ce7c26f8c92be1ff46738f64b7e5deb12870596485652c8",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "938904bd547209d721f50f049687a6a623a01e94a538937af666ad443a55f171",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/harvard_piper_seqir_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "c86c22d2958abc7b01bc0d93484c7698d75f54fedba5ff4025b2e815f76ed812",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/harvard_piper_seqir_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "f935ed80a8fee799ea8f4d2b6fc66fc2a2511cbe679bf02a64da21c205a561db",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "e1feb56f0f158145b708b5b3f890dff0972615cec686e69997930fe1aa229c50",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "2dc7114e0bad4919c02effd6f4f126fd945efb28dfc8b029c8676a7f92d9130e",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "f8d421a5506859603789e83dac25e48e1684429239a12f764100e43125e5a1fe",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "f4423730ed024f0f23c903084b823ba00e2ff4b35cba15c65183f5f534f0e8eb",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/piper-seqir-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "865061197f775def80b06691795668076f517cb323dd7fd0b5fc751ce040b57f",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/machine_state_after.txt",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "035b0bcd5aa23f1f73ae41ada0c3ee38b0a27ef8c3a31f562e5b955a4f4001fc",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot inside WSL; the Windows host state was not recorded."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/machine_state_before.txt",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "705a623a817061838ae3f4a68798b2cd5fde465e1e1592f419ae2b1271b5d982",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot inside WSL; the Windows host state was not recorded."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/pytorch_ctrl_synth_record.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "07f83a7fc6896933597cd0aeffcb698e55d3e788b56ac7ccb2b3935229ed69d8",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "PyTorch control of the ONNX timing session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "21c963f477819231d6f525b89c5d72f93a7498eea0037d3255699fe70a23fbf3",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "23892c3346c16d3b62aeec0980a55a47f6243b5084b8e5e62f2f106f938ea838",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "ec20971dd5105931b2207cb3da5d581cee42b98f607b4a58725a3da304940ed1",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "87dff18032e47819790b2dd99171691deed7a64a3a734e4f5ac203ced06d6545",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "39e9b1e9545559b5d8ec1714c4c337fb0346c25e66f644a00208536e7a27013a",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_A_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "08297f5c2cf45e7b03cd4f9f60e5f235c545fd49625c66c80f761ba0b0be1b03",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "0995060dbf416cc75ad2358f7a0d64f6530a3b40d629ea069220abd2de588310",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "9bc2c245a7470dc0bdb0fee6540199ca825652f3ece48f3e8175aeda4e0a7298",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "eeecd13a4eb922177ef444bfa9a3c466f709cf22b1070fd2dd347a80f75f14ef",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "9bf640469538374a36c4d67c3be922cd3dbf9fb94021205aa8d9946c383c62d2",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "a52eb692c6ba24f15e2ff3c4f1b391afccb50506916297bebb717655b64a57cc",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t12_B_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "a91bbc6d71f588602e4d3ec0ac773e392825cb988da757980ca6f239dc46d7a5",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "383e60995c3b0437fc8df135df6b235eb1a2276ae9c144348d7c5861ffe97444",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "82fab9fdb91b56ab5f7c944a41a61d88cda6bbff598292ad688e8e5401a40e90",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "58737a2b9e6ab5b4c1e8c7acea83f6a564c220bb25eb3d40e38962b70cd17e7e",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "0b3f4578232847fa2bb8490bf1e1e8bbba98f407852a279fa5160bd0b7d9a275",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "b72fc2aa03e7a2e9a8e149042b19f0609d8c616995cff1ffbdc867d01f97b7ac",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_A_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "0f128639513b1685ea77a1bcf2f87ea099e12aacf7378d3af5ee860aed040fed",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "ef0ed41f466448bfd1f9b5ee5c6d47b182124729b17dac3b7ea19c3255dd0dba",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "0ae939e1f25141eddbdd8b8cfecd69e3e2c580a038eedc96193b159c4bcdedad",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "1ea2732782d7112932008d9bfe0961c23986ac514ddaec8b83dc5a3fed9998ba",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "d5d71bb555f9011c547bdddee8ce4afd553d2179e3cf2dcd11b110205d295da4",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "88076ddca207aa008328e71bcacfe4dfccd2dc46408165eeb0fb1a2a230d592e",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/t2_B_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "ae99804a782c51a7b59fda223d79be30360646666214dfccb3ef62c17046fcb7",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq/timing/timing_summary.json",
+      "source": "new ONNX export / PTQ round (2026-10-21, protocol docs/evaluation-onnx-ptq.md); see results/piper-ir-onnx-ptq/README.md",
+      "sha256": "20f49267b25d3eb6c2edf13b8d8722ae21251e7c7e2bbcbaa43b3fb017acde62",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
     }
   ],
   "status": "historical_observations_and_new_measurements",

@@ -87,6 +87,21 @@ Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong n
 chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10 (0.0421). Vì vậy không thể đặt giá trị
 đó, hay bảng RTF lịch sử ở trên, cạnh các giá trị này.
 
+`piper-ir-onnx-ptq/` (README tiếng Việt: [piper-ir-onnx-ptq/README.vi.md](piper-ir-onnx-ptq/README.vi.md), 2026-10-21)
+chứa bản export ONNX FP32 và PTQ INT8 tĩnh của ba model Config A. Protocol là
+`docs/evaluation-onnx-ptq.md`. Thư mục gồm chất lượng Harvard-720 của cả sáu graph và một
+phiên đo thời gian bằng ONNX Runtime.
+- **Export:** không mất mát. Cả 720 câu đạt parity, và WER giống hệt PyTorch.
+- **Kích thước và tốc độ INT8:** graph nhỏ hơn 32–33% và nhanh hơn FP32 4–17%.
+- **Chất lượng INT8:** không phát hiện thay đổi với Piper_no_VITS2_cpn và ParIR. SeqIR giảm 0,036 UTMOSv2.
+- **Tốc độ decoder:** trên ORT 12 thread, decoder IR không nhanh hơn ResBlock2.
+
+| Model, ONNX INT8 | UTMOSv2 (dự đoán) | Macro WER | Kích thước graph | RTF ORT, 2 thread | RTF ORT, 12 thread |
+|---|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 3.503 | 0.0620 | 43,3 MB | 0.0376 | 0.0277 |
+| Piper_ParIR_no_VITS2_cpn | 3.524 | 0.0772 | 41,3 MB | 0.0341 | 0.0366 |
+| Piper_SeqIR_no_VITS2_cpn | 3.459 | 0.0739 | 41,1 MB | 0.0269 | 0.0297 |
+
 ## So sánh bảy model
 
 Cả bảy model trên Harvard-720 (720 câu, 5.742 từ tham chiếu), cùng protocol synthesis và

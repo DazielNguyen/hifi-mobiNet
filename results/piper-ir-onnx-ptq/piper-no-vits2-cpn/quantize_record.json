@@ -1,0 +1,307 @@
+{
+ "label": "piper-no-vits2-cpn",
+ "started_utc": "2026-10-21T09:35:20.819087+00:00",
+ "status": "passed",
+ "protocol": "docs/evaluation-onnx-ptq.md",
+ "script_sha256": "9dff20385589ad8cd66266d9ecc2be10d85bdb2b022168ad3bb1d782379905a9",
+ "common_sha256": "9093530e49972018730d95d37729dd0ea7bd97e62f81fc82d4f30e46bc333a6b",
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "onnx": "1.22.0",
+  "onnxruntime": "1.23.2",
+  "numpy": "1.26.4"
+ },
+ "calibration": {
+  "file": "docs/evidence/claim-evidence-2026-10-07/source-records/calibration/calibration60.candidate.jsonl",
+  "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53",
+  "split": "results/manifests/canonical_split.json",
+  "split_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+  "dataset_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+  "order": "file order",
+  "scales": [
+   0.667,
+   1.0,
+   0.8
+  ],
+  "ort_seed": 1234,
+  "ids": [
+   "LJ044-0196",
+   "LJ008-0029",
+   "LJ002-0265",
+   "LJ017-0090",
+   "LJ015-0306",
+   "LJ014-0255",
+   "LJ009-0229",
+   "LJ007-0111",
+   "LJ047-0132",
+   "LJ037-0187",
+   "LJ006-0137",
+   "LJ040-0179",
+   "LJ028-0326",
+   "LJ003-0048",
+   "LJ003-0013",
+   "LJ006-0261",
+   "LJ014-0172",
+   "LJ015-0088",
+   "LJ034-0113",
+   "LJ041-0152",
+   "LJ002-0292",
+   "LJ038-0203",
+   "LJ013-0073",
+   "LJ050-0066",
+   "LJ045-0142",
+   "LJ049-0031",
+   "LJ037-0179",
+   "LJ028-0285",
+   "LJ014-0203",
+   "LJ030-0082",
+   "LJ040-0157",
+   "LJ017-0150",
+   "LJ001-0122",
+   "LJ010-0286",
+   "LJ048-0263",
+   "LJ028-0340",
+   "LJ021-0080",
+   "LJ017-0144",
+   "LJ010-0212",
+   "LJ014-0104",
+   "LJ021-0011",
+   "LJ007-0104",
+   "LJ006-0244",
+   "LJ025-0094",
+   "LJ007-0004",
+   "LJ022-0201",
+   "LJ021-0148",
+   "LJ041-0184",
+   "LJ016-0350",
+   "LJ003-0255",
+   "LJ031-0011",
+   "LJ037-0016",
+   "LJ008-0273",
+   "LJ025-0068",
+   "LJ005-0291",
+   "LJ038-0036",
+   "LJ018-0135",
+   "LJ043-0182",
+   "LJ043-0004",
+   "LJ023-0049"
+  ],
+  "n": 60,
+  "train": 60,
+  "val": 0,
+  "test": 0,
+  "problems": []
+ },
+ "checks": {
+  "calibration_train_only": {
+   "passed": true,
+   "n": 60,
+   "problems": []
+  },
+  "quantization_reproducible": {
+   "passed": true,
+   "raw_sha256": "ad04d7426a9b29f18206e81c447ae4ac3c455297cc894d8ab25179eb3dd1077a"
+  },
+  "every_in_scope_conv_quantized": {
+   "passed": true,
+   "qlinearconv": {
+    "enc_p": 37,
+    "dp": 32,
+    "flow": 40
+   }
+  },
+  "no_quantized_node_under_dec": {
+   "passed": true
+  },
+  "decoder_initializers_byte_identical_to_fp32": {
+   "passed": true,
+   "decoder_initializers": 45
+  },
+  "two_random_nodes_kept": {
+   "passed": true
+  },
+  "matched_noise_strips_to_deployment_without_random": {
+   "passed": true
+  },
+  "native_random_idx0": {
+   "passed": true
+  },
+  "native_random_idx359": {
+   "passed": true
+  },
+  "native_random_idx719": {
+   "passed": true
+  }
+ },
+ "fp32": {
+  "file": "piper-no-vits2-cpn_fp32.onnx",
+  "sha256": "9cd2f70a59068a551ab61562bc976672a3bf87a066ffce93a2a7da7d78a2dd73",
+  "bytes": 63536010
+ },
+ "recipe": {
+  "method": "onnxruntime.quantization.quantize_static",
+  "quant_format": "QOperator",
+  "weight_type": "QInt8",
+  "activation_type": "QUInt8",
+  "per_channel": true,
+  "calibrate_method": "MinMax",
+  "op_types_to_quantize": [
+   "Conv"
+  ],
+  "scope_modules": [
+   "enc_p",
+   "dp",
+   "flow"
+  ],
+  "conv_in_scope_by_module": {
+   "dp": 32,
+   "enc_p": 37,
+   "flow": 40
+  },
+  "conv_excluded_by_module": {
+   "dec": 20
+  },
+  "nodes_to_exclude": [
+   "/dec/conv_post/Conv",
+   "/dec/conv_pre/Conv",
+   "/dec/resblocks.0/convs.0/Conv",
+   "/dec/resblocks.0/convs.1/Conv",
+   "/dec/resblocks.1/convs.0/Conv",
+   "/dec/resblocks.1/convs.1/Conv",
+   "/dec/resblocks.2/convs.0/Conv",
+   "/dec/resblocks.2/convs.1/Conv",
+   "/dec/resblocks.3/convs.0/Conv",
+   "/dec/resblocks.3/convs.1/Conv",
+   "/dec/resblocks.4/convs.0/Conv",
+   "/dec/resblocks.4/convs.1/Conv",
+   "/dec/resblocks.5/convs.0/Conv",
+   "/dec/resblocks.5/convs.1/Conv",
+   "/dec/resblocks.6/convs.0/Conv",
+   "/dec/resblocks.6/convs.1/Conv",
+   "/dec/resblocks.7/convs.0/Conv",
+   "/dec/resblocks.7/convs.1/Conv",
+   "/dec/resblocks.8/convs.0/Conv",
+   "/dec/resblocks.8/convs.1/Conv"
+  ]
+ },
+ "raw_quantized_sha256": "ad04d7426a9b29f18206e81c447ae4ac3c455297cc894d8ab25179eb3dd1077a",
+ "int8_structure": {
+  "qlinearconv_by_module": {
+   "dp": 32,
+   "enc_p": 37,
+   "flow": 40
+  },
+  "fp32_conv_left_by_module": {
+   "dec": 20
+  },
+  "op_counts": {
+   "Add": 207,
+   "And": 3,
+   "Cast": 143,
+   "Ceil": 1,
+   "Clip": 6,
+   "Concat": 227,
+   "Constant": 2517,
+   "ConstantOfShape": 170,
+   "Conv": 20,
+   "ConvTranspose": 3,
+   "CumSum": 7,
+   "DequantizeLinear": 109,
+   "Div": 77,
+   "Equal": 65,
+   "Erf": 24,
+   "Exp": 7,
+   "Expand": 90,
+   "Gather": 199,
+   "GatherElements": 21,
+   "GatherND": 15,
+   "GreaterOrEqual": 6,
+   "Identity": 31,
+   "IsNaN": 2,
+   "LayerNormalization": 36,
+   "LeakyRelu": 16,
+   "Less": 3,
+   "LessOrEqual": 3,
+   "MatMul": 26,
+   "Mul": 324,
+   "Neg": 10,
+   "NonZero": 21,
+   "Not": 3,
+   "Pad": 58,
+   "Pow": 3,
+   "QLinearConv": 109,
+   "QuantizeLinear": 128,
+   "RandomNormalLike": 2,
+   "Range": 39,
+   "ReduceL2": 32,
+   "ReduceMax": 1,
+   "ReduceSum": 4,
+   "Relu": 6,
+   "Reshape": 235,
+   "ScatterND": 30,
+   "Shape": 351,
+   "Sigmoid": 16,
+   "Slice": 267,
+   "Softmax": 12,
+   "Softplus": 3,
+   "Split": 9,
+   "Sqrt": 3,
+   "Squeeze": 13,
+   "Sub": 108,
+   "Tanh": 17,
+   "Transpose": 184,
+   "Unsqueeze": 372,
+   "Where": 72
+  }
+ },
+ "int8": {
+  "file": "piper-no-vits2-cpn_int8.onnx",
+  "sha256": "7d4b35e4de35493c7ec20e8a71281cd378e4dd124555a34aff81784b97f8fb6d",
+  "bytes": 43258620,
+  "bytes_ratio_to_fp32": 0.6808520081761508
+ },
+ "matched_noise_graph": {
+  "file": "piper-no-vits2-cpn_int8_matched_noise.onnx",
+  "sha256": "16ff404b121b56ac33ae717c4ca19d2c5714b3bc3fbcf671bc365eba1a023f3f",
+  "duration_input": "/dp/RandomNormalLike_output_0",
+  "acoustic_input": "noise_acoustic",
+  "replaced_nodes": [
+   "/dp/RandomNormalLike",
+   "/RandomNormalLike"
+  ]
+ },
+ "native_random_smoke": [
+  {
+   "idx": 0,
+   "shape": [
+    1,
+    1,
+    58880
+   ],
+   "std": 0.05646893009543419,
+   "passed": true
+  },
+  {
+   "idx": 359,
+   "shape": [
+    1,
+    1,
+    53760
+   ],
+   "std": 0.05535149201750755,
+   "passed": true
+  },
+  {
+   "idx": 719,
+   "shape": [
+    1,
+    1,
+    43264
+   ],
+   "std": 0.05682191625237465,
+   "passed": true
+  }
+ ],
+ "finished_utc": "2026-10-21T09:35:59.591133+00:00"
+}

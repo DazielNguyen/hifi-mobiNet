@@ -1,0 +1,116 @@
+{
+ "classification": "new_comparison_of_new_observations",
+ "inputs": {
+  "piper_no_vits2_cpn_fp32_onnx": {
+   "file": "harvard_piper_no_vits2_cpn_fp32_results.json",
+   "sha256": "ce320bfd2ccf99254df0bf28bfedcb96437e7a27e79f10112cadacd2e52f3926"
+  },
+  "piper_no_vits2_cpn_pytorch": {
+   "file": "harvard_piper_no_vits2_cpn_results.json",
+   "sha256": "4ee3ac35743286cf3e7f1dfb0fad83137a1701f23b3e6f5e2469d7b7e431cfc0"
+  }
+ },
+ "scipy": "1.15.3",
+ "numpy": "1.26.4",
+ "method": {
+  "direction": "x = candidate, y = reference; difference = x - y",
+  "better": "lower RTF and WER, higher UTMOSv2",
+  "bootstrap": "paired, 10000 resamples, percentile 2.5/97.5, default_rng(20261004) per comparison",
+  "holm": "exploratory, over the 2 comparisons in this file",
+  "metrics_tested": [
+   "utmosv2",
+   "wer"
+  ],
+  "equivalence": "not tested; no margin was pre-specified"
+ },
+ "summary": {
+  "piper_no_vits2_cpn_fp32_onnx": {
+   "classification": "new_audit_of_stored_observations",
+   "n": 720,
+   "mean_rtf": 0.04739620305188717,
+   "mean_utmosv2_predicted": 3.508159357640478,
+   "macro_wer_stored": 0.06119363275613275,
+   "macro_wer_recomputed": 0.06119363275613275,
+   "max_abs_wer_difference": 0.0,
+   "corpus_wer_exploratory": 0.05956112852664577,
+   "word_counts": {
+    "S": 283,
+    "D": 46,
+    "I": 13,
+    "N": 5742
+   },
+   "ratio_of_sums_rtf_exploratory": 0.047332454508924454,
+   "median_rtf": 0.046648363585548164,
+   "sd_utmosv2": 0.2622262967379578,
+   "sentences_with_wer_0": 502
+  },
+  "piper_no_vits2_cpn_pytorch": {
+   "classification": "new_audit_of_stored_observations",
+   "n": 720,
+   "mean_rtf": 0.042120876108153155,
+   "mean_utmosv2_predicted": 3.5169903079668683,
+   "macro_wer_stored": 0.06119363275613275,
+   "macro_wer_recomputed": 0.06119363275613275,
+   "max_abs_wer_difference": 0.0,
+   "corpus_wer_exploratory": 0.05956112852664577,
+   "word_counts": {
+    "S": 283,
+    "D": 46,
+    "I": 13,
+    "N": 5742
+   },
+   "ratio_of_sums_rtf_exploratory": 0.0419572649402335,
+   "median_rtf": 0.041135577957473995,
+   "sd_utmosv2": 0.25046182668850187,
+   "sentences_with_wer_0": 502
+  }
+ },
+ "paired_tests": {
+  "piper_no_vits2_cpn_fp32_onnx_vs_piper_no_vits2_cpn_pytorch_utmosv2": {
+   "mean_x": 3.508159357640478,
+   "mean_y": 3.5169903079668683,
+   "mean_diff_x_minus_y": -0.008830950326389737,
+   "median_paired_diff": -0.010045170783996582,
+   "n_pairs": 720,
+   "n_zero_differences": 0,
+   "candidate_better_count": 339,
+   "candidate_worse_count": 381,
+   "wilcoxon_p": 0.1536731411831074,
+   "wilcoxon_settings": {
+    "zero_method": "wilcox",
+    "correction": false,
+    "alternative": "two-sided",
+    "method": "auto"
+   },
+   "mannwhitney_p_scipy_default": 0.6496951078880517,
+   "paired_bootstrap95_mean_diff": [
+    -0.02048315772579776,
+    0.0030414105620649103
+   ],
+   "exploratory_holm_adjusted_wilcoxon_p": 0.3073462823662148
+  },
+  "piper_no_vits2_cpn_fp32_onnx_vs_piper_no_vits2_cpn_pytorch_wer": {
+   "mean_x": 0.06119363275613275,
+   "mean_y": 0.06119363275613275,
+   "mean_diff_x_minus_y": 0.0,
+   "median_paired_diff": 0.0,
+   "n_pairs": 720,
+   "n_zero_differences": 720,
+   "candidate_better_count": 0,
+   "candidate_worse_count": 0,
+   "wilcoxon_p": 1.0,
+   "wilcoxon_settings": {
+    "zero_method": "wilcox",
+    "correction": false,
+    "alternative": "two-sided",
+    "method": "auto"
+   },
+   "mannwhitney_p_scipy_default": 1.0,
+   "paired_bootstrap95_mean_diff": [
+    0.0,
+    0.0
+   ],
+   "exploratory_holm_adjusted_wilcoxon_p": 1.0
+  }
+ }
+}
