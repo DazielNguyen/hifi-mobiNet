@@ -1947,6 +1947,29 @@
         "Derived copy without Vocos entries where the file name says so.",
         "Host paths redacted; original kept privately (docs/evidence/historical-import-2026-10-22.json)."
       ]
+    },
+    {
+      "file": "results/frontend-check/dialect_check.json",
+      "source": "exploratory analysis 2026-10-23 by scripts/evaluation/harvard/dialect_check.py; see results/frontend-check/README.md",
+      "sha256": "9fdcac628361aa0b225b2f0c01c4e8468b019f022a73e9470ebe55022d3b07e1",
+      "classification": "new_exploratory_analysis",
+      "n": 720,
+      "limits": [
+        "Correlational; not a causal test (docs/plan-frontend-causal-test.md).",
+        "Piper's training voice inferred from its released config.",
+        "Word level covers the 551 alignable sentences; Whisper-small transcripts."
+      ]
+    },
+    {
+      "file": "results/manifests/harvard720_espeak_en.json",
+      "source": "built 2026-10-23 by scripts/evaluation/harvard/build_manifest.py --voice en from results/manifests/harvard720.json",
+      "sha256": "eaf22c9fcfe732f65093679743eff6bbf4a95512dd11115f832a73e654953b5b",
+      "classification": "derived_manifest",
+      "n": 720,
+      "limits": [
+        "Same sentences and order as harvard720.json; phonemes and IDs rebuilt with espeak voice en (banhmi_phonemize).",
+        "For the frontend causal test only; not used by any result yet."
+      ]
     }
   ],
   "status": "historical_observations_and_new_measurements",

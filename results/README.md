@@ -207,7 +207,7 @@ All seven models on Harvard-720 (720 sentences, 5,742 reference words), with the
 - Every value is copied from the records named under the table; nothing was re-measured for it.
 - **Bold** marks the best value in a row. For RTF, the best is marked within each group of timings only (note 3).
 
-| Metric | Piper_no_VITS2_cpn | Piper-ParIR | Piper-SeqIR | Baseline ResBlock2 | Parallel-IR (MRF) | Sequential-IR (SEQ) | Piper (external) |
+| Metric | Piper_no_VITS2_cpn | Piper-ParIR | Piper-SeqIR | Baseline ResBlock2 | Parallel-IR (MRF) | Sequential-IR (SEQ) | Piper (external) ⁶ |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | ***Model*** | | | | | | | |
 | Decoder | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 |
@@ -263,6 +263,10 @@ Notes:
    - The ONNX file holds only the inference graph, so it is smaller than the FP32 weights.
    - **Historical INT8 files** are the benchmark graphs. MRF's graph is not linked to checkpoint 1386, and SEQ's has the wider scope, hence the parentheses.
    - The training checkpoint also holds the posterior encoder, discriminators and optimizer state.
+
+6. **Piper (external)** was fed **en-us** phonemes, as every system here, but its released config names espeak voice "en" (British).
+   - An exploratory check (`frontend-check/`) found its ASR errors concentrated on the words whose en and en-us phonemes differ: 34.2% against 7.5% on other words, while Piper_no_VITS2_cpn has 5.8% and 5.5%.
+   - Until the prepared causal test (`docs/plan-frontend-causal-test.md`) is run, read every comparison with this column as unfair to Piper.
 
 Sources:
 - quality: `piper-seqir-no-vits2-cpn/comparison.json`, which has summaries of all seven result files;

@@ -207,7 +207,7 @@ Cả bảy model trên Harvard-720 (720 câu, 5.742 từ tham chiếu), cùng pr
 - Mọi giá trị được chép từ các bản ghi liệt kê dưới bảng; không đo lại gì cho bảng này.
 - **In đậm** là giá trị tốt nhất của mỗi dòng. Với RTF, giá trị tốt nhất chỉ được đánh dấu trong từng nhóm đo (ghi chú 3).
 
-| Metric | Piper_no_VITS2_cpn | Piper-ParIR | Piper-SeqIR | Baseline ResBlock2 | Parallel-IR (MRF) | Sequential-IR (SEQ) | Piper (bên ngoài) |
+| Metric | Piper_no_VITS2_cpn | Piper-ParIR | Piper-SeqIR | Baseline ResBlock2 | Parallel-IR (MRF) | Sequential-IR (SEQ) | Piper (bên ngoài) ⁶ |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | ***Model*** | | | | | | | |
 | Decoder | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 | Parallel-IR | Sequential-IR | ResBlock2 |
@@ -263,6 +263,10 @@ Ghi chú:
    - File ONNX chỉ chứa graph inference, nên nhỏ hơn trọng số FP32.
    - **File INT8 lịch sử** là các graph benchmark. Graph MRF không gắn được với checkpoint 1386, còn graph SEQ có scope rộng hơn, nên đặt trong ngoặc.
    - Checkpoint train còn chứa posterior encoder, discriminator và trạng thái optimizer.
+
+6. **Piper (bên ngoài)** được đưa phoneme **en-us** như mọi hệ thống ở đây, nhưng config phát hành của nó ghi giọng espeak "en" (Anh–Anh).
+   - Một phép kiểm thăm dò (`frontend-check/`) cho thấy lỗi ASR của nó tập trung ở các từ có phoneme en và en-us khác nhau: 34,2% so với 7,5% ở các từ còn lại, trong khi Piper_no_VITS2_cpn là 5,8% và 5,5%.
+   - Cho tới khi chạy phép kiểm định nhân quả đã chuẩn bị (`docs/plan-frontend-causal-test.vi.md`), hãy đọc mọi phép so sánh với cột này là đang bất lợi cho Piper.
 
 Nguồn:
 - chất lượng: `piper-seqir-no-vits2-cpn/comparison.json`, có tóm tắt của cả bảy file kết quả;

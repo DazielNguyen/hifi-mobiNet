@@ -56,7 +56,7 @@ Ghi chú:
 | Thế hệ 2: SeqIR − ParIR | −0,037 [−0,060, −0,014]; cùng phiên −0,033 [−0,056, −0,010] | −0,003 [−0,013, +0,007] | −13,2% | như trên |
 | Thế hệ 1: SEQ − MRF | −0,024 (p 0,047; Holm 0,094) | +0,015 [+0,002, +0,028] | −9,1% (p 7e-37) | `results/prior_audit/`, ledger J-E003–J-E005 |
 | Thế hệ 1: SEQ − baseline | +0,518 | −0,026 | −26,2% | `results/prior_audit/` |
-| Thế hệ 1: SEQ − Piper | +0,094 | −0,053 | −21,3% | J-E007 |
+| Thế hệ 1: SEQ − Piper | +0,094 | −0,053 | −21,3% | J-E007; Piper được đưa phoneme lệch (en-us), xem `results/frontend-check/` |
 
 Mel loss trên validation (cùng 100 câu, chỉ thế hệ 2 và baseline thế hệ 1): ResBlock2 19,77, ParIR 19,01, SeqIR 19,03, baseline-resblock2 19,79.
 
