@@ -234,8 +234,8 @@ All seven models on Harvard-720 (720 sentences, 5,742 reference words), with the
 | ORT RTF, 12 threads: FP32 / INT8 | **0.0292 / 0.0277** | 0.0397 / 0.0366 | 0.0312 / 0.0297 | — | — | — | — |
 | ***Size*** ⁵ | | | | | | | |
 | Parameters (Q05 definition) | 16,425,776 | 15,918,032 | **15,870,768** | 17,620,784 | 17,113,040 | 17,065,776 | 16,425,776 |
-| Parameters used at inference | 15,663,771 | 15,156,027 | **15,108,763** | — | — | — | — |
-| Decoder parameters | 1,664,768 | 1,157,024 | **1,109,760** | — | — | — | — |
+| Parameters used at inference | 15,663,771 | 15,156,027 | **15,108,763** | 16,858,779 | 16,351,035 | 16,303,771 | 15,663,771 |
+| Decoder parameters | 1,664,768 | 1,157,024 | **1,109,760** | 1,664,768 | 1,157,024 | **1,109,760** | 1,664,768 |
 | FP32 weights | 65.7 MB | 63.7 MB | **63.5 MB** | 70.5 MB | 68.5 MB | 68.3 MB | 65.7 MB |
 | ONNX FP32 file | 63.5 MB | 61.6 MB | **61.3 MB** | 68.5 MB | 66.5 MB | 66.3 MB | 63.5 MB |
 | ONNX INT8 file | 43.3 MB | 41.3 MB | 41.1 MB | 24.1 MB | (22.2 MB) | (**22.0 MB**) | — |
@@ -280,9 +280,10 @@ Every model has one training run and one synthesis draw per sentence.
 
 ## Model size
 
-`model_parameters.json` (2026-10-21) records parameter counts and sizes for all seven Harvard-720 models.
-- It was written by `scripts/evaluation/count_parameters.py`, which reads the three new checkpoints with `weights_only=True` without building or running a model.
-- The historical rows are taken from the stored Q05 reports and `models/manifest.json`.
+`model_parameters.json` records parameter counts and sizes for all seven Harvard-720 models.
+- It was written by `scripts/evaluation/count_parameters.py`, which reads the checkpoints with `weights_only=True` without building or running a model.
+- The three new checkpoints were counted on 2026-10-21.
+- The four historical checkpoints were recounted on 2026-10-26. Each file matched its SHA-256 in `models/manifest.json`, and each recount equals the total in its stored Q05 report. File and ONNX sizes still come from `models/manifest.json`.
 - The ONNX file sizes of the new models come from `piper-ir-onnx-ptq/*/export_record.json` and `quantize_record.json`.
 
 | Model | Parameters (Q05 definition) | Used at inference | Decoder | FP32 weights | ONNX FP32 file | ONNX INT8 file | Training checkpoint |
@@ -290,10 +291,10 @@ Every model has one training run and one synthesis draw per sentence.
 | Piper_no_VITS2_cpn (ResBlock2) | 16,425,776 | 15,663,771 | 1,664,768 | 65.7 MB | 63.5 MB | 43.3 MB | 845.9 MB |
 | Piper_ParIR_no_VITS2_cpn | 15,918,032 | 15,156,027 | 1,157,024 | 63.7 MB | 61.6 MB | 41.3 MB | 843.4 MB |
 | Piper_SeqIR_no_VITS2_cpn | 15,870,768 | 15,108,763 | 1,109,760 | 63.5 MB | 61.3 MB | 41.1 MB | 842.7 MB |
-| HiFi-GAN ResBlock2 (baseline, with VITS2) | 17,620,784 | — | — | 70.5 MB | 68.5 MB | 24.1 MB | 867.0 MB |
-| Parallel-IR (MRF) | 17,113,040 | — | — | 68.5 MB | 66.5 MB | (22.2 MB) | 864.5 MB |
-| Sequential-IR (SEQ) | 17,065,776 | — | — | 68.3 MB | 66.3 MB | (22.0 MB) | 863.9 MB |
-| Piper external checkpoint | 16,425,776 | — | — | 65.7 MB | 63.5 MB | — | 845.9 MB |
+| HiFi-GAN ResBlock2 (baseline, with VITS2) | 17,620,784 | 16,858,779 | 1,664,768 | 70.5 MB | 68.5 MB | 24.1 MB | 867.0 MB |
+| Parallel-IR (MRF) | 17,113,040 | 16,351,035 | 1,157,024 | 68.5 MB | 66.5 MB | (22.2 MB) | 864.5 MB |
+| Sequential-IR (SEQ) | 17,065,776 | 16,303,771 | 1,109,760 | 68.3 MB | 66.3 MB | (22.0 MB) | 863.9 MB |
+| Piper external checkpoint | 16,425,776 | 15,663,771 | 1,664,768 | 65.7 MB | 63.5 MB | — | 845.9 MB |
 
 How to read the columns (MB = 10^6 bytes):
 - **Parameters (Q05 definition):**
@@ -301,7 +302,7 @@ How to read the columns (MB = 10^6 bytes):
   - counted in weight-norm form, with buffers excluded;
   - the same definition as the Q05 export reports, so all seven rows are comparable.
   - It still includes 762,005 parameters of the stochastic duration predictor that inference does not use: the training-only posterior path `dp.post_*` (640,248) and the flow dropped in reverse mode (121,757).
-- **Used at inference:** the Q05 count minus those 762,005. It was computed for the new models only.
+- **Used at inference:** the Q05 count minus those 762,005. All seven models have the same stochastic duration predictor, so the subtraction is the same for each.
 - **FP32 weights:** 4 bytes × the Q05 count. This is computed, not a file size.
 - **ONNX FP32 file:** the measured size of the exported graph. It holds only the inference path, so it is smaller than the FP32-weights column.
   - New models: the 2026-10-21 export.
@@ -315,6 +316,10 @@ What the counts show:
 - **Shared part:** in the three new models, everything outside the decoder is identical, 21,999,024 parameters including `enc_q`.
 - **Decoder:** ParIR and SeqIR have 30.5% and 33.3% fewer decoder parameters than ResBlock2. Overall that is 3.1% and 3.4% fewer, because the decoder is a small part of the generator.
 - **Piper_no_VITS2_cpn and the external Piper checkpoint:** both have exactly 16,425,776 parameters. Both use the Piper (Config A) architecture.
-- **Training only:** the MPD (46,747,132) and, for the IR models, the MRD (280,902) are discriminators. They are not part of the synthesis model.
+- **Same decoders in both generations:** each decoder has the same parameter count with and without VITS2: ResBlock2 1,664,768, Parallel-IR 1,157,024 and Sequential-IR 1,109,760. So the Gen 1 and Gen 2 decoder comparisons involve the same decoder sizes.
+- **What VITS2 adds:** every VITS2 model has 1,195,008 more generator parameters than its Config A counterpart. All of them are in the flow (8,297,088 against 7,102,080); the text encoder, duration predictor and decoder have the same counts.
+- **Training only:**
+  - the MPD (46,747,132), for the IR models the MRD (280,902), and for the VITS2 models the duration discriminator `model_d_dur` (555,841) are discriminators;
+  - they are not part of the synthesis model.
 
 Public redistribution of sentence collections, result records and generated audio remains an author decision. Local inclusion does not assert those rights.

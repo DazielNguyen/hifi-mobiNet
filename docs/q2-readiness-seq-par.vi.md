@@ -37,13 +37,13 @@ Nguồn: `results/README.vi.md`, mục "So sánh bảy model" (danh sách file c
 | Piper_no_VITS2_cpn (ResBlock2) | 2 | 1.664.768 | 3.517 | **0.0612** | 0.0510 | — |
 | Piper-ParIR | 2 | 1.157.024 | **3.530** | 0.0726 | 0.0392 | −23,2% |
 | Piper-SeqIR | 2 | **1.109.760** | 3.493 | 0.0696 | **0.0340** | **−33,3%** |
-| baseline-resblock2 (có VITS2) | 1 | 1.662.976 | 3.026 | 0.1476 | 0.0418 | — |
-| Parallel-IR (MRF) | 1 | 1.154.560 | **3.568** | 0.1073 | 0.0339 | −18,9% |
-| Sequential-IR (SEQ) | 1 | **1.107.968** | 3.544 | 0.1222 | **0.0308** | **−26,2%** |
-| Piper (bên ngoài) | — | 1.662.976 | 3.451 | 0.1747 | 0.0392 | (−6,2%) |
+| baseline-resblock2 (có VITS2) | 1 | 1.664.768 | 3.026 | 0.1476 | 0.0418 | — |
+| Parallel-IR (MRF) | 1 | 1.157.024 | **3.568** | 0.1073 | 0.0339 | −18,9% |
+| Sequential-IR (SEQ) | 1 | **1.109.760** | 3.544 | 0.1222 | **0.0308** | **−26,2%** |
+| Piper (bên ngoài) | — | 1.664.768 | 3.451 | 0.1747 | 0.0392 | (−6,2%) |
 
 Ghi chú:
-- **Tham số decoder.** Số của thế hệ 2 đếm ở dạng weight-norm (`results/model_parameters.json`); số của thế hệ 1 và Piper đã gộp weight norm (J-E015). Hai cách đếm lệch nhau khoảng 0,1%.
+- **Tham số decoder.** Mọi số đều ở dạng weight-norm, đếm lại từ checkpoint (`results/model_parameters.json`). Mỗi decoder có cùng kích thước ở cả hai thế hệ. J-E015 cho cùng các decoder này ở dạng đã gộp weight norm (ResBlock2 1.662.976, PAR 1.154.560, SEQ 1.107.968), ít hơn khoảng 0,1%.
 - **Nhóm RTF.** Số của thế hệ 2 đến từ một phiên đo trên máy rảnh ngày 2026-10-21. Số của thế hệ 1 là các lần chạy lịch sử. Hai nhóm không so sánh được với nhau.
 - **Khối lượng tính toán decoder (thế hệ 1, J-E016).** SEQ 0,98, PAR 1,23, ResBlock2 và Piper 3,90 GFLOPs cho mỗi giây audio.
 

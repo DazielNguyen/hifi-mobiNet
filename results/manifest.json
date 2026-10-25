@@ -650,14 +650,14 @@
     },
     {
       "file": "results/model_parameters.json",
-      "source": "new static count (2026-10-21) by scripts/evaluation/count_parameters.py; see results/README.md, section Model size",
-      "sha256": "ee0d5e46639b5e0a5818cccbfab24d4bd979eae707752884971538d9304d2396",
+      "source": "new static count (2026-10-21; historical rows recounted from their checkpoints 2026-10-26) by scripts/evaluation/count_parameters.py; see results/README.md, section Model size",
+      "sha256": "0793be2eecbdb2cae3138d718f22a402b4097010dbadff1234b5b333bfa8b525",
       "classification": "new_static_count",
       "n": 7,
       "limits": [
         "Weight-norm form; removing weight norm changes counts slightly.",
-        "FP32 bytes are computed (4 bytes per parameter), not file sizes; the new models have no ONNX export.",
-        "Historical counts are copied from the Q05 reports, not recounted."
+        "FP32 bytes are computed (4 bytes per parameter), not file sizes.",
+        "Historical recounts were checked against the models/manifest.json SHA-256 and equal the Q05 reports."
       ]
     },
     {

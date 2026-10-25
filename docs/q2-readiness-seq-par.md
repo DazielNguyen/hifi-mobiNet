@@ -37,13 +37,13 @@ Source: `results/README.md`, section "Seven-model comparison" (per-model files l
 | Piper_no_VITS2_cpn (ResBlock2) | 2 | 1,664,768 | 3.517 | **0.0612** | 0.0510 | — |
 | Piper-ParIR | 2 | 1,157,024 | **3.530** | 0.0726 | 0.0392 | −23.2% |
 | Piper-SeqIR | 2 | **1,109,760** | 3.493 | 0.0696 | **0.0340** | **−33.3%** |
-| baseline-resblock2 (with VITS2) | 1 | 1,662,976 | 3.026 | 0.1476 | 0.0418 | — |
-| Parallel-IR (MRF) | 1 | 1,154,560 | **3.568** | 0.1073 | 0.0339 | −18.9% |
-| Sequential-IR (SEQ) | 1 | **1,107,968** | 3.544 | 0.1222 | **0.0308** | **−26.2%** |
-| Piper (external) | — | 1,662,976 | 3.451 | 0.1747 | 0.0392 | (−6.2%) |
+| baseline-resblock2 (with VITS2) | 1 | 1,664,768 | 3.026 | 0.1476 | 0.0418 | — |
+| Parallel-IR (MRF) | 1 | 1,157,024 | **3.568** | 0.1073 | 0.0339 | −18.9% |
+| Sequential-IR (SEQ) | 1 | **1,109,760** | 3.544 | 0.1222 | **0.0308** | **−26.2%** |
+| Piper (external) | — | 1,664,768 | 3.451 | 0.1747 | 0.0392 | (−6.2%) |
 
 Notes:
-- **Decoder parameters.** Gen 2 values are in weight-norm form (`results/model_parameters.json`); Gen 1 and Piper values have weight norm folded (J-E015). The two forms differ by about 0.1%.
+- **Decoder parameters.** All values are in weight-norm form, recounted from the checkpoints (`results/model_parameters.json`). Each decoder has the same size in both generations. J-E015 gives the same decoders with weight norm folded (ResBlock2 1,662,976, PAR 1,154,560, SEQ 1,107,968), about 0.1% fewer.
 - **RTF groups.** The Gen 2 values come from one idle session on 2026-10-21. The Gen 1 values are the historical runs. The two groups cannot be compared with each other.
 - **Decoder compute (Gen 1, J-E016).** SEQ 0.98, PAR 1.23, ResBlock2 and Piper 3.90 GFLOPs per second of audio.
 
