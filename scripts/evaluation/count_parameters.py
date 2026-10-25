@@ -10,11 +10,15 @@ row also gives the subset that inference uses:
 - ``dp.post_*`` (posterior path of the SDP) is used only in training;
 - ``dp.flows.1`` (the first ConvFlow) is dropped in reverse mode ("remove a useless vflow").
 
-Historical rows are taken from the stored Q05 reports and ``models/manifest.json``;
-their checkpoints are not opened here.
+Historical rows start from the stored Q05 reports and ``models/manifest.json``. When a
+historical checkpoint is given with ``--historical-checkpoint``, it must match the manifest's
+SHA-256 and its recount must equal the Q05 report; the row then also gets the inference and
+decoder counts. Historical checkpoints pickle ``pathlib.PosixPath`` in their hyperparameters,
+so they are read with that one class allowlisted.
 
     python scripts/evaluation/count_parameters.py \
         --checkpoint Piper_no_VITS2_cpn=<run>/checkpoints/best-epoch=...ckpt [--checkpoint ...] \
+        [--historical-checkpoint baseline-resblock2=<path> ...] \
         --output results/model_parameters.json
 """
 from __future__ import annotations
@@ -49,10 +53,13 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def count_checkpoint(path: Path) -> dict:
+def count_checkpoint(path: Path, allow_posix_path: bool = False) -> dict:
+    import pathlib
+
     import torch
 
-    ck = torch.load(path, map_location="cpu", weights_only=True)
+    with torch.serialization.safe_globals([pathlib.PosixPath] if allow_posix_path else []):
+        ck = torch.load(path, map_location="cpu", weights_only=True)
     state = ck["state_dict"]
     by_module: dict[str, int] = defaultdict(int)
     buffers = {}
@@ -95,8 +102,11 @@ def count_checkpoint(path: Path) -> dict:
     }
 
 
-def historical_rows() -> dict:
+def historical_rows(recount: dict[str, Path]) -> dict:
     manifest = json.loads((REPO / "models/manifest.json").read_text(encoding="utf-8"))
+    unknown = set(recount) - {m["id"] for m in manifest["models"]}
+    if unknown:
+        raise SystemExit(f"--historical-checkpoint ids not in models/manifest.json: {sorted(unknown)}")
     rows = {}
     for model in manifest["models"]:
         label = HISTORICAL[model["id"]]
@@ -115,12 +125,26 @@ def historical_rows() -> dict:
             "fp32_bytes_generator_excluding_posterior": 4 * q05,
             "onnx": {k: model["artifact"][k] for k in ("filename", "sha256", "bytes", "precision", "opset")},
         }
+        if model["id"] in recount:
+            counted = count_checkpoint(recount[model["id"]], allow_posix_path=True)
+            if counted["checkpoint_sha256"] != model["checkpoint"]["sha256"]:
+                raise SystemExit(f"{model['id']}: checkpoint SHA-256 does not match models/manifest.json")
+            if counted["generator_parameters_excluding_posterior"] != q05:
+                raise SystemExit(f"{model['id']}: recount {counted['generator_parameters_excluding_posterior']:,} "
+                                 f"differs from the Q05 report {q05:,}")
+            for key in ("epoch", "parameters_by_module", "buffers_excluded", "generator_parameters",
+                        "not_used_at_inference", "inference_parameters", "decoder_parameters",
+                        "discriminator_parameters", "fp32_bytes_inference_parameters"):
+                rows[model["id"]][key] = counted[key]
+            rows[model["id"]]["source"]["recounted_from_checkpoint"] = True
     return rows
 
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--checkpoint", action="append", required=True, metavar="LABEL=PATH")
+    p.add_argument("--historical-checkpoint", action="append", default=[], metavar="ID=PATH",
+                   help="recount a historical model (id from models/manifest.json) from its checkpoint")
     p.add_argument("--output", required=True, type=Path)
     a = p.parse_args(argv)
     if a.output.exists():
@@ -129,6 +153,12 @@ def main(argv=None) -> int:
     for item in a.checkpoint:
         label, _, path = item.partition("=")
         new[label] = count_checkpoint(Path(path))
+    recount = {}
+    for item in a.historical_checkpoint:
+        model_id, _, path = item.partition("=")
+        recount[model_id] = Path(path)
+    historical = historical_rows(recount)
+    all_recounted = len(recount) == len(historical)
     record = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "classification": "new_static_count_of_stored_checkpoints_and_records",
@@ -139,11 +169,13 @@ def main(argv=None) -> int:
             "checkpoint_bytes": "file size of the full training checkpoint, not a deployable model size",
         },
         "new_models": new,
-        "historical_models": historical_rows(),
+        "historical_models": historical,
         "limits": [
             "Counts are in weight-norm form; removing weight norm drops the weight_g entries and changes counts slightly.",
-            "The new models have no ONNX export; their FP32 bytes are computed, not measured file sizes.",
-            "Historical counts are taken from the Q05 reports, not recounted here.",
+            "FP32 bytes are computed (4 bytes per parameter), not measured file sizes.",
+            "Historical rows were recounted from their checkpoints (SHA-256 checked against models/manifest.json) "
+            "and the recount equals the Q05 report." if all_recounted else
+            "Historical counts without --historical-checkpoint are taken from the Q05 reports, not recounted here.",
         ],
     }
     a.output.parent.mkdir(parents=True, exist_ok=True)
@@ -151,6 +183,10 @@ def main(argv=None) -> int:
     for label, row in new.items():
         print(f"{label}: {row['generator_parameters_excluding_posterior']:,} (Q05 definition), "
               f"{row['inference_parameters']:,} used at inference, decoder {row['decoder_parameters']:,}")
+    for model_id, row in historical.items():
+        if row.get("decoder_parameters") is not None:
+            print(f"{model_id}: {row['generator_parameters_excluding_posterior']:,} (Q05 definition, equals the report), "
+                  f"{row['inference_parameters']:,} used at inference, decoder {row['decoder_parameters']:,}")
     return 0
 
 
