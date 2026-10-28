@@ -110,5 +110,5 @@ Section 1 says the decoder's weight norm is removed, as in `harvard/synthesize.p
   - The declared recipe (static QInt8 per channel) therefore holds for only 8 of the 40 flow convolutions, and for all of enc_p and dp.
   - The INT8 graphs keep 27.8 MB of FP32 flow weights.
 - **Not affected:** none of the declared checks failed, because none of them tested this.
-- **Correction for a repeat round** (implemented, not yet run; `docs/plan-onnx-ptq-v2.md`): call `remove_weight_norm()` on each flow coupling layer's `WN` before export, and add checks that every in-scope QLinearConv has a constant per-channel INT8 weight and that no `ReduceL2` (weight-norm) node remains.
+- **Correction for a repeat round** (implemented; run as round 2 on 2026-10-26, every check passed, records in `results/piper-ir-onnx-ptq-v2/`; `docs/plan-onnx-ptq-v2.md`): call `remove_weight_norm()` on each flow coupling layer's `WN` before export, and add checks that every in-scope QLinearConv has a constant per-channel INT8 weight and that no `ReduceL2` (weight-norm) node remains.
 - **Records:** the current results stay as they are, labelled with this deviation (`results/README.md`, `results/piper-ir-onnx-ptq/README.md`).

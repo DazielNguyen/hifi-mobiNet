@@ -63,7 +63,7 @@ Further checks:
   - The INT8 RTF includes the per-run weight-norm and weight-quantization work.
   - The measured INT8 quality is that of these graphs. Whether SeqIR's UTMOSv2 loss comes from the per-tensor flow weights is not known.
   - The FP32 results, the parity results and the decoder analysis of section 5 are not affected.
-- **Correction:** call `remove_weight_norm()` on every flow coupling layer, then export, quantize, evaluate and time again. It has not been run yet; see `docs/plan-onnx-ptq-v2.md`.
+- **Correction:** call `remove_weight_norm()` on every flow coupling layer, then export, quantize, evaluate and time again. Done in round 2 on 2026-10-26: `../piper-ir-onnx-ptq-v2/` replaces this round's INT8 results.
 
 ## 3. Harvard-720 quality
 

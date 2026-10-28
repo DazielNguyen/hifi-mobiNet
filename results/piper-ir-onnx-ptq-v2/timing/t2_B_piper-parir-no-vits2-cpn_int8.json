@@ -1,0 +1,5817 @@
+{
+ "created_utc": "2026-10-25T20:33:37.246338+00:00",
+ "label": "piper-parir-no-vits2-cpn",
+ "model_id": "Piper_ParIR_no_VITS2_cpn",
+ "checkpoint_sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee",
+ "graph": "piper-parir-no-vits2-cpn_int8.onnx",
+ "graph_sha256": "a94703b769a6f4343bdb06841aa88618733446f8016343c36408b31513f248ee",
+ "graph_bytes": 20485774,
+ "precision": "INT8",
+ "round": "B",
+ "protocol": {
+  "runtime": "onnxruntime",
+  "provider": "CPUExecutionProvider",
+  "intra_op_threads": 2,
+  "inter_op_threads": 1,
+  "execution_mode": "sequential",
+  "ort_seed": 1234,
+  "warm_up": false,
+  "timed_region": "session.run",
+  "scales": [
+   0.667,
+   1.0,
+   0.8
+  ],
+  "noise": "native RandomNormalLike",
+  "document": "docs/evaluation-onnx-ptq.md"
+ },
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "onnxruntime": "1.23.2",
+  "numpy": "1.26.4",
+  "cpu_count": 24
+ },
+ "load_average_start": [
+  1.92041015625,
+  2.98486328125,
+  3.8212890625
+ ],
+ "load_average_end": [
+  1.97021484375,
+  2.81689453125,
+  3.7138671875
+ ],
+ "session_open_s": 0.5872755679999955,
+ "wall_time_s": 53.98978090399987,
+ "manifest_sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272",
+ "script_sha256": "cf7e1b6d6c13e24a04a4b34345bd44a6d17e3eb1faad8894da355d36fcc4a6ec",
+ "summary": {
+  "n": 720,
+  "finite": 720,
+  "mean_rtf": 0.028853060552093062,
+  "median_rtf": 0.028709249835736608
+ },
+ "rows": [
+  {
+   "idx": 0,
+   "text": "The birch canoe slid on the smooth planks.",
+   "synth_time_s": 0.08667577599999277,
+   "audio_duration_s": 2.681904761904762,
+   "rtf": 0.0323187374999973,
+   "finite": true
+  },
+  {
+   "idx": 1,
+   "text": "Glue the sheet to the dark blue background.",
+   "synth_time_s": 0.074618067000074,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.029213927154680963,
+   "finite": true
+  },
+  {
+   "idx": 2,
+   "text": "It's easy to tell the depth of a well.",
+   "synth_time_s": 0.07060458799992375,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02937860743882697,
+   "finite": true
+  },
+  {
+   "idx": 3,
+   "text": "These days a chicken leg is a rare dish.",
+   "synth_time_s": 0.08335451399989324,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.0294244210056616,
+   "finite": true
+  },
+  {
+   "idx": 4,
+   "text": "Rice is often served in round bowls.",
+   "synth_time_s": 0.09336021099989011,
+   "audio_duration_s": 3.111473922902494,
+   "rtf": 0.030005140108261094,
+   "finite": true
+  },
+  {
+   "idx": 5,
+   "text": "The juice of lemons makes fine punch.",
+   "synth_time_s": 0.07105904299987742,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.029284761852334352,
+   "finite": true
+  },
+  {
+   "idx": 6,
+   "text": "The box was thrown beside the parked truck.",
+   "synth_time_s": 0.07485753400010253,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.030413631793600033,
+   "finite": true
+  },
+  {
+   "idx": 7,
+   "text": "The hogs were fed chopped corn and garbage.",
+   "synth_time_s": 0.08340891000011652,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.028852385565740605,
+   "finite": true
+  },
+  {
+   "idx": 8,
+   "text": "Four hours of steady work faced us.",
+   "synth_time_s": 0.07213410500003192,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028113635026348695,
+   "finite": true
+  },
+  {
+   "idx": 9,
+   "text": "A large size in stockings is hard to sell.",
+   "synth_time_s": 0.09300334600015958,
+   "audio_duration_s": 3.274013605442177,
+   "rtf": 0.02840652398193039,
+   "finite": true
+  },
+  {
+   "idx": 10,
+   "text": "The boy was there when the sun rose.",
+   "synth_time_s": 0.06544575300017641,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.028185133860427536,
+   "finite": true
+  },
+  {
+   "idx": 11,
+   "text": "A rod is used to catch pink salmon.",
+   "synth_time_s": 0.0752512689998639,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028303945166604103,
+   "finite": true
+  },
+  {
+   "idx": 12,
+   "text": "The source of the huge river is the clear spring.",
+   "synth_time_s": 0.08030303099985758,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.028940275783650295,
+   "finite": true
+  },
+  {
+   "idx": 13,
+   "text": "Kick the ball straight and follow through.",
+   "synth_time_s": 0.0641055610001331,
+   "audio_duration_s": 2.124625850340136,
+   "rtf": 0.03017263533241408,
+   "finite": true
+  },
+  {
+   "idx": 14,
+   "text": "Help the woman get back to her feet.",
+   "synth_time_s": 0.06141947300011452,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.028751260607433028,
+   "finite": true
+  },
+  {
+   "idx": 15,
+   "text": "A pot of tea helps to pass the evening.",
+   "synth_time_s": 0.07438336100017295,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.029389211404347294,
+   "finite": true
+  },
+  {
+   "idx": 16,
+   "text": "Smoky fires lack flame and heat.",
+   "synth_time_s": 0.07599680099997386,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028584359000570134,
+   "finite": true
+  },
+  {
+   "idx": 17,
+   "text": "The soft cushion broke the man's fall.",
+   "synth_time_s": 0.06862558600005286,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.02869376083322902,
+   "finite": true
+  },
+  {
+   "idx": 18,
+   "text": "The salt breeze came across from the sea.",
+   "synth_time_s": 0.08394079899994722,
+   "audio_duration_s": 2.809614512471655,
+   "rtf": 0.029876269013895215,
+   "finite": true
+  },
+  {
+   "idx": 19,
+   "text": "The girl at the booth sold fifty bonds.",
+   "synth_time_s": 0.07388218899995991,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.029598515033595858,
+   "finite": true
+  },
+  {
+   "idx": 20,
+   "text": "The small pup gnawed a hole in the sock.",
+   "synth_time_s": 0.07249514699992687,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.028643169283048803,
+   "finite": true
+  },
+  {
+   "idx": 21,
+   "text": "The fish twisted and turned on the bent hook.",
+   "synth_time_s": 0.07281605699995453,
+   "audio_duration_s": 2.5425850340136056,
+   "rtf": 0.028638592623590847,
+   "finite": true
+  },
+  {
+   "idx": 22,
+   "text": "Press the pants and sew a button on the vest.",
+   "synth_time_s": 0.0882839050000257,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.029588097416867805,
+   "finite": true
+  },
+  {
+   "idx": 23,
+   "text": "The swan dive was far short of perfect.",
+   "synth_time_s": 0.07336647700003596,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.028337493305962597,
+   "finite": true
+  },
+  {
+   "idx": 24,
+   "text": "The beauty of the view stunned the young boy.",
+   "synth_time_s": 0.060682920000090235,
+   "audio_duration_s": 2.124625850340136,
+   "rtf": 0.028561697105575257,
+   "finite": true
+  },
+  {
+   "idx": 25,
+   "text": "Two blue fish swam in the tank.",
+   "synth_time_s": 0.06604630000015277,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.028443767871159542,
+   "finite": true
+  },
+  {
+   "idx": 26,
+   "text": "Her purse was full of useless trash.",
+   "synth_time_s": 0.07262483999988945,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.028826643901165794,
+   "finite": true
+  },
+  {
+   "idx": 27,
+   "text": "The colt reared and threw the tall rider.",
+   "synth_time_s": 0.08138916000007157,
+   "audio_duration_s": 2.8676643990929707,
+   "rtf": 0.02838168930290957,
+   "finite": true
+  },
+  {
+   "idx": 28,
+   "text": "It snowed, rained, and hailed the same morning.",
+   "synth_time_s": 0.08596597799987649,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.028588770132982576,
+   "finite": true
+  },
+  {
+   "idx": 29,
+   "text": "Read verse out loud for pleasure.",
+   "synth_time_s": 0.06604169000002003,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028300281104252985,
+   "finite": true
+  },
+  {
+   "idx": 30,
+   "text": "Hoist the load to your left shoulder.",
+   "synth_time_s": 0.05972472700000253,
+   "audio_duration_s": 2.089795918367347,
+   "rtf": 0.028579215068360583,
+   "finite": true
+  },
+  {
+   "idx": 31,
+   "text": "Take the winding path to reach the lake.",
+   "synth_time_s": 0.06898715099987385,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028844938553307383,
+   "finite": true
+  },
+  {
+   "idx": 32,
+   "text": "Note closely the size of the gas tank.",
+   "synth_time_s": 0.07475414499981525,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.02836469055007445,
+   "finite": true
+  },
+  {
+   "idx": 33,
+   "text": "Wipe the grease off his dirty face.",
+   "synth_time_s": 0.06941131900020991,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.029596990716944396,
+   "finite": true
+  },
+  {
+   "idx": 34,
+   "text": "Mend the coat before you go out.",
+   "synth_time_s": 0.05527522800002771,
+   "audio_duration_s": 1.9272562358276644,
+   "rtf": 0.028680788248320103,
+   "finite": true
+  },
+  {
+   "idx": 35,
+   "text": "The wrist was badly strained and hung limp.",
+   "synth_time_s": 0.0680863259999569,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.028330757252020108,
+   "finite": true
+  },
+  {
+   "idx": 36,
+   "text": "The stray cat gave birth to kittens.",
+   "synth_time_s": 0.06778621499984183,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.028205880901768426,
+   "finite": true
+  },
+  {
+   "idx": 37,
+   "text": "The young girl gave no clear response.",
+   "synth_time_s": 0.07611878900002012,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.02863024183696854,
+   "finite": true
+  },
+  {
+   "idx": 38,
+   "text": "The meal was cooked before the bell rang.",
+   "synth_time_s": 0.06999999399999979,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02844007716133541,
+   "finite": true
+  },
+  {
+   "idx": 39,
+   "text": "What joy there is in living.",
+   "synth_time_s": 0.05461227999990115,
+   "audio_duration_s": 1.9040362811791383,
+   "rtf": 0.028682373618469426,
+   "finite": true
+  },
+  {
+   "idx": 40,
+   "text": "A king ruled the state in the early days.",
+   "synth_time_s": 0.08141856799989,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.028163896592582432,
+   "finite": true
+  },
+  {
+   "idx": 41,
+   "text": "The ship was torn apart on the sharp reef.",
+   "synth_time_s": 0.07168180999997276,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.02885119579620691,
+   "finite": true
+  },
+  {
+   "idx": 42,
+   "text": "Sickness kept him home the third week.",
+   "synth_time_s": 0.07033369199984918,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.02955140831929639,
+   "finite": true
+  },
+  {
+   "idx": 43,
+   "text": "The wide road shimmered in the hot sun.",
+   "synth_time_s": 0.07300259599992387,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02965999487393723,
+   "finite": true
+  },
+  {
+   "idx": 44,
+   "text": "The lazy cow lay in the cool grass.",
+   "synth_time_s": 0.07065463499998259,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.02830549966841599,
+   "finite": true
+  },
+  {
+   "idx": 45,
+   "text": "Lift the square stone over the fence.",
+   "synth_time_s": 0.07787079800004904,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028300552081702946,
+   "finite": true
+  },
+  {
+   "idx": 46,
+   "text": "The rope will bind the seven books at once.",
+   "synth_time_s": 0.07658855499994388,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.028312393336721475,
+   "finite": true
+  },
+  {
+   "idx": 47,
+   "text": "Hop over the fence and plunge in.",
+   "synth_time_s": 0.06870876499988299,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028728539673987783,
+   "finite": true
+  },
+  {
+   "idx": 48,
+   "text": "The friendly gang left the drug store.",
+   "synth_time_s": 0.07396897400008129,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.030483998891705152,
+   "finite": true
+  },
+  {
+   "idx": 49,
+   "text": "Mesh wire keeps chicks inside.",
+   "synth_time_s": 0.06428234500003782,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.028540304994580257,
+   "finite": true
+  },
+  {
+   "idx": 50,
+   "text": "The frosty air passed through the coat.",
+   "synth_time_s": 0.06345770599978096,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.02876731943452241,
+   "finite": true
+  },
+  {
+   "idx": 51,
+   "text": "The crooked maze failed to fool the mouse.",
+   "synth_time_s": 0.08275173200013342,
+   "audio_duration_s": 2.8676643990929707,
+   "rtf": 0.02885683974258195,
+   "finite": true
+  },
+  {
+   "idx": 52,
+   "text": "Adding fast leads to wrong sums.",
+   "synth_time_s": 0.08572157000003244,
+   "audio_duration_s": 3.030204081632653,
+   "rtf": 0.028289041823825363,
+   "finite": true
+  },
+  {
+   "idx": 53,
+   "text": "The show was a flop from the very start.",
+   "synth_time_s": 0.07379477399990719,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.028000667103144854,
+   "finite": true
+  },
+  {
+   "idx": 54,
+   "text": "A saw is a tool used for making boards.",
+   "synth_time_s": 0.0948733519999223,
+   "audio_duration_s": 3.332063492063492,
+   "rtf": 0.028472852400891317,
+   "finite": true
+  },
+  {
+   "idx": 55,
+   "text": "The wagon moved on well oiled wheels.",
+   "synth_time_s": 0.07328128100016329,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.02935778063324129,
+   "finite": true
+  },
+  {
+   "idx": 56,
+   "text": "March the soldiers past the next hill.",
+   "synth_time_s": 0.07562815899996167,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.02844570322647985,
+   "finite": true
+  },
+  {
+   "idx": 57,
+   "text": "A cup of sugar makes sweet fudge.",
+   "synth_time_s": 0.06983098099999552,
+   "audio_duration_s": 2.507755102040816,
+   "rtf": 0.027846012931313318,
+   "finite": true
+  },
+  {
+   "idx": 58,
+   "text": "Place a rosebush near the porch steps.",
+   "synth_time_s": 0.07660410799985584,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028440203754660918,
+   "finite": true
+  },
+  {
+   "idx": 59,
+   "text": "Both lost their lives in the raging storm.",
+   "synth_time_s": 0.08038616700014245,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.028849527707570658,
+   "finite": true
+  },
+  {
+   "idx": 60,
+   "text": "We talked of the side show in the circus.",
+   "synth_time_s": 0.07266301900017424,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.028709496290027274,
+   "finite": true
+  },
+  {
+   "idx": 61,
+   "text": "Use a pencil to write the first draft.",
+   "synth_time_s": 0.07499368900016634,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.028965997100155332,
+   "finite": true
+  },
+  {
+   "idx": 62,
+   "text": "He ran half way to the hardware store.",
+   "synth_time_s": 0.07815275300004032,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028403022871355633,
+   "finite": true
+  },
+  {
+   "idx": 63,
+   "text": "The clock struck to mark the third period.",
+   "synth_time_s": 0.06306305600014639,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.028290616552800046,
+   "finite": true
+  },
+  {
+   "idx": 64,
+   "text": "A small creek cut across the field.",
+   "synth_time_s": 0.06768384700012575,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028027885110290952,
+   "finite": true
+  },
+  {
+   "idx": 65,
+   "text": "Cars and busses stalled in snow drifts.",
+   "synth_time_s": 0.09044182799993905,
+   "audio_duration_s": 3.215963718820862,
+   "rtf": 0.028122776221212994,
+   "finite": true
+  },
+  {
+   "idx": 66,
+   "text": "The set of china hit the floor with a crash.",
+   "synth_time_s": 0.07968535600002724,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028244954022000397,
+   "finite": true
+  },
+  {
+   "idx": 67,
+   "text": "This is a grand season for hikes on the road.",
+   "synth_time_s": 0.08929195800010348,
+   "audio_duration_s": 3.1346938775510202,
+   "rtf": 0.02848506472659551,
+   "finite": true
+  },
+  {
+   "idx": 68,
+   "text": "The dune rose from the edge of the water.",
+   "synth_time_s": 0.06691190699984872,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.030333214419133725,
+   "finite": true
+  },
+  {
+   "idx": 69,
+   "text": "Those words were the cue for the actor to leave.",
+   "synth_time_s": 0.08147326700009216,
+   "audio_duration_s": 2.8676643990929707,
+   "rtf": 0.028411018746078442,
+   "finite": true
+  },
+  {
+   "idx": 70,
+   "text": "A yacht slid around the point into the bay.",
+   "synth_time_s": 0.07556471600014447,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.0287991217471513,
+   "finite": true
+  },
+  {
+   "idx": 71,
+   "text": "The two met while playing on the sand.",
+   "synth_time_s": 0.06427228400002605,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.02853583807588141,
+   "finite": true
+  },
+  {
+   "idx": 72,
+   "text": "The ink stain dried on the finished page.",
+   "synth_time_s": 0.0817650629999207,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.02946717506453078,
+   "finite": true
+  },
+  {
+   "idx": 73,
+   "text": "The walled town was seized without a fight.",
+   "synth_time_s": 0.07844336200014368,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.028998057472223178,
+   "finite": true
+  },
+  {
+   "idx": 74,
+   "text": "The lease ran out in sixteen weeks.",
+   "synth_time_s": 0.08826631100009763,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.02826254875627545,
+   "finite": true
+  },
+  {
+   "idx": 75,
+   "text": "A tame squirrel makes a nice pet.",
+   "synth_time_s": 0.06173038999986602,
+   "audio_duration_s": 2.159455782312925,
+   "rtf": 0.028586086598980296,
+   "finite": true
+  },
+  {
+   "idx": 76,
+   "text": "The horn of the car woke the sleeping cop.",
+   "synth_time_s": 0.06859147699992718,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.029392919539964132,
+   "finite": true
+  },
+  {
+   "idx": 77,
+   "text": "The heart beat strongly and with firm strokes.",
+   "synth_time_s": 0.08714410099992165,
+   "audio_duration_s": 3.01859410430839,
+   "rtf": 0.028869101968874284,
+   "finite": true
+  },
+  {
+   "idx": 78,
+   "text": "The pearl was worn in a thin silver ring.",
+   "synth_time_s": 0.07172390699997777,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028868139408394968,
+   "finite": true
+  },
+  {
+   "idx": 79,
+   "text": "The fruit peel was cut in thick slices.",
+   "synth_time_s": 0.07679272700011097,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028027006593492564,
+   "finite": true
+  },
+  {
+   "idx": 80,
+   "text": "The Navy attacked the big task force.",
+   "synth_time_s": 0.06840266600011091,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028325548101383068,
+   "finite": true
+  },
+  {
+   "idx": 81,
+   "text": "See the cat glaring at the scared mouse.",
+   "synth_time_s": 0.07316117400000621,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028513926164807284,
+   "finite": true
+  },
+  {
+   "idx": 82,
+   "text": "There are more than two factors here.",
+   "synth_time_s": 0.05988868600002206,
+   "audio_duration_s": 2.043356009070295,
+   "rtf": 0.02930898273926861,
+   "finite": true
+  },
+  {
+   "idx": 83,
+   "text": "The hat brim was wide and too droopy.",
+   "synth_time_s": 0.0719931070000257,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.029388477661259012,
+   "finite": true
+  },
+  {
+   "idx": 84,
+   "text": "The lawyer tried to lose his case.",
+   "synth_time_s": 0.05707828499998868,
+   "audio_duration_s": 2.0085260770975055,
+   "rtf": 0.028417995489743282,
+   "finite": true
+  },
+  {
+   "idx": 85,
+   "text": "The grass curled around the fence post.",
+   "synth_time_s": 0.06677719200001775,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.028473798801059547,
+   "finite": true
+  },
+  {
+   "idx": 86,
+   "text": "Cut the pie into large parts.",
+   "synth_time_s": 0.05662492100009331,
+   "audio_duration_s": 1.8808163265306121,
+   "rtf": 0.030106566069928085,
+   "finite": true
+  },
+  {
+   "idx": 87,
+   "text": "Men strive but seldom get rich.",
+   "synth_time_s": 0.07193984099990303,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.02895505063609561,
+   "finite": true
+  },
+  {
+   "idx": 88,
+   "text": "Always close the barn door tight.",
+   "synth_time_s": 0.06555908699988322,
+   "audio_duration_s": 2.3103854875283445,
+   "rtf": 0.02837582185041271,
+   "finite": true
+  },
+  {
+   "idx": 89,
+   "text": "He lay prone and hardly moved a limb.",
+   "synth_time_s": 0.07255140000006577,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.029201196882327876,
+   "finite": true
+  },
+  {
+   "idx": 90,
+   "text": "The slush lay deep along the street.",
+   "synth_time_s": 0.06364954399987255,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028703215911264512,
+   "finite": true
+  },
+  {
+   "idx": 91,
+   "text": "A wisp of cloud hung in the blue air.",
+   "synth_time_s": 0.07029025799988631,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.028693353615548967,
+   "finite": true
+  },
+  {
+   "idx": 92,
+   "text": "A pound of sugar costs more than eggs.",
+   "synth_time_s": 0.07190461599998343,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.0285407686995902,
+   "finite": true
+  },
+  {
+   "idx": 93,
+   "text": "The fin was sharp and cut the clear water.",
+   "synth_time_s": 0.06995280599994658,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028691580585915585,
+   "finite": true
+  },
+  {
+   "idx": 94,
+   "text": "The play seems dull and quite stupid.",
+   "synth_time_s": 0.07461549900017417,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.028437357455645747,
+   "finite": true
+  },
+  {
+   "idx": 95,
+   "text": "Bail the boat to stop it from sinking.",
+   "synth_time_s": 0.06341154500000812,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.028299558113062236,
+   "finite": true
+  },
+  {
+   "idx": 96,
+   "text": "The term ended in late June that year.",
+   "synth_time_s": 0.06641815700004372,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.02860391331740164,
+   "finite": true
+  },
+  {
+   "idx": 97,
+   "text": "A tusk is used to make costly gifts.",
+   "synth_time_s": 0.09057512799995493,
+   "audio_duration_s": 3.1579138321995464,
+   "rtf": 0.028681950430822126,
+   "finite": true
+  },
+  {
+   "idx": 98,
+   "text": "Ten pins were set in order.",
+   "synth_time_s": 0.051289902000007714,
+   "audio_duration_s": 1.7182766439909296,
+   "rtf": 0.029849618325067835,
+   "finite": true
+  },
+  {
+   "idx": 99,
+   "text": "The bill was paid every third week.",
+   "synth_time_s": 0.06177355299996634,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.028917010097852792,
+   "finite": true
+  },
+  {
+   "idx": 100,
+   "text": "Oak is strong and also gives shade.",
+   "synth_time_s": 0.07151671399992665,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02799970780714458,
+   "finite": true
+  },
+  {
+   "idx": 101,
+   "text": "Cats and dogs each hate the other.",
+   "synth_time_s": 0.06816968799989809,
+   "audio_duration_s": 2.36843537414966,
+   "rtf": 0.028782583111170205,
+   "finite": true
+  },
+  {
+   "idx": 102,
+   "text": "The pipe began to rust while new.",
+   "synth_time_s": 0.059836094000047524,
+   "audio_duration_s": 2.066575963718821,
+   "rtf": 0.028954219467631843,
+   "finite": true
+  },
+  {
+   "idx": 103,
+   "text": "Open the crate but don't break the glass.",
+   "synth_time_s": 0.07760767800004942,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.029841819543476034,
+   "finite": true
+  },
+  {
+   "idx": 104,
+   "text": "Add the sum to the product of these three.",
+   "synth_time_s": 0.07260014400003456,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.029919878424057307,
+   "finite": true
+  },
+  {
+   "idx": 105,
+   "text": "Thieves who rob friends deserve jail.",
+   "synth_time_s": 0.07931346299983488,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028824859229073695,
+   "finite": true
+  },
+  {
+   "idx": 106,
+   "text": "The ripe taste of cheese improves with age.",
+   "synth_time_s": 0.08004032999997435,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.028254503017729162,
+   "finite": true
+  },
+  {
+   "idx": 107,
+   "text": "Act on these orders with great speed.",
+   "synth_time_s": 0.07605863800017687,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.02898736462776376,
+   "finite": true
+  },
+  {
+   "idx": 108,
+   "text": "The hog crawled under the high fence.",
+   "synth_time_s": 0.06491753899990726,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.029122553201252344,
+   "finite": true
+  },
+  {
+   "idx": 109,
+   "text": "Move the vat over the hot fire.",
+   "synth_time_s": 0.056530464999923424,
+   "audio_duration_s": 1.9272562358276644,
+   "rtf": 0.029332096038410947,
+   "finite": true
+  },
+  {
+   "idx": 110,
+   "text": "The bark of the pine tree was shiny and dark.",
+   "synth_time_s": 0.08897928700002922,
+   "audio_duration_s": 3.111473922902494,
+   "rtf": 0.028597150162526883,
+   "finite": true
+  },
+  {
+   "idx": 111,
+   "text": "Leaves turn brown and yellow in the fall.",
+   "synth_time_s": 0.07391960800009656,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028423677392615254,
+   "finite": true
+  },
+  {
+   "idx": 112,
+   "text": "The pennant waved when the wind blew.",
+   "synth_time_s": 0.060606626999970103,
+   "audio_duration_s": 2.089795918367347,
+   "rtf": 0.029001217998032566,
+   "finite": true
+  },
+  {
+   "idx": 113,
+   "text": "Split the log with a quick, sharp blow.",
+   "synth_time_s": 0.07644051699980992,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028379468612705558,
+   "finite": true
+  },
+  {
+   "idx": 114,
+   "text": "Burn peat after the logs give out.",
+   "synth_time_s": 0.06263842299995304,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.028395913387108646,
+   "finite": true
+  },
+  {
+   "idx": 115,
+   "text": "He ordered peach pie with ice cream.",
+   "synth_time_s": 0.06994212500012509,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028687199707082552,
+   "finite": true
+  },
+  {
+   "idx": 116,
+   "text": "Weave the carpet on the right hand side.",
+   "synth_time_s": 0.0646372070000325,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.028697857892048904,
+   "finite": true
+  },
+  {
+   "idx": 117,
+   "text": "Hemp is a weed found in parts of the tropics.",
+   "synth_time_s": 0.08547422900005586,
+   "audio_duration_s": 2.948934240362812,
+   "rtf": 0.028984786378125488,
+   "finite": true
+  },
+  {
+   "idx": 118,
+   "text": "A lame back kept his score low.",
+   "synth_time_s": 0.06182044900015171,
+   "audio_duration_s": 2.159455782312925,
+   "rtf": 0.028627791088149893,
+   "finite": true
+  },
+  {
+   "idx": 119,
+   "text": "We find joy in the simplest things.",
+   "synth_time_s": 0.08288580099997489,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.0285567486257726,
+   "finite": true
+  },
+  {
+   "idx": 120,
+   "text": "Type out three lists of orders.",
+   "synth_time_s": 0.06690855200008627,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.028112301288146006,
+   "finite": true
+  },
+  {
+   "idx": 121,
+   "text": "The harder he tried the less he got done.",
+   "synth_time_s": 0.06629664000001867,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.02826889139852281,
+   "finite": true
+  },
+  {
+   "idx": 122,
+   "text": "The boss ran the show with a watchful eye.",
+   "synth_time_s": 0.07642905600005179,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.029653376351371444,
+   "finite": true
+  },
+  {
+   "idx": 123,
+   "text": "The cup cracked and spilled its contents.",
+   "synth_time_s": 0.0837933029999931,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.028527086387565587,
+   "finite": true
+  },
+  {
+   "idx": 124,
+   "text": "Paste can cleanse the most dirty brass.",
+   "synth_time_s": 0.08822704199997133,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.032200183330564215,
+   "finite": true
+  },
+  {
+   "idx": 125,
+   "text": "The slang word for raw whiskey is booze.",
+   "synth_time_s": 0.08885424400000375,
+   "audio_duration_s": 3.0418140589569163,
+   "rtf": 0.02921093869573119,
+   "finite": true
+  },
+  {
+   "idx": 126,
+   "text": "It caught its hind paw in a rusty trap.",
+   "synth_time_s": 0.08474573500006954,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.02919755401174271,
+   "finite": true
+  },
+  {
+   "idx": 127,
+   "text": "The wharf could be seen at the farther shore.",
+   "synth_time_s": 0.07028621599988583,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.029246132676582926,
+   "finite": true
+  },
+  {
+   "idx": 128,
+   "text": "Feel the heat of the weak dying flame.",
+   "synth_time_s": 0.07899817800011988,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.02907835578429893,
+   "finite": true
+  },
+  {
+   "idx": 129,
+   "text": "The tiny girl took off her hat.",
+   "synth_time_s": 0.05784136399984163,
+   "audio_duration_s": 1.9853061224489796,
+   "rtf": 0.029134733100249176,
+   "finite": true
+  },
+  {
+   "idx": 130,
+   "text": "A cramp is no small danger on a swim.",
+   "synth_time_s": 0.08225529399987863,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.0285680637710642,
+   "finite": true
+  },
+  {
+   "idx": 131,
+   "text": "He said the same phrase thirty times.",
+   "synth_time_s": 0.06899694900016584,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.028989762299040718,
+   "finite": true
+  },
+  {
+   "idx": 132,
+   "text": "Pluck the bright rose without leaves.",
+   "synth_time_s": 0.07074783300004128,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.029296681896989748,
+   "finite": true
+  },
+  {
+   "idx": 133,
+   "text": "Two plus seven is less than ten.",
+   "synth_time_s": 0.06115780699997231,
+   "audio_duration_s": 2.1130158730158732,
+   "rtf": 0.028943373204614296,
+   "finite": true
+  },
+  {
+   "idx": 134,
+   "text": "The glow deepened in the eyes of the sweet girl.",
+   "synth_time_s": 0.07296511200001987,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.028828854637335834,
+   "finite": true
+  },
+  {
+   "idx": 135,
+   "text": "Bring your problems to the wise chief.",
+   "synth_time_s": 0.07007080999983373,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.029298038540965063,
+   "finite": true
+  },
+  {
+   "idx": 136,
+   "text": "Write a fond note to the friend you cherish.",
+   "synth_time_s": 0.08648252900002262,
+   "audio_duration_s": 2.9605442176870747,
+   "rtf": 0.029211699823077496,
+   "finite": true
+  },
+  {
+   "idx": 137,
+   "text": "Clothes and lodging are free to new men.",
+   "synth_time_s": 0.08617621500002315,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.029690399074226725,
+   "finite": true
+  },
+  {
+   "idx": 138,
+   "text": "We frown when events take a bad turn.",
+   "synth_time_s": 0.07507648400019207,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02939340327067179,
+   "finite": true
+  },
+  {
+   "idx": 139,
+   "text": "Port is a strong wine with a smoky taste.",
+   "synth_time_s": 0.08297364999998535,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.02941050962094388,
+   "finite": true
+  },
+  {
+   "idx": 140,
+   "text": "The young kid jumped the rusty gate.",
+   "synth_time_s": 0.05679622999991807,
+   "audio_duration_s": 1.9969160997732427,
+   "rtf": 0.028441971100522198,
+   "finite": true
+  },
+  {
+   "idx": 141,
+   "text": "Guess the results from the first scores.",
+   "synth_time_s": 0.07408364999992045,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.028234659888313158,
+   "finite": true
+  },
+  {
+   "idx": 142,
+   "text": "A salt pickle tastes fine with ham.",
+   "synth_time_s": 0.07435705199986842,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.02872009873523505,
+   "finite": true
+  },
+  {
+   "idx": 143,
+   "text": "The just claim got the right verdict.",
+   "synth_time_s": 0.06522263900001235,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.029107820392452077,
+   "finite": true
+  },
+  {
+   "idx": 144,
+   "text": "These thistles bend in a high wind.",
+   "synth_time_s": 0.0716823679999834,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.028717227732551486,
+   "finite": true
+  },
+  {
+   "idx": 145,
+   "text": "Pure bred poodles have curls.",
+   "synth_time_s": 0.06671605099995759,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.029169751835125813,
+   "finite": true
+  },
+  {
+   "idx": 146,
+   "text": "The tree top waved in a graceful way.",
+   "synth_time_s": 0.06526153599997997,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.02838969517044583,
+   "finite": true
+  },
+  {
+   "idx": 147,
+   "text": "The spot on the blotter was made by green ink.",
+   "synth_time_s": 0.08392517999982374,
+   "audio_duration_s": 2.9605442176870747,
+   "rtf": 0.02834788938413164,
+   "finite": true
+  },
+  {
+   "idx": 148,
+   "text": "Mud was spattered on the front of his white shirt.",
+   "synth_time_s": 0.0755927409998094,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.028809802596892236,
+   "finite": true
+  },
+  {
+   "idx": 149,
+   "text": "The cigar burned a hole in the desk top.",
+   "synth_time_s": 0.0717158389998076,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.02886489212079727,
+   "finite": true
+  },
+  {
+   "idx": 150,
+   "text": "The empty flask stood on the tin tray.",
+   "synth_time_s": 0.08622214900015024,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.029353977048130447,
+   "finite": true
+  },
+  {
+   "idx": 151,
+   "text": "A speedy man can beat this track mark.",
+   "synth_time_s": 0.0768477899998743,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028530673651286843,
+   "finite": true
+  },
+  {
+   "idx": 152,
+   "text": "He broke a new shoelace that day.",
+   "synth_time_s": 0.06485945800000081,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.029096497576904662,
+   "finite": true
+  },
+  {
+   "idx": 153,
+   "text": "The coffee stand is too high for the couch.",
+   "synth_time_s": 0.08415676300000996,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.028994634752347183,
+   "finite": true
+  },
+  {
+   "idx": 154,
+   "text": "The urge to write short stories is rare.",
+   "synth_time_s": 0.07482226399997671,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.02877076801756917,
+   "finite": true
+  },
+  {
+   "idx": 155,
+   "text": "The pencils have all been used.",
+   "synth_time_s": 0.0519432329999745,
+   "audio_duration_s": 1.811156462585034,
+   "rtf": 0.028679594542503947,
+   "finite": true
+  },
+  {
+   "idx": 156,
+   "text": "The pirates seized the crew of the lost ship.",
+   "synth_time_s": 0.07755947399982688,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.029045285354894406,
+   "finite": true
+  },
+  {
+   "idx": 157,
+   "text": "We tried to replace the coin but failed.",
+   "synth_time_s": 0.08788762099993619,
+   "audio_duration_s": 3.0882539682539685,
+   "rtf": 0.028458676619017166,
+   "finite": true
+  },
+  {
+   "idx": 158,
+   "text": "She sewed the torn coat quite neatly.",
+   "synth_time_s": 0.06416447299989159,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.028054144782035405,
+   "finite": true
+  },
+  {
+   "idx": 159,
+   "text": "The sofa cushion is red and of light weight.",
+   "synth_time_s": 0.09213016599983348,
+   "audio_duration_s": 3.215963718820862,
+   "rtf": 0.028647762865189646,
+   "finite": true
+  },
+  {
+   "idx": 160,
+   "text": "The jacket hung on the back of the wide chair.",
+   "synth_time_s": 0.06923628899994583,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028397696660134027,
+   "finite": true
+  },
+  {
+   "idx": 161,
+   "text": "At that high level the air is pure.",
+   "synth_time_s": 0.07360282100012228,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.028816445366702702,
+   "finite": true
+  },
+  {
+   "idx": 162,
+   "text": "Drop the two when you add the figures.",
+   "synth_time_s": 0.06366414900003292,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.029167937280807972,
+   "finite": true
+  },
+  {
+   "idx": 163,
+   "text": "A filing case is now hard to buy.",
+   "synth_time_s": 0.07136290899984488,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.02885769042412301,
+   "finite": true
+  },
+  {
+   "idx": 164,
+   "text": "An abrupt start does not win the prize.",
+   "synth_time_s": 0.06836022600009528,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028582808390892386,
+   "finite": true
+  },
+  {
+   "idx": 165,
+   "text": "Wood is best for making toys and blocks.",
+   "synth_time_s": 0.07753918299999896,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.029037686568443903,
+   "finite": true
+  },
+  {
+   "idx": 166,
+   "text": "The office paint was a dull, sad tan.",
+   "synth_time_s": 0.08491265400016346,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.030601530150098134,
+   "finite": true
+  },
+  {
+   "idx": 167,
+   "text": "He knew the skill of the great young actress.",
+   "synth_time_s": 0.069946365000078,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.029388668983455032,
+   "finite": true
+  },
+  {
+   "idx": 168,
+   "text": "A rag will soak up spilled water.",
+   "synth_time_s": 0.06602415899988046,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.0293136417917881,
+   "finite": true
+  },
+  {
+   "idx": 169,
+   "text": "A shower of dirt fell from the hot pipes.",
+   "synth_time_s": 0.081777996000028,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.028750076718759843,
+   "finite": true
+  },
+  {
+   "idx": 170,
+   "text": "Steam hissed from the broken valve.",
+   "synth_time_s": 0.06299814899989542,
+   "audio_duration_s": 2.1942857142857144,
+   "rtf": 0.028710093945264838,
+   "finite": true
+  },
+  {
+   "idx": 171,
+   "text": "The child almost hurt the small dog.",
+   "synth_time_s": 0.07472650600016095,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.029124000588651527,
+   "finite": true
+  },
+  {
+   "idx": 172,
+   "text": "There was a sound of dry leaves outside.",
+   "synth_time_s": 0.08215466699994067,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.028533115035104143,
+   "finite": true
+  },
+  {
+   "idx": 173,
+   "text": "The sky that morning was clear and bright blue.",
+   "synth_time_s": 0.08355795000011312,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.02937584179691477,
+   "finite": true
+  },
+  {
+   "idx": 174,
+   "text": "Torn scraps littered the stone floor.",
+   "synth_time_s": 0.07079535400021086,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.028628182873104636,
+   "finite": true
+  },
+  {
+   "idx": 175,
+   "text": "Sunday is the best part of the week.",
+   "synth_time_s": 0.06682627500003946,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.02794143210996037,
+   "finite": true
+  },
+  {
+   "idx": 176,
+   "text": "The doctor cured him with these pills.",
+   "synth_time_s": 0.062063494000085484,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.028434591977682118,
+   "finite": true
+  },
+  {
+   "idx": 177,
+   "text": "The new girl was fired today at noon.",
+   "synth_time_s": 0.06414467900003729,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.02847918355248917,
+   "finite": true
+  },
+  {
+   "idx": 178,
+   "text": "They felt gay when the ship arrived in port.",
+   "synth_time_s": 0.07019715100000212,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.028386281901959486,
+   "finite": true
+  },
+  {
+   "idx": 179,
+   "text": "Add the store's account to the last cent.",
+   "synth_time_s": 0.07341108900004656,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02874137983755374,
+   "finite": true
+  },
+  {
+   "idx": 180,
+   "text": "Acid burns holes in wool cloth.",
+   "synth_time_s": 0.07301070000016807,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02858462242549194,
+   "finite": true
+  },
+  {
+   "idx": 181,
+   "text": "Fairy tales should be fun to write.",
+   "synth_time_s": 0.07616443100005199,
+   "audio_duration_s": 2.647074829931973,
+   "rtf": 0.028773055502178357,
+   "finite": true
+  },
+  {
+   "idx": 182,
+   "text": "Eight miles of woodland burned to waste.",
+   "synth_time_s": 0.08713508300002104,
+   "audio_duration_s": 3.030204081632653,
+   "rtf": 0.02875551634564272,
+   "finite": true
+  },
+  {
+   "idx": 183,
+   "text": "The third act was dull and tired the players.",
+   "synth_time_s": 0.09659691299998485,
+   "audio_duration_s": 3.332063492063492,
+   "rtf": 0.028990117754378077,
+   "finite": true
+  },
+  {
+   "idx": 184,
+   "text": "A young child should not suffer fright.",
+   "synth_time_s": 0.0699536669999361,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.0281556359037053,
+   "finite": true
+  },
+  {
+   "idx": 185,
+   "text": "Add the column and put the sum here.",
+   "synth_time_s": 0.06078714000000218,
+   "audio_duration_s": 2.078185941043084,
+   "rtf": 0.029250096826991274,
+   "finite": true
+  },
+  {
+   "idx": 186,
+   "text": "We admire and love a good cook.",
+   "synth_time_s": 0.07418924100011282,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.02852735707401799,
+   "finite": true
+  },
+  {
+   "idx": 187,
+   "text": "There the flood mark is ten inches.",
+   "synth_time_s": 0.06706572400003097,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.02859682886371989,
+   "finite": true
+  },
+  {
+   "idx": 188,
+   "text": "He carved a head from the round block of marble.",
+   "synth_time_s": 0.08544307700003628,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.029675211817206403,
+   "finite": true
+  },
+  {
+   "idx": 189,
+   "text": "She has a smart way of wearing clothes.",
+   "synth_time_s": 0.08324504400002297,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.028795701873125416,
+   "finite": true
+  },
+  {
+   "idx": 190,
+   "text": "The fruit of a fig tree is apple-shaped.",
+   "synth_time_s": 0.07074858500004666,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.031411209311594496,
+   "finite": true
+  },
+  {
+   "idx": 191,
+   "text": "Corn cobs can be used to kindle a fire.",
+   "synth_time_s": 0.09451627500016002,
+   "audio_duration_s": 3.274013605442177,
+   "rtf": 0.02886862621555752,
+   "finite": true
+  },
+  {
+   "idx": 192,
+   "text": "Where were they when the noise started.",
+   "synth_time_s": 0.05121887600012087,
+   "audio_duration_s": 1.7531065759637188,
+   "rtf": 0.029216065185292458,
+   "finite": true
+  },
+  {
+   "idx": 193,
+   "text": "The paper box is full of thumb tacks.",
+   "synth_time_s": 0.06968044000018381,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.028444418357598727,
+   "finite": true
+  },
+  {
+   "idx": 194,
+   "text": "Sell your gift to a buyer at a good gain.",
+   "synth_time_s": 0.07790459600005306,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.029560096740796567,
+   "finite": true
+  },
+  {
+   "idx": 195,
+   "text": "The tongs lay beside the ice pail.",
+   "synth_time_s": 0.06506594999996196,
+   "audio_duration_s": 2.147845804988662,
+   "rtf": 0.03029358525124918,
+   "finite": true
+  },
+  {
+   "idx": 196,
+   "text": "The petals fall with the next puff of wind.",
+   "synth_time_s": 0.08111362399995414,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.029110602363264796,
+   "finite": true
+  },
+  {
+   "idx": 197,
+   "text": "Bring your best compass to the third class.",
+   "synth_time_s": 0.07978952099983871,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.02828187593310255,
+   "finite": true
+  },
+  {
+   "idx": 198,
+   "text": "They could laugh although they were sad.",
+   "synth_time_s": 0.0588760010000442,
+   "audio_duration_s": 2.066575963718821,
+   "rtf": 0.02848963794880123,
+   "finite": true
+  },
+  {
+   "idx": 199,
+   "text": "Farmers came in to thresh the oat crop.",
+   "synth_time_s": 0.07243646100005208,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028231475626611074,
+   "finite": true
+  },
+  {
+   "idx": 200,
+   "text": "The brown house was on fire to the attic.",
+   "synth_time_s": 0.0677343079998991,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02818428237088193,
+   "finite": true
+  },
+  {
+   "idx": 201,
+   "text": "The lure is used to catch trout and flounder.",
+   "synth_time_s": 0.07860726800004159,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.028448172587331223,
+   "finite": true
+  },
+  {
+   "idx": 202,
+   "text": "Float the soap on top of the bath water.",
+   "synth_time_s": 0.07530221000001802,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.027956858339513693,
+   "finite": true
+  },
+  {
+   "idx": 203,
+   "text": "A blue crane is a tall wading bird.",
+   "synth_time_s": 0.06811402800008182,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028206023088224983,
+   "finite": true
+  },
+  {
+   "idx": 204,
+   "text": "A fresh start will work such wonders.",
+   "synth_time_s": 0.07174196500000107,
+   "audio_duration_s": 2.507755102040816,
+   "rtf": 0.0286080426839197,
+   "finite": true
+  },
+  {
+   "idx": 205,
+   "text": "The club rented the rink for the fifth night.",
+   "synth_time_s": 0.06705915599991386,
+   "audio_duration_s": 2.3103854875283445,
+   "rtf": 0.029025094020848394,
+   "finite": true
+  },
+  {
+   "idx": 206,
+   "text": "After the dance, they went straight home.",
+   "synth_time_s": 0.0706351569999697,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02869813553672855,
+   "finite": true
+  },
+  {
+   "idx": 207,
+   "text": "The hostess taught the new maid to serve.",
+   "synth_time_s": 0.06575699900008658,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.029195027141428583,
+   "finite": true
+  },
+  {
+   "idx": 208,
+   "text": "He wrote his last novel there at the inn.",
+   "synth_time_s": 0.08291107000013653,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.029755681860400566,
+   "finite": true
+  },
+  {
+   "idx": 209,
+   "text": "Even the worst will beat his low score.",
+   "synth_time_s": 0.06824187200004417,
+   "audio_duration_s": 2.3103854875283445,
+   "rtf": 0.029537006862456305,
+   "finite": true
+  },
+  {
+   "idx": 210,
+   "text": "The cement had dried when he moved it.",
+   "synth_time_s": 0.06196074699983001,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.029004638063566825,
+   "finite": true
+  },
+  {
+   "idx": 211,
+   "text": "The loss of the second ship was hard to take.",
+   "synth_time_s": 0.07472894700003962,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.02873488562623594,
+   "finite": true
+  },
+  {
+   "idx": 212,
+   "text": "The fly made its way along the wall.",
+   "synth_time_s": 0.06971165499999188,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028592670996090416,
+   "finite": true
+  },
+  {
+   "idx": 213,
+   "text": "Do that with a wooden stick.",
+   "synth_time_s": 0.05051249000007374,
+   "audio_duration_s": 1.7182766439909296,
+   "rtf": 0.029397181284354573,
+   "finite": true
+  },
+  {
+   "idx": 214,
+   "text": "Live wires should be kept covered.",
+   "synth_time_s": 0.06512141799998972,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.02861781064452673,
+   "finite": true
+  },
+  {
+   "idx": 215,
+   "text": "The large house had hot water taps.",
+   "synth_time_s": 0.0659831729999496,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.028849321158171178,
+   "finite": true
+  },
+  {
+   "idx": 216,
+   "text": "It is hard to erase blue or red ink.",
+   "synth_time_s": 0.08020923799995217,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.028198560234358183,
+   "finite": true
+  },
+  {
+   "idx": 217,
+   "text": "Write at once or you may forget it.",
+   "synth_time_s": 0.059916853000004267,
+   "audio_duration_s": 2.1130158730158732,
+   "rtf": 0.02835608277494192,
+   "finite": true
+  },
+  {
+   "idx": 218,
+   "text": "The doorknob was made of bright clean brass.",
+   "synth_time_s": 0.07754389299998365,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.02818174513201542,
+   "finite": true
+  },
+  {
+   "idx": 219,
+   "text": "The wreck occurred by the bank on Main Street.",
+   "synth_time_s": 0.07328260200006298,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.028305096939836544,
+   "finite": true
+  },
+  {
+   "idx": 220,
+   "text": "A pencil with black lead writes best.",
+   "synth_time_s": 0.07951152200007527,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.02877542443706768,
+   "finite": true
+  },
+  {
+   "idx": 221,
+   "text": "Coax a young calf to drink from a bucket.",
+   "synth_time_s": 0.07040463600014846,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028876901484435887,
+   "finite": true
+  },
+  {
+   "idx": 222,
+   "text": "Schools for ladies teach charm and grace.",
+   "synth_time_s": 0.10774016400000619,
+   "audio_duration_s": 3.274013605442177,
+   "rtf": 0.03290767143450987,
+   "finite": true
+  },
+  {
+   "idx": 223,
+   "text": "The lamp shone with a steady green flame.",
+   "synth_time_s": 0.07953287600003023,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.028543292900401477,
+   "finite": true
+  },
+  {
+   "idx": 224,
+   "text": "They took the axe and the saw to the forest.",
+   "synth_time_s": 0.08319395900002746,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.02866291868672821,
+   "finite": true
+  },
+  {
+   "idx": 225,
+   "text": "The ancient coin was quite dull and worn.",
+   "synth_time_s": 0.0762500270000146,
+   "audio_duration_s": 2.507755102040816,
+   "rtf": 0.03040569110514905,
+   "finite": true
+  },
+  {
+   "idx": 226,
+   "text": "The shaky barn fell with a loud crash.",
+   "synth_time_s": 0.08350450200009618,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.029357051484408814,
+   "finite": true
+  },
+  {
+   "idx": 227,
+   "text": "Jazz and swing fans like fast music.",
+   "synth_time_s": 0.08052270100006353,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.02889852794680015,
+   "finite": true
+  },
+  {
+   "idx": 228,
+   "text": "Rake the rubbish up and then burn it.",
+   "synth_time_s": 0.057863209999823084,
+   "audio_duration_s": 1.9736961451247166,
+   "rtf": 0.029317182456252276,
+   "finite": true
+  },
+  {
+   "idx": 229,
+   "text": "Slash the gold cloth into fine ribbons.",
+   "synth_time_s": 0.08129316200006542,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02823390596807968,
+   "finite": true
+  },
+  {
+   "idx": 230,
+   "text": "Try to have the court decide the case.",
+   "synth_time_s": 0.06266410699981861,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.028709764780294227,
+   "finite": true
+  },
+  {
+   "idx": 231,
+   "text": "They are pushed back each time they attack.",
+   "synth_time_s": 0.0774368710001454,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028262099535772082,
+   "finite": true
+  },
+  {
+   "idx": 232,
+   "text": "He broke his ties with groups of former friends.",
+   "synth_time_s": 0.0930080260000068,
+   "audio_duration_s": 3.274013605442177,
+   "rtf": 0.028407953420048617,
+   "finite": true
+  },
+  {
+   "idx": 233,
+   "text": "They floated on the raft to sun their white backs.",
+   "synth_time_s": 0.09789368399992782,
+   "audio_duration_s": 3.4481632653061225,
+   "rtf": 0.028390095383501793,
+   "finite": true
+  },
+  {
+   "idx": 234,
+   "text": "The map had an X that meant nothing.",
+   "synth_time_s": 0.05873938200011253,
+   "audio_duration_s": 2.089795918367347,
+   "rtf": 0.028107712089897593,
+   "finite": true
+  },
+  {
+   "idx": 235,
+   "text": "Whitings are small fish caught in nets.",
+   "synth_time_s": 0.07500866800000949,
+   "audio_duration_s": 2.6122448979591835,
+   "rtf": 0.028714255718753637,
+   "finite": true
+  },
+  {
+   "idx": 236,
+   "text": "Some ads serve to cheat buyers.",
+   "synth_time_s": 0.06984533000013471,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.028511728497166957,
+   "finite": true
+  },
+  {
+   "idx": 237,
+   "text": "Jerk the rope and the bell rings weakly.",
+   "synth_time_s": 0.0777671589999045,
+   "audio_duration_s": 2.681904761904762,
+   "rtf": 0.028996987553231435,
+   "finite": true
+  },
+  {
+   "idx": 238,
+   "text": "A waxed floor makes us lose balance.",
+   "synth_time_s": 0.08072557100013,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02803677609237756,
+   "finite": true
+  },
+  {
+   "idx": 239,
+   "text": "Madam, this is the best brand of corn.",
+   "synth_time_s": 0.07810134499982269,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028384339682985402,
+   "finite": true
+  },
+  {
+   "idx": 240,
+   "text": "On the islands the sea breeze is soft and mild.",
+   "synth_time_s": 0.0927779589999318,
+   "audio_duration_s": 3.274013605442177,
+   "rtf": 0.02833768278962345,
+   "finite": true
+  },
+  {
+   "idx": 241,
+   "text": "The play began as soon as we sat down.",
+   "synth_time_s": 0.0793951890000244,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.028613100115234998,
+   "finite": true
+  },
+  {
+   "idx": 242,
+   "text": "This will lead the world to more sound and fury.",
+   "synth_time_s": 0.0856583730001148,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.02916204182084566,
+   "finite": true
+  },
+  {
+   "idx": 243,
+   "text": "Add salt before you fry the egg.",
+   "synth_time_s": 0.06911577899995791,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028620848237475058,
+   "finite": true
+  },
+  {
+   "idx": 244,
+   "text": "The rush for funds reached its peak Tuesday.",
+   "synth_time_s": 0.0812906280000334,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.02857873640626174,
+   "finite": true
+  },
+  {
+   "idx": 245,
+   "text": "The birch looked stark white and lonesome.",
+   "synth_time_s": 0.06977109799981918,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.028347079726120522,
+   "finite": true
+  },
+  {
+   "idx": 246,
+   "text": "The box is held by a bright red snapper.",
+   "synth_time_s": 0.07044577100009519,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.02835370273350064,
+   "finite": true
+  },
+  {
+   "idx": 247,
+   "text": "To make pure ice, you freeze water.",
+   "synth_time_s": 0.07288527799983058,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028025955285579385,
+   "finite": true
+  },
+  {
+   "idx": 248,
+   "text": "The first worm gets snapped early.",
+   "synth_time_s": 0.06851785300000302,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.029957540027166614,
+   "finite": true
+  },
+  {
+   "idx": 249,
+   "text": "Jump the fence and hurry up the bank.",
+   "synth_time_s": 0.06850868600008653,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.02864488255275159,
+   "finite": true
+  },
+  {
+   "idx": 250,
+   "text": "Yell and clap as the curtain slides back.",
+   "synth_time_s": 0.07823807700015095,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028434032137614196,
+   "finite": true
+  },
+  {
+   "idx": 251,
+   "text": "They are men who walk the middle of the road.",
+   "synth_time_s": 0.06575470600000699,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028604231125713267,
+   "finite": true
+  },
+  {
+   "idx": 252,
+   "text": "Both brothers wear the same size.",
+   "synth_time_s": 0.0641024159999688,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.02802701207168687,
+   "finite": true
+  },
+  {
+   "idx": 253,
+   "text": "In some form or other we need fun.",
+   "synth_time_s": 0.06739618799997515,
+   "audio_duration_s": 2.3103854875283445,
+   "rtf": 0.029170970975962867,
+   "finite": true
+  },
+  {
+   "idx": 254,
+   "text": "The prince ordered his head chopped off.",
+   "synth_time_s": 0.066112498999928,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028759876162965835,
+   "finite": true
+  },
+  {
+   "idx": 255,
+   "text": "The houses are built of red clay bricks.",
+   "synth_time_s": 0.07499947600013002,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.029098719837465984,
+   "finite": true
+  },
+  {
+   "idx": 256,
+   "text": "Ducks fly north but lack a compass.",
+   "synth_time_s": 0.07847994399980962,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.028048540670315775,
+   "finite": true
+  },
+  {
+   "idx": 257,
+   "text": "Fruit flavors are used in fizz drinks.",
+   "synth_time_s": 0.07773109499999009,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.02824977987786428,
+   "finite": true
+  },
+  {
+   "idx": 258,
+   "text": "These pills do less good than others.",
+   "synth_time_s": 0.06956909900009123,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028000851214807457,
+   "finite": true
+  },
+  {
+   "idx": 259,
+   "text": "Canned pears lack full flavor.",
+   "synth_time_s": 0.05935335300000588,
+   "audio_duration_s": 2.066575963718821,
+   "rtf": 0.028720624860650665,
+   "finite": true
+  },
+  {
+   "idx": 260,
+   "text": "The dark pot hung in the front closet.",
+   "synth_time_s": 0.06663896400004887,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.029284700976583977,
+   "finite": true
+  },
+  {
+   "idx": 261,
+   "text": "Carry the pail to the wall and spill it there.",
+   "synth_time_s": 0.07949483600009444,
+   "audio_duration_s": 2.809614512471655,
+   "rtf": 0.02829385869386109,
+   "finite": true
+  },
+  {
+   "idx": 262,
+   "text": "The train brought our hero to the big town.",
+   "synth_time_s": 0.07242411100014579,
+   "audio_duration_s": 2.5425850340136056,
+   "rtf": 0.028484440060523947,
+   "finite": true
+  },
+  {
+   "idx": 263,
+   "text": "We are sure that one war is enough.",
+   "synth_time_s": 0.07265280899991922,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.029106003605527227,
+   "finite": true
+  },
+  {
+   "idx": 264,
+   "text": "Gray paint stretched for miles around.",
+   "synth_time_s": 0.07139325800017104,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.029143611872478,
+   "finite": true
+  },
+  {
+   "idx": 265,
+   "text": "The rude laugh filled the empty room.",
+   "synth_time_s": 0.07085778800001208,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.029201820899376986,
+   "finite": true
+  },
+  {
+   "idx": 266,
+   "text": "High seats are best for football fans.",
+   "synth_time_s": 0.09336648099997547,
+   "audio_duration_s": 3.2856235827664397,
+   "rtf": 0.028416669970868197,
+   "finite": true
+  },
+  {
+   "idx": 267,
+   "text": "Tea served from the brown jug is tasty.",
+   "synth_time_s": 0.07370603699996536,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.028596884076739097,
+   "finite": true
+  },
+  {
+   "idx": 268,
+   "text": "A dash of pepper spoils beef stew.",
+   "synth_time_s": 0.06946656300010545,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.028223351159941137,
+   "finite": true
+  },
+  {
+   "idx": 269,
+   "text": "A zestful food is the hot-cross bun.",
+   "synth_time_s": 0.06941244699987692,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.02806896376810604,
+   "finite": true
+  },
+  {
+   "idx": 270,
+   "text": "The horse trotted around the field at a brisk pace.",
+   "synth_time_s": 0.09161654399986219,
+   "audio_duration_s": 3.1927437641723357,
+   "rtf": 0.028695238568138652,
+   "finite": true
+  },
+  {
+   "idx": 271,
+   "text": "Find the twin who stole the pearl necklace.",
+   "synth_time_s": 0.07397260099992309,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.028192337044529593,
+   "finite": true
+  },
+  {
+   "idx": 272,
+   "text": "Cut the cord that binds the box tightly.",
+   "synth_time_s": 0.08055603199977668,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028205356097482783,
+   "finite": true
+  },
+  {
+   "idx": 273,
+   "text": "The red tape bound the smuggled food.",
+   "synth_time_s": 0.06634988399991926,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02815222718207781,
+   "finite": true
+  },
+  {
+   "idx": 274,
+   "text": "Look in the corner to find the tan shirt.",
+   "synth_time_s": 0.06851817599999777,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.0290722325431025,
+   "finite": true
+  },
+  {
+   "idx": 275,
+   "text": "The cold drizzle will halt the bond drive.",
+   "synth_time_s": 0.06315361499991923,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028479573191022147,
+   "finite": true
+  },
+  {
+   "idx": 276,
+   "text": "Nine men were hired to dig the ruins.",
+   "synth_time_s": 0.07800655200003348,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.029729750961019395,
+   "finite": true
+  },
+  {
+   "idx": 277,
+   "text": "The junk yard had a mouldy smell.",
+   "synth_time_s": 0.06786882500000502,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.029228663891603723,
+   "finite": true
+  },
+  {
+   "idx": 278,
+   "text": "The flint sputtered and lit a pine torch.",
+   "synth_time_s": 0.08003531899998961,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.02997246576001649,
+   "finite": true
+  },
+  {
+   "idx": 279,
+   "text": "Soak the cloth and drown the sharp odor.",
+   "synth_time_s": 0.06861612199986666,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.028277988376515024,
+   "finite": true
+  },
+  {
+   "idx": 280,
+   "text": "The shelves were bare of both jam or crackers.",
+   "synth_time_s": 0.09443588999988606,
+   "audio_duration_s": 3.297233560090703,
+   "rtf": 0.028640946502221164,
+   "finite": true
+  },
+  {
+   "idx": 281,
+   "text": "A joy to every child is the swan boat.",
+   "synth_time_s": 0.0835984580000968,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.028017783300433707,
+   "finite": true
+  },
+  {
+   "idx": 282,
+   "text": "All sat frozen and watched the screen.",
+   "synth_time_s": 0.08387314800006607,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.029976058632674028,
+   "finite": true
+  },
+  {
+   "idx": 283,
+   "text": "A cloud of dust stung his tender eyes.",
+   "synth_time_s": 0.07422856700009106,
+   "audio_duration_s": 2.6122448979591835,
+   "rtf": 0.028415623304722363,
+   "finite": true
+  },
+  {
+   "idx": 284,
+   "text": "To reach the end he needs much courage.",
+   "synth_time_s": 0.08193750299983549,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028689055213833407,
+   "finite": true
+  },
+  {
+   "idx": 285,
+   "text": "Shape the clay gently into block form.",
+   "synth_time_s": 0.06836996300012288,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028312005787122698,
+   "finite": true
+  },
+  {
+   "idx": 286,
+   "text": "A ridge on a smooth surface is a bump or flaw.",
+   "synth_time_s": 0.08519992800006548,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.028334013217927185,
+   "finite": true
+  },
+  {
+   "idx": 287,
+   "text": "Hedge apples may stain your hands green.",
+   "synth_time_s": 0.07634246499992514,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.028589527059245064,
+   "finite": true
+  },
+  {
+   "idx": 288,
+   "text": "Quench your thirst, then eat the crackers.",
+   "synth_time_s": 0.08617167200009135,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.029453208203156223,
+   "finite": true
+  },
+  {
+   "idx": 289,
+   "text": "Tight curls get limp on rainy days.",
+   "synth_time_s": 0.06895019400008096,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028829486075959213,
+   "finite": true
+  },
+  {
+   "idx": 290,
+   "text": "The mute muffled the high tones of the horn.",
+   "synth_time_s": 0.07152014200005397,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.0296164951003078,
+   "finite": true
+  },
+  {
+   "idx": 291,
+   "text": "The gold ring fits only a pierced ear.",
+   "synth_time_s": 0.06695452300004945,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.028549412750446517,
+   "finite": true
+  },
+  {
+   "idx": 292,
+   "text": "The old pan was covered with hard fudge.",
+   "synth_time_s": 0.07323682699984602,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.028414837333660695,
+   "finite": true
+  },
+  {
+   "idx": 293,
+   "text": "Watch the log float in the wide river.",
+   "synth_time_s": 0.06625254200002928,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.029264193731984085,
+   "finite": true
+  },
+  {
+   "idx": 294,
+   "text": "The node on the stalk of wheat grew daily.",
+   "synth_time_s": 0.06864016500003345,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028699856611247295,
+   "finite": true
+  },
+  {
+   "idx": 295,
+   "text": "The heap of fallen leaves was set on fire.",
+   "synth_time_s": 0.08282067899995127,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028998284615550773,
+   "finite": true
+  },
+  {
+   "idx": 296,
+   "text": "Write fast if you want to finish early.",
+   "synth_time_s": 0.06807862599998771,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.02860391965129057,
+   "finite": true
+  },
+  {
+   "idx": 297,
+   "text": "His shirt was clean but one button was gone.",
+   "synth_time_s": 0.08416273600005297,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.028206899452838767,
+   "finite": true
+  },
+  {
+   "idx": 298,
+   "text": "The barrel of beer was a brew of malt and hops.",
+   "synth_time_s": 0.09684745799995653,
+   "audio_duration_s": 3.4249433106575964,
+   "rtf": 0.02827709810512502,
+   "finite": true
+  },
+  {
+   "idx": 299,
+   "text": "Tin cans are absent from store shelves.",
+   "synth_time_s": 0.07717315699983374,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.02840658573461428,
+   "finite": true
+  },
+  {
+   "idx": 300,
+   "text": "Slide the box into that empty space.",
+   "synth_time_s": 0.08012033399995744,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.02949140899938337,
+   "finite": true
+  },
+  {
+   "idx": 301,
+   "text": "The plant grew large and green in the window.",
+   "synth_time_s": 0.07892573399999492,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.028325397700193492,
+   "finite": true
+  },
+  {
+   "idx": 302,
+   "text": "The beam dropped down on the workmen's head.",
+   "synth_time_s": 0.0692877829999361,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028692075104202804,
+   "finite": true
+  },
+  {
+   "idx": 303,
+   "text": "Pink clouds floated with the breeze.",
+   "synth_time_s": 0.06568292200017822,
+   "audio_duration_s": 2.3103854875283445,
+   "rtf": 0.028429421131122998,
+   "finite": true
+  },
+  {
+   "idx": 304,
+   "text": "She danced like a swan, tall and graceful.",
+   "synth_time_s": 0.08547611899984986,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.028425863054215274,
+   "finite": true
+  },
+  {
+   "idx": 305,
+   "text": "The tube was blown and the tire flat and useless.",
+   "synth_time_s": 0.09917816300003324,
+   "audio_duration_s": 3.5062131519274375,
+   "rtf": 0.028286404363497684,
+   "finite": true
+  },
+  {
+   "idx": 306,
+   "text": "It is late morning on the old wall clock.",
+   "synth_time_s": 0.07168869800011635,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.029829706199097326,
+   "finite": true
+  },
+  {
+   "idx": 307,
+   "text": "Let's all join as we sing the last chorus.",
+   "synth_time_s": 0.10305659999994532,
+   "audio_duration_s": 3.599092970521542,
+   "rtf": 0.02863404775704126,
+   "finite": true
+  },
+  {
+   "idx": 308,
+   "text": "The last switch cannot be turned off.",
+   "synth_time_s": 0.07249232399999528,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028253247741089785,
+   "finite": true
+  },
+  {
+   "idx": 309,
+   "text": "The fight will end in just six minutes.",
+   "synth_time_s": 0.07249867499990614,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.02973578466793025,
+   "finite": true
+  },
+  {
+   "idx": 310,
+   "text": "The store walls were lined with colored frocks.",
+   "synth_time_s": 0.08723450699994828,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.02969863017769361,
+   "finite": true
+  },
+  {
+   "idx": 311,
+   "text": "The peace league met to discuss their plans.",
+   "synth_time_s": 0.0756803920000948,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.02846534940642212,
+   "finite": true
+  },
+  {
+   "idx": 312,
+   "text": "The rise to fame of a person takes luck.",
+   "synth_time_s": 0.07337577900011638,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.028991111076414965,
+   "finite": true
+  },
+  {
+   "idx": 313,
+   "text": "Paper is scarce, so write with much care.",
+   "synth_time_s": 0.08490831100016294,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.028456776774586467,
+   "finite": true
+  },
+  {
+   "idx": 314,
+   "text": "The quick fox jumped on the sleeping cat.",
+   "synth_time_s": 0.07705120400009946,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.028361696183930838,
+   "finite": true
+  },
+  {
+   "idx": 315,
+   "text": "The nozzle of the fire hose was bright brass.",
+   "synth_time_s": 0.07967033099998844,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.02859262367431226,
+   "finite": true
+  },
+  {
+   "idx": 316,
+   "text": "Screw the round cap on as tight as needed.",
+   "synth_time_s": 0.08034888400015916,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.02836342360725393,
+   "finite": true
+  },
+  {
+   "idx": 317,
+   "text": "Time brings us many changes.",
+   "synth_time_s": 0.06105270800003382,
+   "audio_duration_s": 2.1710657596371883,
+   "rtf": 0.028121077276920654,
+   "finite": true
+  },
+  {
+   "idx": 318,
+   "text": "The purple tie was ten years old.",
+   "synth_time_s": 0.0636911770000097,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.028277836115701796,
+   "finite": true
+  },
+  {
+   "idx": 319,
+   "text": "Men think and plan and sometimes act.",
+   "synth_time_s": 0.07597846099997696,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.028453211023259033,
+   "finite": true
+  },
+  {
+   "idx": 320,
+   "text": "Fill the ink jar with sticky glue.",
+   "synth_time_s": 0.06483732099991357,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.02792310406343934,
+   "finite": true
+  },
+  {
+   "idx": 321,
+   "text": "He smoke a big pipe with strong contents.",
+   "synth_time_s": 0.07995067100000597,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.028574174914907473,
+   "finite": true
+  },
+  {
+   "idx": 322,
+   "text": "We need grain to keep our mules healthy.",
+   "synth_time_s": 0.07890849499995056,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.028319210852033042,
+   "finite": true
+  },
+  {
+   "idx": 323,
+   "text": "Pack the records in a neat thin case.",
+   "synth_time_s": 0.07033710700011397,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028309966584267546,
+   "finite": true
+  },
+  {
+   "idx": 324,
+   "text": "The crunch of feet in the snow was the only sound.",
+   "synth_time_s": 0.08674023999992642,
+   "audio_duration_s": 3.01859410430839,
+   "rtf": 0.028735310877379468,
+   "finite": true
+  },
+  {
+   "idx": 325,
+   "text": "The copper bowl shone in the sun's rays.",
+   "synth_time_s": 0.08026561399992715,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028450629962358438,
+   "finite": true
+  },
+  {
+   "idx": 326,
+   "text": "Boards will warp unless kept dry.",
+   "synth_time_s": 0.06873643600010837,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02860126837640379,
+   "finite": true
+  },
+  {
+   "idx": 327,
+   "text": "The plush chair leaned against the wall.",
+   "synth_time_s": 0.06713785100009773,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.028913859659221774,
+   "finite": true
+  },
+  {
+   "idx": 328,
+   "text": "Glass will clink when struck by metal.",
+   "synth_time_s": 0.06304649200001222,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028431265310051322,
+   "finite": true
+  },
+  {
+   "idx": 329,
+   "text": "Bathe and relax in the cool green grass.",
+   "synth_time_s": 0.09538684299991473,
+   "audio_duration_s": 3.355283446712018,
+   "rtf": 0.028428847969130082,
+   "finite": true
+  },
+  {
+   "idx": 330,
+   "text": "Nine rows of soldiers stood in line.",
+   "synth_time_s": 0.08098113699998066,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.028469930976555702,
+   "finite": true
+  },
+  {
+   "idx": 331,
+   "text": "The beach is dry and shallow at low tide.",
+   "synth_time_s": 0.08755434799991235,
+   "audio_duration_s": 3.0418140589569163,
+   "rtf": 0.02878359633525267,
+   "finite": true
+  },
+  {
+   "idx": 332,
+   "text": "The idea is to sew both edges straight.",
+   "synth_time_s": 0.08945110000013301,
+   "audio_duration_s": 3.053424036281179,
+   "rtf": 0.029295341536996984,
+   "finite": true
+  },
+  {
+   "idx": 333,
+   "text": "The kitten chased the dog down the street.",
+   "synth_time_s": 0.06711799200002133,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028761499603553918,
+   "finite": true
+  },
+  {
+   "idx": 334,
+   "text": "Pages bound in cloth make a book.",
+   "synth_time_s": 0.06967712100004064,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.030464397962620883,
+   "finite": true
+  },
+  {
+   "idx": 335,
+   "text": "Try to trace the fine lines of the painting.",
+   "synth_time_s": 0.07773433700003807,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028370665566254623,
+   "finite": true
+  },
+  {
+   "idx": 336,
+   "text": "Women form less than half of the group.",
+   "synth_time_s": 0.06382638999980372,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028782965876465807,
+   "finite": true
+  },
+  {
+   "idx": 337,
+   "text": "The zones merge in the central part of town.",
+   "synth_time_s": 0.07204763799995817,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.028207571340537602,
+   "finite": true
+  },
+  {
+   "idx": 338,
+   "text": "A gem in the rough needs work to polish.",
+   "synth_time_s": 0.09131700199986881,
+   "audio_duration_s": 3.0418140589569163,
+   "rtf": 0.030020573325636735,
+   "finite": true
+  },
+  {
+   "idx": 339,
+   "text": "Code is used when secrets are sent.",
+   "synth_time_s": 0.06684526799995183,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.030144350445822515,
+   "finite": true
+  },
+  {
+   "idx": 340,
+   "text": "Most of the news is easy for us to hear.",
+   "synth_time_s": 0.0852181150000888,
+   "audio_duration_s": 2.9605442176870747,
+   "rtf": 0.028784611454533673,
+   "finite": true
+  },
+  {
+   "idx": 341,
+   "text": "He used the lathe to make brass objects.",
+   "synth_time_s": 0.08410175200015146,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02920935659657478,
+   "finite": true
+  },
+  {
+   "idx": 342,
+   "text": "The vane on top of the pole revolved in the wind.",
+   "synth_time_s": 0.08567539699993176,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.0306201780317767,
+   "finite": true
+  },
+  {
+   "idx": 343,
+   "text": "Mince pie is a dish served to children.",
+   "synth_time_s": 0.07386346199996296,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.028657962716412997,
+   "finite": true
+  },
+  {
+   "idx": 344,
+   "text": "The clan gathered on each dull night.",
+   "synth_time_s": 0.06610413299995344,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.028186806401782432,
+   "finite": true
+  },
+  {
+   "idx": 345,
+   "text": "Let it burn, it gives us warmth and comfort.",
+   "synth_time_s": 0.08858217400006652,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.028363686929331243,
+   "finite": true
+  },
+  {
+   "idx": 346,
+   "text": "A castle built from sand fails to endure.",
+   "synth_time_s": 0.08853946199997154,
+   "audio_duration_s": 3.1463038548752835,
+   "rtf": 0.028140785532451747,
+   "finite": true
+  },
+  {
+   "idx": 347,
+   "text": "A child's wit saved the day for us.",
+   "synth_time_s": 0.06874532999995608,
+   "audio_duration_s": 2.36843537414966,
+   "rtf": 0.02902563048596491,
+   "finite": true
+  },
+  {
+   "idx": 348,
+   "text": "Tack the strip of carpet to the worn floor.",
+   "synth_time_s": 0.07021437200000946,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028260567001318064,
+   "finite": true
+  },
+  {
+   "idx": 349,
+   "text": "Next Tuesday we must vote.",
+   "synth_time_s": 0.05833295599995836,
+   "audio_duration_s": 2.0549659863945577,
+   "rtf": 0.02838633650686533,
+   "finite": true
+  },
+  {
+   "idx": 350,
+   "text": "Pour the stew from the pot into the plate.",
+   "synth_time_s": 0.0749279200001638,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028182325259341084,
+   "finite": true
+  },
+  {
+   "idx": 351,
+   "text": "Each penny shone like new.",
+   "synth_time_s": 0.05331167299982553,
+   "audio_duration_s": 1.8575963718820863,
+   "rtf": 0.028699277090970532,
+   "finite": true
+  },
+  {
+   "idx": 352,
+   "text": "The man went to the woods to gather sticks.",
+   "synth_time_s": 0.06963655499998822,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028028001565233288,
+   "finite": true
+  },
+  {
+   "idx": 353,
+   "text": "The dirt piles were lines along the road.",
+   "synth_time_s": 0.0731926169999042,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028526180798357743,
+   "finite": true
+  },
+  {
+   "idx": 354,
+   "text": "The logs fell and tumbled into the clear stream.",
+   "synth_time_s": 0.08772503599993797,
+   "audio_duration_s": 3.030204081632653,
+   "rtf": 0.028950207192867464,
+   "finite": true
+  },
+  {
+   "idx": 355,
+   "text": "Just hoist it up and take it away.",
+   "synth_time_s": 0.06336504000000787,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.028725311101977253,
+   "finite": true
+  },
+  {
+   "idx": 356,
+   "text": "A ripe plum is fit for a king's palate.",
+   "synth_time_s": 0.07633015700002943,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.029482202246543035,
+   "finite": true
+  },
+  {
+   "idx": 357,
+   "text": "Our plans right now are hazy.",
+   "synth_time_s": 0.060057261999872935,
+   "audio_duration_s": 2.089795918367347,
+   "rtf": 0.028738338261657944,
+   "finite": true
+  },
+  {
+   "idx": 358,
+   "text": "Brass rings are sold by these natives.",
+   "synth_time_s": 0.08455322300005719,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.030600029003926943,
+   "finite": true
+  },
+  {
+   "idx": 359,
+   "text": "It takes a good trap to capture a bear.",
+   "synth_time_s": 0.0689044670000385,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02923613564791504,
+   "finite": true
+  },
+  {
+   "idx": 360,
+   "text": "Feed the white mouse some flower seeds.",
+   "synth_time_s": 0.08792160400003013,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.029239131397814075,
+   "finite": true
+  },
+  {
+   "idx": 361,
+   "text": "The thaw came early and freed the stream.",
+   "synth_time_s": 0.08152612300000328,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.02877899289430828,
+   "finite": true
+  },
+  {
+   "idx": 362,
+   "text": "He took the lead and kept it the whole distance.",
+   "synth_time_s": 0.08294996199992966,
+   "audio_duration_s": 2.809614512471655,
+   "rtf": 0.029523609602570524,
+   "finite": true
+  },
+  {
+   "idx": 363,
+   "text": "The key you designed will fit the lock.",
+   "synth_time_s": 0.06458836499996323,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.02927988174854419,
+   "finite": true
+  },
+  {
+   "idx": 364,
+   "text": "Plead to the council to free the poor thief.",
+   "synth_time_s": 0.07186779299991031,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.028526152715438187,
+   "finite": true
+  },
+  {
+   "idx": 365,
+   "text": "Better hash is made of rare beef.",
+   "synth_time_s": 0.06599093999989236,
+   "audio_duration_s": 2.36843537414966,
+   "rtf": 0.027862672851517053,
+   "finite": true
+  },
+  {
+   "idx": 366,
+   "text": "This plank was made for walking on.",
+   "synth_time_s": 0.05861396499994953,
+   "audio_duration_s": 2.066575963718821,
+   "rtf": 0.02836284077091132,
+   "finite": true
+  },
+  {
+   "idx": 367,
+   "text": "The lake sparkled in the red hot sun.",
+   "synth_time_s": 0.06637963499997568,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.029170738037098687,
+   "finite": true
+  },
+  {
+   "idx": 368,
+   "text": "He crawled with care along the ledge.",
+   "synth_time_s": 0.065552045000004,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.029407197921754724,
+   "finite": true
+  },
+  {
+   "idx": 369,
+   "text": "Tend the sheep while the dog wanders.",
+   "synth_time_s": 0.06448382999997193,
+   "audio_duration_s": 2.1942857142857144,
+   "rtf": 0.029387162109362208,
+   "finite": true
+  },
+  {
+   "idx": 370,
+   "text": "It takes a lot of help to finish these.",
+   "synth_time_s": 0.10021216100017227,
+   "audio_duration_s": 3.517823129251701,
+   "rtf": 0.028486981101147363,
+   "finite": true
+  },
+  {
+   "idx": 371,
+   "text": "Mark the spot with a sign painted red.",
+   "synth_time_s": 0.070468419000008,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028362818321958538,
+   "finite": true
+  },
+  {
+   "idx": 372,
+   "text": "Take two shares as a fair profit.",
+   "synth_time_s": 0.07459441100013464,
+   "audio_duration_s": 2.647074829931973,
+   "rtf": 0.02817994042202866,
+   "finite": true
+  },
+  {
+   "idx": 373,
+   "text": "The fur of cats goes by many names.",
+   "synth_time_s": 0.07115988300006393,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.028775590891861238,
+   "finite": true
+  },
+  {
+   "idx": 374,
+   "text": "North winds bring colds and fevers.",
+   "synth_time_s": 0.07666150199997901,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.02870900338144594,
+   "finite": true
+  },
+  {
+   "idx": 375,
+   "text": "He asks no person to vouch for him.",
+   "synth_time_s": 0.06666270599998825,
+   "audio_duration_s": 2.36843537414966,
+   "rtf": 0.028146305669802023,
+   "finite": true
+  },
+  {
+   "idx": 376,
+   "text": "Go now and come here later.",
+   "synth_time_s": 0.05485939499999404,
+   "audio_duration_s": 1.9040362811791383,
+   "rtf": 0.028812158435353195,
+   "finite": true
+  },
+  {
+   "idx": 377,
+   "text": "A sash of gold silk will trim her dress.",
+   "synth_time_s": 0.08209796500000266,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.029341612555920295,
+   "finite": true
+  },
+  {
+   "idx": 378,
+   "text": "Soap can wash most dirt away.",
+   "synth_time_s": 0.06445810099990013,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.028471577064258766,
+   "finite": true
+  },
+  {
+   "idx": 379,
+   "text": "That move means the game is over.",
+   "synth_time_s": 0.06127381500004958,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.02807279797105829,
+   "finite": true
+  },
+  {
+   "idx": 380,
+   "text": "He wrote down a long list of items.",
+   "synth_time_s": 0.06669534299999214,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028298805286903993,
+   "finite": true
+  },
+  {
+   "idx": 381,
+   "text": "A siege will crack the strong defense.",
+   "synth_time_s": 0.06740087799994399,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.02818168537429393,
+   "finite": true
+  },
+  {
+   "idx": 382,
+   "text": "Grape juice and water mix well.",
+   "synth_time_s": 0.07084827400012728,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.028784722171705603,
+   "finite": true
+  },
+  {
+   "idx": 383,
+   "text": "Roads are paved with sticky tar.",
+   "synth_time_s": 0.06338695799991001,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.028288585328246754,
+   "finite": true
+  },
+  {
+   "idx": 384,
+   "text": "Fake stones shine but cost little.",
+   "synth_time_s": 0.07401391000007607,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028459938537626905,
+   "finite": true
+  },
+  {
+   "idx": 385,
+   "text": "The drip of the rain made a pleasant sound.",
+   "synth_time_s": 0.06702183600009448,
+   "audio_duration_s": 2.345215419501134,
+   "rtf": 0.028578115017831127,
+   "finite": true
+  },
+  {
+   "idx": 386,
+   "text": "Smoke poured out of every crack.",
+   "synth_time_s": 0.06260764800003926,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.028683897905603096,
+   "finite": true
+  },
+  {
+   "idx": 387,
+   "text": "Serve the hot rum to the tired heroes.",
+   "synth_time_s": 0.07906935100004375,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.028495671900349188,
+   "finite": true
+  },
+  {
+   "idx": 388,
+   "text": "Much of the story makes good sense.",
+   "synth_time_s": 0.06465601400009291,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.02841328740238458,
+   "finite": true
+  },
+  {
+   "idx": 389,
+   "text": "The sun came up to light the eastern sky.",
+   "synth_time_s": 0.07234862400014208,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.028984141700638316,
+   "finite": true
+  },
+  {
+   "idx": 390,
+   "text": "Heave the line over the port side.",
+   "synth_time_s": 0.066070849000198,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.029035041064540135,
+   "finite": true
+  },
+  {
+   "idx": 391,
+   "text": "A lathe cuts and trims any wood.",
+   "synth_time_s": 0.06274675000008756,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.028445021330220616,
+   "finite": true
+  },
+  {
+   "idx": 392,
+   "text": "It's a dense crowd in two distinct ways.",
+   "synth_time_s": 0.09161814699996285,
+   "audio_duration_s": 3.1927437641723357,
+   "rtf": 0.028695740644164497,
+   "finite": true
+  },
+  {
+   "idx": 393,
+   "text": "His hip struck the knee of the next player.",
+   "synth_time_s": 0.0656378250000671,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.02929311126237612,
+   "finite": true
+  },
+  {
+   "idx": 394,
+   "text": "The stale smell of old beer lingers.",
+   "synth_time_s": 0.07426124299990988,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.029074225996946253,
+   "finite": true
+  },
+  {
+   "idx": 395,
+   "text": "The desk was firm on the shaky floor.",
+   "synth_time_s": 0.06521038400001089,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.028952339062504835,
+   "finite": true
+  },
+  {
+   "idx": 396,
+   "text": "It takes heat to bring out the odor.",
+   "synth_time_s": 0.06504168100013885,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.02902706173196773,
+   "finite": true
+  },
+  {
+   "idx": 397,
+   "text": "Beef is scarcer than some lamb.",
+   "synth_time_s": 0.0543910839999171,
+   "audio_duration_s": 1.8808163265306121,
+   "rtf": 0.02891887061627537,
+   "finite": true
+  },
+  {
+   "idx": 398,
+   "text": "Raise the sail and steer the ship northward.",
+   "synth_time_s": 0.08270463400003791,
+   "audio_duration_s": 2.647074829931973,
+   "rtf": 0.031243783917571887,
+   "finite": true
+  },
+  {
+   "idx": 399,
+   "text": "A cone costs five cents on Mondays.",
+   "synth_time_s": 0.07981285699997898,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.028524920527255193,
+   "finite": true
+  },
+  {
+   "idx": 400,
+   "text": "A pod is what peas always grow in.",
+   "synth_time_s": 0.08620051599996259,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.0286667678842781,
+   "finite": true
+  },
+  {
+   "idx": 401,
+   "text": "Jerk the dart from the cork target.",
+   "synth_time_s": 0.06078548300001785,
+   "audio_duration_s": 2.1130158730158732,
+   "rtf": 0.028767168186607,
+   "finite": true
+  },
+  {
+   "idx": 402,
+   "text": "No cement will hold hard wood.",
+   "synth_time_s": 0.0611333349997949,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.0286173156578099,
+   "finite": true
+  },
+  {
+   "idx": 403,
+   "text": "We now have a new base for shipping.",
+   "synth_time_s": 0.07367789399995672,
+   "audio_duration_s": 2.5425850340136056,
+   "rtf": 0.0289775535584162,
+   "finite": true
+  },
+  {
+   "idx": 404,
+   "text": "A list of names is carved around the base.",
+   "synth_time_s": 0.08837539899991498,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.029390045064372063,
+   "finite": true
+  },
+  {
+   "idx": 405,
+   "text": "The sheep were led home by a dog.",
+   "synth_time_s": 0.059972595999852274,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.028073958513008295,
+   "finite": true
+  },
+  {
+   "idx": 406,
+   "text": "Three for a dime, the young peddler cried.",
+   "synth_time_s": 0.08124878199987506,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.028218492362292798,
+   "finite": true
+  },
+  {
+   "idx": 407,
+   "text": "The sense of smell is better than that of touch.",
+   "synth_time_s": 0.07991856500007088,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.02832761635563855,
+   "finite": true
+  },
+  {
+   "idx": 408,
+   "text": "No hardship seemed to keep him sad.",
+   "synth_time_s": 0.06964170100013689,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.028030072777690904,
+   "finite": true
+  },
+  {
+   "idx": 409,
+   "text": "Grace makes up for lack of beauty.",
+   "synth_time_s": 0.06889953099994273,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.028394786530889973,
+   "finite": true
+  },
+  {
+   "idx": 410,
+   "text": "Nudge gently but wake her now.",
+   "synth_time_s": 0.05980873899989092,
+   "audio_duration_s": 2.10140589569161,
+   "rtf": 0.02846129780187316,
+   "finite": true
+  },
+  {
+   "idx": 411,
+   "text": "The news struck doubt into restless minds.",
+   "synth_time_s": 0.08886733100007405,
+   "audio_duration_s": 3.01859410430839,
+   "rtf": 0.029439973686172367,
+   "finite": true
+  },
+  {
+   "idx": 412,
+   "text": "Once we stood beside the shore.",
+   "synth_time_s": 0.05786962100000892,
+   "audio_duration_s": 1.9853061224489796,
+   "rtf": 0.02914896616982357,
+   "finite": true
+  },
+  {
+   "idx": 413,
+   "text": "A chink in the wall allowed a draft to blow.",
+   "synth_time_s": 0.09220622399993772,
+   "audio_duration_s": 3.1579138321995464,
+   "rtf": 0.029198461040881016,
+   "finite": true
+  },
+  {
+   "idx": 414,
+   "text": "Fasten two pins on each side.",
+   "synth_time_s": 0.0679907109999931,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.029878730419918842,
+   "finite": true
+  },
+  {
+   "idx": 415,
+   "text": "A cold dip restores health and zest.",
+   "synth_time_s": 0.07873390700001437,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.02910546287135054,
+   "finite": true
+  },
+  {
+   "idx": 416,
+   "text": "He takes the oath of office each March.",
+   "synth_time_s": 0.07220834699978695,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.029476341294159183,
+   "finite": true
+  },
+  {
+   "idx": 417,
+   "text": "The sand drifts over the sill of the old house.",
+   "synth_time_s": 0.08405345400001352,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.02872920791016087,
+   "finite": true
+  },
+  {
+   "idx": 418,
+   "text": "The point of the steel pen was bent and twisted.",
+   "synth_time_s": 0.08392112799992901,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.028683979296850737,
+   "finite": true
+  },
+  {
+   "idx": 419,
+   "text": "There is a lag between thought and act.",
+   "synth_time_s": 0.06909833800000342,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02807374618403736,
+   "finite": true
+  },
+  {
+   "idx": 420,
+   "text": "Seed is needed to plant the spring corn.",
+   "synth_time_s": 0.08120641999994405,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.029022976546271496,
+   "finite": true
+  },
+  {
+   "idx": 421,
+   "text": "Draw the chart with heavy black lines.",
+   "synth_time_s": 0.07187804399995912,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.02839934902162949,
+   "finite": true
+  },
+  {
+   "idx": 422,
+   "text": "The boy owed his pal thirty cents.",
+   "synth_time_s": 0.06604842900014773,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028732004802976198,
+   "finite": true
+  },
+  {
+   "idx": 423,
+   "text": "The chap slipped into the crowd and was lost.",
+   "synth_time_s": 0.08288234099995861,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.029378144596339497,
+   "finite": true
+  },
+  {
+   "idx": 424,
+   "text": "Hats are worn to tea and not to dinner.",
+   "synth_time_s": 0.06617703100005201,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.02908170307619473,
+   "finite": true
+  },
+  {
+   "idx": 425,
+   "text": "The ramp led up to the wide highway.",
+   "synth_time_s": 0.06223174399997333,
+   "audio_duration_s": 2.147845804988662,
+   "rtf": 0.028974027770257853,
+   "finite": true
+  },
+  {
+   "idx": 426,
+   "text": "Beat the dust from the rug onto the lawn.",
+   "synth_time_s": 0.06949194699996042,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.02919774068881721,
+   "finite": true
+  },
+  {
+   "idx": 427,
+   "text": "Say it slowly but make it ring clear.",
+   "synth_time_s": 0.0855375040000581,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.029588697966887567,
+   "finite": true
+  },
+  {
+   "idx": 428,
+   "text": "The straw nest housed five robins.",
+   "synth_time_s": 0.06920937699987917,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02879805938344157,
+   "finite": true
+  },
+  {
+   "idx": 429,
+   "text": "Screen the porch with woven straw mats.",
+   "synth_time_s": 0.0819478999999319,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.028927881579765922,
+   "finite": true
+  },
+  {
+   "idx": 430,
+   "text": "This horse will nose his way to the finish.",
+   "synth_time_s": 0.0882619409999279,
+   "audio_duration_s": 3.030204081632653,
+   "rtf": 0.029127391628478362,
+   "finite": true
+  },
+  {
+   "idx": 431,
+   "text": "The dry wax protects the deep scratch.",
+   "synth_time_s": 0.08358746399994743,
+   "audio_duration_s": 2.8328344671201813,
+   "rtf": 0.029506653131385133,
+   "finite": true
+  },
+  {
+   "idx": 432,
+   "text": "He picked up the dice for a second roll.",
+   "synth_time_s": 0.0709713759999886,
+   "audio_duration_s": 2.507755102040816,
+   "rtf": 0.028300760286453785,
+   "finite": true
+  },
+  {
+   "idx": 433,
+   "text": "These coins will be needed to pay his debt.",
+   "synth_time_s": 0.07762335799998255,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.02857229974458492,
+   "finite": true
+  },
+  {
+   "idx": 434,
+   "text": "The nag pulled the frail cart along.",
+   "synth_time_s": 0.06056944600004499,
+   "audio_duration_s": 2.136235827664399,
+   "rtf": 0.028353351823645383,
+   "finite": true
+  },
+  {
+   "idx": 435,
+   "text": "Twist the valve and release hot steam.",
+   "synth_time_s": 0.07769840299988573,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028357550750587265,
+   "finite": true
+  },
+  {
+   "idx": 436,
+   "text": "The vamp of the shoe had a gold buckle.",
+   "synth_time_s": 0.06338448699989385,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.028734127021950235,
+   "finite": true
+  },
+  {
+   "idx": 437,
+   "text": "The smell of burned rags itches my nose.",
+   "synth_time_s": 0.08714488700002221,
+   "audio_duration_s": 3.076643990929705,
+   "rtf": 0.028324657404930568,
+   "finite": true
+  },
+  {
+   "idx": 438,
+   "text": "New pants lack cuffs and pockets.",
+   "synth_time_s": 0.08167969499982064,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02836815263901911,
+   "finite": true
+  },
+  {
+   "idx": 439,
+   "text": "The marsh will freeze when cold enough.",
+   "synth_time_s": 0.0677011489999586,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.02844531889194145,
+   "finite": true
+  },
+  {
+   "idx": 440,
+   "text": "They slice the sausage thin with a knife.",
+   "synth_time_s": 0.07129176500006906,
+   "audio_duration_s": 2.507755102040816,
+   "rtf": 0.028428519571967646,
+   "finite": true
+  },
+  {
+   "idx": 441,
+   "text": "The bloom of the rose lasts a few days.",
+   "synth_time_s": 0.07491350899999816,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028805853680419213,
+   "finite": true
+  },
+  {
+   "idx": 442,
+   "text": "A gray mare walked before the colt.",
+   "synth_time_s": 0.06428114199979973,
+   "audio_duration_s": 2.2058956916099772,
+   "rtf": 0.029140608163971713,
+   "finite": true
+  },
+  {
+   "idx": 443,
+   "text": "Breakfast buns are fine with a hot drink.",
+   "synth_time_s": 0.07109785599982388,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.029441626442234758,
+   "finite": true
+  },
+  {
+   "idx": 444,
+   "text": "Bottles hold four kinds of rum.",
+   "synth_time_s": 0.061531792000096175,
+   "audio_duration_s": 2.1130158730158732,
+   "rtf": 0.029120364302930128,
+   "finite": true
+  },
+  {
+   "idx": 445,
+   "text": "The man wore a feather in his felt hat.",
+   "synth_time_s": 0.06904030099985903,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028867161655167086,
+   "finite": true
+  },
+  {
+   "idx": 446,
+   "text": "He wheeled the bike past the winding road.",
+   "synth_time_s": 0.07274021099988204,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.02914101839657338,
+   "finite": true
+  },
+  {
+   "idx": 447,
+   "text": "Drop the ashes on the worn old rug.",
+   "synth_time_s": 0.0740686630001619,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.02860870969649611,
+   "finite": true
+  },
+  {
+   "idx": 448,
+   "text": "The desk and both chairs were painted tan.",
+   "synth_time_s": 0.0779571829998531,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028942549251528168,
+   "finite": true
+  },
+  {
+   "idx": 449,
+   "text": "Throw out the used paper cup and plate.",
+   "synth_time_s": 0.0731957059999786,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.02852738470905557,
+   "finite": true
+  },
+  {
+   "idx": 450,
+   "text": "A clean neck means a neat collar.",
+   "synth_time_s": 0.06614229399997384,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.02834339207671454,
+   "finite": true
+  },
+  {
+   "idx": 451,
+   "text": "The couch cover and hall drapes were blue.",
+   "synth_time_s": 0.07261452700004156,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.02909066715753845,
+   "finite": true
+  },
+  {
+   "idx": 452,
+   "text": "The stems of the tall glasses cracked and broke.",
+   "synth_time_s": 0.08274065699993116,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.029327923849801988,
+   "finite": true
+  },
+  {
+   "idx": 453,
+   "text": "The wall phone rang loud and often.",
+   "synth_time_s": 0.07499590400016132,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.029097333952765293,
+   "finite": true
+  },
+  {
+   "idx": 454,
+   "text": "The clothes dried on a thin wooden rack.",
+   "synth_time_s": 0.07647275199997239,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.029804584657794668,
+   "finite": true
+  },
+  {
+   "idx": 455,
+   "text": "Turn on the lantern which gives us light.",
+   "synth_time_s": 0.07486692799989214,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02931135941757141,
+   "finite": true
+  },
+  {
+   "idx": 456,
+   "text": "The cleat sank deeply into the soft turf.",
+   "synth_time_s": 0.08823634800000946,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.030522268345259295,
+   "finite": true
+  },
+  {
+   "idx": 457,
+   "text": "The bills were mailed promptly on the tenth of the month.",
+   "synth_time_s": 0.08410466100008307,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.029210366920549263,
+   "finite": true
+  },
+  {
+   "idx": 458,
+   "text": "To have is better than to wait and hope.",
+   "synth_time_s": 0.07250293299989607,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.029045960622233073,
+   "finite": true
+  },
+  {
+   "idx": 459,
+   "text": "The price is fair for a good antique clock.",
+   "synth_time_s": 0.08041474100014057,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028503488925107696,
+   "finite": true
+  },
+  {
+   "idx": 460,
+   "text": "The music played on while they talked.",
+   "synth_time_s": 0.05798566200019195,
+   "audio_duration_s": 2.020136054421769,
+   "rtf": 0.028703839958338553,
+   "finite": true
+  },
+  {
+   "idx": 461,
+   "text": "Dispense with a vest on a day like this.",
+   "synth_time_s": 0.07295986999997695,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.02818044306158022,
+   "finite": true
+  },
+  {
+   "idx": 462,
+   "text": "The bunch of grapes was pressed into wine.",
+   "synth_time_s": 0.07922399700009919,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.02831446339879712,
+   "finite": true
+  },
+  {
+   "idx": 463,
+   "text": "He sent the figs, but kept the ripe cherries.",
+   "synth_time_s": 0.08269797299999482,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.028378521922464605,
+   "finite": true
+  },
+  {
+   "idx": 464,
+   "text": "The hinge on the door creaked with old age.",
+   "synth_time_s": 0.07706901000005928,
+   "audio_duration_s": 2.728344671201814,
+   "rtf": 0.02824753441657758,
+   "finite": true
+  },
+  {
+   "idx": 465,
+   "text": "The screen before the fire kept in the sparks.",
+   "synth_time_s": 0.0807065409999268,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.029834683963391666,
+   "finite": true
+  },
+  {
+   "idx": 466,
+   "text": "Fly by night, and you waste little time.",
+   "synth_time_s": 0.08454366299997673,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.028896759814445172,
+   "finite": true
+  },
+  {
+   "idx": 467,
+   "text": "Thick glasses helped him read the print.",
+   "synth_time_s": 0.07116127400013283,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.02824571737656482,
+   "finite": true
+  },
+  {
+   "idx": 468,
+   "text": "Birth and death mark the limits of life.",
+   "synth_time_s": 0.06777433699994617,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02820093845955641,
+   "finite": true
+  },
+  {
+   "idx": 469,
+   "text": "The chair looked strong but had no bottom.",
+   "synth_time_s": 0.08399192100000619,
+   "audio_duration_s": 2.728344671201814,
+   "rtf": 0.030784937800035512,
+   "finite": true
+  },
+  {
+   "idx": 470,
+   "text": "The kite flew wildly in the high wind.",
+   "synth_time_s": 0.06821902899991983,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028523771037777458,
+   "finite": true
+  },
+  {
+   "idx": 471,
+   "text": "A fur muff is stylish once more.",
+   "synth_time_s": 0.06262757600006807,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.027949685289861984,
+   "finite": true
+  },
+  {
+   "idx": 472,
+   "text": "The tin box held priceless stones.",
+   "synth_time_s": 0.08176688000003196,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028629314405498995,
+   "finite": true
+  },
+  {
+   "idx": 473,
+   "text": "We need an end of all such matter.",
+   "synth_time_s": 0.069664720999981,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.02803933809231858,
+   "finite": true
+  },
+  {
+   "idx": 474,
+   "text": "The case was puzzling to the old and wise.",
+   "synth_time_s": 0.07198906899998292,
+   "audio_duration_s": 2.5425850340136056,
+   "rtf": 0.02831333781837941,
+   "finite": true
+  },
+  {
+   "idx": 475,
+   "text": "The bright lanterns were gay on the dark lawn.",
+   "synth_time_s": 0.07869945200013717,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.028481534214204053,
+   "finite": true
+  },
+  {
+   "idx": 476,
+   "text": "We don't get much money but we have fun.",
+   "synth_time_s": 0.07052501900011521,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.028789185962539623,
+   "finite": true
+  },
+  {
+   "idx": 477,
+   "text": "The youth drove with zest, but little skill.",
+   "synth_time_s": 0.1064388570000574,
+   "audio_duration_s": 3.4249433106575964,
+   "rtf": 0.03107755292440765,
+   "finite": true
+  },
+  {
+   "idx": 478,
+   "text": "Five years he lived with a shaggy dog.",
+   "synth_time_s": 0.0888661310000316,
+   "audio_duration_s": 3.0882539682539685,
+   "rtf": 0.02877552556024872,
+   "finite": true
+  },
+  {
+   "idx": 479,
+   "text": "A fence cuts through the corner lot.",
+   "synth_time_s": 0.06699871599994367,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.029145393146282315,
+   "finite": true
+  },
+  {
+   "idx": 480,
+   "text": "The way to save money is not to spend much.",
+   "synth_time_s": 0.09021315600011803,
+   "audio_duration_s": 2.972154195011338,
+   "rtf": 0.03035278457340397,
+   "finite": true
+  },
+  {
+   "idx": 481,
+   "text": "Shut the hatch before the waves push it in.",
+   "synth_time_s": 0.06906031600010465,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.028875530336057102,
+   "finite": true
+  },
+  {
+   "idx": 482,
+   "text": "The odor of spring makes young hearts jump.",
+   "synth_time_s": 0.07706954100012808,
+   "audio_duration_s": 2.647074829931973,
+   "rtf": 0.02911498387905743,
+   "finite": true
+  },
+  {
+   "idx": 483,
+   "text": "Crack the walnut with your sharp side teeth.",
+   "synth_time_s": 0.07794083800013141,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.028206989855286524,
+   "finite": true
+  },
+  {
+   "idx": 484,
+   "text": "He offered proof in the form of a large chart.",
+   "synth_time_s": 0.0926996569999119,
+   "audio_duration_s": 3.0650340136054424,
+   "rtf": 0.03024425066358986,
+   "finite": true
+  },
+  {
+   "idx": 485,
+   "text": "Send the stuff in a thick paper bag.",
+   "synth_time_s": 0.06472844300014913,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.028300725098217173,
+   "finite": true
+  },
+  {
+   "idx": 486,
+   "text": "A quart of milk is water for the most part.",
+   "synth_time_s": 0.07726763000005121,
+   "audio_duration_s": 2.681904761904762,
+   "rtf": 0.028810728515644098,
+   "finite": true
+  },
+  {
+   "idx": 487,
+   "text": "They told wild tales to frighten him.",
+   "synth_time_s": 0.066439790000004,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02819037425916118,
+   "finite": true
+  },
+  {
+   "idx": 488,
+   "text": "The three story house was built of stone.",
+   "synth_time_s": 0.070124025000041,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02849046932582002,
+   "finite": true
+  },
+  {
+   "idx": 489,
+   "text": "In the rear of the ground floor was a large passage.",
+   "synth_time_s": 0.09449189999986629,
+   "audio_duration_s": 3.332063492063492,
+   "rtf": 0.028358373189746457,
+   "finite": true
+  },
+  {
+   "idx": 490,
+   "text": "A man in a blue sweater sat at the desk.",
+   "synth_time_s": 0.08472512599996662,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.02895878330076984,
+   "finite": true
+  },
+  {
+   "idx": 491,
+   "text": "Oats are a food eaten by horse and man.",
+   "synth_time_s": 0.07476848999999675,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.028495665177335594,
+   "finite": true
+  },
+  {
+   "idx": 492,
+   "text": "Their eyelids droop for want of sleep.",
+   "synth_time_s": 0.06850908299998082,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02906837438711471,
+   "finite": true
+  },
+  {
+   "idx": 493,
+   "text": "A sip of tea revives his tired friend.",
+   "synth_time_s": 0.07577922299992679,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.02875364584162283,
+   "finite": true
+  },
+  {
+   "idx": 494,
+   "text": "There are many ways to do these things.",
+   "synth_time_s": 0.08837887100003172,
+   "audio_duration_s": 3.076643990929705,
+   "rtf": 0.028725738584178942,
+   "finite": true
+  },
+  {
+   "idx": 495,
+   "text": "Tuck the sheet under the edge of the mat.",
+   "synth_time_s": 0.0623915720000241,
+   "audio_duration_s": 2.147845804988662,
+   "rtf": 0.029048440933288247,
+   "finite": true
+  },
+  {
+   "idx": 496,
+   "text": "A force equal to that would move the earth.",
+   "synth_time_s": 0.07946578500013857,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.028638542090302293,
+   "finite": true
+  },
+  {
+   "idx": 497,
+   "text": "We like to see clear weather.",
+   "synth_time_s": 0.04776520499990511,
+   "audio_duration_s": 1.6602267573696146,
+   "rtf": 0.02877028983413209,
+   "finite": true
+  },
+  {
+   "idx": 498,
+   "text": "The work of the tailor is seen on each side.",
+   "synth_time_s": 0.09887720500000796,
+   "audio_duration_s": 3.3436734693877552,
+   "rtf": 0.02957142971801996,
+   "finite": true
+  },
+  {
+   "idx": 499,
+   "text": "Take a chance and win a china doll.",
+   "synth_time_s": 0.06724009200002001,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028529942052810217,
+   "finite": true
+  },
+  {
+   "idx": 500,
+   "text": "Shake the dust from your shoes, stranger.",
+   "synth_time_s": 0.07546149800009516,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.02825961329657096,
+   "finite": true
+  },
+  {
+   "idx": 501,
+   "text": "She was kind to sick old people.",
+   "synth_time_s": 0.06366982400004417,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.027979903125019412,
+   "finite": true
+  },
+  {
+   "idx": 502,
+   "text": "The square wooden crate was packed to be shipped.",
+   "synth_time_s": 0.07804764100001194,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.02824564213580395,
+   "finite": true
+  },
+  {
+   "idx": 503,
+   "text": "The dusty bench stood by the stone wall.",
+   "synth_time_s": 0.07937218400002166,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028133948321766935,
+   "finite": true
+  },
+  {
+   "idx": 504,
+   "text": "We dress to suit the weather of most days.",
+   "synth_time_s": 0.07514961200013204,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028265709344345517,
+   "finite": true
+  },
+  {
+   "idx": 505,
+   "text": "Smile when you say nasty words.",
+   "synth_time_s": 0.0648398079999879,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028206237499994735,
+   "finite": true
+  },
+  {
+   "idx": 506,
+   "text": "A bowl of rice is free with chicken stew.",
+   "synth_time_s": 0.07598408499984544,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.02857957618461026,
+   "finite": true
+  },
+  {
+   "idx": 507,
+   "text": "The water in this well is a source of good health.",
+   "synth_time_s": 0.09426059899988104,
+   "audio_duration_s": 3.308843537414966,
+   "rtf": 0.028487475437875234,
+   "finite": true
+  },
+  {
+   "idx": 508,
+   "text": "Take shelter in this tent, but keep still.",
+   "synth_time_s": 0.07790253899997879,
+   "audio_duration_s": 2.681904761904762,
+   "rtf": 0.029047466601554592,
+   "finite": true
+  },
+  {
+   "idx": 509,
+   "text": "That guy is the writer of a few banned books.",
+   "synth_time_s": 0.0932944830001361,
+   "audio_duration_s": 3.1811337868480725,
+   "rtf": 0.029327431428960438,
+   "finite": true
+  },
+  {
+   "idx": 510,
+   "text": "The little tales they tell are false.",
+   "synth_time_s": 0.06839141800014659,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02845770619910991,
+   "finite": true
+  },
+  {
+   "idx": 511,
+   "text": "The door was barred, locked, and bolted as well.",
+   "synth_time_s": 0.10239821699997265,
+   "audio_duration_s": 3.610702947845805,
+   "rtf": 0.028359634807694396,
+   "finite": true
+  },
+  {
+   "idx": 512,
+   "text": "Ripe pears are fit for a queen's table.",
+   "synth_time_s": 0.07913187000008293,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.030564352114311737,
+   "finite": true
+  },
+  {
+   "idx": 513,
+   "text": "A big wet stain was on the round carpet.",
+   "synth_time_s": 0.07271304100004272,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.02833927025683933,
+   "finite": true
+  },
+  {
+   "idx": 514,
+   "text": "The kite dipped and swayed, but stayed aloft.",
+   "synth_time_s": 0.083054200000106,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02884553159655899,
+   "finite": true
+  },
+  {
+   "idx": 515,
+   "text": "The pleasant hours fly by much too soon.",
+   "synth_time_s": 0.09123795499999687,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.02921405825612702,
+   "finite": true
+  },
+  {
+   "idx": 516,
+   "text": "The room was crowded with a wild mob.",
+   "synth_time_s": 0.0632734690000234,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.0283850095916853,
+   "finite": true
+  },
+  {
+   "idx": 517,
+   "text": "This strong arm shall shield your honor.",
+   "synth_time_s": 0.06461696599990319,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028109298064588565,
+   "finite": true
+  },
+  {
+   "idx": 518,
+   "text": "She blushed when he gave her a white orchid.",
+   "synth_time_s": 0.07290146200011804,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028412705689737746,
+   "finite": true
+  },
+  {
+   "idx": 519,
+   "text": "The beetle droned in the hot June sun.",
+   "synth_time_s": 0.06758650200004013,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028962266190548914,
+   "finite": true
+  },
+  {
+   "idx": 520,
+   "text": "Press the pedal with your left foot.",
+   "synth_time_s": 0.05395185100019262,
+   "audio_duration_s": 1.9040362811791383,
+   "rtf": 0.02833551625748493,
+   "finite": true
+  },
+  {
+   "idx": 521,
+   "text": "Neat plans fail without luck.",
+   "synth_time_s": 0.0564890910000031,
+   "audio_duration_s": 2.0085260770975055,
+   "rtf": 0.028124649036986735,
+   "finite": true
+  },
+  {
+   "idx": 522,
+   "text": "The black trunk fell from the landing.",
+   "synth_time_s": 0.06590425299987146,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02796314614083986,
+   "finite": true
+  },
+  {
+   "idx": 523,
+   "text": "The bank pressed for payment of the debt.",
+   "synth_time_s": 0.06410558499987928,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028908870853389605,
+   "finite": true
+  },
+  {
+   "idx": 524,
+   "text": "The theft of the pearl pin was kept secret.",
+   "synth_time_s": 0.07426577700016423,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028556786810365886,
+   "finite": true
+  },
+  {
+   "idx": 525,
+   "text": "Shake hands with this friendly child.",
+   "synth_time_s": 0.06742185300004166,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.02805426967562875,
+   "finite": true
+  },
+  {
+   "idx": 526,
+   "text": "The vast space stretched into the far distance.",
+   "synth_time_s": 0.08607562600013807,
+   "audio_duration_s": 3.0418140589569163,
+   "rtf": 0.028297464714084036,
+   "finite": true
+  },
+  {
+   "idx": 527,
+   "text": "A rich farm is rare in this sandy waste.",
+   "synth_time_s": 0.09569533400008368,
+   "audio_duration_s": 3.3901133786848074,
+   "rtf": 0.02822776801559617,
+   "finite": true
+  },
+  {
+   "idx": 528,
+   "text": "His wide grin earned many friends.",
+   "synth_time_s": 0.06563045600000805,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028124058512130318,
+   "finite": true
+  },
+  {
+   "idx": 529,
+   "text": "Flax makes a fine brand of paper.",
+   "synth_time_s": 0.07329965199983235,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.02831168243056865,
+   "finite": true
+  },
+  {
+   "idx": 530,
+   "text": "Hurdle the pit with the aid of a long pole.",
+   "synth_time_s": 0.07381682800019007,
+   "audio_duration_s": 2.589024943310658,
+   "rtf": 0.028511439486480362,
+   "finite": true
+  },
+  {
+   "idx": 531,
+   "text": "A strong bid may scare your partner stiff.",
+   "synth_time_s": 0.07255718099986552,
+   "audio_duration_s": 2.5658049886621317,
+   "rtf": 0.028278525188189952,
+   "finite": true
+  },
+  {
+   "idx": 532,
+   "text": "Even a just cause needs power to win.",
+   "synth_time_s": 0.08144166900001437,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.029228333356938755,
+   "finite": true
+  },
+  {
+   "idx": 533,
+   "text": "Peep under the tent and see the clowns.",
+   "synth_time_s": 0.07329082599994763,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.029918222624756463,
+   "finite": true
+  },
+  {
+   "idx": 534,
+   "text": "The leaf drifts along with a slow spin.",
+   "synth_time_s": 0.06963363799991384,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.02925727358799734,
+   "finite": true
+  },
+  {
+   "idx": 535,
+   "text": "Cheap clothes are flashy but don't last.",
+   "synth_time_s": 0.08495769699993616,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.029153965681782124,
+   "finite": true
+  },
+  {
+   "idx": 536,
+   "text": "A thing of small note can cause despair.",
+   "synth_time_s": 0.0763716049998493,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.02910664218484992,
+   "finite": true
+  },
+  {
+   "idx": 537,
+   "text": "Flood the mails with requests for this book.",
+   "synth_time_s": 0.08270050700002685,
+   "audio_duration_s": 2.809614512471655,
+   "rtf": 0.029434823401191117,
+   "finite": true
+  },
+  {
+   "idx": 538,
+   "text": "A thick coat of black paint covered all.",
+   "synth_time_s": 0.08761201500010429,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.029362915411483156,
+   "finite": true
+  },
+  {
+   "idx": 539,
+   "text": "The pencil was cut to be sharp at both ends.",
+   "synth_time_s": 0.09823783499996352,
+   "audio_duration_s": 3.4597732426303853,
+   "rtf": 0.028394298733079852,
+   "finite": true
+  },
+  {
+   "idx": 540,
+   "text": "Those last words were a strong statement.",
+   "synth_time_s": 0.07210264000013922,
+   "audio_duration_s": 2.5541950113378684,
+   "rtf": 0.02822910532675905,
+   "finite": true
+  },
+  {
+   "idx": 541,
+   "text": "He wrote his name boldly at the top of the sheet.",
+   "synth_time_s": 0.08622902199999771,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.030818042257195758,
+   "finite": true
+  },
+  {
+   "idx": 542,
+   "text": "Dill pickles are sour but taste fine.",
+   "synth_time_s": 0.08663736699986657,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.028812046669085697,
+   "finite": true
+  },
+  {
+   "idx": 543,
+   "text": "Down that road is the way to the grain farmer.",
+   "synth_time_s": 0.0875395909999952,
+   "audio_duration_s": 3.0650340136054424,
+   "rtf": 0.028560724158823006,
+   "finite": true
+  },
+  {
+   "idx": 544,
+   "text": "Either mud or dust are found at all times.",
+   "synth_time_s": 0.09224296000002141,
+   "audio_duration_s": 3.1695238095238096,
+   "rtf": 0.029103097355775986,
+   "finite": true
+  },
+  {
+   "idx": 545,
+   "text": "The best method is to fix it in place with clips.",
+   "synth_time_s": 0.09648021099997095,
+   "audio_duration_s": 3.332063492063492,
+   "rtf": 0.028955093811919637,
+   "finite": true
+  },
+  {
+   "idx": 546,
+   "text": "If you mumble your speech will be lost.",
+   "synth_time_s": 0.07423019300017586,
+   "audio_duration_s": 2.6122448979591835,
+   "rtf": 0.028416245757879825,
+   "finite": true
+  },
+  {
+   "idx": 547,
+   "text": "At night the alarm roused him from a deep sleep.",
+   "synth_time_s": 0.08449096199979067,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.028878746777272202,
+   "finite": true
+  },
+  {
+   "idx": 548,
+   "text": "Read just what the meter says.",
+   "synth_time_s": 0.05888703200002965,
+   "audio_duration_s": 2.066575963718821,
+   "rtf": 0.028494975763708165,
+   "finite": true
+  },
+  {
+   "idx": 549,
+   "text": "Fill your pack with bright trinkets for the poor.",
+   "synth_time_s": 0.07455419200005053,
+   "audio_duration_s": 2.6122448979591835,
+   "rtf": 0.02854027662501935,
+   "finite": true
+  },
+  {
+   "idx": 550,
+   "text": "The small red neon lamp went out.",
+   "synth_time_s": 0.07295960300007209,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028054534844998424,
+   "finite": true
+  },
+  {
+   "idx": 551,
+   "text": "Clams are small, round, soft, and tasty.",
+   "synth_time_s": 0.09926345899998523,
+   "audio_duration_s": 3.5062131519274375,
+   "rtf": 0.028310731464063463,
+   "finite": true
+  },
+  {
+   "idx": 552,
+   "text": "The fan whirled its round blades softly.",
+   "synth_time_s": 0.07943787700014582,
+   "audio_duration_s": 2.809614512471655,
+   "rtf": 0.028273585805998442,
+   "finite": true
+  },
+  {
+   "idx": 553,
+   "text": "The line where the edges join was clean.",
+   "synth_time_s": 0.07722177599998759,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.028424481850956966,
+   "finite": true
+  },
+  {
+   "idx": 554,
+   "text": "Breathe deep and smell the piny air.",
+   "synth_time_s": 0.0717449389999274,
+   "audio_duration_s": 2.5425850340136056,
+   "rtf": 0.028217321363948326,
+   "finite": true
+  },
+  {
+   "idx": 555,
+   "text": "It matters not if he reads these words or those.",
+   "synth_time_s": 0.09617348000006132,
+   "audio_duration_s": 3.332063492063492,
+   "rtf": 0.028863039443615963,
+   "finite": true
+  },
+  {
+   "idx": 556,
+   "text": "A brown leather bag hung from its strap.",
+   "synth_time_s": 0.06600503100003152,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.029154866457345652,
+   "finite": true
+  },
+  {
+   "idx": 557,
+   "text": "A toad and a frog are hard to tell apart.",
+   "synth_time_s": 0.08188280700005635,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.029509608628910212,
+   "finite": true
+  },
+  {
+   "idx": 558,
+   "text": "A white silk jacket goes with any shoes.",
+   "synth_time_s": 0.10214048200009529,
+   "audio_duration_s": 3.5062131519274375,
+   "rtf": 0.02913128140653587,
+   "finite": true
+  },
+  {
+   "idx": 559,
+   "text": "A break in the dam almost caused a flood.",
+   "synth_time_s": 0.08533078400000704,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.029165795312502407,
+   "finite": true
+  },
+  {
+   "idx": 560,
+   "text": "Paint the sockets in the wall dull green.",
+   "synth_time_s": 0.07354953999993086,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.029193680821545134,
+   "finite": true
+  },
+  {
+   "idx": 561,
+   "text": "The child crawled into the dense grass.",
+   "synth_time_s": 0.08091144299987718,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.02915954037243874,
+   "finite": true
+  },
+  {
+   "idx": 562,
+   "text": "Bribes fail where honest men work.",
+   "synth_time_s": 0.06640506999997342,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028175642578113724,
+   "finite": true
+  },
+  {
+   "idx": 563,
+   "text": "Trample the spark, else the flames will spread.",
+   "synth_time_s": 0.09150605000013456,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.029299901290993365,
+   "finite": true
+  },
+  {
+   "idx": 564,
+   "text": "The hilt of the sword was carved with fine designs.",
+   "synth_time_s": 0.10127814700013005,
+   "audio_duration_s": 3.378503401360544,
+   "rtf": 0.02997722215089223,
+   "finite": true
+  },
+  {
+   "idx": 565,
+   "text": "A round hole was drilled through the thin board.",
+   "synth_time_s": 0.07596398800001225,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028202551444643554,
+   "finite": true
+  },
+  {
+   "idx": 566,
+   "text": "Footprints showed the path he took up the beach.",
+   "synth_time_s": 0.07990887000005387,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.02832417990453298,
+   "finite": true
+  },
+  {
+   "idx": 567,
+   "text": "She was waiting at my front lawn.",
+   "synth_time_s": 0.06819538099989586,
+   "audio_duration_s": 2.1710657596371883,
+   "rtf": 0.031411015855775895,
+   "finite": true
+  },
+  {
+   "idx": 568,
+   "text": "A vent near the edge brought in fresh air.",
+   "synth_time_s": 0.07664118599996073,
+   "audio_duration_s": 2.670294784580499,
+   "rtf": 0.028701395232661922,
+   "finite": true
+  },
+  {
+   "idx": 569,
+   "text": "Prod the old mule with a crooked stick.",
+   "synth_time_s": 0.06640467299985175,
+   "audio_duration_s": 2.2523356009070294,
+   "rtf": 0.029482583755773423,
+   "finite": true
+  },
+  {
+   "idx": 570,
+   "text": "It is a band of steel three inches wide.",
+   "synth_time_s": 0.08518314000002647,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.029348253703134118,
+   "finite": true
+  },
+  {
+   "idx": 571,
+   "text": "The pipe ran almost the length of the ditch.",
+   "synth_time_s": 0.08163908699998501,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.029177610677348118,
+   "finite": true
+  },
+  {
+   "idx": 572,
+   "text": "It was hidden from sight by a mass of leaves and shrubs.",
+   "synth_time_s": 0.10695954800007712,
+   "audio_duration_s": 3.645532879818594,
+   "rtf": 0.029339893926673223,
+   "finite": true
+  },
+  {
+   "idx": 573,
+   "text": "The weight of the package was seen on the high scale.",
+   "synth_time_s": 0.09168479200002366,
+   "audio_duration_s": 3.2043537414965986,
+   "rtf": 0.028612568834925863,
+   "finite": true
+  },
+  {
+   "idx": 574,
+   "text": "Wake and rise, and step into the green outdoors.",
+   "synth_time_s": 0.09873218899997482,
+   "audio_duration_s": 3.4017233560090703,
+   "rtf": 0.029024167654776088,
+   "finite": true
+  },
+  {
+   "idx": 575,
+   "text": "The green light in the brown box flickered.",
+   "synth_time_s": 0.07374265900011778,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.029270334658564896,
+   "finite": true
+  },
+  {
+   "idx": 576,
+   "text": "The brass tube circled the high wall.",
+   "synth_time_s": 0.05957577799995306,
+   "audio_duration_s": 2.10140589569161,
+   "rtf": 0.02835043821000874,
+   "finite": true
+  },
+  {
+   "idx": 577,
+   "text": "The lobes of her ears were pierced to hold rings.",
+   "synth_time_s": 0.09697213399999782,
+   "audio_duration_s": 3.3901133786848074,
+   "rtf": 0.028604392587488654,
+   "finite": true
+  },
+  {
+   "idx": 578,
+   "text": "Hold the hammer near the end to drive the nail.",
+   "synth_time_s": 0.07878589000006286,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028633123590806074,
+   "finite": true
+  },
+  {
+   "idx": 579,
+   "text": "Next Sunday is the twelfth of the month.",
+   "synth_time_s": 0.06575007500009633,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.028602216574970883,
+   "finite": true
+  },
+  {
+   "idx": 580,
+   "text": "Every word and phrase he speaks is true.",
+   "synth_time_s": 0.0900841989998753,
+   "audio_duration_s": 3.1579138321995464,
+   "rtf": 0.028526490520841715,
+   "finite": true
+  },
+  {
+   "idx": 581,
+   "text": "He put his last cartridge into the gun and fired.",
+   "synth_time_s": 0.10579078299997491,
+   "audio_duration_s": 3.5874829931972787,
+   "rtf": 0.029488859794061576,
+   "finite": true
+  },
+  {
+   "idx": 582,
+   "text": "They took their kids from the public school.",
+   "synth_time_s": 0.06795489599994653,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028833233081873865,
+   "finite": true
+  },
+  {
+   "idx": 583,
+   "text": "Drive the screw straight into the wood.",
+   "synth_time_s": 0.07023514399998021,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.02880738328124188,
+   "finite": true
+  },
+  {
+   "idx": 584,
+   "text": "Keep the hatch tight and the watch constant.",
+   "synth_time_s": 0.0764798789998622,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028766057108811433,
+   "finite": true
+  },
+  {
+   "idx": 585,
+   "text": "Sever the twine with a quick snip of the knife.",
+   "synth_time_s": 0.06478607100007139,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.02906357555240019,
+   "finite": true
+  },
+  {
+   "idx": 586,
+   "text": "Paper will dry out when wet.",
+   "synth_time_s": 0.05695253100020636,
+   "audio_duration_s": 1.9504761904761905,
+   "rtf": 0.02919929567881674,
+   "finite": true
+  },
+  {
+   "idx": 587,
+   "text": "Slide the catch back and open the desk.",
+   "synth_time_s": 0.08731616399995801,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.027958315174823913,
+   "finite": true
+  },
+  {
+   "idx": 588,
+   "text": "Help the weak to preserve their strength.",
+   "synth_time_s": 0.06282667400000719,
+   "audio_duration_s": 2.1942857142857144,
+   "rtf": 0.02863194778646161,
+   "finite": true
+  },
+  {
+   "idx": 589,
+   "text": "A sullen smile gets few friends.",
+   "synth_time_s": 0.06945263300008264,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028486431503940143,
+   "finite": true
+  },
+  {
+   "idx": 590,
+   "text": "Stop whistling and watch the boys march.",
+   "synth_time_s": 0.08807263299991064,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.028200533771608235,
+   "finite": true
+  },
+  {
+   "idx": 591,
+   "text": "Jerk the cord, and out tumbles the gold.",
+   "synth_time_s": 0.07827778900013982,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.028813188559246177,
+   "finite": true
+  },
+  {
+   "idx": 592,
+   "text": "Slide the tray across the glass top.",
+   "synth_time_s": 0.0657072630001494,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.028297756819400277,
+   "finite": true
+  },
+  {
+   "idx": 593,
+   "text": "The cloud moved in a stately way and was gone.",
+   "synth_time_s": 0.08390484099982132,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.029023935492690448,
+   "finite": true
+  },
+  {
+   "idx": 594,
+   "text": "Light maple makes for a swell room.",
+   "synth_time_s": 0.06731917499996598,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.028284828672813452,
+   "finite": true
+  },
+  {
+   "idx": 595,
+   "text": "Set the piece here and say nothing.",
+   "synth_time_s": 0.06568360500000381,
+   "audio_duration_s": 2.124625850340136,
+   "rtf": 0.030915375048029457,
+   "finite": true
+  },
+  {
+   "idx": 596,
+   "text": "Dull stories make her laugh.",
+   "synth_time_s": 0.05116596399989248,
+   "audio_duration_s": 1.6718367346938776,
+   "rtf": 0.030604641552670064,
+   "finite": true
+  },
+  {
+   "idx": 597,
+   "text": "A stiff cord will do to fasten your shoe.",
+   "synth_time_s": 0.08746111100003873,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.03138863114503343,
+   "finite": true
+  },
+  {
+   "idx": 598,
+   "text": "Get the trust fund to the bank early.",
+   "synth_time_s": 0.06534424200003741,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.029162089866030295,
+   "finite": true
+  },
+  {
+   "idx": 599,
+   "text": "Choose between the high road and the low.",
+   "synth_time_s": 0.0973704349999025,
+   "audio_duration_s": 2.9837641723356008,
+   "rtf": 0.03263342187116747,
+   "finite": true
+  },
+  {
+   "idx": 600,
+   "text": "A plea for funds seems to come again.",
+   "synth_time_s": 0.06975401499994405,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.02834013912788853,
+   "finite": true
+  },
+  {
+   "idx": 601,
+   "text": "He lent his coat to the tall gaunt stranger.",
+   "synth_time_s": 0.07974003300000732,
+   "audio_duration_s": 2.728344671201814,
+   "rtf": 0.029226524728227416,
+   "finite": true
+  },
+  {
+   "idx": 602,
+   "text": "There is a strong chance it will happen once more.",
+   "synth_time_s": 0.08680771199988158,
+   "audio_duration_s": 3.006984126984127,
+   "rtf": 0.02886869645266332,
+   "finite": true
+  },
+  {
+   "idx": 603,
+   "text": "The duke left the park in a silver coach.",
+   "synth_time_s": 0.07827935899990734,
+   "audio_duration_s": 2.728344671201814,
+   "rtf": 0.028691154686634922,
+   "finite": true
+  },
+  {
+   "idx": 604,
+   "text": "Greet the new guests and leave quickly.",
+   "synth_time_s": 0.05896347499992771,
+   "audio_duration_s": 2.078185941043084,
+   "rtf": 0.028372569477749784,
+   "finite": true
+  },
+  {
+   "idx": 605,
+   "text": "When the frost has come it is time for turkey.",
+   "synth_time_s": 0.07029069400005028,
+   "audio_duration_s": 2.4729251700680273,
+   "rtf": 0.02842410876432491,
+   "finite": true
+  },
+  {
+   "idx": 606,
+   "text": "Sweet words work better than fierce.",
+   "synth_time_s": 0.06891791399993963,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.028133145803070733,
+   "finite": true
+  },
+  {
+   "idx": 607,
+   "text": "A thin stripe runs down the middle.",
+   "synth_time_s": 0.06664882599989141,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028279068143811686,
+   "finite": true
+  },
+  {
+   "idx": 608,
+   "text": "A six comes up more often than a ten.",
+   "synth_time_s": 0.06921812799987492,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028663230964491474,
+   "finite": true
+  },
+  {
+   "idx": 609,
+   "text": "Lush fern grow on the lofty rocks.",
+   "synth_time_s": 0.08467041199992309,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.02905538135891285,
+   "finite": true
+  },
+  {
+   "idx": 610,
+   "text": "The ram scared the school children off.",
+   "synth_time_s": 0.06129370400003609,
+   "audio_duration_s": 2.124625850340136,
+   "rtf": 0.028849175486697312,
+   "finite": true
+  },
+  {
+   "idx": 611,
+   "text": "The team with the best timing looks good.",
+   "synth_time_s": 0.06551299599982485,
+   "audio_duration_s": 2.2755555555555556,
+   "rtf": 0.02878989082023553,
+   "finite": true
+  },
+  {
+   "idx": 612,
+   "text": "The farmer swapped his horse for a brown ox.",
+   "synth_time_s": 0.08231133399999635,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.028245843418512193,
+   "finite": true
+  },
+  {
+   "idx": 613,
+   "text": "Sit on the perch and tell the others what to do.",
+   "synth_time_s": 0.07964829200000167,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028231816464120964,
+   "finite": true
+  },
+  {
+   "idx": 614,
+   "text": "A steep trail is painful for our feet.",
+   "synth_time_s": 0.08254887999987659,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.02867002904481601,
+   "finite": true
+  },
+  {
+   "idx": 615,
+   "text": "The early phase of life moves fast.",
+   "synth_time_s": 0.09245867799995722,
+   "audio_duration_s": 3.2856235827664397,
+   "rtf": 0.028140374474092546,
+   "finite": true
+  },
+  {
+   "idx": 616,
+   "text": "Green moss grows on the northern side.",
+   "synth_time_s": 0.08069477699996241,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.028026081036560787,
+   "finite": true
+  },
+  {
+   "idx": 617,
+   "text": "Tea in thin china has a sweet taste.",
+   "synth_time_s": 0.06439764400010972,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.028444872800529233,
+   "finite": true
+  },
+  {
+   "idx": 618,
+   "text": "Pitch the straw through the door of the stable.",
+   "synth_time_s": 0.06987754900001164,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.028390329367818705,
+   "finite": true
+  },
+  {
+   "idx": 619,
+   "text": "The latch on the back gate needed a nail.",
+   "synth_time_s": 0.06538447999992059,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.0281587457812158,
+   "finite": true
+  },
+  {
+   "idx": 620,
+   "text": "The goose was brought straight from the old market.",
+   "synth_time_s": 0.07417443000008461,
+   "audio_duration_s": 2.4961451247165534,
+   "rtf": 0.02971559196042634,
+   "finite": true
+  },
+  {
+   "idx": 621,
+   "text": "The sink is the thing in which we pile dishes.",
+   "synth_time_s": 0.0821309300001758,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028756780464047834,
+   "finite": true
+  },
+  {
+   "idx": 622,
+   "text": "A whiff of it will cure the most stubborn cold.",
+   "synth_time_s": 0.08237902299993038,
+   "audio_duration_s": 2.8792743764172335,
+   "rtf": 0.028611036056395932,
+   "finite": true
+  },
+  {
+   "idx": 623,
+   "text": "The facts don't always show who is right.",
+   "synth_time_s": 0.08438587900013772,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.028842829736375197,
+   "finite": true
+  },
+  {
+   "idx": 624,
+   "text": "She flaps her cape as she parades the street.",
+   "synth_time_s": 0.09151633900000888,
+   "audio_duration_s": 3.076643990929705,
+   "rtf": 0.02974550818028001,
+   "finite": true
+  },
+  {
+   "idx": 625,
+   "text": "The loss of the cruiser was a blow to the fleet.",
+   "synth_time_s": 0.07851850700012619,
+   "audio_duration_s": 2.681904761904762,
+   "rtf": 0.02927714216979137,
+   "finite": true
+  },
+  {
+   "idx": 626,
+   "text": "Loop the braid to the left and then over.",
+   "synth_time_s": 0.08768342700000176,
+   "audio_duration_s": 3.0882539682539685,
+   "rtf": 0.02839255705694958,
+   "finite": true
+  },
+  {
+   "idx": 627,
+   "text": "Plead with the lawyer to drop the lost cause.",
+   "synth_time_s": 0.07836314500013941,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028479485549397977,
+   "finite": true
+  },
+  {
+   "idx": 628,
+   "text": "Calves thrive on tender spring grass.",
+   "synth_time_s": 0.08279559699985839,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.028187421471203025,
+   "finite": true
+  },
+  {
+   "idx": 629,
+   "text": "Post no bills on this office wall.",
+   "synth_time_s": 0.06373572100005731,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.02815249695615512,
+   "finite": true
+  },
+  {
+   "idx": 630,
+   "text": "Tear a thin sheet from the yellow pad.",
+   "synth_time_s": 0.06596957200008546,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.029749449087898488,
+   "finite": true
+  },
+  {
+   "idx": 631,
+   "text": "A cruise in warm waters in a sleek yacht is fun.",
+   "synth_time_s": 0.10300521800013485,
+   "audio_duration_s": 3.5874829931972787,
+   "rtf": 0.028712392001706277,
+   "finite": true
+  },
+  {
+   "idx": 632,
+   "text": "A streak of color ran down the left edge.",
+   "synth_time_s": 0.07553058700000292,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.028041646069337022,
+   "finite": true
+  },
+  {
+   "idx": 633,
+   "text": "It was done before the boy could see it.",
+   "synth_time_s": 0.06110555000009299,
+   "audio_duration_s": 2.159455782312925,
+   "rtf": 0.028296735918641854,
+   "finite": true
+  },
+  {
+   "idx": 634,
+   "text": "Crouch before you jump or miss the mark.",
+   "synth_time_s": 0.07562502199994015,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028444523319778252,
+   "finite": true
+  },
+  {
+   "idx": 635,
+   "text": "Pack the kits and don't forget the salt.",
+   "synth_time_s": 0.06872511400001713,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.028596557286012562,
+   "finite": true
+  },
+  {
+   "idx": 636,
+   "text": "The square peg will settle in the round hole.",
+   "synth_time_s": 0.08218009000006532,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.028891437890647964,
+   "finite": true
+  },
+  {
+   "idx": 637,
+   "text": "Fine soap saves tender skin.",
+   "synth_time_s": 0.05895247100011147,
+   "audio_duration_s": 2.0085260770975055,
+   "rtf": 0.029351110584186643,
+   "finite": true
+  },
+  {
+   "idx": 638,
+   "text": "Poached eggs and tea must suffice.",
+   "synth_time_s": 0.07918722700014769,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028900926167790924,
+   "finite": true
+  },
+  {
+   "idx": 639,
+   "text": "Bad nerves are jangled by a door slam.",
+   "synth_time_s": 0.08567410000000564,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.029399805543453127,
+   "finite": true
+  },
+  {
+   "idx": 640,
+   "text": "Ship maps are different from those for planes.",
+   "synth_time_s": 0.08009326599994893,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.02923160280883994,
+   "finite": true
+  },
+  {
+   "idx": 641,
+   "text": "Dimes showered down from all sides.",
+   "synth_time_s": 0.07877886500000386,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.0291220824378032,
+   "finite": true
+  },
+  {
+   "idx": 642,
+   "text": "They sang the same tunes at each party.",
+   "synth_time_s": 0.08613496499992834,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.029557955338776455,
+   "finite": true
+  },
+  {
+   "idx": 643,
+   "text": "The sky in the west is tinged with orange red.",
+   "synth_time_s": 0.0798920250001629,
+   "audio_duration_s": 2.7747845804988662,
+   "rtf": 0.028792154014997254,
+   "finite": true
+  },
+  {
+   "idx": 644,
+   "text": "The pods of peas ferment in bare fields.",
+   "synth_time_s": 0.08388834800007317,
+   "audio_duration_s": 2.9605442176870747,
+   "rtf": 0.028335448428333538,
+   "finite": true
+  },
+  {
+   "idx": 645,
+   "text": "The horse balked and threw the tall rider.",
+   "synth_time_s": 0.08076018699989618,
+   "audio_duration_s": 2.8444444444444446,
+   "rtf": 0.028392253242151,
+   "finite": true
+  },
+  {
+   "idx": 646,
+   "text": "The hitch between the horse and cart broke.",
+   "synth_time_s": 0.0861029730001519,
+   "audio_duration_s": 2.8676643990929707,
+   "rtf": 0.03002547056321719,
+   "finite": true
+  },
+  {
+   "idx": 647,
+   "text": "Pile the coal high in the shed corner.",
+   "synth_time_s": 0.06783520099997986,
+   "audio_duration_s": 2.2291156462585033,
+   "rtf": 0.030431440878286864,
+   "finite": true
+  },
+  {
+   "idx": 648,
+   "text": "A gold vase is both rare and costly.",
+   "synth_time_s": 0.08415494900009435,
+   "audio_duration_s": 2.9373242630385485,
+   "rtf": 0.028650207285265572,
+   "finite": true
+  },
+  {
+   "idx": 649,
+   "text": "The knife was hung inside its bright sheath.",
+   "synth_time_s": 0.07055478999996012,
+   "audio_duration_s": 2.426485260770975,
+   "rtf": 0.02907694975140402,
+   "finite": true
+  },
+  {
+   "idx": 650,
+   "text": "The rarest spice comes from the far East.",
+   "synth_time_s": 0.07911214099999597,
+   "audio_duration_s": 2.7399546485260773,
+   "rtf": 0.028873522064517862,
+   "finite": true
+  },
+  {
+   "idx": 651,
+   "text": "The roof should be tilted at a sharp slant.",
+   "synth_time_s": 0.0929847150000569,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.032164799287011395,
+   "finite": true
+  },
+  {
+   "idx": 652,
+   "text": "A smatter of French is worse than none.",
+   "synth_time_s": 0.0647767840000597,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.02832186086614286,
+   "finite": true
+  },
+  {
+   "idx": 653,
+   "text": "The mule trod the treadmill day and night.",
+   "synth_time_s": 0.0733491309999863,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.029114133398432062,
+   "finite": true
+  },
+  {
+   "idx": 654,
+   "text": "The aim of the contest is to raise a great fund.",
+   "synth_time_s": 0.09341847099994993,
+   "audio_duration_s": 3.215963718820862,
+   "rtf": 0.02904835973529016,
+   "finite": true
+  },
+  {
+   "idx": 655,
+   "text": "To send it now in large amounts is bad.",
+   "synth_time_s": 0.08253291199980595,
+   "audio_duration_s": 2.914104308390023,
+   "rtf": 0.0283218798181605,
+   "finite": true
+  },
+  {
+   "idx": 656,
+   "text": "There is a fine hard tang in salty air.",
+   "synth_time_s": 0.07332992499982538,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.028196931610040277,
+   "finite": true
+  },
+  {
+   "idx": 657,
+   "text": "Cod is the main business of the north shore.",
+   "synth_time_s": 0.07843696200006889,
+   "audio_duration_s": 2.786394557823129,
+   "rtf": 0.028149983920923164,
+   "finite": true
+  },
+  {
+   "idx": 658,
+   "text": "The slab was hewn from heavy blocks of slate.",
+   "synth_time_s": 0.0807589949999965,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028276420219606246,
+   "finite": true
+  },
+  {
+   "idx": 659,
+   "text": "Dunk the stale biscuits into strong drink.",
+   "synth_time_s": 0.07882618000007824,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.02852739740352096,
+   "finite": true
+  },
+  {
+   "idx": 660,
+   "text": "Hang tinsel from both branches.",
+   "synth_time_s": 0.06358136099993317,
+   "audio_duration_s": 2.2175056689342405,
+   "rtf": 0.028672468301057883,
+   "finite": true
+  },
+  {
+   "idx": 661,
+   "text": "Cap the jar with a tight brass cover.",
+   "synth_time_s": 0.06799695900008373,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.028851080394701478,
+   "finite": true
+  },
+  {
+   "idx": 662,
+   "text": "The poor boy missed the boat again.",
+   "synth_time_s": 0.06038777599997047,
+   "audio_duration_s": 2.0549659863945577,
+   "rtf": 0.029386265466087327,
+   "finite": true
+  },
+  {
+   "idx": 663,
+   "text": "Be sure to set the lamp firmly in the hole.",
+   "synth_time_s": 0.09089200000016717,
+   "audio_duration_s": 3.01859410430839,
+   "rtf": 0.030110706129863073,
+   "finite": true
+  },
+  {
+   "idx": 664,
+   "text": "Pick a card and slip it under the pack.",
+   "synth_time_s": 0.07744316600019374,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.02977856114509403,
+   "finite": true
+  },
+  {
+   "idx": 665,
+   "text": "A round mat will cover the dull spot.",
+   "synth_time_s": 0.07213669500015385,
+   "audio_duration_s": 2.48453514739229,
+   "rtf": 0.029034282358962334,
+   "finite": true
+  },
+  {
+   "idx": 666,
+   "text": "The first part of the plan needs changing.",
+   "synth_time_s": 0.07154076599999826,
+   "audio_duration_s": 2.391655328798186,
+   "rtf": 0.029912657203806915,
+   "finite": true
+  },
+  {
+   "idx": 667,
+   "text": "A good book informs of what we ought to know.",
+   "synth_time_s": 0.08322757099995215,
+   "audio_duration_s": 2.7980045351473923,
+   "rtf": 0.02974533098659467,
+   "finite": true
+  },
+  {
+   "idx": 668,
+   "text": "The mail comes in three batches per day.",
+   "synth_time_s": 0.06682180500001778,
+   "audio_duration_s": 2.2639455782312927,
+   "rtf": 0.02951564103065689,
+   "finite": true
+  },
+  {
+   "idx": 669,
+   "text": "You cannot brew tea in a cold pot.",
+   "synth_time_s": 0.07656124699997235,
+   "audio_duration_s": 2.716734693877551,
+   "rtf": 0.028181348429977802,
+   "finite": true
+  },
+  {
+   "idx": 670,
+   "text": "Dots of light betrayed the black cat.",
+   "synth_time_s": 0.06497091500000352,
+   "audio_duration_s": 2.2871655328798184,
+   "rtf": 0.02840673928755706,
+   "finite": true
+  },
+  {
+   "idx": 671,
+   "text": "Put the chart on the mantel and tack it down.",
+   "synth_time_s": 0.08969434599998749,
+   "audio_duration_s": 3.1230839002267574,
+   "rtf": 0.028719800320918393,
+   "finite": true
+  },
+  {
+   "idx": 672,
+   "text": "The night shift men rate extra pay.",
+   "synth_time_s": 0.06349965699996574,
+   "audio_duration_s": 2.2407256235827666,
+   "rtf": 0.02833888108907959,
+   "finite": true
+  },
+  {
+   "idx": 673,
+   "text": "The red paper brightened the dim stage.",
+   "synth_time_s": 0.06968283200012593,
+   "audio_duration_s": 2.4380952380952383,
+   "rtf": 0.028580849062551646,
+   "finite": true
+  },
+  {
+   "idx": 674,
+   "text": "See the player scoot to third base.",
+   "synth_time_s": 0.07791152799995871,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.028801455076433235,
+   "finite": true
+  },
+  {
+   "idx": 675,
+   "text": "Slide the bill between the two leaves.",
+   "synth_time_s": 0.07007410300002448,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.029017690263494208,
+   "finite": true
+  },
+  {
+   "idx": 676,
+   "text": "Many hands help get the job done.",
+   "synth_time_s": 0.07165623399987453,
+   "audio_duration_s": 2.2987755102040817,
+   "rtf": 0.03117147963417837,
+   "finite": true
+  },
+  {
+   "idx": 677,
+   "text": "We don't like to admit our small faults.",
+   "synth_time_s": 0.07849363600007564,
+   "audio_duration_s": 2.75156462585034,
+   "rtf": 0.028526909839821795,
+   "finite": true
+  },
+  {
+   "idx": 678,
+   "text": "No doubt about the way the wind blows.",
+   "synth_time_s": 0.07509309800002484,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.02913504382919038,
+   "finite": true
+  },
+  {
+   "idx": 679,
+   "text": "Dig deep in the earth for pirate's gold.",
+   "synth_time_s": 0.08200785100007124,
+   "audio_duration_s": 2.8560544217687074,
+   "rtf": 0.028713686397223877,
+   "finite": true
+  },
+  {
+   "idx": 680,
+   "text": "The steady drip is worse than a drenching rain.",
+   "synth_time_s": 0.09656753300009768,
+   "audio_duration_s": 3.1811337868480725,
+   "rtf": 0.0303563255966605,
+   "finite": true
+  },
+  {
+   "idx": 681,
+   "text": "A flat pack takes less luggage space.",
+   "synth_time_s": 0.08219742899996163,
+   "audio_duration_s": 2.7631746031746034,
+   "rtf": 0.029747461092587215,
+   "finite": true
+  },
+  {
+   "idx": 682,
+   "text": "Green ice frosted the punch bowl.",
+   "synth_time_s": 0.06663967400004367,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.028699312728534432,
+   "finite": true
+  },
+  {
+   "idx": 683,
+   "text": "A stuffed chair slipped from the moving van.",
+   "synth_time_s": 0.07244963099992674,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.028625185700049897,
+   "finite": true
+  },
+  {
+   "idx": 684,
+   "text": "The stitch will serve but needs to be shortened.",
+   "synth_time_s": 0.08256462000008469,
+   "audio_duration_s": 2.9024943310657596,
+   "rtf": 0.028446091734404176,
+   "finite": true
+  },
+  {
+   "idx": 685,
+   "text": "A thin book fits in the side pocket.",
+   "synth_time_s": 0.06885936000003312,
+   "audio_duration_s": 2.414875283446712,
+   "rtf": 0.028514665114196404,
+   "finite": true
+  },
+  {
+   "idx": 686,
+   "text": "The gloss on top made it unfit to read.",
+   "synth_time_s": 0.06895454999994399,
+   "audio_duration_s": 2.380045351473923,
+   "rtf": 0.0289719479325222,
+   "finite": true
+  },
+  {
+   "idx": 687,
+   "text": "The hail pattered on the burnt brown grass.",
+   "synth_time_s": 0.07566555800008246,
+   "audio_duration_s": 2.6586848072562357,
+   "rtf": 0.028459769956021737,
+   "finite": true
+  },
+  {
+   "idx": 688,
+   "text": "Seven seals were stamped on great sheets.",
+   "synth_time_s": 0.07577097700004742,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.028750516981880605,
+   "finite": true
+  },
+  {
+   "idx": 689,
+   "text": "Our troops are set to strike heavy blows.",
+   "synth_time_s": 0.08462588499992307,
+   "audio_duration_s": 2.9257142857142857,
+   "rtf": 0.02892486303708308,
+   "finite": true
+  },
+  {
+   "idx": 690,
+   "text": "The store was jammed before the sale could start.",
+   "synth_time_s": 0.08306258800007527,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.02944203423035075,
+   "finite": true
+  },
+  {
+   "idx": 691,
+   "text": "It was a bad error on the part of the new judge.",
+   "synth_time_s": 0.09649033000005147,
+   "audio_duration_s": 3.297233560090703,
+   "rtf": 0.029264026415343515,
+   "finite": true
+  },
+  {
+   "idx": 692,
+   "text": "One step more and the board will collapse.",
+   "synth_time_s": 0.07469626400006746,
+   "audio_duration_s": 2.5309750566893423,
+   "rtf": 0.029512840832882158,
+   "finite": true
+  },
+  {
+   "idx": 693,
+   "text": "Take the match and strike it against your shoe.",
+   "synth_time_s": 0.07481763600003433,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.029028168528307238,
+   "finite": true
+  },
+  {
+   "idx": 694,
+   "text": "The pot boiled, but the contents failed to jell.",
+   "synth_time_s": 0.09848479100014629,
+   "audio_duration_s": 3.3436734693877552,
+   "rtf": 0.02945406957401836,
+   "finite": true
+  },
+  {
+   "idx": 695,
+   "text": "The baby puts his right foot in his mouth.",
+   "synth_time_s": 0.09081396999999924,
+   "audio_duration_s": 3.1579138321995464,
+   "rtf": 0.028757583273494706,
+   "finite": true
+  },
+  {
+   "idx": 696,
+   "text": "The bombs left most of the town in ruins.",
+   "synth_time_s": 0.07453255000018544,
+   "audio_duration_s": 2.6006349206349206,
+   "rtf": 0.02865936676032521,
+   "finite": true
+  },
+  {
+   "idx": 697,
+   "text": "Stop and stare at the hard working man.",
+   "synth_time_s": 0.066634084000043,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028554134643208728,
+   "finite": true
+  },
+  {
+   "idx": 698,
+   "text": "The streets are narrow and full of sharp turns.",
+   "synth_time_s": 0.0819423509999524,
+   "audio_duration_s": 2.8908843537414968,
+   "rtf": 0.028345080941719225,
+   "finite": true
+  },
+  {
+   "idx": 699,
+   "text": "The pup jerked the leash as he saw a feline shape.",
+   "synth_time_s": 0.08928650100006053,
+   "audio_duration_s": 3.076643990929705,
+   "rtf": 0.02902074509214821,
+   "finite": true
+  },
+  {
+   "idx": 700,
+   "text": "Open your book to the first page.",
+   "synth_time_s": 0.06411524400004964,
+   "audio_duration_s": 2.182675736961451,
+   "rtf": 0.029374607924723545,
+   "finite": true
+  },
+  {
+   "idx": 701,
+   "text": "Fish evade the net and swim off.",
+   "synth_time_s": 0.07076756500009651,
+   "audio_duration_s": 2.461315192743764,
+   "rtf": 0.028751931166202244,
+   "finite": true
+  },
+  {
+   "idx": 702,
+   "text": "Dip the pail once and let it settle.",
+   "synth_time_s": 0.068356225999878,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.02929210943908019,
+   "finite": true
+  },
+  {
+   "idx": 703,
+   "text": "Will you please answer that phone.",
+   "synth_time_s": 0.05945668200001819,
+   "audio_duration_s": 1.9969160997732427,
+   "rtf": 0.029774251410347046,
+   "finite": true
+  },
+  {
+   "idx": 704,
+   "text": "The big red apple fell to the ground.",
+   "synth_time_s": 0.07623562000003403,
+   "audio_duration_s": 2.6238548752834467,
+   "rtf": 0.029054815766744166,
+   "finite": true
+  },
+  {
+   "idx": 705,
+   "text": "The curtain rose and the show was on.",
+   "synth_time_s": 0.07370697400006065,
+   "audio_duration_s": 2.5774149659863945,
+   "rtf": 0.02859724761932252,
+   "finite": true
+  },
+  {
+   "idx": 706,
+   "text": "The young prince became heir to the throne.",
+   "synth_time_s": 0.06763729700014665,
+   "audio_duration_s": 2.3336054421768706,
+   "rtf": 0.028984032937912657,
+   "finite": true
+  },
+  {
+   "idx": 707,
+   "text": "He sent the boy on a short errand.",
+   "synth_time_s": 0.06840960099998483,
+   "audio_duration_s": 2.3219954648526078,
+   "rtf": 0.02946155668065753,
+   "finite": true
+  },
+  {
+   "idx": 708,
+   "text": "Leave now and you will arrive on time.",
+   "synth_time_s": 0.07587675400009175,
+   "audio_duration_s": 2.449705215419501,
+   "rtf": 0.030973830452125723,
+   "finite": true
+  },
+  {
+   "idx": 709,
+   "text": "The corner store was robbed last night.",
+   "synth_time_s": 0.07632149000005484,
+   "audio_duration_s": 2.6354648526077096,
+   "rtf": 0.02895940347090462,
+   "finite": true
+  },
+  {
+   "idx": 710,
+   "text": "A gold ring will please most any girl.",
+   "synth_time_s": 0.07879733400000077,
+   "audio_duration_s": 2.693514739229025,
+   "rtf": 0.029254465495353196,
+   "finite": true
+  },
+  {
+   "idx": 711,
+   "text": "The long journey home took a year.",
+   "synth_time_s": 0.05580246099998476,
+   "audio_duration_s": 1.9272562358276644,
+   "rtf": 0.028954354881628012,
+   "finite": true
+  },
+  {
+   "idx": 712,
+   "text": "She saw a cat in the neighbor's house.",
+   "synth_time_s": 0.06925373400008539,
+   "audio_duration_s": 2.403265306122449,
+   "rtf": 0.028816516355334443,
+   "finite": true
+  },
+  {
+   "idx": 713,
+   "text": "A pink shell was found on the sandy beach.",
+   "synth_time_s": 0.07639521000010063,
+   "audio_duration_s": 2.705124716553288,
+   "rtf": 0.028240919737496966,
+   "finite": true
+  },
+  {
+   "idx": 714,
+   "text": "Small children came to see him.",
+   "synth_time_s": 0.057543404000170995,
+   "audio_duration_s": 1.9040362811791383,
+   "rtf": 0.030221800166819992,
+   "finite": true
+  },
+  {
+   "idx": 715,
+   "text": "The grass and bushes were wet with dew.",
+   "synth_time_s": 0.07379978199992365,
+   "audio_duration_s": 2.5193650793650795,
+   "rtf": 0.029293008228296308,
+   "finite": true
+  },
+  {
+   "idx": 716,
+   "text": "The blind man counted his old coins.",
+   "synth_time_s": 0.08113450599989847,
+   "audio_duration_s": 2.8212244897959184,
+   "rtf": 0.028758613961190862,
+   "finite": true
+  },
+  {
+   "idx": 717,
+   "text": "A severe storm tore down the barn.",
+   "synth_time_s": 0.0682498180001403,
+   "audio_duration_s": 2.3568253968253967,
+   "rtf": 0.02895836835943453,
+   "finite": true
+  },
+  {
+   "idx": 718,
+   "text": "She called his name many times.",
+   "synth_time_s": 0.05708578899998429,
+   "audio_duration_s": 1.9388662131519274,
+   "rtf": 0.02944287161886353,
+   "finite": true
+  },
+  {
+   "idx": 719,
+   "text": "When you hear the bell, come quickly.",
+   "synth_time_s": 0.05828427599999486,
+   "audio_duration_s": 1.9853061224489796,
+   "rtf": 0.029357828166115832,
+   "finite": true
+  }
+ ]
+}

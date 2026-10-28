@@ -1970,6 +1970,683 @@
         "Same sentences and order as harvard720.json; phonemes and IDs rebuilt with espeak voice en (banhmi_phonemize).",
         "For the frontend causal test only; not used by any result yet."
       ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "e8efc496f84c4ef1d27c861e48ae8e97cf600a421e0b6879fcae11c9d95cb42b",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "21d20a47332723061392bc44865627b4c09449916696b93b63b9360f05044b86",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "de9d9fa8e124a62189d0d34a8744fe43670668fdc38a41c25db26db3bbe61c00",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "06eab6d5798d7b8cb0b6ae606b4a304f689114be444afbe0ce5acb4393df0a55",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/harvard_piper_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "3c6ffec91dc45fafcfdceb05b6270c06f458395d9352a9a06f79cf3b047892af",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/harvard_piper_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "ec33593aac5f365dce0b9dc3284fc33bb9b124b7c43da636196009268e8ed95c",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "904e235e66e24dbd947f4a3a33d0594cffb0c1ee231e33e2d1b69ebaf3f5c32f",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "caff1d93cdaaaf264a48b44a41ff838c93948b16841a4d91caaed814a419b747",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "d298ce835544339de136e3a17021e33c8bc614ce90f6ede859dd0f30d470969e",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "b503bb8add745e519b445b0a54c70f9f7dbd92e80244edec951e965fcc9e9bc8",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_int8_vs_round1_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "cbd7090fb1b48f26c69ffbcefdb8c159189f186e704ddcb14d4e9b6fb4f74b52",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "Round-2 INT8 against stored round-1 INT8 of the same model, written after the round with harvard/compare.py.",
+        "The two rounds were scored in different sessions; UTMOSv2 includes session variation of about \u00b10.01\u20130.02.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "826de44c2b179f8600e8c60c15e49aab75cf3a6a837c7b4fe509e90178adcbc5",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "4002f8cecac1120f0e00e3be314dacbbccda91157335a7df3a3b3701956d2b48",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "5cde7f31be2942243543a069223cf88ee56af8db0bbf846a3c6da236e6218fa5",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "f7fb6964ece25e353de549bb7de6f9f505065dc6554a2b68a6ca11a7338daeb7",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "b47c27819b11b8f8b7566f457e3b7acf4da4d704cb62365a97b552177ca111cc",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "7e4b8484d792093152c083504e3927e2d92a0fed2dc99a1f1a4c2e82b1385561",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/harvard_piper_parir_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "5cc017bf3892ebc17ac8f4a64e7e399217438aee79cdda2d48360deb017b6319",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "bc1f59428424033a2d14b7731414deeaae11558439a51b90bea515386d978e5f",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "ae6f8b7fd6e19a6c4d9595fde22a09a6542f0a3b7b383f9f47ee53c3ec06582a",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "ba412f5476dd0133f1f5db7c8e84255e68f57f618e60a4dc59d5519730e6a72a",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "9c4f504d5a48ba3e40fde54ff900d5ee42f113a47225606807c8f2885aae0f88",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/piper-parir-no-vits2-cpn_int8_vs_round1_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "bd830de1689ab82d4d1bd06c1d38c38798bb2c18a999c203ad4e62393010d541",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "Round-2 INT8 against stored round-1 INT8 of the same model, written after the round with harvard/compare.py.",
+        "The two rounds were scored in different sessions; UTMOSv2 includes session variation of about \u00b10.01\u20130.02.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-parir-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "71089d83dacf53b55e7a05f25508c0626c5e7c3f35a6c6249d8c3ac42309736f",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/export_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "99132a12fe8115ebf2faa7c8915e98185f690e9a777a51929de539758f19a3eb",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/fp32_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "d5cedd03c572c9da8def37d8346938756bd834fde15fa04bb1540b0fe8a77ffb",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/harvard720_fp32_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "d1a7dc6c9ceae04070f6f0bb6ee6460da80b246f22b44f26c4fd75cdfc387312",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/harvard720_int8_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "327e5474b1b0849a0455df61c075dd2271faa892f9fc39d960e3535521120645",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "Matched-noise graph (PyTorch noise); timing fields are from a mixed loop and not for use."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/harvard_piper_seqir_no_vits2_cpn_fp32_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "1e30d0ee6743856d433f07af2c557724002c354dca774bc8f7c8ae87bdb71193",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/harvard_piper_seqir_no_vits2_cpn_int8_results.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "391ad6aa39792101bc185ac4f4c6bb946611d5ebdc43667812eb99505c1ae2ab",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "The rtf field is from the matched-noise quality loop; do not use it."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/int8_score_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "f19dda02a41e7a63c22d8b4339d6be9c3951f1a4313dbb6ed41ea789add80c36",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_fp32_vs_pytorch.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "cf729b427a65baf5bd49a94cf07fba59ee7fd498d101fe1de2b70e2f439c1b78",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_int8_vs_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "e14a7ba4f4cd28c51cff19b04df9b67433ee6ad23961cd11746f575ed99b91b2",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_int8_vs_historical.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "1ff2b6c5c9a2c558ad703e7d53b8e529021510787522be1915c4ce8f4d62314d",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One training run per model; one synthesis draw per sentence; sentence-level uncertainty only.",
+        "UTMOSv2 is predicted, not human MOS; Whisper-small WER.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/piper-seqir-no-vits2-cpn_int8_vs_round1_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "ee20e2ce2c9a06aa9378239ebf6ed02d49ac7013f609117b82e8623d10848af9",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "Round-2 INT8 against stored round-1 INT8 of the same model, written after the round with harvard/compare.py.",
+        "The two rounds were scored in different sessions; UTMOSv2 includes session variation of about \u00b10.01\u20130.02.",
+        "UTMOSv2 and WER only; Holm within the file, exploratory."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/piper-seqir-no-vits2-cpn/quantize_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "fc606250a4f41c4b63dd9c554e5bae60ee8d6abd3a63c29757a027747e6bef12",
+      "classification": "new_measurement_record",
+      "n": null,
+      "limits": []
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/machine_state_after.txt",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "a9ea1b8fb31187fde2c7f86030678d34e7b189e86536244fa9bf57a42e8dfdf6",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot inside WSL; the Windows host state was not recorded."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/machine_state_before.txt",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "fbbd46712a8a855b158c591e10e8357c5e3962c1f242e834d045ea9b2c3f7024",
+      "classification": "session_record",
+      "n": null,
+      "limits": [
+        "Snapshot inside WSL; the Windows host state was not recorded."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/pytorch_ctrl_synth_record.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "87c4103feee04bcc476083aea364449ee164b7c1ed5228be701d9cb2b9757e37",
+      "classification": "new_control",
+      "n": 720,
+      "limits": [
+        "PyTorch control of the ONNX timing session."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "535dece8e427ef1c216741d7fb58e8de8070a77be492c4c09b54e8fbd7ebe1ff",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "570cd8ffc9161f09771fd64b41e755885b007142dfb9be0e5e66353f3d263569",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "0afab68af6782887703e151721203351d823765fcaae0aa9031082006f7bb224",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "d65a3437fbd50356528072e2ef74ae7527bd50509a126e17ca319431b7a39ea9",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "975c08d6c4806c8fa76cd7ebf1c6a84c8fefe048d0263092e50d7ba510c4ddd0",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_A_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "9c64cf465f93e3d65fa4a2f9a1a99d4c4d8d509e1a2a6fd8241efede7c90ac3a",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "3165d5f2de88f1d4227b415fb435bfd6923d375d14564acb235a6150c4da4aca",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "0978fcec2f2f97e1819e4066fbf9a06d018acd947ca95b07224eba7304e1675c",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "5cf3d6fd8d98d8985bb581ef8201c343fc9126edf13e9ae9462c35a751cdfcb6",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "6d7601d0b4b33c426c6072b02342c18177d1ec3ff37512d34c56212c18a305a7",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "b19b24da569c2f1370bbbc056a06fa8845c30b722b453bee4b466b8106237613",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t12_B_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "daaa366bb8636b2fcc59c91982f3272cdf777a98358350a0354eba6258a54fd3",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "e855c7ee624645341c2540629b03ae272464983c3e9c374fbee4f0e9c479008b",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "4e6546be5f2a06eb0dc9f02fd193bbe78c1405e048c41f61758eb56a1b1c1f4f",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "270c1cd7f126cf0fac6fa523de02a384ce31b59fe2d02d094a4a10f56387381c",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "e07bc0b29c89842cd93efdac9b728ae2ed53a1dbef2d1631b50e92130cba4773",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "b5c3a1fa18f12d9eb020fec9a1a1cb797b620cf4c5f6137e7b762fdbcf32a7fa",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_A_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "875de24a85680caf7b640779ae493e3b05fda23067d067cc35c6d0729336c272",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "57945646e561fcf172003e52b863e773c24e018c231f652b7abec3a0eb1ae5d7",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "4e25d4ec15347e9ad468eca2fca237745b99cb596b20ea87194ae9682759560c",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-parir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "59e001db3efa78dc65f4be9dc21c3fc265fef36ca207019bf288d076ae3577d6",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-parir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "4ab5bb883e94ca4aeb04c8cabe3794bec18fb66fdf4e815f83708868df64147d",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-seqir-no-vits2-cpn_fp32.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "7d9369ceec805473fe1f1953ba2e33e9ccfa22bb2def65b5ca44c4691c23db58",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/t2_B_piper-seqir-no-vits2-cpn_int8.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "cb2cb59946dc7ecbc207a012306ea2e6f4bcff028d2219911d8eabe5454a4331",
+      "classification": "new_measurement",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
+    },
+    {
+      "file": "results/piper-ir-onnx-ptq-v2/timing/timing_summary.json",
+      "source": "new ONNX export / PTQ round 2 (2026-10-26, flow weight norm folded; protocol docs/evaluation-onnx-ptq.md, plan docs/plan-onnx-ptq-v2.md); see results/piper-ir-onnx-ptq-v2/README.md",
+      "sha256": "9d66344ed6a1220560e43cdd571f1628198c20bf279797ebec9dcdceb6f9ee91",
+      "classification": "new_analysis",
+      "n": 720,
+      "limits": [
+        "One timing pass per sentence, no warm-up; ORT CPU on a workstation under WSL, not an edge device.",
+        "Compare RTF only within this session; rounds A and B differ by up to 17% for some graphs."
+      ]
     }
   ],
   "status": "historical_observations_and_new_measurements",

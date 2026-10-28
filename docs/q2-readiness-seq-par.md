@@ -111,18 +111,18 @@ There is no QAT record for SEQ. The QAT gains cannot be attributed to quantizati
 
 ### 2.3 ONNX FP32 and INT8, Gen 2 (clean protocol)
 
-Source: `results/piper-ir-onnx-ptq/`. Harvard-720; matched noise; train-only calibration; the same INT8 scope for all models.
+Source: `results/piper-ir-onnx-ptq-v2/` (round 2, flow weight norm folded; round 1 in `results/piper-ir-onnx-ptq/`). Harvard-720; matched noise; train-only calibration; the same INT8 scope for all models.
 
 | Model | FP32 → INT8 size | ΔUTMOSv2 INT8 − FP32 | ΔWER INT8 − FP32 | ORT RTF, 2 threads (FP32 → INT8) | ORT RTF, 12 threads (FP32 → INT8) |
 |---|---|---|---|---|---|
-| ResBlock2 | 63.5 → 43.3 MB | −0.005 [−0.023, +0.013] | +0.001 [−0.006, +0.008] | 0.0420 → 0.0376 | 0.0292 → 0.0277 |
-| ParIR | 61.6 → 41.3 MB | +0.000 [−0.018, +0.019] | +0.005 [−0.003, +0.012] | 0.0397 → 0.0341 | 0.0397 → 0.0366 |
-| SeqIR | 61.3 → 41.1 MB | **−0.036 [−0.056, −0.016]** | +0.004 [−0.003, +0.011] | **0.0323 → 0.0269** | 0.0312 → 0.0297 |
+| ResBlock2 | 63.5 → 22.4 MB | −0.011 [−0.031, +0.008] | −0.003 [−0.009, +0.004] | 0.0323 → 0.0280 | 0.0253 → 0.0226 |
+| ParIR | 61.5 → 20.5 MB | −0.007 [−0.025, +0.011] | +0.004 [−0.004, +0.012] | 0.0338 → 0.0306 | 0.0318 → 0.0290 |
+| SeqIR | 61.3 → 20.3 MB | −0.023 [−0.043, −0.002] (Wilcoxon p 0.058) | −0.001 [−0.008, +0.006] | **0.0278 → 0.0238** | 0.0267 → 0.0243 |
 
 - **FP32 export is lossless:** parity on 720/720 sentences, identical WER.
 - **The speed ranking depends on the runtime and the thread count:**
-  - ORT, 2 threads: SeqIR is fastest (−23% to −28% against ResBlock2).
-  - ORT, 12 threads: ResBlock2 is fastest; ParIR is 32–36% slower.
+  - ORT, 2 threads: SeqIR is fastest (−14% to −17% against ResBlock2 in round 2; −23% to −28% in round 1).
+  - ORT, 12 threads: ResBlock2 is fastest; ParIR is 26–29% slower (round 1: 32–36%).
 - **Cause (kernel profile):** SnakeBeta's `Sin` does not use ONNX Runtime 1.23's thread pool, while ResBlock2's dense convolutions do.
 
 ## 3. What the evidence supports today
@@ -134,8 +134,8 @@ Source: `results/piper-ir-onnx-ptq/`. Harvard-720; matched noise; train-only cal
 | SeqIR is faster than ParIR | **Supported** in PyTorch (Gen 1 −9%, Gen 2 −13%) and on ORT at 2 threads | both generations |
 | IR decoders keep the quality of ResBlock2 | **Partial.** UTMOSv2 within 0.04 and WER within 1.1 points, but WER is slightly worse in both IR models, and no equivalence margin was set | Gen 2 paired tests |
 | SEQ has better quality than PAR | **Contradicted.** SEQ has lower UTMOSv2 in Gen 1 and Gen 2; WER is not distinguishable | J-E004, J-E031, Gen 2 |
-| The speed advantage holds after ONNX export and INT8 | **Only at low thread counts.** It holds at 2 ORT threads and reverses at 12 (cause identified) | `results/piper-ir-onnx-ptq/` |
-| Selective INT8 PTQ (enc_p/dp/flow) costs no quality | **Partial.** Supported for ResBlock2 and ParIR; SeqIR loses 0.036 UTMOSv2. Graphs are 32–33% smaller and 4–17% faster, but 32 of the 40 flow convolutions were quantized per tensor at run time (the flow weight-norm defect), so the round must be repeated before this is a recipe result | Gen 2 PTQ, `results/README.md` |
+| The speed advantage holds after ONNX export and INT8 | **Only at low thread counts.** It holds at 2 ORT threads and reverses at 12 (cause identified) | `results/piper-ir-onnx-ptq-v2/`, `results/piper-ir-onnx-ptq/` |
+| Selective INT8 PTQ (enc_p/dp/flow) costs no quality | **Mostly supported** (round 2, flow weight norm folded). No model changes WER detectably, and ResBlock2 and ParIR keep their UTMOSv2. SeqIR may lose 0.023 UTMOSv2: the bootstrap CI excludes 0, but Wilcoxon p is 0.058. Graphs are 65–67% smaller and 9–16% faster. One run per model; no equivalence margin | Gen 2 PTQ round 2, `results/piper-ir-onnx-ptq-v2/` |
 | Removing the VITS2 components improves a Piper-size model | **Partial:** WER −8.6 points and UTMOSv2 +0.49, but the code bases also differ | `results/piper-no-vits2-cpn/` |
 | Edge-device speed (N150, Raspberry Pi 5) | **Not available** | J-E028 |
 | Human listening quality (MOS) | **Not available**; UTMOSv2 is a prediction | J-E029 |
@@ -164,7 +164,7 @@ Journals at this level usually expect, for a TTS or vocoder systems paper, human
 - **A defensible paper story:**
   - lightweight inverted-residual decoders for Piper/VITS-class TTS on CPU;
   - −30% decoder parameters and −23% to −33% PyTorch RTF, at a quality cost of about 1 WER point;
-  - selective INT8 PTQ adds −32% size and −4% to −17% RTF. These are the current graphs; folding the flow's weight norm should reduce the size further, and the round has to be repeated;
+  - selective INT8 PTQ adds −65% to −67% graph size and −9% to −16% ORT RTF, with no detectable WER change (round 2);
   - **deployment speed depends on runtime kernel coverage:** FLOPs and parameters did not predict ORT speed at 12 threads because SnakeBeta's `Sin` is single-threaded. This finding is concrete and measured, which makes it a contribution worth highlighting.
 - **With the priority-1 items, a Q2-level systems or deployment paper is plausible, not guaranteed.** That means listening test, seeds, one or two ablations and device runs: about 4–6 weeks of compute plus the listening study. Novelty also has to be positioned against existing lightweight vocoder and TTS work through a literature review; this document does not assess it.
 
@@ -181,7 +181,7 @@ Journals at this level usually expect, for a TTS or vocoder systems paper, human
 | Gen 1 Q01 archive catalog (27 result tables, provenance gaps) | `docs/evidence/q01-archive-2026-10-04/` |
 | Claim evidence of 2026-10-07 (J-C claims) | `docs/evidence/claim-evidence-2026-10-07/` |
 | Import record for the two folders above and `results/historical/{lj500_development,qat,ptq_sweep}` | `docs/evidence/historical-import-2026-10-22.json` |
-| Gen 2 results, timing, ONNX/INT8, profile | `results/piper-*/`, `results/piper-ir-timing-session/`, `results/piper-ir-onnx-ptq/` |
+| Gen 2 results, timing, ONNX/INT8, profile | `results/piper-*/`, `results/piper-ir-timing-session/`, `results/piper-ir-onnx-ptq-v2/`, `results/piper-ir-onnx-ptq/` |
 | Parameter counts and sizes | `results/model_parameters.json` |
 | Gen 2 protocols | `docs/training/piper-ir-protocol.md`, `docs/evaluation-onnx-ptq.md` |
 

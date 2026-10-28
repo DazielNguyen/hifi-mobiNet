@@ -2,7 +2,7 @@
 
 *Tiếng Việt: [plan-onnx-ptq-v2.vi.md](plan-onnx-ptq-v2.vi.md)*
 
-Status: **prepared, not run.** Written 2026-10-22. The author will start the run.
+Status: **run on 2026-10-26** (03:06–07:09 +07, commit `f495672`); every acceptance criterion of section 5 passed. Results: `results/piper-ir-onnx-ptq-v2/`. The plan below is kept as written on 2026-10-22.
 
 ## 1. Why a second round
 

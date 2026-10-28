@@ -12,7 +12,7 @@ This folder holds every stored result of hifi-mobiNet's two generations of model
 |---|---|
 | [Historical results](#historical-results-gen-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [New measurements](#new-measurements-gen-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
-| [ONNX export and INT8 PTQ](#onnx-export-and-int8-ptq) | `piper-ir-onnx-ptq/` and the historical ONNX, PTQ and QAT records |
+| [ONNX export and INT8 PTQ](#onnx-export-and-int8-ptq) | `piper-ir-onnx-ptq-v2/` (current), `piper-ir-onnx-ptq/` and the historical ONNX, PTQ and QAT records |
 | [Seven-model comparison](#seven-model-comparison) | one table with every metric of the seven Harvard-720 models |
 | [Model size](#model-size) | `model_parameters.json` |
 
@@ -97,7 +97,50 @@ The RTF column comes from one session and is comparable only within it. The cont
 
 ## ONNX export and INT8 PTQ
 
-### Gen 2: the 2026-10-21 round
+### Gen 2, round 2 (2026-10-26): flow weight norm folded, current results
+
+`piper-ir-onnx-ptq-v2/` ([README](piper-ir-onnx-ptq-v2/README.md)) repeats round 1 below with its one defect fixed. The flow's weight norm is folded before export (`docs/plan-onnx-ptq-v2.md`); everything else is the round-1 protocol. Every check passed, including three new gates:
+- folding changed no output;
+- no weight-norm op is left in the PTQ scope;
+- every QLinearConv weight is a constant per-channel INT8 initializer, 109 of 109 per model.
+
+**Quality on Harvard-720** (FP32 and INT8 scored in one session; FP32 WER equals PyTorch on every sentence):
+
+| Model | ONNX FP32 UTMOSv2 / WER | ONNX INT8 UTMOSv2 / WER | INT8 − FP32: ΔUTMOSv2 [95% CI] | INT8 − FP32: ΔWER [95% CI] |
+|---|---|---|---|---|
+| Piper_no_VITS2_cpn | 3.517 / 0.0612 | 3.506 / **0.0584** | −0.011 [−0.031, +0.008] | −0.003 [−0.009, +0.004] |
+| Piper-ParIR | 3.526 / 0.0726 | **3.520** / 0.0764 | −0.007 [−0.025, +0.011] | +0.004 [−0.004, +0.012] |
+| Piper-SeqIR | 3.497 / 0.0696 | 3.474 / 0.0687 | −0.023 [−0.043, −0.002] (Wilcoxon p 0.058, Holm 0.12) | −0.001 [−0.008, +0.006] |
+
+- **WER:** no model changes detectably under INT8.
+- **SeqIR's UTMOSv2 loss** shrank from 0.036 (round 1, significant after Holm) to 0.023. The bootstrap CI still excludes 0 but the Wilcoxon test does not reach 0.05, so it is a possible small loss, not an established one.
+- **Round 2 against round 1** (paired, `*_int8_vs_round1_int8.json`): no INT8 difference is significant for any model.
+
+**Speed** (mean RTF, round A; round B in brackets; one idle session; every INT8-vs-FP32 CI excludes 0):
+
+| Model | 2 threads FP32 | 2 threads INT8 | INT8 vs FP32 | 12 threads FP32 | 12 threads INT8 | INT8 vs FP32 |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 0.0323 (0.0321) | 0.0280 (0.0281) | −13.3% | **0.0253** (0.0253) | **0.0226** (0.0226) | −10.6% |
+| Piper-ParIR | 0.0338 (0.0333) | 0.0306 (0.0289) | −9.5% | 0.0318 (0.0321) | 0.0290 (0.0292) | −8.6% |
+| Piper-SeqIR | **0.0278** (0.0276) | **0.0238** (0.0232) | −14.5% | 0.0267 (0.0282) | 0.0243 (0.0244) | −9.0% |
+
+- **Rankings are as in round 1:**
+  - at 2 threads, SeqIR is fastest (−14% to −17% against ResBlock2);
+  - at 12 threads, ResBlock2 is fastest, with ParIR 26–29% and SeqIR 5–11% slower.
+- **ParIR at 2 threads** is now 3–9% slower than ResBlock2.
+- **Session speed:** the PyTorch control ran 0.76× its 2026-10-21 RTF, so compare RTF only within a round.
+
+**Graph size:**
+
+| Model | ONNX FP32 | ONNX INT8 | INT8 / FP32 | Round-1 INT8 |
+|---|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 63.5 MB | 22.4 MB | 0.354 | 43.3 MB |
+| Piper-ParIR | 61.5 MB | 20.5 MB | 0.333 | 41.3 MB |
+| Piper-SeqIR | 61.3 MB | 20.3 MB | 0.331 | 41.1 MB |
+
+### Gen 2, round 1 (2026-10-21): superseded for INT8
+
+Round 2 above replaces this round's INT8 results. Its FP32 results, parity results and decoder profile remain valid.
 
 `piper-ir-onnx-ptq/` ([README](piper-ir-onnx-ptq/README.md)) holds the ONNX FP32 export, static INT8 PTQ and Harvard-720 evaluation of the three Config A models. The protocol, `docs/evaluation-onnx-ptq.md`, was fixed before the runs. The scripts are in `scripts/evaluation/onnx/`.
 
@@ -170,21 +213,21 @@ The RTF column comes from one session and is comparable only within it. The cont
   - **Speed:** the INT8 RTF includes the per-run weight-norm and weight-quantization work.
   - **Quality:** the measured INT8 results are those of these graphs. Whether SeqIR's UTMOSv2 loss comes from the per-tensor flow weights is not known.
   - **What stays valid:** the FP32 results, the parity results and the decoder speed analysis are not affected. Both FP32 and INT8 graphs carry the same unfolded flow, and the decoder is FP32 in both.
-- **Correction:** export again with `remove_weight_norm()` on every flow coupling layer, then quantize, evaluate and time again. This has not been run yet; it is prepared in `docs/plan-onnx-ptq-v2.md`.
+- **Correction:** export again with `remove_weight_norm()` on every flow coupling layer, then quantize, evaluate and time again. Done in round 2 (2026-10-26, above).
 
 ### Historical PTQ and QAT (Gen 1)
 
 These records are kept for transparency. They differ from the Gen 2 round in ways that prevent a direct comparison:
 
-| | Historical PTQ (Sept 2026) | Gen 2 round (2026-10-21) |
+| | Historical PTQ (Sept 2026) | Gen 2 rounds (2026-10-21 and 2026-10-26) |
 |---|---|---|
 | Graphs | benchmark graphs. Baseline and SEQ are linked to their checkpoints; the MRF graph is **not** (0/478 named weights equal checkpoint 1386) | exported from the selected checkpoints, hash in the graph metadata |
 | Calibration | 60 random sentences, 57 train and **3 test** (J-E025) | 60 train-only sentences |
 | Scope | baseline/MRF: Conv in enc_p/dp/flow (133 QLinearConv); **SEQ also MatMul** (+40 QLinearMatMul) | the same Conv scope for all three (109 QLinearConv) |
 | Scope selection | sweep with a faulty evaluator (J-E026) | fixed in the protocol before the runs |
-| Flow weight norm | not recorded; the 22–24 MB INT8 sizes suggest the flow weights were stored as INT8 | **not folded** (see the defect above) |
+| Flow weight norm | not recorded; the 22–24 MB INT8 sizes suggest the flow weights were stored as INT8 | round 1 **not folded** (see the defect above); round 2 folded |
 | Evaluation set | LJ-500, MRF on its own sentence set | Harvard-720, matched noise |
-| INT8 file size | baseline 24.1 MB, MRF 22.2 MB, SEQ 22.0 MB | 41.1–43.3 MB |
+| INT8 file size | baseline 24.1 MB, MRF 22.2 MB, SEQ 22.0 MB | round 1: 41.1–43.3 MB; round 2: 20.3–22.4 MB |
 
 **Historical ONNX results** (LJ-500, ORT CPU 2 threads, `historical/onnx_historical/`):
 
@@ -228,17 +271,17 @@ All seven models on Harvard-720 (720 sentences, 5,742 reference words), with the
 | Mean RTF relative to the ResBlock2 model of the same group | — | −23.2% | −33.3% | — | −18.9% | −26.2% | (−6.2%) |
 | Timing session | 2026-10-21 | 2026-10-21 | 2026-10-21 | historical | historical | historical | historical |
 | ***Deployment, ONNX Runtime CPU*** ⁴ | | | | | | | |
-| ONNX FP32: UTMOSv2 / macro WER | 3.508 / **0.0612** | **3.524** / 0.0726 | 3.495 / 0.0696 | — | — | — | — |
-| ONNX INT8: UTMOSv2 / macro WER | 3.503 / **0.0620** | **3.524** / 0.0772 | 3.459 / 0.0739 | — | — | — | — |
-| ORT RTF, 2 threads: FP32 / INT8 | 0.0420 / 0.0376 | 0.0397 / 0.0341 | **0.0323 / 0.0269** | — | — | — | — |
-| ORT RTF, 12 threads: FP32 / INT8 | **0.0292 / 0.0277** | 0.0397 / 0.0366 | 0.0312 / 0.0297 | — | — | — | — |
+| ONNX FP32: UTMOSv2 / macro WER | 3.517 / **0.0612** | **3.526** / 0.0726 | 3.497 / 0.0696 | — | — | — | — |
+| ONNX INT8: UTMOSv2 / macro WER | 3.506 / **0.0584** | **3.520** / 0.0764 | 3.474 / 0.0687 | — | — | — | — |
+| ORT RTF, 2 threads: FP32 / INT8 | 0.0323 / 0.0280 | 0.0338 / 0.0306 | **0.0278 / 0.0238** | — | — | — | — |
+| ORT RTF, 12 threads: FP32 / INT8 | **0.0253 / 0.0226** | 0.0318 / 0.0290 | 0.0267 / 0.0243 | — | — | — | — |
 | ***Size*** ⁵ | | | | | | | |
 | Parameters (Q05 definition) | 16,425,776 | 15,918,032 | **15,870,768** | 17,620,784 | 17,113,040 | 17,065,776 | 16,425,776 |
 | Parameters used at inference | 15,663,771 | 15,156,027 | **15,108,763** | 16,858,779 | 16,351,035 | 16,303,771 | 15,663,771 |
 | Decoder parameters | 1,664,768 | 1,157,024 | **1,109,760** | 1,664,768 | 1,157,024 | **1,109,760** | 1,664,768 |
 | FP32 weights | 65.7 MB | 63.7 MB | **63.5 MB** | 70.5 MB | 68.5 MB | 68.3 MB | 65.7 MB |
-| ONNX FP32 file | 63.5 MB | 61.6 MB | **61.3 MB** | 68.5 MB | 66.5 MB | 66.3 MB | 63.5 MB |
-| ONNX INT8 file | 43.3 MB | 41.3 MB | 41.1 MB | 24.1 MB | (22.2 MB) | (**22.0 MB**) | — |
+| ONNX FP32 file | 63.5 MB | 61.5 MB | **61.3 MB** | 68.5 MB | 66.5 MB | 66.3 MB | 63.5 MB |
+| ONNX INT8 file | 22.4 MB | 20.5 MB | **20.3 MB** | 24.1 MB | (22.2 MB) | (22.0 MB) | — |
 | Training checkpoint | 845.9 MB | 843.4 MB | **842.7 MB** | 867.0 MB | 864.5 MB | 863.9 MB | 845.9 MB |
 
 Notes:
@@ -256,9 +299,9 @@ Notes:
    - The four historical values come from their original runs. These were not shown to be one session, and Piper ran on a different PyTorch version from the internal models, hence the parentheses.
    - The 2026-10-21 control ran 1.21× slower than in its own 2026-10-10 session. On 2026-10-10 the baseline itself ran 8.3% slower than its historical value.
    - So compare RTF only within a group. The "relative" row does this, using the ResBlock2 model of the same group as the reference.
-4. **Deployment rows:** the three Config A models only, from `piper-ir-onnx-ptq/`, Harvard-720. Round-A ORT timings come from one idle session.
+4. **Deployment rows:** the three Config A models only, from ONNX/PTQ round 2 (`piper-ir-onnx-ptq-v2/`, flow weight norm folded), Harvard-720. Round-A ORT timings come from one idle session on 2026-10-26.
    - The historical ONNX graphs were evaluated on LJ-500 only (see the historical ONNX table above), so their Harvard-720 cells are empty.
-   - The Config A INT8 results carry the flow weight-norm defect described above.
+   - Round 1 (`piper-ir-onnx-ptq/`) is kept for its FP32 and profile results; its INT8 graphs had the flow weight-norm defect.
 5. **Size:** definitions and the record are in [Model size](#model-size) (`model_parameters.json`; MB = 10^6 bytes).
    - The ONNX file holds only the inference graph, so it is smaller than the FP32 weights.
    - **Historical INT8 files** are the benchmark graphs. MRF's graph is not linked to checkpoint 1386, and SEQ's has the wider scope, hence the parentheses.
@@ -271,7 +314,7 @@ Notes:
 Sources:
 - quality: `piper-seqir-no-vits2-cpn/comparison.json`, which has summaries of all seven result files;
 - PyTorch RTF: `piper-ir-timing-session/` and the historical result files;
-- deployment: `piper-ir-onnx-ptq/`;
+- deployment: `piper-ir-onnx-ptq-v2/` (round 1: `piper-ir-onnx-ptq/`);
 - historical INT8 file sizes: `docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json`;
 - epochs and validation: each model's `selected_checkpoint.json` or `models/manifest.json`;
 - size: `model_parameters.json` and the export and quantization records.
@@ -284,13 +327,13 @@ Every model has one training run and one synthesis draw per sentence.
 - It was written by `scripts/evaluation/count_parameters.py`, which reads the checkpoints with `weights_only=True` without building or running a model.
 - The three new checkpoints were counted on 2026-10-21.
 - The four historical checkpoints were recounted on 2026-10-26. Each file matched its SHA-256 in `models/manifest.json`, and each recount equals the total in its stored Q05 report. File and ONNX sizes still come from `models/manifest.json`.
-- The ONNX file sizes of the new models come from `piper-ir-onnx-ptq/*/export_record.json` and `quantize_record.json`.
+- The ONNX file sizes of the new models come from `piper-ir-onnx-ptq-v2/*/export_record.json` and `quantize_record.json` (round 2).
 
 | Model | Parameters (Q05 definition) | Used at inference | Decoder | FP32 weights | ONNX FP32 file | ONNX INT8 file | Training checkpoint |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Piper_no_VITS2_cpn (ResBlock2) | 16,425,776 | 15,663,771 | 1,664,768 | 65.7 MB | 63.5 MB | 43.3 MB | 845.9 MB |
-| Piper_ParIR_no_VITS2_cpn | 15,918,032 | 15,156,027 | 1,157,024 | 63.7 MB | 61.6 MB | 41.3 MB | 843.4 MB |
-| Piper_SeqIR_no_VITS2_cpn | 15,870,768 | 15,108,763 | 1,109,760 | 63.5 MB | 61.3 MB | 41.1 MB | 842.7 MB |
+| Piper_no_VITS2_cpn (ResBlock2) | 16,425,776 | 15,663,771 | 1,664,768 | 65.7 MB | 63.5 MB | 22.4 MB | 845.9 MB |
+| Piper_ParIR_no_VITS2_cpn | 15,918,032 | 15,156,027 | 1,157,024 | 63.7 MB | 61.5 MB | 20.5 MB | 843.4 MB |
+| Piper_SeqIR_no_VITS2_cpn | 15,870,768 | 15,108,763 | 1,109,760 | 63.5 MB | 61.3 MB | 20.3 MB | 842.7 MB |
 | HiFi-GAN ResBlock2 (baseline, with VITS2) | 17,620,784 | 16,858,779 | 1,664,768 | 70.5 MB | 68.5 MB | 24.1 MB | 867.0 MB |
 | Parallel-IR (MRF) | 17,113,040 | 16,351,035 | 1,157,024 | 68.5 MB | 66.5 MB | (22.2 MB) | 864.5 MB |
 | Sequential-IR (SEQ) | 17,065,776 | 16,303,771 | 1,109,760 | 68.3 MB | 66.3 MB | (22.0 MB) | 863.9 MB |
@@ -305,10 +348,10 @@ How to read the columns (MB = 10^6 bytes):
 - **Used at inference:** the Q05 count minus those 762,005. All seven models have the same stochastic duration predictor, so the subtraction is the same for each.
 - **FP32 weights:** 4 bytes × the Q05 count. This is computed, not a file size.
 - **ONNX FP32 file:** the measured size of the exported graph. It holds only the inference path, so it is smaller than the FP32-weights column.
-  - New models: the 2026-10-21 export.
+  - New models: the round-2 export of 2026-10-26.
   - Historical models: the Q05 exports.
 - **ONNX INT8 file:**
-  - New models: the 2026-10-21 PTQ. They still store the flow in FP32 because its weight norm was not folded (see [the defect](#onnx-export-and-int8-ptq)).
+  - New models: the round-2 PTQ of 2026-10-26, with the flow's weight norm folded. The round-1 graphs were 41–43 MB because they still stored the flow in FP32 (see [the defect](#onnx-export-and-int8-ptq)).
   - Historical models: the benchmark INT8 graphs, with the caveats in note 5 above.
 - **Training checkpoint:** the full Lightning state: generator, posterior encoder, discriminators and optimizer states. It is not a deployable model size.
 

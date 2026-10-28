@@ -111,18 +111,18 @@ Không có bản ghi QAT nào cho SEQ. Không thể quy phần cải thiện c�
 
 ### 2.3 ONNX FP32 và INT8, thế hệ 2 (protocol sạch)
 
-Nguồn: `results/piper-ir-onnx-ptq/`. Harvard-720; noise khớp với PyTorch; calibration chỉ lấy từ train; cùng một scope INT8 cho mọi model.
+Nguồn: `results/piper-ir-onnx-ptq-v2/` (đợt 2, đã gộp weight norm của flow; đợt 1 ở `results/piper-ir-onnx-ptq/`). Harvard-720; noise khớp với PyTorch; calibration chỉ lấy từ train; cùng một scope INT8 cho mọi model.
 
 | Model | Kích thước FP32 → INT8 | ΔUTMOSv2 INT8 − FP32 | ΔWER INT8 − FP32 | RTF ORT 2 thread (FP32 → INT8) | RTF ORT 12 thread (FP32 → INT8) |
 |---|---|---|---|---|---|
-| ResBlock2 | 63,5 → 43,3 MB | −0,005 [−0,023, +0,013] | +0,001 [−0,006, +0,008] | 0.0420 → 0.0376 | 0.0292 → 0.0277 |
-| ParIR | 61,6 → 41,3 MB | +0,000 [−0,018, +0,019] | +0,005 [−0,003, +0,012] | 0.0397 → 0.0341 | 0.0397 → 0.0366 |
-| SeqIR | 61,3 → 41,1 MB | **−0,036 [−0,056, −0,016]** | +0,004 [−0,003, +0,011] | **0.0323 → 0.0269** | 0.0312 → 0.0297 |
+| ResBlock2 | 63,5 → 22,4 MB | −0,011 [−0,031, +0,008] | −0,003 [−0,009, +0,004] | 0.0323 → 0.0280 | 0.0253 → 0.0226 |
+| ParIR | 61,5 → 20,5 MB | −0,007 [−0,025, +0,011] | +0,004 [−0,004, +0,012] | 0.0338 → 0.0306 | 0.0318 → 0.0290 |
+| SeqIR | 61,3 → 20,3 MB | −0,023 [−0,043, −0,002] (Wilcoxon p 0,058) | −0,001 [−0,008, +0,006] | **0.0278 → 0.0238** | 0.0267 → 0.0243 |
 
 - **Export FP32 không mất mát:** parity đạt 720/720 câu, WER giống hệt.
 - **Thứ hạng tốc độ phụ thuộc runtime và số thread:**
-  - ORT 2 thread: SeqIR nhanh nhất (−23% đến −28% so với ResBlock2).
-  - ORT 12 thread: ResBlock2 nhanh nhất; ParIR chậm hơn 32–36%.
+  - ORT 2 thread: SeqIR nhanh nhất (−14% đến −17% so với ResBlock2 ở đợt 2; −23% đến −28% ở đợt 1).
+  - ORT 12 thread: ResBlock2 nhanh nhất; ParIR chậm hơn 26–29% (đợt 1: 32–36%).
 - **Nguyên nhân (profile kernel):** `Sin` của SnakeBeta không dùng thread pool của ONNX Runtime 1.23, trong khi convolution dày của ResBlock2 thì có.
 
 ## 3. Những gì bằng chứng hiện hỗ trợ
@@ -134,8 +134,8 @@ Nguồn: `results/piper-ir-onnx-ptq/`. Harvard-720; noise khớp với PyTorch; 
 | SeqIR nhanh hơn ParIR | **Được hỗ trợ** trên PyTorch (thế hệ 1 −9%, thế hệ 2 −13%) và trên ORT 2 thread | cả hai thế hệ |
 | Decoder IR giữ được chất lượng của ResBlock2 | **Một phần.** UTMOSv2 lệch trong khoảng 0,04 và WER trong khoảng 1,1 điểm, nhưng WER của cả hai model IR đều kém hơn một chút, và không có ngưỡng tương đương nào được chốt | phép thử ghép cặp thế hệ 2 |
 | SEQ có chất lượng tốt hơn PAR | **Bị bác bỏ.** UTMOSv2 của SEQ thấp hơn ở cả thế hệ 1 lẫn thế hệ 2; WER không phân biệt được | J-E004, J-E031, thế hệ 2 |
-| Lợi thế tốc độ vẫn giữ sau khi export ONNX và INT8 | **Chỉ ở số thread thấp.** Giữ ở ORT 2 thread và đảo ngược ở 12 thread (đã xác định nguyên nhân) | `results/piper-ir-onnx-ptq/` |
-| PTQ INT8 có chọn lọc (enc_p/dp/flow) không làm giảm chất lượng | **Một phần.** Được hỗ trợ với ResBlock2 và ParIR; SeqIR giảm 0,036 UTMOSv2. Graph nhỏ hơn 32–33% và nhanh hơn 4–17%, nhưng 32 trên 40 convolution của flow bị lượng tử hoá per-tensor lúc chạy (lỗi weight norm của flow), nên phải chạy lại đợt này thì mới thành kết quả của đúng công thức | PTQ thế hệ 2, `results/README.vi.md` |
+| Lợi thế tốc độ vẫn giữ sau khi export ONNX và INT8 | **Chỉ ở số thread thấp.** Giữ ở ORT 2 thread và đảo ngược ở 12 thread (đã xác định nguyên nhân) | `results/piper-ir-onnx-ptq-v2/`, `results/piper-ir-onnx-ptq/` |
+| PTQ INT8 có chọn lọc (enc_p/dp/flow) không làm giảm chất lượng | **Phần lớn được hỗ trợ** (đợt 2, đã gộp weight norm của flow). Không model nào thay đổi WER đáng kể, ResBlock2 và ParIR giữ nguyên UTMOSv2. SeqIR có thể giảm 0,023 UTMOSv2: khoảng tin cậy bootstrap loại trừ 0, nhưng Wilcoxon p là 0,058. Graph nhỏ hơn 65–67% và nhanh hơn 9–16%. Mỗi model một lần chạy; không có ngưỡng tương đương | PTQ thế hệ 2 đợt 2, `results/piper-ir-onnx-ptq-v2/` |
 | Bỏ các thành phần VITS2 giúp model cỡ Piper tốt hơn | **Một phần:** WER −8,6 điểm và UTMOSv2 +0,49, nhưng code base cũng khác nhau | `results/piper-no-vits2-cpn/` |
 | Tốc độ trên thiết bị biên (N150, Raspberry Pi 5) | **Chưa có** | J-E028 |
 | Chất lượng qua người nghe (MOS) | **Chưa có**; UTMOSv2 chỉ là điểm dự đoán | J-E029 |
@@ -164,7 +164,7 @@ Với một paper về hệ thống TTS hay vocoder, các journal ở mức này
 - **Một câu chuyện paper có thể bảo vệ được:**
   - decoder inverted-residual gọn nhẹ cho TTS cỡ Piper/VITS chạy trên CPU;
   - giảm 30% tham số decoder và giảm 23–33% RTF trên PyTorch, đổi lại khoảng 1 điểm WER;
-  - PTQ INT8 có chọn lọc giảm thêm 32% kích thước và 4–17% RTF. Đây là số của các graph hiện tại; gộp weight norm của flow sẽ giảm kích thước thêm, và đợt này phải chạy lại;
+  - PTQ INT8 có chọn lọc giảm thêm 65–67% kích thước graph và 9–16% RTF trên ORT, không làm WER thay đổi đáng kể (đợt 2);
   - **tốc độ triển khai phụ thuộc vào độ phủ kernel của runtime:** FLOPs và số tham số không dự đoán được tốc độ ORT ở 12 thread, vì `Sin` của SnakeBeta chạy đơn luồng. Phát hiện này cụ thể và đã được đo, nên đáng làm điểm nhấn của paper.
 - **Có đủ các mục ưu tiên 1, một paper hệ thống/triển khai ở mức Q2 là khả thi, nhưng không chắc chắn.** Các mục đó là nghe thử, thêm seed, một hoặc hai ablation và đo trên thiết bị: khoảng 4–6 tuần tính toán, cộng với nghiên cứu nghe thử. Tính mới cũng cần được định vị so với các công trình vocoder/TTS nhẹ đã có bằng một bước rà soát tài liệu; tài liệu này không đánh giá điều đó.
 
@@ -181,7 +181,7 @@ Với một paper về hệ thống TTS hay vocoder, các journal ở mức này
 | Catalog lưu trữ Q01 của thế hệ 1 (27 bảng kết quả, các lỗ hổng nguồn gốc) | `docs/evidence/q01-archive-2026-10-04/` |
 | Claim evidence ngày 2026-10-07 (các claim J-C) | `docs/evidence/claim-evidence-2026-10-07/` |
 | Bản ghi nhập cho hai thư mục trên và `results/historical/{lj500_development,qat,ptq_sweep}` | `docs/evidence/historical-import-2026-10-22.json` |
-| Kết quả, đo thời gian, ONNX/INT8 và profile của thế hệ 2 | `results/piper-*/`, `results/piper-ir-timing-session/`, `results/piper-ir-onnx-ptq/` |
+| Kết quả, đo thời gian, ONNX/INT8 và profile của thế hệ 2 | `results/piper-*/`, `results/piper-ir-timing-session/`, `results/piper-ir-onnx-ptq-v2/`, `results/piper-ir-onnx-ptq/` |
 | Số tham số và kích thước | `results/model_parameters.json` |
 | Protocol của thế hệ 2 | `docs/training/piper-ir-protocol.md`, `docs/evaluation-onnx-ptq.md` |
 

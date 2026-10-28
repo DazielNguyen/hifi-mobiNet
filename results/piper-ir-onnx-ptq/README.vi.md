@@ -63,7 +63,7 @@ Các kiểm tra khác:
   - RTF của INT8 có tính cả phần tính weight norm và lượng tử hoá trọng số ở mỗi lần chạy.
   - Chất lượng INT8 đo được là của chính các graph này. Chưa biết mức giảm UTMOSv2 của SeqIR có phải do trọng số flow per-tensor hay không.
   - Kết quả FP32, kết quả parity và phân tích decoder ở mục 5 không bị ảnh hưởng.
-- **Cách sửa:** gọi `remove_weight_norm()` trên mọi lớp coupling của flow, rồi export, lượng tử hoá, đánh giá và đo thời gian lại. Việc này chưa được chạy; xem `docs/plan-onnx-ptq-v2.vi.md`.
+- **Cách sửa:** gọi `remove_weight_norm()` trên mọi lớp coupling của flow, rồi export, lượng tử hoá, đánh giá và đo thời gian lại. Đã thực hiện ở đợt 2 ngày 2026-10-26: `../piper-ir-onnx-ptq-v2/` thay thế kết quả INT8 của đợt này.
 
 ## 3. Chất lượng Harvard-720
 

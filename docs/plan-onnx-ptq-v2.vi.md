@@ -2,7 +2,7 @@
 
 *English: [plan-onnx-ptq-v2.md](plan-onnx-ptq-v2.md)*
 
-Trạng thái: **đã chuẩn bị, chưa chạy.** Viết ngày 2026-10-22. Tác giả sẽ tự khởi chạy.
+Trạng thái: **đã chạy ngày 2026-10-26** (03:06–07:09 +07, commit `f495672`); mọi tiêu chí chấp nhận ở mục 5 đều đạt. Kết quả: `results/piper-ir-onnx-ptq-v2/`. Phần plan bên dưới được giữ nguyên như khi viết ngày 2026-10-22.
 
 ## 1. Vì sao cần đợt thứ hai
 

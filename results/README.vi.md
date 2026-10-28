@@ -12,7 +12,7 @@ Thư mục này chứa mọi kết quả đã lưu của hai thế hệ model tr
 |---|---|
 | [Kết quả lịch sử](#kết-quả-lịch-sử-thế-hệ-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [Phép đo mới](#phép-đo-mới-thế-hệ-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
-| [Export ONNX và PTQ INT8](#export-onnx-và-ptq-int8) | `piper-ir-onnx-ptq/` cùng các bản ghi ONNX, PTQ và QAT lịch sử |
+| [Export ONNX và PTQ INT8](#export-onnx-và-ptq-int8) | `piper-ir-onnx-ptq-v2/` (hiện hành), `piper-ir-onnx-ptq/` cùng các bản ghi ONNX, PTQ và QAT lịch sử |
 | [So sánh bảy model](#so-sánh-bảy-model) | một bảng gồm mọi metric của bảy model trên Harvard-720 |
 | [Kích thước model](#kích-thước-model) | `model_parameters.json` |
 
@@ -97,7 +97,50 @@ Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong n
 
 ## Export ONNX và PTQ INT8
 
-### Thế hệ 2: đợt ngày 2026-10-21
+### Thế hệ 2, đợt 2 (2026-10-26): đã gộp weight norm của flow, kết quả hiện hành
+
+`piper-ir-onnx-ptq-v2/` ([README](piper-ir-onnx-ptq-v2/README.vi.md)) lặp lại đợt 1 bên dưới, chỉ sửa đúng một lỗi của nó. Weight norm của flow được gộp trước khi export (`docs/plan-onnx-ptq-v2.vi.md`); mọi thứ khác giữ nguyên protocol của đợt 1. Mọi kiểm tra đều đạt, kể cả ba gate mới:
+- việc gộp không làm thay đổi output nào;
+- không còn phép tính weight norm nào trong scope PTQ;
+- mọi trọng số QLinearConv là initializer INT8 per-channel cố định, 109 trên 109 ở mỗi model.
+
+**Chất lượng trên Harvard-720** (FP32 và INT8 chấm trong cùng một phiên; WER của FP32 bằng PyTorch ở từng câu):
+
+| Model | ONNX FP32 UTMOSv2 / WER | ONNX INT8 UTMOSv2 / WER | INT8 − FP32: ΔUTMOSv2 [KTC 95%] | INT8 − FP32: ΔWER [KTC 95%] |
+|---|---|---|---|---|
+| Piper_no_VITS2_cpn | 3.517 / 0.0612 | 3.506 / **0.0584** | −0,011 [−0,031; +0,008] | −0,003 [−0,009; +0,004] |
+| Piper-ParIR | 3.526 / 0.0726 | **3.520** / 0.0764 | −0,007 [−0,025; +0,011] | +0,004 [−0,004; +0,012] |
+| Piper-SeqIR | 3.497 / 0.0696 | 3.474 / 0.0687 | −0,023 [−0,043; −0,002] (Wilcoxon p 0,058, Holm 0,12) | −0,001 [−0,008; +0,006] |
+
+- **WER:** không model nào thay đổi đáng kể khi chuyển sang INT8.
+- **Mức giảm UTMOSv2 của SeqIR** thu hẹp từ 0,036 (đợt 1, có ý nghĩa sau Holm) xuống 0,023. Khoảng tin cậy bootstrap vẫn loại trừ 0 nhưng kiểm định Wilcoxon không đạt 0,05, nên đây là một mức giảm nhỏ có thể có, chưa phải đã xác lập.
+- **Đợt 2 so với đợt 1** (ghép cặp, `*_int8_vs_round1_int8.json`): không model nào có chênh lệch INT8 có ý nghĩa.
+
+**Tốc độ** (RTF trung bình, vòng A; vòng B trong ngoặc; một phiên trên máy rảnh; mọi khoảng tin cậy INT8 so với FP32 đều loại trừ 0):
+
+| Model | 2 thread FP32 | 2 thread INT8 | INT8 so với FP32 | 12 thread FP32 | 12 thread INT8 | INT8 so với FP32 |
+|---|---:|---:|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 0.0323 (0.0321) | 0.0280 (0.0281) | −13,3% | **0.0253** (0.0253) | **0.0226** (0.0226) | −10,6% |
+| Piper-ParIR | 0.0338 (0.0333) | 0.0306 (0.0289) | −9,5% | 0.0318 (0.0321) | 0.0290 (0.0292) | −8,6% |
+| Piper-SeqIR | **0.0278** (0.0276) | **0.0238** (0.0232) | −14,5% | 0.0267 (0.0282) | 0.0243 (0.0244) | −9,0% |
+
+- **Thứ hạng giống đợt 1:**
+  - ở 2 thread, SeqIR nhanh nhất (−14% đến −17% so với ResBlock2);
+  - ở 12 thread, ResBlock2 nhanh nhất, ParIR chậm hơn 26–29% và SeqIR chậm hơn 5–11%.
+- **ParIR ở 2 thread** nay chậm hơn ResBlock2 3–9%.
+- **Tốc độ của phiên:** đối chứng PyTorch chạy ở mức 0,76× RTF của nó ngày 2026-10-21, nên chỉ so RTF trong cùng một đợt.
+
+**Kích thước graph:**
+
+| Model | ONNX FP32 | ONNX INT8 | INT8 / FP32 | INT8 đợt 1 |
+|---|---:|---:|---:|---:|
+| Piper_no_VITS2_cpn | 63,5 MB | 22,4 MB | 0,354 | 43,3 MB |
+| Piper-ParIR | 61,5 MB | 20,5 MB | 0,333 | 41,3 MB |
+| Piper-SeqIR | 61,3 MB | 20,3 MB | 0,331 | 41,1 MB |
+
+### Thế hệ 2, đợt 1 (2026-10-21): kết quả INT8 đã được thay thế
+
+Đợt 2 ở trên thay thế kết quả INT8 của đợt này. Kết quả FP32, kết quả parity và profile decoder của nó vẫn còn giá trị.
 
 `piper-ir-onnx-ptq/` ([README](piper-ir-onnx-ptq/README.vi.md)) chứa bản export ONNX FP32, PTQ INT8 tĩnh và đánh giá Harvard-720 của ba model Config A. Protocol `docs/evaluation-onnx-ptq.md` được chốt trước khi chạy. Script nằm trong `scripts/evaluation/onnx/`.
 
@@ -170,21 +213,21 @@ Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong n
   - **Tốc độ:** RTF của INT8 có tính cả phần tính weight norm và lượng tử hoá trọng số ở mỗi lần chạy.
   - **Chất lượng:** kết quả INT8 đo được là của chính các graph này. Chưa biết mức giảm UTMOSv2 của SeqIR có phải do trọng số flow per-tensor hay không.
   - **Những gì vẫn đúng:** kết quả FP32, kết quả parity và phân tích tốc độ decoder không bị ảnh hưởng. Graph FP32 và INT8 đều mang cùng một flow chưa gộp, và decoder là FP32 ở cả hai.
-- **Cách sửa:** export lại, gọi `remove_weight_norm()` trên mọi lớp coupling của flow, rồi lượng tử hoá, đánh giá và đo thời gian lại. Việc này chưa được chạy; nó đã được chuẩn bị trong `docs/plan-onnx-ptq-v2.vi.md`.
+- **Cách sửa:** export lại, gọi `remove_weight_norm()` trên mọi lớp coupling của flow, rồi lượng tử hoá, đánh giá và đo thời gian lại. Đã thực hiện ở đợt 2 (2026-10-26, ở trên).
 
 ### PTQ và QAT lịch sử (thế hệ 1)
 
 Các bản ghi này được giữ để minh bạch. Chúng khác đợt thế hệ 2 ở những điểm khiến không thể so sánh trực tiếp:
 
-| | PTQ lịch sử (09/2026) | Đợt thế hệ 2 (2026-10-21) |
+| | PTQ lịch sử (09/2026) | Các đợt thế hệ 2 (2026-10-21 và 2026-10-26) |
 |---|---|---|
 | Graph | graph benchmark. Baseline và SEQ gắn được với checkpoint; graph MRF thì **không** (0/478 trọng số cùng tên trùng checkpoint 1386) | export từ các checkpoint đã chọn, có hash trong metadata của graph |
 | Calibration | 60 câu ngẫu nhiên, 57 câu train và **3 câu test** (J-E025) | 60 câu chỉ lấy từ train |
 | Scope | baseline/MRF: Conv trong enc_p/dp/flow (133 QLinearConv); **SEQ thêm MatMul** (+40 QLinearMatMul) | cùng một scope Conv cho cả ba (109 QLinearConv) |
 | Cách chọn scope | sweep với evaluator bị lỗi (J-E026) | chốt trong protocol trước khi chạy |
-| Weight norm của flow | không được ghi lại; kích thước INT8 22–24 MB gợi ý trọng số flow được lưu dạng INT8 | **chưa gộp** (xem lỗi ở trên) |
+| Weight norm của flow | không được ghi lại; kích thước INT8 22–24 MB gợi ý trọng số flow được lưu dạng INT8 | đợt 1 **chưa gộp** (xem lỗi ở trên); đợt 2 đã gộp |
 | Tập đánh giá | LJ-500, MRF dùng tập câu riêng | Harvard-720, noise khớp với PyTorch |
-| Kích thước file INT8 | baseline 24,1 MB, MRF 22,2 MB, SEQ 22,0 MB | 41,1–43,3 MB |
+| Kích thước file INT8 | baseline 24,1 MB, MRF 22,2 MB, SEQ 22,0 MB | đợt 1: 41,1–43,3 MB; đợt 2: 20,3–22,4 MB |
 
 **Kết quả ONNX lịch sử** (LJ-500, ORT CPU 2 thread, `historical/onnx_historical/`):
 
@@ -228,17 +271,17 @@ Cả bảy model trên Harvard-720 (720 câu, 5.742 từ tham chiếu), cùng pr
 | RTF trung bình so với model ResBlock2 cùng nhóm | — | −23,2% | −33,3% | — | −18,9% | −26,2% | (−6,2%) |
 | Nhóm đo thời gian | 2026-10-21 | 2026-10-21 | 2026-10-21 | lịch sử | lịch sử | lịch sử | lịch sử |
 | ***Triển khai, ONNX Runtime CPU*** ⁴ | | | | | | | |
-| ONNX FP32: UTMOSv2 / macro WER | 3.508 / **0.0612** | **3.524** / 0.0726 | 3.495 / 0.0696 | — | — | — | — |
-| ONNX INT8: UTMOSv2 / macro WER | 3.503 / **0.0620** | **3.524** / 0.0772 | 3.459 / 0.0739 | — | — | — | — |
-| RTF ORT, 2 thread: FP32 / INT8 | 0.0420 / 0.0376 | 0.0397 / 0.0341 | **0.0323 / 0.0269** | — | — | — | — |
-| RTF ORT, 12 thread: FP32 / INT8 | **0.0292 / 0.0277** | 0.0397 / 0.0366 | 0.0312 / 0.0297 | — | — | — | — |
+| ONNX FP32: UTMOSv2 / macro WER | 3.517 / **0.0612** | **3.526** / 0.0726 | 3.497 / 0.0696 | — | — | — | — |
+| ONNX INT8: UTMOSv2 / macro WER | 3.506 / **0.0584** | **3.520** / 0.0764 | 3.474 / 0.0687 | — | — | — | — |
+| RTF ORT, 2 thread: FP32 / INT8 | 0.0323 / 0.0280 | 0.0338 / 0.0306 | **0.0278 / 0.0238** | — | — | — | — |
+| RTF ORT, 12 thread: FP32 / INT8 | **0.0253 / 0.0226** | 0.0318 / 0.0290 | 0.0267 / 0.0243 | — | — | — | — |
 | ***Kích thước*** ⁵ | | | | | | | |
 | Tham số (định nghĩa Q05) | 16.425.776 | 15.918.032 | **15.870.768** | 17.620.784 | 17.113.040 | 17.065.776 | 16.425.776 |
 | Tham số dùng khi inference | 15.663.771 | 15.156.027 | **15.108.763** | 16.858.779 | 16.351.035 | 16.303.771 | 15.663.771 |
 | Tham số decoder | 1.664.768 | 1.157.024 | **1.109.760** | 1.664.768 | 1.157.024 | **1.109.760** | 1.664.768 |
 | Trọng số FP32 | 65,7 MB | 63,7 MB | **63,5 MB** | 70,5 MB | 68,5 MB | 68,3 MB | 65,7 MB |
-| File ONNX FP32 | 63,5 MB | 61,6 MB | **61,3 MB** | 68,5 MB | 66,5 MB | 66,3 MB | 63,5 MB |
-| File ONNX INT8 | 43,3 MB | 41,3 MB | 41,1 MB | 24,1 MB | (22,2 MB) | (**22,0 MB**) | — |
+| File ONNX FP32 | 63,5 MB | 61,5 MB | **61,3 MB** | 68,5 MB | 66,5 MB | 66,3 MB | 63,5 MB |
+| File ONNX INT8 | 22,4 MB | 20,5 MB | **20,3 MB** | 24,1 MB | (22,2 MB) | (22,0 MB) | — |
 | Checkpoint train | 845,9 MB | 843,4 MB | **842,7 MB** | 867,0 MB | 864,5 MB | 863,9 MB | 845,9 MB |
 
 Ghi chú:
@@ -256,9 +299,9 @@ Ghi chú:
    - Bốn giá trị lịch sử lấy từ các lần chạy gốc. Chúng không được chứng minh là cùng một phiên, và Piper chạy trên phiên bản PyTorch khác các model nội bộ, nên giá trị của Piper đặt trong ngoặc.
    - Control ngày 2026-10-21 chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10. Còn trong phiên 2026-10-10, chính baseline chậm hơn 8,3% so với giá trị lịch sử của nó.
    - Vì vậy chỉ so RTF trong cùng một nhóm. Dòng "so với" làm đúng như vậy, lấy model ResBlock2 của cùng nhóm làm mốc.
-4. **Các dòng triển khai:** chỉ có ba model Config A, lấy từ `piper-ir-onnx-ptq/`, trên Harvard-720. Thời gian ORT vòng A đo trong một phiên trên máy rảnh.
+4. **Các dòng triển khai:** chỉ có ba model Config A, lấy từ đợt ONNX/PTQ thứ 2 (`piper-ir-onnx-ptq-v2/`, đã gộp weight norm của flow), trên Harvard-720. Thời gian ORT vòng A đo trong một phiên trên máy rảnh ngày 2026-10-26.
    - Graph ONNX lịch sử chỉ được đánh giá trên LJ-500 (xem bảng ONNX lịch sử ở trên), nên ô Harvard-720 của chúng để trống.
-   - Kết quả INT8 của Config A chịu ảnh hưởng của lỗi weight norm của flow đã nêu ở trên.
+   - Đợt 1 (`piper-ir-onnx-ptq/`) được giữ lại vì kết quả FP32 và profile; graph INT8 của nó mắc lỗi weight norm của flow.
 5. **Kích thước:** định nghĩa và bản ghi nằm ở [Kích thước model](#kích-thước-model) (`model_parameters.json`; MB = 10^6 byte).
    - File ONNX chỉ chứa graph inference, nên nhỏ hơn trọng số FP32.
    - **File INT8 lịch sử** là các graph benchmark. Graph MRF không gắn được với checkpoint 1386, còn graph SEQ có scope rộng hơn, nên đặt trong ngoặc.
@@ -271,7 +314,7 @@ Ghi chú:
 Nguồn:
 - chất lượng: `piper-seqir-no-vits2-cpn/comparison.json`, có tóm tắt của cả bảy file kết quả;
 - RTF PyTorch: `piper-ir-timing-session/` và các file kết quả lịch sử;
-- triển khai: `piper-ir-onnx-ptq/`;
+- triển khai: `piper-ir-onnx-ptq-v2/` (đợt 1: `piper-ir-onnx-ptq/`);
 - kích thước file INT8 lịch sử: `docs/evidence/journal-evidence-package-2026-10-04/evidence/E_onnx_ptq/onnx_inventory_inspected_now.json`;
 - epoch và validation: `selected_checkpoint.json` của từng model hoặc `models/manifest.json`;
 - kích thước: `model_parameters.json` và các bản ghi export, lượng tử hoá.
@@ -284,13 +327,13 @@ Mỗi model chỉ có một lần train, và mỗi câu chỉ sinh một lần.
 - File được tạo bởi `scripts/evaluation/count_parameters.py`. Script đọc checkpoint bằng `weights_only=True`, không dựng và không chạy model.
 - Ba checkpoint mới được đếm ngày 2026-10-21.
 - Bốn checkpoint lịch sử được đếm lại ngày 2026-10-26. Mỗi file khớp SHA-256 trong `models/manifest.json`, và mỗi lần đếm lại đều bằng đúng tổng trong báo cáo Q05 đã lưu. Kích thước file và ONNX vẫn lấy từ `models/manifest.json`.
-- Kích thước file ONNX của các model mới lấy từ `piper-ir-onnx-ptq/*/export_record.json` và `quantize_record.json`.
+- Kích thước file ONNX của các model mới lấy từ `piper-ir-onnx-ptq-v2/*/export_record.json` và `quantize_record.json` (đợt 2).
 
 | Model | Tham số (định nghĩa Q05) | Dùng khi inference | Decoder | Trọng số FP32 | File ONNX FP32 | File ONNX INT8 | Checkpoint train |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Piper_no_VITS2_cpn (ResBlock2) | 16.425.776 | 15.663.771 | 1.664.768 | 65,7 MB | 63,5 MB | 43,3 MB | 845,9 MB |
-| Piper_ParIR_no_VITS2_cpn | 15.918.032 | 15.156.027 | 1.157.024 | 63,7 MB | 61,6 MB | 41,3 MB | 843,4 MB |
-| Piper_SeqIR_no_VITS2_cpn | 15.870.768 | 15.108.763 | 1.109.760 | 63,5 MB | 61,3 MB | 41,1 MB | 842,7 MB |
+| Piper_no_VITS2_cpn (ResBlock2) | 16.425.776 | 15.663.771 | 1.664.768 | 65,7 MB | 63,5 MB | 22,4 MB | 845,9 MB |
+| Piper_ParIR_no_VITS2_cpn | 15.918.032 | 15.156.027 | 1.157.024 | 63,7 MB | 61,5 MB | 20,5 MB | 843,4 MB |
+| Piper_SeqIR_no_VITS2_cpn | 15.870.768 | 15.108.763 | 1.109.760 | 63,5 MB | 61,3 MB | 20,3 MB | 842,7 MB |
 | HiFi-GAN ResBlock2 (baseline, có VITS2) | 17.620.784 | 16.858.779 | 1.664.768 | 70,5 MB | 68,5 MB | 24,1 MB | 867,0 MB |
 | Parallel-IR (MRF) | 17.113.040 | 16.351.035 | 1.157.024 | 68,5 MB | 66,5 MB | (22,2 MB) | 864,5 MB |
 | Sequential-IR (SEQ) | 17.065.776 | 16.303.771 | 1.109.760 | 68,3 MB | 66,3 MB | (22,0 MB) | 863,9 MB |
@@ -305,10 +348,10 @@ Cách đọc các cột (MB = 10^6 byte):
 - **Dùng khi inference:** số Q05 trừ đi 762.005 tham số đó. Cả bảy model có cùng stochastic duration predictor, nên phần trừ đi giống nhau ở mọi model.
 - **Trọng số FP32:** 4 byte × số Q05. Đây là con số tính ra, không phải kích thước file.
 - **File ONNX FP32:** kích thước đo được của graph đã export. Graph chỉ chứa đường inference, nên nhỏ hơn cột trọng số FP32.
-  - Model mới: bản export ngày 2026-10-21.
+  - Model mới: bản export của đợt 2, ngày 2026-10-26.
   - Model lịch sử: các bản export Q05.
 - **File ONNX INT8:**
-  - Model mới: đợt PTQ ngày 2026-10-21. Các graph này vẫn lưu flow dạng FP32 vì weight norm của flow chưa được gộp (xem [lỗi đã biết](#export-onnx-và-ptq-int8)).
+  - Model mới: PTQ của đợt 2, ngày 2026-10-26, đã gộp weight norm của flow. Graph của đợt 1 nặng 41–43 MB vì vẫn lưu flow dạng FP32 (xem [lỗi đã biết](#export-onnx-và-ptq-int8)).
   - Model lịch sử: các graph INT8 benchmark, với các lưu ý ở ghi chú 5 phía trên.
 - **Checkpoint train:** toàn bộ trạng thái Lightning: generator, posterior encoder, discriminator và trạng thái optimizer. Đây không phải kích thước model để triển khai.
 
