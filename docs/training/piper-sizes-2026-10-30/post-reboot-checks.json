@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-10-29T18:23:25.170237+00:00",
+  "client_date": "2026-10-30",
+  "authorization": "User confirmed reboot complete; requested all setup changes committed before training and reuse of the existing environment.",
+  "execution_order": [
+    "Low training using both GPUs with DDP",
+    "Low complete evaluation including ONNX",
+    "High only after Low evaluation is complete"
+  ],
+  "environment_path": "/home/capstone/hifimobinet-train/venv",
+  "new_environment_created": false,
+  "tests": {
+    "command": "python -m pytest tests/test_piper_sizes.py tests/test_training_ir_configs.py tests/test_run_sequence.py -q -p no:cacheprovider",
+    "passed": 29,
+    "failed": 0
+  },
+  "cache_verification": {
+    "command": "python scripts/training/prepare_piper_low.py --source-data-root data/ljspeech-medium --output-data-root data/ljspeech-low-16000-2026-10-30 --split results/manifests/canonical_split.json --verify-only",
+    "verified_rows": 13100,
+    "verified_tensors": 26200,
+    "source_hashes": "pass",
+    "derived_hashes": "pass"
+  },
+  "training_started_at_this_check": false,
+  "next_action": "Commit all prepared source changes, require clean launch preflight, then launch Low only."
+}

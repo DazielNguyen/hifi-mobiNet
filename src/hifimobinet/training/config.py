@@ -47,12 +47,14 @@ MODEL_KEYS = {
     "Piper_SeqIR_no_VITS2_cpn": _COMMON_MODEL | {"use_sdp", "use_bigvgan", "use_vits2", "use_f0",
                                                  "mb_expansion", "mb_kernel_size", "mb_blocks_per_stage", "use_mrd"},
 }
-CONFIG_A_FAMILY = ("Piper_no_VITS2_cpn", "Piper_ParIR_no_VITS2_cpn", "Piper_SeqIR_no_VITS2_cpn")
+PIPER_STANDARD_MODELS = ("Piper_no_VITS2_cpn", "Piper_Low_no_VITS2_cpn", "Piper_High_no_VITS2_cpn")
+for _model_id in PIPER_STANDARD_MODELS[1:]:
+    MODEL_KEYS[_model_id] = MODEL_KEYS["Piper_no_VITS2_cpn"].copy()
+CONFIG_A_FAMILY = (*PIPER_STANDARD_MODELS, "Piper_ParIR_no_VITS2_cpn", "Piper_SeqIR_no_VITS2_cpn")
 IR_RESBLOCK = {"Piper_ParIR_no_VITS2_cpn": "mrf", "Piper_SeqIR_no_VITS2_cpn": "mb"}
 OPTIM_KEYS = {"learning_rate", "betas", "eps", "lr_decay", "c_mel", "c_kl"}
 # EdgeTTS clips gradients itself inside its manual-optimization training_step.
-EXTRA_OPTIM_KEYS = {model_id: {"grad_clip"} for model_id in ("Piper_no_VITS2_cpn", "Piper_ParIR_no_VITS2_cpn",
-                                                                 "Piper_SeqIR_no_VITS2_cpn")}
+EXTRA_OPTIM_KEYS = {model_id: {"grad_clip"} for model_id in CONFIG_A_FAMILY}
 TRAINER_KEYS = {"precision", "gradient_clip_val", "seed"}
 DATA_KEYS = {"batch_size", "sampler", "num_workers", "max_phoneme_ids", "num_audio_samples"}
 HARNESS_KEYS = {"skip_nonfinite_updates", "dp_health_gate", "save_rng_state"}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "sequence_id": "piper-low-2026-10-30",
+  "description": "Piper Low, from scratch. Approved after reboot; commit all setup changes first, reuse the existing venv; run Low only on both GPUs. See docs/training/piper-low-high-runbook.md.",
+  "state_dir": "training_output/piper-low-sequence-2026-10-30",
+  "runs": [
+    {
+      "name": "low",
+      "model_id": "Piper_Low_no_VITS2_cpn",
+      "config": "configs/training/piper-low-no-vits2-cpn.yaml",
+      "run_dir": "training_output/piper-low-no-vits2-cpn-2026-10-30",
+      "log": "training_output/piper-low-no-vits2-cpn-2026-10-30.log"
+    }
+  ],
+  "train_args": [
+    "--dataset-dir",
+    "data/ljspeech-low-16000-2026-10-30/training_output/ljspeech/medium",
+    "--data-root",
+    "data/ljspeech-low-16000-2026-10-30",
+    "--split",
+    "results/manifests/canonical_split.json",
+    "--length-cache",
+    "data/ljspeech-low-16000-2026-10-30/training_output/ljspeech/medium/.spectrogram_lengths_cache.json",
+    "--accelerator",
+    "gpu",
+    "--devices",
+    "2",
+    "--strategy",
+    "ddp",
+    "--max_epochs",
+    "1500",
+    "--checkpoint-epochs",
+    "1"
+  ],
+  "budget": {
+    "max_epochs": 1500,
+    "batches_per_epoch_per_rank": 393,
+    "optimizer_steps_per_batch": 2,
+    "source": "Measured LengthBucketBatchSampler on all 12500 Low train utterances: batch 16, world size 2, boundaries 150/250/350/450/600/800/1000. 1500 epochs = 589500 generator updates and 1179000 Lightning global steps."
+  },
+  "expected": {
+    "dataset_jsonl_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "split_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+    "dataset_config_sha256": "a70f9140750b854eb0fb7ea3e30b658364017e2ac5f6790740a7b9e975d77c94",
+    "environment": {
+      "python": "3.10.20",
+      "torch": "2.13.0+cu130",
+      "pytorch_lightning": "1.7.7",
+      "numpy": "1.26.4"
+    },
+    "source": "Verified Low PREPARATION_RECORD.json (2026-10-30); same source dataset.jsonl and canonical split as Medium, separate 16 kHz tensor root."
+  },
+  "preflight": {
+    "min_free_disk_gib": 100,
+    "max_gpu_memory_used_mib": 2048,
+    "gpus": 2
+  }
+}

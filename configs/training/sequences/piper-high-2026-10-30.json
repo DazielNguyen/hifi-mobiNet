@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "sequence_id": "piper-high-2026-10-30",
+  "description": "Piper High, from scratch. Launch only after Low training and full evaluation including ONNX are complete; never queued automatically. See docs/training/piper-low-high-runbook.md.",
+  "state_dir": "training_output/piper-high-sequence-2026-10-30",
+  "runs": [
+    {
+      "name": "high",
+      "model_id": "Piper_High_no_VITS2_cpn",
+      "config": "configs/training/piper-high-no-vits2-cpn.yaml",
+      "run_dir": "training_output/piper-high-no-vits2-cpn-2026-10-30",
+      "log": "training_output/piper-high-no-vits2-cpn-2026-10-30.log"
+    }
+  ],
+  "train_args": [
+    "--dataset-dir",
+    "data/ljspeech-medium/training_output/ljspeech/medium",
+    "--data-root",
+    "data/ljspeech-medium",
+    "--split",
+    "results/manifests/canonical_split.json",
+    "--length-cache",
+    "data/ljspeech-medium/training_output/ljspeech/medium/.spectrogram_lengths_cache.json",
+    "--accelerator",
+    "gpu",
+    "--devices",
+    "2",
+    "--strategy",
+    "ddp",
+    "--max_epochs",
+    "1500",
+    "--checkpoint-epochs",
+    "1"
+  ],
+  "budget": {
+    "max_epochs": 1500,
+    "batches_per_epoch_per_rank": 392,
+    "optimizer_steps_per_batch": 2,
+    "source": "Piper_no_VITS2_cpn run: same data, split, sampler, batch and devices; its selected checkpoint has global_step 1,100,736 = 392 x 1,404 x 2"
+  },
+  "expected": {
+    "dataset_jsonl_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "split_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+    "dataset_config_sha256": "4b751b911b4d42f5dc1a8c604e4c7cd5b19d298b9768ba07564e96696d665b6e",
+    "environment": {
+      "python": "3.10.20",
+      "torch": "2.13.0+cu130",
+      "pytorch_lightning": "1.7.7",
+      "numpy": "1.26.4"
+    },
+    "source": "Piper_no_VITS2_cpn run_record.json and STAGING_RECORD.json"
+  },
+  "preflight": {
+    "min_free_disk_gib": 100,
+    "max_gpu_memory_used_mib": 2048,
+    "gpus": 2
+  }
+}

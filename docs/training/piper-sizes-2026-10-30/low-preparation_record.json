@@ -1,0 +1,57 @@
+{
+  "status": "complete",
+  "created_utc": "2026-10-29T17:47:38.105851+00:00",
+  "source_data_root": "/home/capstone/hifimobinet-train/hifi-mobiNet/data/ljspeech-medium",
+  "output_data_root": "/home/capstone/hifimobinet-train/hifi-mobiNet/data/ljspeech-low-16000-2026-10-30",
+  "dataset_dir_relative": "training_output/ljspeech/medium",
+  "source_metadata_hashes": {
+    "dataset.jsonl": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "config.json": "4b751b911b4d42f5dc1a8c604e4c7cd5b19d298b9768ba07564e96696d665b6e"
+  },
+  "metadata_hashes": {
+    "training_output/ljspeech/medium/dataset.jsonl": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "training_output/ljspeech/medium/config.json": "a70f9140750b854eb0fb7ea3e30b658364017e2ac5f6790740a7b9e975d77c94",
+    "training_output/ljspeech/medium/.spectrogram_lengths_cache.json": "612138f9538ba5282ca022cf0d747ec0a5be563e73cdf806f69a7b5c1897ad19"
+  },
+  "split_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+  "rows": 13100,
+  "split_counts": {
+    "train": 12500,
+    "val": 100,
+    "test": 500
+  },
+  "source_rate": 22050,
+  "target_rate": 16000,
+  "source_samples": 1898881532,
+  "target_samples": 1377879766,
+  "resampler": "scipy.signal.resample_poly(up=320, down=441, window=('kaiser', 5.0), padtype='constant')",
+  "normalization": "retain source normalization/trimming; no additional clipping or gain",
+  "target_peak_abs": 1.1642507314682007,
+  "target_samples_above_unit_amplitude": 6,
+  "spectrogram": {
+    "n_fft": 1024,
+    "hop": 256,
+    "win": 1024,
+    "center": false,
+    "reflect_pad_each_side": 384
+  },
+  "tensor_manifest_sha256": "5198ce76305aeca7895a264311d3f295f434458b894625d6eb15f4e065525f9f",
+  "batches_per_epoch_per_rank": 393,
+  "optimizer_steps_per_batch": 2,
+  "environment": {
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "torch": "2.13.0+cu130"
+  },
+  "code_sha256": {
+    "prepare_piper_low.py": "f3214208f5da67f5bc918c27e97bb898a16bd72aa04fb887b9ebbe9bd4af14a2",
+    "mel_processing.py": "0a661f8672d5b2a844214da4c059ffea365d57b1679d8bdb57f1f4c05507429a",
+    "length_bucket_sampler.py": "a765255d134654485e928270d3bf288135786fdf53aabb60d106e2d20e309ee4"
+  },
+  "not_copied": [
+    "raw WAVs (audio_path retains source provenance)",
+    "F0 (unused by Config A)"
+  ],
+  "training_started": false
+}

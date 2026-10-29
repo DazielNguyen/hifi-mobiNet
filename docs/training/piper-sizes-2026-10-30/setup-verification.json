@@ -1,0 +1,225 @@
+{
+  "created_utc": "2026-10-29T17:53:07.387275+00:00",
+  "status": "prepared_awaiting_user_confirmation",
+  "training_started": false,
+  "forward_backward_or_optimizer_steps_executed": false,
+  "tests": {
+    "command": "python -m pytest tests/test_piper_sizes.py tests/test_training_ir_configs.py tests/test_run_sequence.py -q -p no:cacheprovider",
+    "passed": 27,
+    "failed": 0
+  },
+  "models": {
+    "medium": {
+      "model_id": "Piper_no_VITS2_cpn",
+      "config_sha256": "2d9c1f47b35b17af9e7b262b995e8d19a82c9b6b444f5d440c7e3701f3d37135",
+      "sample_rate": 22050,
+      "device": "cpu",
+      "decoder_block_type": "ResBlock2",
+      "upsampling_stages": 3,
+      "generator_parameters_including_posterior_and_weight_norm": 23663792,
+      "decoder_parameters_with_weight_norm": 1664768,
+      "mrd": false,
+      "duration_discriminator": false,
+      "snake": false,
+      "constructor_only": true
+    },
+    "low": {
+      "model_id": "Piper_Low_no_VITS2_cpn",
+      "config_sha256": "cd4f5176fa3c7f551c783c8fefd6d0a67ccca56833ca33d99c6928ba3c487d23",
+      "sample_rate": 16000,
+      "device": "cpu",
+      "decoder_block_type": "ResBlock2",
+      "upsampling_stages": 3,
+      "generator_parameters_including_posterior_and_weight_norm": 23663792,
+      "decoder_parameters_with_weight_norm": 1664768,
+      "mrd": false,
+      "duration_discriminator": false,
+      "snake": false,
+      "constructor_only": true
+    },
+    "high": {
+      "model_id": "Piper_High_no_VITS2_cpn",
+      "config_sha256": "9d5bdea638f34f312df6d62a4e7f632d900f37344521149b1b507b601bf0fbbb",
+      "sample_rate": 22050,
+      "device": "cpu",
+      "decoder_block_type": "ResBlock1",
+      "upsampling_stages": 4,
+      "generator_parameters_including_posterior_and_weight_norm": 36336048,
+      "decoder_parameters_with_weight_norm": 14337024,
+      "mrd": false,
+      "duration_discriminator": false,
+      "snake": false,
+      "constructor_only": true
+    }
+  },
+  "preflight_snapshot": {
+    "low": {
+      "utc": "2026-10-29T17:53:09+00:00",
+      "run": "low",
+      "resume": false,
+      "passed": false,
+      "checks": {
+        "git_clean": {
+          "passed": false,
+          "commit": "9f0988ba3dc58518bb4ee6de514634775b050f74"
+        },
+        "dataset_jsonl_sha256": {
+          "passed": true
+        },
+        "dataset_config_sha256": {
+          "passed": true
+        },
+        "split_sha256": {
+          "passed": true
+        },
+        "config_model_id": {
+          "passed": true,
+          "config_sha256": "cd4f5176fa3c7f551c783c8fefd6d0a67ccca56833ca33d99c6928ba3c487d23"
+        },
+        "environment_versions": {
+          "passed": true,
+          "observed": {
+            "python": "3.10.20",
+            "torch": "2.13.0+cu130",
+            "pytorch_lightning": "1.7.7",
+            "numpy": "1.26.4"
+          }
+        },
+        "mas_extension_present": {
+          "passed": true,
+          "files": [
+            {
+              "file": "core.cpython-310-x86_64-linux-gnu.so",
+              "bytes": 177168,
+              "sha256": "b1efd3ced35b272c9c9a80800ad972ca8927787aa47a140dda2c52e2608b9108"
+            }
+          ]
+        },
+        "no_other_training_process": {
+          "passed": true,
+          "processes": []
+        },
+        "gpus_available": {
+          "passed": true,
+          "gpus": [
+            {
+              "index": "0",
+              "name": "NVIDIA GeForce RTX 4070 Ti",
+              "used_mib": "453",
+              "total_mib": "12282"
+            },
+            {
+              "index": "1",
+              "name": "NVIDIA GeForce RTX 4070 Ti",
+              "used_mib": "1218",
+              "total_mib": "12282"
+            }
+          ]
+        },
+        "free_disk": {
+          "passed": true,
+          "free_gib": 531.7
+        },
+        "run_dir_new": {
+          "passed": true
+        },
+        "log_new": {
+          "passed": true
+        }
+      },
+      "actual_batches_per_epoch_per_rank": 393,
+      "failed_checks": [
+        "git_clean"
+      ]
+    },
+    "high": {
+      "utc": "2026-10-29T17:53:10+00:00",
+      "run": "high",
+      "resume": false,
+      "passed": false,
+      "checks": {
+        "git_clean": {
+          "passed": false,
+          "commit": "9f0988ba3dc58518bb4ee6de514634775b050f74"
+        },
+        "dataset_jsonl_sha256": {
+          "passed": true
+        },
+        "dataset_config_sha256": {
+          "passed": true
+        },
+        "split_sha256": {
+          "passed": true
+        },
+        "config_model_id": {
+          "passed": true,
+          "config_sha256": "9d5bdea638f34f312df6d62a4e7f632d900f37344521149b1b507b601bf0fbbb"
+        },
+        "environment_versions": {
+          "passed": true,
+          "observed": {
+            "python": "3.10.20",
+            "torch": "2.13.0+cu130",
+            "pytorch_lightning": "1.7.7",
+            "numpy": "1.26.4"
+          }
+        },
+        "mas_extension_present": {
+          "passed": true,
+          "files": [
+            {
+              "file": "core.cpython-310-x86_64-linux-gnu.so",
+              "bytes": 177168,
+              "sha256": "b1efd3ced35b272c9c9a80800ad972ca8927787aa47a140dda2c52e2608b9108"
+            }
+          ]
+        },
+        "no_other_training_process": {
+          "passed": true,
+          "processes": []
+        },
+        "gpus_available": {
+          "passed": true,
+          "gpus": [
+            {
+              "index": "0",
+              "name": "NVIDIA GeForce RTX 4070 Ti",
+              "used_mib": "453",
+              "total_mib": "12282"
+            },
+            {
+              "index": "1",
+              "name": "NVIDIA GeForce RTX 4070 Ti",
+              "used_mib": "1218",
+              "total_mib": "12282"
+            }
+          ]
+        },
+        "free_disk": {
+          "passed": true,
+          "free_gib": 531.7
+        },
+        "run_dir_new": {
+          "passed": true
+        },
+        "log_new": {
+          "passed": true
+        }
+      },
+      "actual_batches_per_epoch_per_rank": 392,
+      "failed_checks": [
+        "git_clean"
+      ]
+    }
+  },
+  "pending": [
+    "Explicit user confirmation before training",
+    "Local source commit: both checkouts intentionally contain uncommitted setup changes",
+    "Rerun runtime preflight at launch",
+    "High batch-16 GPU feasibility has not been tested; no automatic batch/protocol change"
+  ],
+  "source_commits_before_setup": {
+    "windows": "2fead00267d5c950489fc5caba3e34ab39d2930c",
+    "wsl": "9f0988ba3dc58518bb4ee6de514634775b050f74"
+  }
+}

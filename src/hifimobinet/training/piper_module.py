@@ -4,7 +4,8 @@ trained from scratch in this project's data/split/checkpoint harness.
 Subclasses the unmodified EdgeTTS ``VitsModel`` (vendor/edgetts/vits/lightning.py,
 EdgeTTS a73a897, a fork of rhasspy/piper 73c04d81). With ``use_bigvgan``,
 ``use_vits2`` and ``use_f0`` all false it builds Piper's WaveNet coupling flow,
-stochastic duration predictor, plain MAS, LeakyReLU ResBlock2 generator and MPD,
+stochastic duration predictor, plain MAS, LeakyReLU generator and MPD
+(ResBlock2 for Medium/Low, ResBlock1 for High),
 with no duration discriminator, MRD, Snake activation or F0 branch. Inherited
 unchanged: the model, losses, manual-optimization ``training_step`` (generator
 then discriminator, gradient-norm clipping by ``grad_clip``),

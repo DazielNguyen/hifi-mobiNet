@@ -125,6 +125,9 @@ all stay inside the clone; training never overwrites released models.
 `Piper_ParIR_no_VITS2_cpn` and `Piper_SeqIR_no_VITS2_cpn` put the released
 Parallel-IR / Sequential-IR decoder bundles (IR decoder, SnakeBeta, MRD) on that
 Config A backbone ([protocol](docs/training/piper-ir-protocol.md)).
+The additional [Low 16 kHz and High 22.05 kHz recipes](docs/training/piper-low-high-runbook.md)
+are prepared. Low is approved to run first on both GPUs; High waits for Low's
+training, full evaluation and ONNX results.
 Start with [training setup](docs/training/training-setup-ubuntu.md); the
 component audit, protocol, smoke results and next-run commands are in
 [docs/training/](docs/training/). Smoke-test outputs are not research results.

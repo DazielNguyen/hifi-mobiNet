@@ -46,6 +46,16 @@ TRAINING_MODELS: Dict[str, TrainingModel] = {
         "BigVGAN, VITS2 and F0 flags off, trained from scratch in the project harness",
         _piper,
     ),
+    "Piper_Low_no_VITS2_cpn": TrainingModel(
+        "Piper_Low_no_VITS2_cpn", "edgetts",
+        "Piper Low: Config A with the Medium architecture at 16 kHz (not x-low), trained from scratch",
+        _piper,
+    ),
+    "Piper_High_no_VITS2_cpn": TrainingModel(
+        "Piper_High_no_VITS2_cpn", "edgetts",
+        "Piper High: Config A with the upstream High ResBlock1/512-channel decoder at 22.05 kHz, trained from scratch",
+        _piper,
+    ),
     "Piper_ParIR_no_VITS2_cpn": TrainingModel(
         "Piper_ParIR_no_VITS2_cpn", "edgetts",
         "Piper-ParIR: the Piper_no_VITS2_cpn backbone (EdgeTTS Config A) with the released Parallel-IR "

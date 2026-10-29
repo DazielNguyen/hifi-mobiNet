@@ -27,7 +27,7 @@ import torch
 from pytorch_lightning import Callback, Trainer
 from pytorch_lightning.loggers import TensorBoardLogger
 
-from .config import TrainingConfig, load_config
+from .config import PIPER_STANDARD_MODELS, TrainingConfig, load_config
 from .env import environment_record
 from .train import build_module, checkpoint_callback
 
@@ -315,7 +315,7 @@ def main(argv: Optional[List[str]] = None) -> None:
         report.set("ids_match_dataset", "pass" if all(
             torch.equal(data.train[i].phoneme_ids, torch.LongTensor(data.full.utterances[data.train.indices[i]].phoneme_ids))
             for i in range(len(data.train))) else "fail", "tensor IDs equal dataset.jsonl rows")
-        if config.model_id == "Piper_no_VITS2_cpn":
+        if config.model_id in PIPER_STANDARD_MODELS:
             vits2_absence(module, report)
         elif config.model_id in IR_EXPECTED:
             ir_bundle_checks(module, report, config.model_id)
@@ -330,7 +330,7 @@ def main(argv: Optional[List[str]] = None) -> None:
                           "grad_norm_first_last": {k: [v[0], v[-1]] if v else None for k, v in checks_a.grad_norms.items()},
                           "parameter_changes": getattr(checks_a, "changed", None),
                           "metrics": {k: float(v) for k, v in trainer_a.callback_metrics.items()}}
-        if config.model_id == "Piper_no_VITS2_cpn":
+        if config.model_id in PIPER_STANDARD_MODELS:
             # EdgeTTS always logs loss_dur_gen/loss_disc_dur; without a duration
             # discriminator they must be exactly zero. No MAS-noise schedule is logged.
             metrics = trainer_a.callback_metrics
@@ -390,7 +390,7 @@ def main(argv: Optional[List[str]] = None) -> None:
     else:
         report.set("run_completed", "pass")
     for name in ("duration_discriminator_updates",):
-        if config.model_id == "Piper_no_VITS2_cpn" or config.model_id in IR_EXPECTED:
+        if config.model_id in PIPER_STANDARD_MODELS or config.model_id in IR_EXPECTED:
             report.checks.setdefault(name, {"status": "not_applicable", "detail": "model has no duration discriminator"})
     out["checks"] = report.checks
     out["summary"] = {s: sorted(k for k, v in report.checks.items() if v["status"] == s)
