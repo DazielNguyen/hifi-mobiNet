@@ -1,0 +1,73 @@
+{
+  "model_id": "baseline-resblock2",
+  "evidence_class": "checkpoint_metadata_extracted_during_Q05",
+  "source": "BanhmiTTS/docs/evidence/q05_2026-10-04/baseline/checkpoint_hparams.json",
+  "source_sha256": "a3c302c6581600e917cc60a7dc9ca25dc3d5e3dde9b62f17249f428dc89832cc",
+  "parameters": {
+    "num_symbols": 256,
+    "resblock": "2",
+    "resblock_kernel_sizes": [
+      3,
+      5,
+      7
+    ],
+    "resblock_dilation_sizes": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "upsample_rates": [
+      8,
+      8,
+      4
+    ],
+    "upsample_initial_channel": 256,
+    "upsample_kernel_sizes": [
+      16,
+      16,
+      8
+    ],
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "mel_channels": 80,
+    "sample_rate": 22050,
+    "mel_fmin": 0.0,
+    "mel_fmax": null,
+    "inter_channels": 192,
+    "hidden_channels": 192,
+    "filter_channels": 768,
+    "n_heads": 2,
+    "n_layers": 6,
+    "kernel_size": 3,
+    "p_dropout": 0.1,
+    "segment_size": 8192,
+    "posterior_encoder_kernel_size": 5,
+    "posterior_encoder_dilation_rate": 1,
+    "posterior_encoder_layers": 16,
+    "flow_kernel_size": 5,
+    "flow_dilation_rate": 1,
+    "flow_n_flows": 4,
+    "use_snake": false,
+    "use_mrd": false,
+    "use_vocos": false,
+    "mas_noise_scale_initial": 0.01,
+    "mas_noise_scale_decay": 2e-06,
+    "gradient_clip_val": 1.0,
+    "precision": "bf16",
+    "seed": 1234
+  },
+  "limits": [
+    "Selected fields only; no host paths. See original source locator for complete hparams.",
+    "Current architecture defaults are not a training-time source binding."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "started_utc": "2026-10-31T21:26:47.052500+00:00",
+  "status": "starting",
+  "model": "piper-seqir-no-vits2-cpn",
+  "environment": {
+    "utc": "2026-10-31T21:26:47.010942+00:00",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "load_average": [
+      0.341796875,
+      0.47265625,
+      0.28271484375
+    ],
+    "thermal_millidegrees_celsius": {
+      "/sys/class/thermal/thermal_zone0/temp": "27800",
+      "/sys/class/thermal/thermal_zone1/temp": "49000"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "script_sha256": "28090dbae369f24a22a7c04179191d959265e606c541e07e72b794e5d49ee60c",
+  "original_suite_sha256": "06dd0c87cd287554b52fd264d3d6450eb60b3bfe0bb09c2bdd7cd04adefc7c0e",
+  "models_manifest_sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+  "source_onnx_sha256": "a8d18a9e583fba2480ca5c5166b45431eb372c0cde4f8074e7d5a0e3be7b8ad6",
+  "interpretation": "diagnostic only; never certifies calibration, quality or RTF",
+  "instrumentation": "process-local NumPy _mean/_var/_std errstate and warnings.showwarning only inside nncf.quantize"
+}

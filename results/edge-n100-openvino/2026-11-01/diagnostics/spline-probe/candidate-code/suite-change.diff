@@ -1,0 +1,62 @@
+--- original/openvino_suite.py
++++ candidate/openvino_suite.py
+@@ -26,6 +26,22 @@
+ SCALES = [0.667, 1.0, 0.8]
+ PARITY_IDS = [0, 1, 2, 59, 119, 179, 239, 299, 359, 419, 479, 599, 719]
+ SCOPES = ("/enc_p/", "/dp/", "/flow/")
++
++# Candidate revision: do not quantize dynamic masked spline operations.
++# Conv layers pre/convs/proj inside each duration flow remain eligible.
++# This changes activation quantization boundaries; it is a separate NNCF experiment.
++NUMERIC_REVISION = "n100-spline-fp32-v1-20261101"
++DIAGNOSTIC_GUARD_SHA256 = "28090dbae369f24a22a7c04179191d959265e606c541e07e72b794e5d49ee60c"
++
++
++def is_masked_duration_spline(name):
++    import re
++    match = re.match(r"^/dp/flows\.[0-9]+/(.*)$", name)
++    if match is None:
++        return False
++    tail = match.group(1)
++    return not any(tail.startswith(prefix) for prefix in ("pre/", "convs/", "proj/"))
++
+ 
+ 
+ def sha(path):
+@@ -251,12 +267,32 @@
+             ignored = [n.get_friendly_name() for n in model.get_ops()
+                        if ("/dec/" in n.get_friendly_name() and n.get_type_name() not in ("Constant", "Parameter", "Result"))
+                        or (n.get_type_name() in weighted and n.get_friendly_name() not in allowed)]
++            spline_ignored = sorted({n.get_friendly_name() for n in model.get_ops()
++                                     if is_masked_duration_spline(n.get_friendly_name())
++                                     and n.get_type_name() not in ("Constant", "Parameter", "Result")})
++            if not spline_ignored:
++                raise ValueError("cannot identify masked duration spline scope; review the graph")
++            if set(spline_ignored).intersection(allowed):
++                raise ValueError("spline policy unexpectedly excludes an eligible convolution")
++            ignored = sorted(set(ignored).union(spline_ignored))
++            helper_path = Path(__file__).resolve().parent / "diagnose_n100_calibration.py"
++            if sha(helper_path) != DIAGNOSTIC_GUARD_SHA256:
++                raise ValueError("numeric guard is missing or changed")
++            from diagnose_n100_calibration import Recorder
++            guard = Recorder(output, np)
++            record["numeric_guard"] = {"status": "running", "helper_sha256": sha(helper_path),
++                                       "revision": NUMERIC_REVISION}
++            record["experiment"] = "NNCF selective INT8 v2 candidate: masked duration spline FP32; not original preparation"
+             dataset = nncf.Dataset(cal, feeds)
+             record["quantization"] = {"subset_size": 60, "preset": "MIXED", "target_device": "CPU",
+-                                      "fast_bias_correction": True, "allowed_convolutions": allowed, "ignored_nodes": ignored}
+-            quantized = nncf.quantize(model, dataset, subset_size=60, preset=nncf.QuantizationPreset.MIXED,
+-                                      target_device=nncf.TargetDevice.CPU, fast_bias_correction=True,
+-                                      ignored_scope=nncf.IgnoredScope(names=ignored))
++                                      "fast_bias_correction": True, "allowed_convolutions": allowed, "ignored_nodes": ignored,
++                                      "revision": NUMERIC_REVISION, "spline_fp32_ignored_nodes": spline_ignored,
++                                      "scope_change": "exclude masked duration spline activations; eligible Conv scopes unchanged"}
++            quantized = guard.guarded_call(nncf.quantize, model, dataset, subset_size=60,
++                                          preset=nncf.QuantizationPreset.MIXED,
++                                          target_device=nncf.TargetDevice.CPU, fast_bias_correction=True,
++                                          ignored_scope=nncf.IgnoredScope(names=ignored))
++            record["numeric_guard"]["status"] = "no_numerical_issue_intercepted"
+             ov.save_model(quantized, str(output / "int8.xml"), compress_to_fp16=False)
+             record["artifacts"] = {}
+             for precision in ("fp32", "int8"):

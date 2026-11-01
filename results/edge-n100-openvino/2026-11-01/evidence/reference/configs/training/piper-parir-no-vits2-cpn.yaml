@@ -1,0 +1,74 @@
+# Piper_ParIR_no_VITS2_cpn (Piper-ParIR) = Piper_no_VITS2_cpn (EdgeTTS Config A backbone,
+# data, split and recipe; configs/training/piper-no-vits2-cpn.yaml) with the
+# decoder bundle of the released Parallel-IR model: its inverted-residual decoder,
+# SnakeBeta activations and the MRD discriminator (released checkpoint
+# hyper-parameters: resblock "mrf", mb_expansion [1, 1, 1], use_snake and
+# use_mrd true, no gradient clipping). VITS2 components stay off.
+#
+# Every value outside the decoder block and use_mrd is copied unchanged from the
+# Config A file. Comparison table and limits: docs/training/piper-ir-protocol.md.
+model_id: Piper_ParIR_no_VITS2_cpn
+
+model:
+  inter_channels: 192
+  hidden_channels: 192
+  filter_channels: 768
+  n_heads: 2
+  n_layers: 6
+  kernel_size: 3
+  p_dropout: 0.1
+  # Decoder bundle of the released Parallel-IR model (configs/parallel-ir.json):
+  # three parallel inverted-residual branches per stage, depthwise kernels
+  # 3/5/7, expansion 1 (pointwise expand kept), averaged; SnakeBeta throughout
+  # the generator (implied by resblock "mrf"). resblock_kernel_sizes and
+  # resblock_dilation_sizes are not read by this decoder; kept as released.
+  resblock: "mrf"
+  mb_expansion: [1, 1, 1]
+  mb_mrf_kernel_sizes: [3, 5, 7]
+  resblock_kernel_sizes: [3, 5, 7]
+  resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+  upsample_rates: [8, 8, 4]
+  upsample_initial_channel: 256
+  upsample_kernel_sizes: [16, 16, 8]
+  filter_length: 1024
+  hop_length: 256
+  win_length: 1024
+  mel_channels: 80
+  sample_rate: 22050
+  mel_fmin: 0.0
+  mel_fmax: null
+  segment_size: 8192
+  use_spectral_norm: false
+  use_sdp: true
+  use_bigvgan: false
+  use_vits2: false
+  use_f0: false
+  # MRD discriminator of the IR bundle (three STFT resolutions; loss weight 1,
+  # discriminator optimizer), implemented in src/hifimobinet/training/piper_ir_module.py.
+  use_mrd: true
+
+optim:
+  learning_rate: 0.0002
+  betas: [0.8, 0.99]
+  eps: 1.0e-9
+  lr_decay: 0.999875
+  c_mel: 45
+  c_kl: 1.0
+  grad_clip: null         # no clipping, as in the SEQ/MRF runs (EdgeTTS's own Config A run used 1.0)
+
+trainer:
+  precision: bf16
+  gradient_clip_val: null # must stay null: clipping happens inside the EdgeTTS training_step
+  seed: 1234
+
+data:
+  batch_size: 16          # per GPU
+  sampler: length_bucket
+  num_workers: 1          # SEQ/MRF value; data-loading parallelism only
+  max_phoneme_ids: null   # SEQ/MRF value (Config A's 400 would remove nothing: longest row 399)
+  num_audio_samples: 5
+
+harness:
+  skip_nonfinite_updates: false   # not in EdgeTTS; unavailable with manual optimization
+  dp_health_gate: false           # not in EdgeTTS
+  save_rng_state: true

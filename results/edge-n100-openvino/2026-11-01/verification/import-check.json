@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "verified_utc": "2026-11-01T10:17:25.477214+00:00",
+  "base_commit": "27ba3415930a281b29e7c1f38078d7b6424df8d0",
+  "scope": "Import verification of saved evidence; no training, inference, export, quantization, scoring or benchmark executed.",
+  "checks": {
+    "status": "passed",
+    "imported_text_files": 240,
+    "declared_path_derivatives": 8,
+    "local_originals_checked": 312,
+    "local_artifacts_requested": true,
+    "excluded_cache_files": 1,
+    "original_preflight_identity_links": 120,
+    "cells": 36,
+    "timed_observations": 25920,
+    "interpretation": "Integrity and stored timing verified; retained duration outliers and pending INT8 quality remain documented."
+  },
+  "verifier_cases": [
+    {
+      "case": "clean_checkout_without_local_artifacts",
+      "status": "passed",
+      "observed_exit_code": 0
+    },
+    {
+      "case": "local_artifact_mode_fails_when_originals_absent",
+      "status": "passed",
+      "observed_exit_code": 1
+    },
+    {
+      "case": "changed_timing_file_is_rejected",
+      "status": "passed",
+      "observed_exit_code": 1
+    },
+    {
+      "case": "missing_run_log_is_rejected",
+      "status": "passed",
+      "observed_exit_code": 1
+    },
+    {
+      "case": "unlisted_file_is_rejected",
+      "status": "passed",
+      "observed_exit_code": 1
+    },
+    {
+      "case": "restored_checkout_passes",
+      "status": "passed",
+      "observed_exit_code": 0
+    }
+  ],
+  "focused_repository_content_scan": "passed; imported text and package documentation checked with the repository heuristic inspect function",
+  "existing_untracked_files": "Six pre-existing edge implementation/test files remain byte-identical and outside this commit.",
+  "limits": [
+    "Hashes establish consistency with the received artifacts, not independent correctness of the experiment.",
+    "Earlier PC verification reports remain under verification/received/ with original identity and declared redactions in manifest.json.",
+    "INT8 quality and retained duration outliers remain unresolved as documented in the READMEs."
+  ],
+  "whitespace_review": {
+    "new_authored_files": "passed git diff --cached --check",
+    "archived_source_warning_files": [
+      "results/edge-n100-openvino/2026-11-01/diagnostics/spline-probe/candidate-code/audit_empty_branch.py",
+      "results/edge-n100-openvino/2026-11-01/diagnostics/spline-probe/candidate-code/run_probe.py",
+      "results/edge-n100-openvino/2026-11-01/diagnostics/spline-probe/candidate-code/suite-change.diff",
+      "results/edge-n100-openvino/2026-11-01/evidence/diagnose_n100_calibration.py"
+    ],
+    "disposition": "Original EOF blank lines and diff context spaces retained byte-for-byte; no silent cleanup of evidence."
+  }
+}

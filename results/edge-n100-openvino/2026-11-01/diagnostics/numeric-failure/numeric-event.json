@@ -1,0 +1,634 @@
+{
+  "kind": "numpy__mean",
+  "message": "overflow encountered in reduce",
+  "utc": "2026-10-31T21:27:36.496485+00:00",
+  "warning_location": null,
+  "numeric_policy": {
+    "previous": {
+      "divide": "warn",
+      "over": "warn",
+      "under": "ignore",
+      "invalid": "warn"
+    },
+    "diagnostic": {
+      "over": "raise",
+      "invalid": "raise",
+      "divide": "raise"
+    }
+  },
+  "frames": [
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/quantize_model.py",
+      "line": 188,
+      "function": "quantize",
+      "arrays": {},
+      "context": {},
+      "source_context": [
+        {
+          "line": 186,
+          "text": "        from nncf.openvino.quantization.quantize_model import quantize_impl"
+        },
+        {
+          "line": 187,
+          "text": ""
+        },
+        {
+          "line": 188,
+          "text": "        return quantize_impl(  # type: ignore[no-any-return]"
+        },
+        {
+          "line": 189,
+          "text": "            model=model,"
+        },
+        {
+          "line": 190,
+          "text": "            calibration_dataset=calibration_dataset,"
+        }
+      ],
+      "source_sha256": "8875d97f9baefbdc57762d767cc411a0b5a6a232d463edfdfe9a9824c53ea962"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py",
+      "line": 351,
+      "function": "quantize_impl",
+      "arrays": {},
+      "context": {},
+      "source_context": [
+        {
+          "line": 349,
+          "text": "        quantize_fn = native_quantize_if_op_impl"
+        },
+        {
+          "line": 350,
+          "text": ""
+        },
+        {
+          "line": 351,
+          "text": "    return quantize_fn("
+        },
+        {
+          "line": 352,
+          "text": "        model=model,"
+        },
+        {
+          "line": 353,
+          "text": "        calibration_dataset=calibration_dataset,"
+        }
+      ],
+      "source_sha256": "611bef4e67edde461d255ce943ebc3c5b2b22cd9c71050bb7b6ae2cf0a958a68"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py",
+      "line": 171,
+      "function": "native_quantize_impl",
+      "arrays": {},
+      "context": {},
+      "source_context": [
+        {
+          "line": 169,
+          "text": "    graph = GraphConverter.create_nncf_graph(model)"
+        },
+        {
+          "line": 170,
+          "text": "    warning_model_no_batchwise_support(graph, advanced_parameters, model_type, OPERATIONS_OUTPUT_HAS_NO_BATCH_AXIS)"
+        },
+        {
+          "line": 171,
+          "text": "    quantized_model = quantization_algorithm.apply(model, graph, dataset=calibration_dataset)"
+        },
+        {
+          "line": 172,
+          "text": ""
+        },
+        {
+          "line": 173,
+          "text": "    if is_weight_compression_needed(advanced_parameters):"
+        }
+      ],
+      "source_sha256": "611bef4e67edde461d255ce943ebc3c5b2b22cd9c71050bb7b6ae2cf0a958a68"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/post_training/algorithm.py",
+      "line": 113,
+      "function": "apply",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.quantization.algorithms.post_training.algorithm.PostTrainingQuantization"
+      },
+      "source_context": [
+        {
+          "line": 111,
+          "text": "            step_index_to_statistics = {0: statistic_points}"
+        },
+        {
+          "line": 112,
+          "text": ""
+        },
+        {
+          "line": 113,
+          "text": "        return self._pipeline.run_from_step(model, dataset, graph, 0, step_index_to_statistics)"
+        },
+        {
+          "line": 114,
+          "text": ""
+        },
+        {
+          "line": 115,
+          "text": ""
+        }
+      ],
+      "source_sha256": "46855bb1e753d067b33cd121d44ab8c8d33c8f7cc8ef49018e5218ebae0dc279"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py",
+      "line": 164,
+      "function": "run_from_step",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.quantization.algorithms.pipeline.Pipeline"
+      },
+      "source_context": [
+        {
+          "line": 162,
+          "text": ""
+        },
+        {
+          "line": 163,
+          "text": "            # Run current pipeline step"
+        },
+        {
+          "line": 164,
+          "text": "            step_model = self.run_step(step_index, step_statistics, step_model, step_graph)"
+        },
+        {
+          "line": 165,
+          "text": ""
+        },
+        {
+          "line": 166,
+          "text": "            step_graph = None  # We should rebuild the graph for the next pipeline step"
+        }
+      ],
+      "source_sha256": "f2438826d7e6f367a8277edc9cf0520332b7301079f66be3c2bce570795936c4"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py",
+      "line": 117,
+      "function": "run_step",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.quantization.algorithms.pipeline.Pipeline"
+      },
+      "source_context": [
+        {
+          "line": 115,
+          "text": "        pipeline_step = pipeline_steps[step_index]"
+        },
+        {
+          "line": 116,
+          "text": "        for algorithm in pipeline_step[:-1]:"
+        },
+        {
+          "line": 117,
+          "text": "            current_model = algorithm.apply(current_model, current_graph, step_statistics)"
+        },
+        {
+          "line": 118,
+          "text": "            current_graph = build_graph(current_model)"
+        },
+        {
+          "line": 119,
+          "text": "        current_model = pipeline_step[-1].apply(current_model, current_graph, step_statistics)"
+        }
+      ],
+      "source_sha256": "f2438826d7e6f367a8277edc9cf0520332b7301079f66be3c2bce570795936c4"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/min_max/algorithm.py",
+      "line": 1065,
+      "function": "apply",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.quantization.algorithms.min_max.algorithm.MinMaxQuantization",
+        "target_node_name": "/dp/flows.7/Slice_23"
+      },
+      "source_context": [
+        {
+          "line": 1063,
+          "text": ""
+        },
+        {
+          "line": 1064,
+          "text": "                half_range = quantization_target_point in quantization_points_overflow_fix"
+        },
+        {
+          "line": 1065,
+          "text": "                statistics = tensor_collector.get_statistics()"
+        },
+        {
+          "line": 1066,
+          "text": "                if statistics.min_values is None or statistics.max_values is None:"
+        },
+        {
+          "line": 1067,
+          "text": "                    msg = f\"Statistics were not collected for the node {target_node_name}\""
+        }
+      ],
+      "source_sha256": "473c76df9d140c01403fd0bf8a34d6a50ff852a53ae71a7406b17870c6e9d204"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py",
+      "line": 392,
+      "function": "get_statistics",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.common.tensor_statistics.collectors.TensorCollector"
+      },
+      "source_context": [
+        {
+          "line": 390,
+          "text": "            return deepcopy(self._cached_statistics)"
+        },
+        {
+          "line": 391,
+          "text": ""
+        },
+        {
+          "line": 392,
+          "text": "        aggregated_values = self._aggregate()"
+        },
+        {
+          "line": 393,
+          "text": "        statistics_config = {}"
+        },
+        {
+          "line": 394,
+          "text": "        for container_key, branch_key in self._stat_container_kwargs_map.items():"
+        }
+      ],
+      "source_sha256": "7b75f587cbab24750c150bee454506e10019f9e8ae6fef5a4f542b75087459d0"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py",
+      "line": 352,
+      "function": "_aggregate",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.common.tensor_statistics.collectors.TensorCollector"
+      },
+      "source_context": [
+        {
+          "line": 350,
+          "text": "            aggregator,"
+        },
+        {
+          "line": 351,
+          "text": "        ) in self._aggregators.items():"
+        },
+        {
+          "line": 352,
+          "text": "            val = aggregator.aggregate()"
+        },
+        {
+          "line": 353,
+          "text": "            result[key] = val"
+        },
+        {
+          "line": 354,
+          "text": "        return result"
+        }
+      ],
+      "source_sha256": "7b75f587cbab24750c150bee454506e10019f9e8ae6fef5a4f542b75087459d0"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py",
+      "line": 214,
+      "function": "aggregate",
+      "arrays": {},
+      "context": {
+        "self_type": "nncf.common.tensor_statistics.collectors.MeanAggregator"
+      },
+      "source_context": [
+        {
+          "line": 212,
+          "text": "        \"\"\""
+        },
+        {
+          "line": 213,
+          "text": "        if self._collected_samples:"
+        },
+        {
+          "line": 214,
+          "text": "            return self._aggregate_impl()"
+        },
+        {
+          "line": 215,
+          "text": "        return None"
+        },
+        {
+          "line": 216,
+          "text": ""
+        }
+      ],
+      "source_sha256": "7b75f587cbab24750c150bee454506e10019f9e8ae6fef5a4f542b75087459d0"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py",
+      "line": 745,
+      "function": "_aggregate_impl",
+      "arrays": {
+        "stacked_value": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        }
+      },
+      "context": {
+        "self_type": "nncf.common.tensor_statistics.collectors.MeanAggregator"
+      },
+      "source_context": [
+        {
+          "line": 743,
+          "text": "        if all(self._container[0].shape == x.shape for x in self._container):"
+        },
+        {
+          "line": 744,
+          "text": "            stacked_value = fns.stack(self._container)"
+        },
+        {
+          "line": 745,
+          "text": "            aggregated = self._aggregation_fn(stacked_value, axis=self._aggregation_axes, keepdims=self._keepdims)"
+        },
+        {
+          "line": 746,
+          "text": "            return fns.squeeze(aggregated, 0)"
+        },
+        {
+          "line": 747,
+          "text": "        online_axes = tuple(x - 1 for x in self._aggregation_axes if x > 0)"
+        }
+      ],
+      "source_sha256": "7b75f587cbab24750c150bee454506e10019f9e8ae6fef5a4f542b75087459d0"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py",
+      "line": 773,
+      "function": "_aggregation_fn",
+      "arrays": {
+        "stacked_value": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        }
+      },
+      "context": {
+        "self_type": "nncf.common.tensor_statistics.collectors.MeanAggregator",
+        "axis": "(0,)"
+      },
+      "source_context": [
+        {
+          "line": 771,
+          "text": "class MeanAggregator(OfflineAggregatorBase):"
+        },
+        {
+          "line": 772,
+          "text": "    def _aggregation_fn(self, stacked_value: Tensor, axis: AggregationAxes, keepdims: bool) -> Tensor:"
+        },
+        {
+          "line": 773,
+          "text": "        return fns.mean(stacked_value, axis=axis, keepdims=keepdims)"
+        },
+        {
+          "line": 774,
+          "text": ""
+        },
+        {
+          "line": 775,
+          "text": ""
+        }
+      ],
+      "source_sha256": "7b75f587cbab24750c150bee454506e10019f9e8ae6fef5a4f542b75087459d0"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/dispatcher.py",
+      "line": 96,
+      "function": "wrapper",
+      "arrays": {},
+      "context": {},
+      "source_context": [
+        {
+          "line": 94,
+          "text": "        kwargs = {n: _unwrap_tensors(x) if n in name_to_unwrap else x for n, x in kwargs.items()}"
+        },
+        {
+          "line": 95,
+          "text": "        dispatched_func = dispatch(func_type)"
+        },
+        {
+          "line": 96,
+          "text": "        ret = dispatched_func(*args, **kwargs)"
+        },
+        {
+          "line": 97,
+          "text": "        return _wrap_output(ret, signature.return_annotation)"
+        },
+        {
+          "line": 98,
+          "text": ""
+        }
+      ],
+      "source_sha256": "78ee88baa9e001f808ebaf517e35d306f1e9ce64782e7cb74f68522c436f999e"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/numpy_numeric.py",
+      "line": 247,
+      "function": "_",
+      "arrays": {
+        "a": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        }
+      },
+      "context": {
+        "axis": "(0,)",
+        "dtype": "None"
+      },
+      "source_context": [
+        {
+          "line": 245,
+          "text": ") -> T_NUMPY_ARRAY:"
+        },
+        {
+          "line": 246,
+          "text": "    np_dtype = convert_to_numpy_dtype(dtype)"
+        },
+        {
+          "line": 247,
+          "text": "    return np.array(np.mean(a, axis=axis, keepdims=keepdims, dtype=np_dtype))  # type: ignore [arg-type]"
+        },
+        {
+          "line": 248,
+          "text": ""
+        },
+        {
+          "line": 249,
+          "text": ""
+        }
+      ],
+      "source_sha256": "5ae498476af157512f2196368959b3a618c3537644569aa0d70ef44129294470"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 3824,
+      "function": "mean",
+      "arrays": {
+        "a": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        }
+      },
+      "context": {
+        "axis": "(0,)",
+        "dtype": "None"
+      },
+      "source_context": [
+        {
+          "line": 3822,
+          "text": "            return mean(axis=axis, dtype=dtype, out=out, **kwargs)"
+        },
+        {
+          "line": 3823,
+          "text": ""
+        },
+        {
+          "line": 3824,
+          "text": "    return _methods._mean(a, axis=axis, dtype=dtype,"
+        },
+        {
+          "line": 3825,
+          "text": "                          out=out, **kwargs)"
+        },
+        {
+          "line": 3826,
+          "text": ""
+        }
+      ],
+      "source_sha256": "6055d8e195cf7aaae417d23bda203cd35014e3db3d7c28a32e7eb71e858e945f"
+    },
+    {
+      "file": "/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/_methods.py",
+      "line": 132,
+      "function": "_mean",
+      "arrays": {
+        "a": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        },
+        "arr": {
+          "shape": [
+            60,
+            1
+          ],
+          "dtype": "float32",
+          "size": 60,
+          "sample_policy": "first at most 4096 elements; not a whole-tensor check",
+          "sample_count": 60,
+          "sample_finite_count": 60,
+          "sample_nan_count": 0,
+          "sample_posinf_count": 0,
+          "sample_neginf_count": 0,
+          "sample_finite_min": 3.4028234663852886e+38,
+          "sample_finite_max": 3.4028234663852886e+38
+        }
+      },
+      "context": {
+        "axis": "(0,)",
+        "dtype": "None"
+      },
+      "source_context": [
+        {
+          "line": 130,
+          "text": "            is_float16_result = True"
+        },
+        {
+          "line": 131,
+          "text": ""
+        },
+        {
+          "line": 132,
+          "text": "    ret = umr_sum(arr, axis, dtype, out, keepdims, where=where)"
+        },
+        {
+          "line": 133,
+          "text": "    if isinstance(ret, mu.ndarray):"
+        },
+        {
+          "line": 134,
+          "text": "        ret = um.true_divide("
+        }
+      ],
+      "source_sha256": "724facf7e63c5b8fcc2fac14bf31a02cb048d9e28f516d86502ba5077a425476"
+    }
+  ],
+  "call_stack": "  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 370, in <module>\n    raise SystemExit(main())\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 333, in main\n    suite.prepare(bundle, output / \"probe-work\", args.model)\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/openvino_suite.py\", line 257, in prepare\n    quantized = nncf.quantize(model, dataset, subset_size=60, preset=nncf.QuantizationPreset.MIXED,\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 329, in guarded_quantize\n    return recorder.guarded_call(quantize, *values, **options)\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 186, in guarded_call\n    result = function(*args, **kwargs)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/telemetry/decorator.py\", line 81, in wrapped\n    retval = fn(*args, **kwargs)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/quantize_model.py\", line 188, in quantize\n    return quantize_impl(  # type: ignore[no-any-return]\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py\", line 351, in quantize_impl\n    return quantize_fn(\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py\", line 171, in native_quantize_impl\n    quantized_model = quantization_algorithm.apply(model, graph, dataset=calibration_dataset)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/post_training/algorithm.py\", line 113, in apply\n    return self._pipeline.run_from_step(model, dataset, graph, 0, step_index_to_statistics)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py\", line 164, in run_from_step\n    step_model = self.run_step(step_index, step_statistics, step_model, step_graph)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py\", line 117, in run_step\n    current_model = algorithm.apply(current_model, current_graph, step_statistics)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/min_max/algorithm.py\", line 1065, in apply\n    statistics = tensor_collector.get_statistics()\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 392, in get_statistics\n    aggregated_values = self._aggregate()\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 352, in _aggregate\n    val = aggregator.aggregate()\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 214, in aggregate\n    return self._aggregate_impl()\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 745, in _aggregate_impl\n    aggregated = self._aggregation_fn(stacked_value, axis=self._aggregation_axes, keepdims=self._keepdims)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 773, in _aggregation_fn\n    return fns.mean(stacked_value, axis=axis, keepdims=keepdims)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/dispatcher.py\", line 96, in wrapper\n    ret = dispatched_func(*args, **kwargs)\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/numpy_numeric.py\", line 247, in _\n    return np.array(np.mean(a, axis=axis, keepdims=keepdims, dtype=np_dtype))  # type: ignore [arg-type]\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/fromnumeric.py\", line 3824, in mean\n    return _methods._mean(a, axis=axis, dtype=dtype,\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 165, in wrapped\n    self.capture(\"numpy_\" + name, exc, sys._getframe(), exc.__traceback__,\n",
+  "exception_traceback": "  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 163, in wrapped\n    return original(*values, **options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 132, in _mean\n    ret = umr_sum(arr, axis, dtype, out, keepdims, where=where)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+  "inspection_errors": []
+}

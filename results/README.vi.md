@@ -6,13 +6,16 @@ Thư mục này chứa mọi kết quả đã lưu của hai thế hệ model tr
 - **Thế hệ 1:** các model lịch sử của BanhmiTTS: baseline HiFi-GAN ResBlock2 có thành phần VITS2, Parallel-IR (MRF), Sequential-IR (SEQ) và checkpoint Piper bên ngoài.
 - **Thế hệ 2:** các model Config A có kiểm soát của tháng 10/2026: Piper_no_VITS2_cpn (ResBlock2), Piper-ParIR và Piper-SeqIR.
 
-`manifest.json` liệt kê mọi file kèm SHA-256, phân loại và giới hạn.
+`manifest.json` lập danh mục các đợt nhập lịch sử kèm SHA-256, phân loại và giới hạn.
+Các package đo về sau có provenance riêng; phiên N100 có manifest import từng file
+và script kiểm độc lập.
 
 | Mục | Nội dung |
 |---|---|
 | [Kết quả lịch sử](#kết-quả-lịch-sử-thế-hệ-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [Phép đo mới](#phép-đo-mới-thế-hệ-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
 | [Export ONNX và PTQ INT8](#export-onnx-và-ptq-int8) | `piper-ir-onnx-ptq-v2/` (hiện hành), `piper-ir-onnx-ptq/` cùng các bản ghi ONNX, PTQ và QAT lịch sử |
+| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: sáu model, FP32/INT8 chọn lọc, timing từng câu và log |
 | [So sánh bảy model](#so-sánh-bảy-model) | một bảng gồm mọi metric của bảy model trên Harvard-720 |
 | [Kích thước model](#kích-thước-model) | `model_parameters.json` |
 
@@ -94,6 +97,24 @@ Nhập ngày 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`). Byt
 | Piper_SeqIR_no_VITS2_cpn | 3.493 | 0.0696 | 0.0340 | −33,3% |
 
 Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong nội bộ phiên đó. Ở phiên này control chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10 (0.0421), nên không thể đặt giá trị đó, hay bảng RTF lịch sử, cạnh các giá trị này.
+
+## Intel N100 / OpenVINO CPU
+
+[README tiếng Việt](edge-n100-openvino/2026-11-01/README.vi.md) ·
+[English](edge-n100-openvino/2026-11-01/README.md)
+
+Phiên ngày 01-11-2026 trên N100 cài Ubuntu trực tiếp gồm sáu model nội bộ,
+FP32 và NNCF INT8 chọn lọc, bốn CPU thread, ba vòng Harvard-720: 36 cell /
+25.920 bản ghi timed. Lưu đầy đủ từng câu, execution metadata, log prepare/worker,
+lịch sử chẩn đoán và snapshot code thực thi. Đã kiểm hash và tính lại thống kê
+độc lập từ file nhận về.
+
+Piper-SeqIR có RTF trọng số thời lượng thấp nhất phiên (FP32 0,05326; INT8 0,04788).
+Output Baseline FP32 dài 87,06 giây và một quan sát thời lượng khác vẫn được giữ
+trong bảng gốc. Listening/WER/UTMOS của INT8 còn pending. Đây là inference-only
+trong power profile đã ghi; so sánh trong cùng phiên, tách khỏi PyTorch/ORT
+trên workstation bên dưới. Graph và pilot audio giữ local trong `.local/` của
+phiên đo, được Git bỏ qua và ghi rõ danh tính trong manifest.
 
 ## Export ONNX và PTQ INT8
 

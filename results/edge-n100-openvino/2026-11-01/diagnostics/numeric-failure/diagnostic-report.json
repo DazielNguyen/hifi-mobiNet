@@ -1,0 +1,45 @@
+{
+  "started_utc": "2026-10-31T21:26:47.052500+00:00",
+  "status": "numeric_issue_captured",
+  "model": "piper-seqir-no-vits2-cpn",
+  "environment": {
+    "utc": "2026-10-31T21:26:47.010942+00:00",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "load_average": [
+      0.341796875,
+      0.47265625,
+      0.28271484375
+    ],
+    "thermal_millidegrees_celsius": {
+      "/sys/class/thermal/thermal_zone0/temp": "27800",
+      "/sys/class/thermal/thermal_zone1/temp": "49000"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "script_sha256": "28090dbae369f24a22a7c04179191d959265e606c541e07e72b794e5d49ee60c",
+  "original_suite_sha256": "06dd0c87cd287554b52fd264d3d6450eb60b3bfe0bb09c2bdd7cd04adefc7c0e",
+  "models_manifest_sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+  "source_onnx_sha256": "a8d18a9e583fba2480ca5c5166b45431eb372c0cde4f8074e7d5a0e3be7b8ad6",
+  "interpretation": "diagnostic only; never certifies calibration, quality or RTF",
+  "instrumentation": "process-local NumPy _mean/_var/_std errstate and warnings.showwarning only inside nncf.quantize",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 163, in wrapped\n    return original(*values, **options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/_methods.py\", line 132, in _mean\n    ret = umr_sum(arr, axis, dtype, out, keepdims, where=where)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFloatingPointError: overflow encountered in reduce\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 333, in main\n    suite.prepare(bundle, output / \"probe-work\", args.model)\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/openvino_suite.py\", line 257, in prepare\n    quantized = nncf.quantize(model, dataset, subset_size=60, preset=nncf.QuantizationPreset.MIXED,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 329, in guarded_quantize\n    return recorder.guarded_call(quantize, *values, **options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 186, in guarded_call\n    result = function(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/telemetry/decorator.py\", line 81, in wrapped\n    retval = fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/quantize_model.py\", line 188, in quantize\n    return quantize_impl(  # type: ignore[no-any-return]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py\", line 351, in quantize_impl\n    return quantize_fn(\n           ^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/openvino/quantization/quantize_model.py\", line 171, in native_quantize_impl\n    quantized_model = quantization_algorithm.apply(model, graph, dataset=calibration_dataset)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/post_training/algorithm.py\", line 113, in apply\n    return self._pipeline.run_from_step(model, dataset, graph, 0, step_index_to_statistics)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py\", line 164, in run_from_step\n    step_model = self.run_step(step_index, step_statistics, step_model, step_graph)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/pipeline.py\", line 117, in run_step\n    current_model = algorithm.apply(current_model, current_graph, step_statistics)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/quantization/algorithms/min_max/algorithm.py\", line 1065, in apply\n    statistics = tensor_collector.get_statistics()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 392, in get_statistics\n    aggregated_values = self._aggregate()\n                        ^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 352, in _aggregate\n    val = aggregator.aggregate()\n          ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 214, in aggregate\n    return self._aggregate_impl()\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 745, in _aggregate_impl\n    aggregated = self._aggregation_fn(stacked_value, axis=self._aggregation_axes, keepdims=self._keepdims)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/common/tensor_statistics/collectors.py\", line 773, in _aggregation_fn\n    return fns.mean(stacked_value, axis=axis, keepdims=keepdims)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/dispatcher.py\", line 96, in wrapper\n    ret = dispatched_func(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/nncf/tensor/functions/numpy_numeric.py\", line 247, in _\n    return np.array(np.mean(a, axis=axis, keepdims=keepdims, dtype=np_dtype))  # type: ignore [arg-type]\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/venvs/openvino-n100/lib/python3.12/site-packages/numpy/_core/fromnumeric.py\", line 3824, in mean\n    return _methods._mean(a, axis=axis, dtype=dtype,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/diagnose_n100_calibration.py\", line 168, in wrapped\n    raise NumericDiagnosticStop(\"Captured NumPy numerical issue in \" + name) from exc\nNumericDiagnosticStop: Captured NumPy numerical issue in _mean\n",
+  "event_file": "numeric-event.json",
+  "finished_utc": "2026-10-31T21:27:36.553561+00:00"
+}

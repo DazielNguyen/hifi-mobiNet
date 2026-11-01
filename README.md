@@ -9,8 +9,11 @@ results, manifests, statistical tools and a Streamlit interface.
 
 This is newly organized code, **not a recovered training-time source tree**.
 The research concerns system-level quality and computational tradeoffs. Recipe
-and split differences prevent decoder-only causal claims. No quality equivalence,
-edge-device performance or production readiness is established here.
+and split differences prevent decoder-only causal claims. Quality equivalence and
+production readiness are not established here. A scoped
+[Intel N100 / OpenVINO CPU session](results/edge-n100-openvino/2026-11-01/README.md)
+now records six internal models in FP32 and selective INT8, with raw timings,
+logs, retained duration outliers and explicit limits; INT8 quality remains pending.
 
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. Original repository

@@ -1,0 +1,71 @@
+# Piper_no_VITS2_cpn = the hifi-mobiNet baseline WITHOUT the VITS2 components:
+# EdgeTTS Config A (vanilla Piper; BigVGAN, VITS2 and F0 flags off), trained from
+# scratch on the baseline's dataset and split. The released baseline-resblock2 is
+# Piper WITH the VITS2 components. Purpose: see whether the VITS2 components make
+# the model better or worse.
+#
+# Model values follow EdgeTTS configs/baseline-vits.yaml (vendored unchanged under
+# vendor/edgetts/configs/). Training setup follows the BanhmiTTS SEQ and MRF runs
+# (recorded hparams): 1500 epochs, 2 GPUs DDP, batch 16 per GPU, bf16, seed 1234,
+# no gradient clipping, num_workers 1, no phoneme-length filter, checkpoint every
+# epoch with best val_loss_mel + last. See docs/training/next-run.md.
+#
+# Harness choices that differ from EdgeTTS's own launcher (recorded, intentional):
+#   - split: the baseline's canonical split instead of random_split(seed);
+#   - sampler: length-bucket like the BanhmiTTS models (EdgeTTS: fixed-order loader);
+#   - no F0 is loaded at all (Config A never reads it).
+model_id: Piper_no_VITS2_cpn
+
+model:
+  inter_channels: 192
+  hidden_channels: 192
+  filter_channels: 768
+  n_heads: 2
+  n_layers: 6
+  kernel_size: 3
+  p_dropout: 0.1
+  resblock: "2"
+  resblock_kernel_sizes: [3, 5, 7]
+  resblock_dilation_sizes: [[1, 2], [2, 6], [3, 12]]
+  upsample_rates: [8, 8, 4]
+  upsample_initial_channel: 256
+  upsample_kernel_sizes: [16, 16, 8]
+  filter_length: 1024
+  hop_length: 256
+  win_length: 1024
+  mel_channels: 80
+  sample_rate: 22050
+  mel_fmin: 0.0
+  mel_fmax: null
+  segment_size: 8192
+  use_spectral_norm: false
+  use_sdp: true
+  use_bigvgan: false
+  use_vits2: false
+  use_f0: false
+
+optim:
+  learning_rate: 0.0002
+  betas: [0.8, 0.99]
+  eps: 1.0e-9
+  lr_decay: 0.999875
+  c_mel: 45
+  c_kl: 1.0
+  grad_clip: null         # no clipping, as in the SEQ/MRF runs (EdgeTTS's own Config A run used 1.0)
+
+trainer:
+  precision: bf16
+  gradient_clip_val: null # must stay null: clipping happens inside the EdgeTTS training_step
+  seed: 1234
+
+data:
+  batch_size: 16          # per GPU
+  sampler: length_bucket
+  num_workers: 1          # SEQ/MRF value; data-loading parallelism only
+  max_phoneme_ids: null   # SEQ/MRF value (Config A's 400 would remove nothing: longest row 399)
+  num_audio_samples: 5
+
+harness:
+  skip_nonfinite_updates: false   # not in EdgeTTS; unavailable with manual optimization
+  dp_health_gate: false           # not in EdgeTTS
+  save_rng_state: true

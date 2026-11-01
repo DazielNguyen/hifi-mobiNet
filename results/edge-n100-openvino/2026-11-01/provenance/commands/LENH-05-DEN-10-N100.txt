@@ -1,0 +1,428 @@
+LỆNH N100 05–10 SAU KHI ĐÃ KIỂM REPORT 03B
+Ngày: 01/11/2026. Dùng file này thay phần 05–10 của LENH-CHAN-DOAN-N100.txt cũ.
+
+KẾT QUẢ ĐÃ KIỂM TRÊN REPORT MỚI
+- ZIP report: SHA-256/CRC hợp lệ.
+- SeqIR: 60/60 mẫu audit có tensor rỗng tại /dp/flows.7/Slice_23.
+- Bản spline FP32: log prepare không còn RuntimeWarning/overflow/invalid; numeric guard hoàn tất.
+- 13/13 FP32 parity đạt; runtime có 97 INT8 weighted kernels, FP32 không có INT8 kernels.
+- Đây mới là kiểm tra kỹ thuật riêng SeqIR, chưa phải kết quả RTF hoặc chứng nhận chất lượng INT8.
+- Bước 05 sẽ chuẩn bị lại ĐỦ SÁU model với cùng code và cùng policy, trong thư mục mới.
+
+CÁCH CHẠY
+1. Mở Terminal mới trên N100 bằng Ctrl+Alt+T.
+2. Copy từng khối lệnh, từ "if bash" tới "fi"; dán Ctrl+Shift+V rồi Enter.
+3. Chờ bước hiện tại hoàn tất trước khi sang bước kế tiếp.
+4. Lộ trình: 05 -> 06 -> 07 -> 09 -> 10.
+   Bước 08 tùy chọn, chạy ở Terminal thứ hai để xem 07.
+5. Khối lệnh tự vào đúng thư mục và bật env. Không cần gõ lại đường dẫn.
+6. Nhánh if/else xử lý mã thoát để lỗi lệnh con không tự làm shell errexit đóng Terminal.
+   Nếu có lỗi vẫn dừng bước đó và in DUNG, không gọi đó là pass.
+
+PHÉP ĐO
+Sáu model nội bộ trong models.json; không gồm Piper external, Low hoặc High.
+4 luồng CPU, 3 vòng, FP32 và INT8 riêng: 36 cell x 720 câu = 25.920 lượt timed.
+Đây là RTF của model inference; không bao gồm frontend text/phoneme hoặc ghi WAV.
+INT8 dùng NNCF selective INT8, phần spline và decoder giữ FP32; Conv được chọn vẫn đủ điều kiện lượng tử hóa.
+Không gộp với artifacts cũ có cảnh báo hoặc kết quả ORT/PTQ lịch sử.
+Listening/WER/UTMOS cho INT8 vẫn cần đánh giá riêng.
+
+========================================================================
+LENH 05 - CHUẨN BỊ LẠI CẢ SÁU MODEL BẰNG CODE ĐÃ KIỂM TRONG 03B
+========================================================================
+Chạy ngay sau khi copy TXT này sang N100. Code 03B đã nằm trên N100; không cần cài lại env. Bước này prepare/calibrate, không train.
+
+--- BAT DAU LENH 05 ---
+if bash <<'N100_STEP_05'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    exec 9>.n100-workflow.lock
+    flock -n 9 || { printf 'Dang co mot lenh prepare/run khac. Khong khoi chay them.\n'; exit 1; }
+    python -B - <<'PY05'
+import hashlib
+from importlib.metadata import version
+from pathlib import Path
+expected_script = "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf"
+expected_helper = "28090dbae369f24a22a7c04179191d959265e606c541e07e72b794e5d49ee60c"
+expected_packages = {"openvino": "2026.4.1", "nncf": "3.4.0", "numpy": "2.4.6",
+                     "onnx": "1.23.2", "onnxruntime": "1.31.1"}
+if hashlib.sha256(Path("openvino_suite.py").read_bytes()).hexdigest() != expected_script:
+    raise SystemExit("DUNG: suite khong phai ban da kiem trong report 03B.")
+if hashlib.sha256(Path("diagnose_n100_calibration.py").read_bytes()).hexdigest() != expected_helper:
+    raise SystemExit("DUNG: helper guard khong khop.")
+if {k: version(k) for k in expected_packages} != expected_packages:
+    raise SystemExit("DUNG: thu vien khac moi truong 03B; can kiem tra lai.")
+print("Code/guard/versions match the verified SeqIR probe.")
+PY05
+    python -m pip check
+    edge_work="work-n100-clean-$(date -u +%Y%m%dT%H%M%SZ)"
+    edge_prepare_log="$edge_work.prepare.log"
+    test ! -e "$edge_work"
+    test ! -e "$edge_prepare_log"
+    printf '%s\n' "$edge_work" > .n100-latest-prepare-attempt.txt
+    python -m pip freeze > "$edge_work.environment-lock.txt"
+    systemd-inhibit --what=sleep:idle --mode=block --why="N100 preparation" python -B -u openvino_suite.py prepare --work "$edge_work" 2>&1 | tee "$edge_prepare_log"
+    python -B - "$edge_prepare_log" <<'PY05WARN'
+import re, sys
+from pathlib import Path
+text = Path(sys.argv[1]).read_text(errors="replace")
+pattern = r"RuntimeWarning|overflow encountered|invalid value encountered|divide by zero|Traceback"
+hits = [line for line in text.splitlines() if re.search(pattern, line, re.I)]
+if hits:
+    print("\n".join(hits[-20:]))
+    raise SystemExit("DUNG: log con van de so hoc/traceback. Giu lan nay lam evidence; chua sang 06.")
+PY05WARN
+    printf '%s\n' "$edge_work" > .n100-current-work.txt
+    printf '%s\n' "$edge_prepare_log" > .n100-current-prepare-log.txt
+    printf '\nBUOC 05 HOAN TAT - chay lenh 06 de kiem tra artifacts.\n'
+N100_STEP_05
+then
+    printf '\nLENH 05 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 05 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 05 ---
+
+KẾT QUẢ / TIẾP THEO:
+Có BUOC 05 HOAN TAT -> chạy 06. Nếu thấy DUNG/Traceback/cảnh báo số học thì giữ log, gửi lỗi; không sang 06/07.
+
+========================================================================
+LENH 06 - KIỂM ĐỦ SÁU BỘ MODEL MỚI TRƯỚC KHI ĐO
+========================================================================
+Chỉ chạy khi 05 có BUOC 05 HOAN TAT. Kiểm tất cả model, numeric guard, calibration split, parity, runtime kernels, IR hashes và WAV headers.
+
+--- BAT DAU LENH 06 ---
+if bash <<'N100_STEP_06'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    python -B - <<'PY06'
+import datetime, json, re, math, wave
+from pathlib import Path
+import openvino_suite as suite
+
+root = Path.cwd().resolve()
+data = suite.manifest(root)
+env = suite.environment()
+if suite.sha(root / "openvino_suite.py") != "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf":
+    raise SystemExit("Suite khong phai ban da kiem trong 03B.")
+if suite.sha(root / "diagnose_n100_calibration.py") != suite.DIAGNOSTIC_GUARD_SHA256:
+    raise SystemExit("Diagnostic guard thay doi.")
+work_name = Path(".n100-current-work.txt").read_text().strip()
+if Path(".n100-latest-prepare-attempt.txt").read_text().strip() != work_name:
+    raise SystemExit("Lan prepare moi nhat chua hoan tat; khong dung ket qua cu.")
+log_name = Path(".n100-current-prepare-log.txt").read_text().strip()
+work = (root / work_name).resolve()
+log = (root / log_name).resolve()
+work.relative_to(root)
+log.relative_to(root)
+if work.parent != root or not work.name.startswith("work-n100-clean-"):
+    raise SystemExit("Can thu muc work-n100-clean-... moi tu buoc 05.")
+if log.name != work.name + ".prepare.log":
+    raise SystemExit("Log khong gan voi thu muc preparation dang kiem tra.")
+if re.search(r"RuntimeWarning|overflow encountered|invalid value encountered|divide by zero|Traceback",
+             log.read_text(errors="replace"), re.I):
+    raise SystemExit("Log con canh bao/loi, khong duoc chay RTF tu bo nay.")
+if len(data["models"]) != 6:
+    raise SystemExit("Manifest khong co dung sau model.")
+checked = {root / "models.json", root / "requirements.txt", log,
+           root / ".n100-current-work.txt", root / ".n100-current-prepare-log.txt",
+           root / ".n100-latest-prepare-attempt.txt",
+           root / (work.name + ".environment-lock.txt")}
+checked.update(root.glob("*.py"))
+checked.update(p for p in (root / "metadata").rglob("*") if p.is_file())
+checked.update(p for p in (root / "reference").rglob("*") if p.is_file())
+entries = []
+for item in data["models"]:
+    folder = work / item["id"]
+    prep_path = folder / "preparation.json"
+    prep = json.loads(prep_path.read_text())
+    if prep["status"] != "prepared" or prep["model"] != item:
+        raise SystemExit("Preparation/model mismatch: " + item["id"])
+    if prep["script_sha256"] != suite.sha(root / "openvino_suite.py"):
+        raise SystemExit("Script khac script da prepare.")
+    if prep["manifest_sha256"] != suite.sha(root / "models.json"):
+        raise SystemExit("Manifest thay doi.")
+    if prep["environment"]["packages"] != env["packages"]:
+        raise SystemExit("Phien ban thu vien thay doi sau prepare.")
+    guard = prep.get("numeric_guard", {})
+    if (guard.get("status") != "no_numerical_issue_intercepted"
+            or guard.get("revision") != suite.NUMERIC_REVISION
+            or guard.get("helper_sha256") != suite.DIAGNOSTIC_GUARD_SHA256):
+        raise SystemExit("Numeric guard chua dat: " + item["id"])
+    quant = prep["quantization"]
+    if not quant.get("spline_fp32_ignored_nodes"):
+        raise SystemExit("Thieu spline FP32 scope: " + item["id"])
+    if set(quant["spline_fp32_ignored_nodes"]).intersection(quant["allowed_convolutions"]):
+        raise SystemExit("Eligible Conv bi loai bo: " + item["id"])
+    cal = prep["calibration"]
+    if (not cal["passed"] or cal["n"] != 60 or cal["train"] != 60
+            or cal["val"] != 0 or cal["test"] != 0 or cal["problems"]):
+        raise SystemExit("Calibration khong dung 60 train-only rows.")
+    if prep.get("int8_weighted_kernel_count", 0) <= 0:
+        raise SystemExit("Thieu bang chung kernel INT8: " + item["id"])
+    parity_path = folder / "fp32_openvino_parity.json"
+    parity = json.loads(parity_path.read_text())
+    if len(parity) != 13 or not all(row.get("passed") is True for row in parity):
+        raise SystemExit("FP32 parity chua dat du 13 cau: " + item["id"])
+    checked.update({prep_path, parity_path, suite.verify_file(root, item["fp32"])})
+    for precision in ("fp32", "int8"):
+        artifacts = prep["artifacts"][precision]
+        if {f["file"] for f in artifacts["files"]} != {precision + ".xml", precision + ".bin"}:
+            raise SystemExit("Thieu XML/BIN: " + item["id"] + "/" + precision)
+        if len(artifacts["smoke"]) != 3:
+            raise SystemExit("Thieu smoke record: " + item["id"] + "/" + precision)
+        for f in artifacts["files"]:
+            checked.add(suite.verify_file(folder, f))
+        runtime_path = folder / (precision + "_runtime_nodes.json")
+        nodes = json.loads(runtime_path.read_text())
+        suite.check_runtime_precision(nodes, precision)
+        if precision == "int8" and len(suite.int8_kernels(nodes)) != prep["int8_weighted_kernel_count"]:
+            raise SystemExit("INT8 kernel count mismatch.")
+        checked.add(runtime_path)
+        if {s["idx"] for s in artifacts["smoke"]} != {0, 359, 719}:
+            raise SystemExit("Sai pilot indices.")
+        for sample in artifacts["smoke"]:
+            if (sample["samples"] <= 0 or not math.isfinite(sample["peak_abs"])
+                    or not math.isfinite(sample["audio_seconds"]) or sample["audio_seconds"] <= 0):
+                raise SystemExit("Smoke record khong hop le.")
+            wav_path = folder / (precision + "_" + format(sample["idx"], "04d") + ".wav")
+            with wave.open(str(wav_path), "rb") as wav:
+                if (wav.getnchannels() != 1 or wav.getsampwidth() != 2
+                        or wav.getframerate() != item["sample_rate"]
+                        or wav.getnframes() != sample["samples"]):
+                    raise SystemExit("Pilot WAV header mismatch: " + str(wav_path))
+                if len(wav.readframes(sample["samples"])) != sample["samples"] * 2:
+                    raise SystemExit("Pilot WAV bi cat ngan: " + str(wav_path))
+            checked.add(wav_path)
+    entries.append({"model": item["id"], "int8_kernels": prep["int8_weighted_kernel_count"]})
+    print(item["id"], "PRECHECK OK", prep["int8_weighted_kernel_count"], "INT8 kernels")
+stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+prefix = "timing-validation-" + stamp
+record_path = root / (prefix + ".json")
+record = {"status": "technical_preflight_passed", "work": work.name, "models": entries,
+          "environment": env, "prepare_log": log.name,
+          "numeric_revision": suite.NUMERIC_REVISION,
+          "seqir_probe_report_zip_sha256": "2656a6d05e14bc62749c4d3f25a0be7cee6169297b6ce23f06a0771237c775b9",
+          "quality_status": "INT8 listening/WER/UTMOS not certified; no speed/quality trade-off conclusion"}
+with record_path.open("x") as stream:
+    json.dump(record, stream, indent=2, allow_nan=False)
+checked.add(record_path)
+sum_path = root / (prefix + ".sha256")
+with sum_path.open("x") as stream:
+    for p in sorted(checked):
+        p.resolve().relative_to(root)
+        stream.write(suite.sha(p) + "  " + p.relative_to(root).as_posix() + "\n")
+Path(".n100-timing-validation.txt").write_text(sum_path.name + "\n")
+print("BUOC 06 OK - kiem tra ky thuat dat; chay lenh 07 de do RTF.")
+print("INT8 quality van phai danh gia rieng.")
+PY06
+N100_STEP_06
+then
+    printf '\nLENH 06 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 06 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 06 ---
+
+KẾT QUẢ / TIẾP THEO:
+Đủ sáu PRECHECK OK và BUOC 06 OK -> chạy 07. Thiếu bất kỳ model/check nào thì dừng và gửi lỗi.
+
+========================================================================
+LENH 07 - ĐO RTF FP32/INT8 - 4 LUỒNG CPU - 3 VÒNG
+========================================================================
+Chỉ chạy khi 06 có đủ sáu PRECHECK OK và BUOC 06 OK. Đóng ứng dụng nặng; giữ nguồn điện, cooling và cấu hình nguồn ổn định; giữ Terminal mở.
+
+--- BAT DAU LENH 07 ---
+if bash <<'N100_STEP_07'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    exec 9>.n100-workflow.lock
+    flock -n 9 || { printf 'Dang co mot lenh prepare/run khac. Khong khoi chay them.\n'; exit 1; }
+    edge_validation="$(cat .n100-timing-validation.txt)"
+    sha256sum --check --quiet "$edge_validation"
+    edge_work="$(cat .n100-current-work.txt)"
+    edge_prepare_log="$(cat .n100-current-prepare-log.txt)"
+    python -m pip check
+    edge_output="results-n100-t4-$(date -u +%Y%m%dT%H%M%SZ)"
+    test ! -e "$edge_output"
+    test ! -e "$edge_output.run.log"
+    printf '%s\n' "$edge_output" > .n100-last-run.txt
+    printf '%s\n' "$edge_work" > "$edge_output.work-path.txt"
+    printf '%s\n' "$edge_prepare_log" > "$edge_output.prepare-log-path.txt"
+    printf '%s\n' "$edge_validation" > "$edge_output.validation-path.txt"
+    python -m pip freeze > "$edge_output.environment-lock.txt"
+    {
+        date -Is
+        if command -v powerprofilesctl >/dev/null 2>&1; then powerprofilesctl get; fi
+        for edge_path in /sys/devices/system/cpu/cpufreq/policy*/scaling_driver /sys/devices/system/cpu/cpufreq/policy*/scaling_governor /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference; do
+            if [ -r "$edge_path" ]; then printf '%s: %s\n' "$edge_path" "$(cat "$edge_path")"; fi
+        done
+    } > "$edge_output.power-before.txt"
+    systemd-inhibit --what=sleep:idle --mode=block --why="N100 RTF measurement" python -B -u openvino_suite.py run --work "$edge_work" --threads 4 --rounds 3 --output "$edge_output" 2>&1 | tee "$edge_output.run.log"
+    {
+        date -Is
+        if command -v powerprofilesctl >/dev/null 2>&1; then powerprofilesctl get; fi
+        for edge_path in /sys/devices/system/cpu/cpufreq/policy*/scaling_driver /sys/devices/system/cpu/cpufreq/policy*/scaling_governor /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference; do
+            if [ -r "$edge_path" ]; then printf '%s: %s\n' "$edge_path" "$(cat "$edge_path")"; fi
+        done
+    } > "$edge_output.power-after.txt"
+    printf '\nBUOC 07 HOAN TAT - chay lenh 09.\n'
+N100_STEP_07
+then
+    printf '\nLENH 07 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 07 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 07 ---
+
+KẾT QUẢ / TIẾP THEO:
+Trong lúc chạy có thể dùng 08. Có BUOC 07 HOAN TAT -> chạy 09. Nếu lỗi, dùng 08 lấy worker log; không ghi đè output cũ.
+
+========================================================================
+LENH 08 - XEM TIẾN ĐỘ / LOG LỖI (TERMINAL THỨ HAI)
+========================================================================
+Tùy chọn: mở Terminal thứ hai khi 07 đang chạy. Đây chỉ là đọc tiến độ; không khởi chạy suite khác.
+
+--- BAT DAU LENH 08 ---
+if bash <<'N100_STEP_08'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    python -B - <<'PY08'
+import json
+from pathlib import Path
+run = Path(Path(".n100-last-run.txt").read_text().strip())
+schedule_path = run / "schedule.json"
+if not schedule_path.is_file():
+    print("Chua co schedule; xem run.log ben duoi.")
+else:
+    schedule = json.loads(schedule_path.read_text())
+    done, failed, pending = 0, [], []
+    for rnd, model, precision, threads in schedule:
+        name = f"r{rnd}_{model}_{precision}_t{threads}"
+        p = run / name / "result.json"
+        try:
+            record = json.loads(p.read_text())
+        except (FileNotFoundError, json.JSONDecodeError):
+            pending.append(name)
+            continue
+        if record.get("status") == "measured":
+            done += 1
+        elif record.get("status") == "failed":
+            failed.append(name)
+        else:
+            pending.append(name)
+    print("THU MUC:", run)
+    print("SO CELL DA HOAN TAT:", done, "/", len(schedule))
+    print("CELL LOI:", failed)
+    for name in (failed or pending)[:1]:
+        log = run / (name + ".log")
+        if log.is_file():
+            print("WORKER LOG:", log)
+            print("\n".join(log.read_text(errors="replace").splitlines()[-25:]))
+    print("Chua co result.json co the la cell dang chay hoac chua bat dau.")
+PY08
+    edge_output="$(cat .n100-last-run.txt)"
+    tail -n 30 "$edge_output.run.log"
+N100_STEP_08
+then
+    printf '\nLENH 08 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 08 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 08 ---
+
+KẾT QUẢ / TIẾP THEO:
+Nếu 07 còn chạy bình thường thì đợi. Nếu 07 hoàn tất thì chạy 09. Nếu lỗi thì gửi worker log được in ra.
+
+========================================================================
+LENH 09 - KIỂM TRA TỔNG HỢP VÀ XEM HAI BẢNG RTF
+========================================================================
+Chạy sau khi 07 kết thúc thành công. Summarize kiểm tra toàn bộ lịch đo và các câu trong từng cell.
+
+--- BAT DAU LENH 09 ---
+if bash <<'N100_STEP_09'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    edge_output="$(cat .n100-last-run.txt)"
+    python -B openvino_suite.py summarize --output "$edge_output"
+    python -B - "$edge_output" <<'PY09'
+import json, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+record = json.loads((root / "summary.json").read_text())
+if record["status"] != "timing_complete":
+    raise SystemExit("Ket qua chua hoan tat.")
+for precision in ("fp32", "int8"):
+    print("\n=== " + precision.upper() + " ===")
+    print((root / ("summary_" + precision + ".csv")).read_text())
+print("BUOC 09 OK - chay lenh 10 de dong goi evidence.")
+print("RTF hoan tat khong co nghia chat luong INT8 da duoc chung nhan.")
+PY09
+N100_STEP_09
+then
+    printf '\nLENH 09 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 09 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 09 ---
+
+KẾT QUẢ / TIẾP THEO:
+Có BUOC 09 OK, summary_fp32.csv và summary_int8.csv -> chạy 10.
+
+========================================================================
+LENH 10 - ĐÓNG GÓI EVIDENCE ĐỂ COPY VỀ PC
+========================================================================
+Chạy sau khi 09 có BUOC 09 OK. Gói chứa results, ONNX nguồn, IR FP32/INT8, pilot WAVs, logs, code và metadata của phép đo.
+
+--- BAT DAU LENH 10 ---
+if bash <<'N100_STEP_10'
+    set -e
+    set -o pipefail
+    cd "$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31"
+    source "$HOME/venvs/openvino-n100/bin/activate"
+    edge_output="$(cat .n100-last-run.txt)"
+    python -B openvino_suite.py summarize --output "$edge_output"
+    edge_work="$(cat "$edge_output.work-path.txt")"
+    edge_prepare_log="$(cat "$edge_output.prepare-log-path.txt")"
+    edge_validation="$(cat "$edge_output.validation-path.txt")"
+    sha256sum --check --quiet "$edge_validation"
+    edge_validation_json="$(dirname "$edge_validation")/$(basename "$edge_validation" .sha256).json"
+    edge_export="$HOME/Downloads/N100-RESULTS-$(date -u +%Y%m%dT%H%M%SZ)"
+    mkdir "$edge_export"
+    edge_archive="$edge_export/$edge_output.tar.gz"
+    tar -czf "$edge_archive" -- "$edge_output" "$edge_work" "$edge_prepare_log" "$edge_work.environment-lock.txt" "$edge_validation" "$edge_validation_json" "$edge_output".* *.py models.json requirements.txt metadata reference models .n100-current-work.txt .n100-current-prepare-log.txt .n100-latest-prepare-attempt.txt code-history/06dd0c87cd287554b52fd264d3d6450eb60b3bfe0bb09c2bdd7cd04adefc7c0e.openvino_suite.py
+    tar -tzf "$edge_archive" > "$edge_export/archive-file-list.txt"
+    (
+        cd "$edge_export"
+        sha256sum "$edge_output.tar.gz" > "$edge_output.tar.gz.sha256"
+        sha256sum -c "$edge_output.tar.gz.sha256"
+    )
+    printf '\nBUOC 10 OK. Copy file .tar.gz va .tar.gz.sha256 trong:\n%s\n' "$edge_export"
+    xdg-open "$edge_export"
+N100_STEP_10
+then
+    printf '\nLENH 10 DA KET THUC BINH THUONG. Xem buoc tiep theo trong TXT.\n'
+else
+    printf '\nDUNG: LENH 10 KHONG HOAN TAT. Giu log va gui loi; khong sang buoc ke.\n'
+fi
+--- KET THUC LENH 10 ---
+
+KẾT QUẢ / TIẾP THEO:
+Copy .tar.gz và .tar.gz.sha256 từ thư mục Downloads/N100-RESULTS-... vừa mở về PC. Giữ bản trên N100 tới khi bản copy được kiểm.
+
+LƯU Ý KHI COPY KẾT QUẢ
+- Archive bước 10 được kiểm đọc/list tar và SHA-256; chưa tuyên bố kiểm giải nén toàn bộ ở bước này.
+- Hàm summarize xác minh đủ 36 cell và đủ 720 câu/cell trước khi đóng gói.
+- Code gốc đã được backup trong code-history; SHA256SUMS của gói gốc vẫn phản ánh code cũ.
+- Các hash của lượt đo mới được ghi trong timing-validation-*.sha256; không cập nhật manifest gốc.
+- File TXT này đã kiểm cú pháp Bash/Python, chưa chạy toàn bộ sáu-model workflow trên N100.

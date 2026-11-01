@@ -1,0 +1,54 @@
+{
+  "status": "running",
+  "environment": {
+    "utc": "2026-11-01T07:41:53.060695+00:00",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "load_average": [
+      0.22412109375,
+      0.1806640625,
+      0.07470703125
+    ],
+    "thermal_millidegrees_celsius": {
+      "/sys/class/thermal/thermal_zone0/temp": "27800",
+      "/sys/class/thermal/thermal_zone1/temp": "47000"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "started_utc": "2026-11-01T07:41:53.061983+00:00",
+  "session": "/home/<user>/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/probe-n100-empty-spline-20261101T074153.061899Z",
+  "model": "piper-seqir-no-vits2-cpn",
+  "original_suite_sha256": "06dd0c87cd287554b52fd264d3d6450eb60b3bfe0bb09c2bdd7cd04adefc7c0e",
+  "candidate_suite_sha256": "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf",
+  "patch_payload_sha256": {
+    "openvino_suite.py": "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf",
+    "audit_empty_branch.py": "845e50e1568ccd95ed44a55f3e3f6a279d219f6b9476f4dec51b4bb9231a8ffb",
+    "run_probe.py": "90dfb88f7098016d5a5abfea25bb779147ff6e0686916275ac16046cdca438dd",
+    "suite-change.diff": "574bb7fd94b690250c0b68a6b1e56147e347c8f171f91e2b0c3769508b10b3f5",
+    "LENH-03B-N100.txt": "1a8ae7cec448f9a159502c23ec582e393cdf3cc08ed0787634b2069dbdc9f7ea",
+    "static-validation.json": "96c8bbf6993f65ca89f7e235afc3af3c3c0cf2c37a5fb6b9d37a20845efe7030"
+  },
+  "scope": "masked duration spline FP32, same eligible Conv scopes",
+  "not_run": [
+    "six-model preparation",
+    "RTF benchmark",
+    "quality scoring"
+  ],
+  "original_evidence": "work-n100 and diagnostic-n100 directories are preserved"
+}

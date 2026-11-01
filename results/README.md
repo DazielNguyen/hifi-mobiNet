@@ -6,13 +6,16 @@ This folder holds every stored result of hifi-mobiNet's two generations of model
 - **Gen 1:** the historical BanhmiTTS models: HiFi-GAN ResBlock2 baseline with VITS2 components, Parallel-IR (MRF), Sequential-IR (SEQ) and the external Piper checkpoint.
 - **Gen 2:** the controlled Config A models of October 2026: Piper_no_VITS2_cpn (ResBlock2), Piper-ParIR and Piper-SeqIR.
 
-`manifest.json` lists every file with its SHA-256, classification and limits.
+`manifest.json` catalogs the historical imports with SHA-256, classification and limits.
+Later measurement packages carry their own provenance records; the N100 session
+includes a complete per-file import manifest and a standalone verifier.
 
 | Section | What it covers |
 |---|---|
 | [Historical results](#historical-results-gen-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [New measurements](#new-measurements-gen-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
 | [ONNX export and INT8 PTQ](#onnx-export-and-int8-ptq) | `piper-ir-onnx-ptq-v2/` (current), `piper-ir-onnx-ptq/` and the historical ONNX, PTQ and QAT records |
+| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: six models, FP32/selective INT8, raw timings and logs |
 | [Seven-model comparison](#seven-model-comparison) | one table with every metric of the seven Harvard-720 models |
 | [Model size](#model-size) | `model_parameters.json` |
 
@@ -94,6 +97,25 @@ Imported on 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`). Resu
 | Piper_SeqIR_no_VITS2_cpn | 3.493 | 0.0696 | 0.0340 | −33.3% |
 
 The RTF column comes from one session and is comparable only within it. The control ran 1.21× slower there than in its own 2026-10-10 session (0.0421), so neither that value nor the historical RTF table can be set beside these values.
+
+## Intel N100 / OpenVINO CPU
+
+[Session README](edge-n100-openvino/2026-11-01/README.md) ·
+[Tiếng Việt](edge-n100-openvino/2026-11-01/README.vi.md)
+
+The 2026-11-01 native N100 session contains six internal models, FP32 and selective
+NNCF INT8, four CPU threads and three Harvard-720 rounds: 36 cells / 25,920 timed
+observations. It preserves per-sentence records, execution metadata, preparation
+and worker logs, diagnostic history and the exact executed source snapshot.
+Checksums and aggregates were independently verified from the received files.
+
+Piper-SeqIR has the lowest duration-weighted RTF in this session (FP32 0.05326;
+INT8 0.04788). A Baseline FP32 output of 87.06 seconds and a second duration
+observation remain in the original tables. INT8 listening/WER/UTMOS is pending.
+These are inference-only measurements under the recorded power profile; compare
+them within this session, separately from workstation PyTorch/ORT results below.
+Graphs and pilot audio are retained locally under the session's ignored `.local/`
+directory; their identities and exclusions from Git are explicit in its manifest.
 
 ## ONNX export and INT8 PTQ
 

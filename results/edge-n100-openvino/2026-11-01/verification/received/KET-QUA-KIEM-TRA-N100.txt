@@ -1,0 +1,61 @@
+KẾT QUẢ KIỂM GÓI N100 TRÊN PC
+
+Gói nguồn: <WINDOWS_USER>\Downloads\N100-RESULTS-20261101T092554Z\results-n100-t4-20261101T080423Z.tar.gz
+Dung lượng: 1,178,279,698 bytes (1.178 GB; 1.097 GiB)
+SHA-256: 0655d3b9d4f146a0a4423f63c58e07b9c21234675f6f8f1e02e1f4f75a4b69b1
+Thời điểm kiểm UTC: 2026-11-01T09:55:04.790295+00:00
+
+Kết luận: gói nhận được toàn vẹn và dữ liệu timing đủ. Có mẫu thời lượng bất thường cần xem xét; chưa chứng nhận chất lượng giọng nói INT8.
+
+Kiểm tra mới trên PC:
+- Hash archive khớp sidecar; đọc hết gzip và kiểm CRC thành công.
+- Danh sách 345 entry khớp archive-file-list.txt; giải nén an toàn 283 file, tổng 1,390,576,679 bytes.
+- Đọc lại từng file sau giải nén: hash khớp bytes trong archive.
+- 120 mục trong timing-validation-*.sha256 đều khớp. Source ONNX, configs, metadata, IR XML/BIN và code khớp các hash liên kết.
+- Đủ 6 model x 2 precision x 3 vòng = 36 cell; đủ 720 câu mỗi cell, tổng 25,920 bản ghi.
+- Tính lại từng latency/duration/RTF và các bảng tổng hợp từ utterances.jsonl, khớp JSON/CSV đã gửi.
+- Đối chiếu 78 FP32 parity records, 36 pilot WAVs và runtime execution records; không chạy inference lại.
+- Calibration có đúng 60 câu train, không thuộc val/test, khớp metadata dataset đã đóng gói.
+- Không thấy RuntimeWarning/overflow/invalid/divide-by-zero/Traceback trong prepare log mới hoặc 36 worker logs.
+- Runtime INT8 ghi nhận 121 weighted kernels cho mỗi model nhóm lịch sử, 97 cho mỗi model nhóm Piper mới; đúng scope.
+
+Thiết lập phép đo:
+Intel N100, CPU 4 threads, batch 1, 1 stream, LATENCY; 10 warmup calls, 3 vòng Harvard-720.
+OpenVINO 2026.4.1; NNCF 3.4.0; NumPy 2.4.6; ONNX 1.23.2; ONNX Runtime 1.31.1; Python 3.12.3.
+Bắt đầu 2026-11-01T08:04:24.224763+00:00, kết thúc 2026-11-01T09:18:46.163322+00:00; khoảng 74 phút 22 giây theo records.
+Power profile trước/sau: balanced; driver intel_pstate; governor powersave; EPP balance_performance.
+
+RTF dưới đây = tổng thời gian inference / tổng thời lượng audio; càng nhỏ càng nhanh.
+Mỗi hàng/precision có 2160 observations, là 720 câu lặp 3 lần.
+Các số đều giữ nguyên toàn bộ mẫu, kể cả outlier.
+
+Model                           RTF FP32   RTF INT8   mean latency FP32/INT8 (ms)
+baseline-resblock2              0.070948   0.068799   198.36 / 211.17
+parallel-ir                     0.070531   0.067394   178.28 / 169.42
+sequential-ir                   0.060446   0.055109   154.63 / 146.34
+piper-no-vits2-cpn              0.064575   0.058704   164.43 / 147.30
+piper-parir-no-vits2-cpn        0.063224   0.058204   166.96 / 154.26
+piper-seqir-no-vits2-cpn        0.053259   0.047884   137.25 / 123.52
+
+Piper-SeqIR mới có RTF thấp nhất trong lượt đo này. INT8 RTF thấp hơn FP32 10.09%.
+Đây là kết quả quan sát của protocol hiện tại; chưa kết luận về chất lượng, ý nghĩa thống kê hay tất cả power profiles.
+
+Các điểm cần lưu ý:
+1. Baseline FP32: r1 (vòng thứ hai), Harvard idx 379 (đánh số từ 0), câu "That move means the game is over."
+   Một output dài 87.0632 giây, inference 12.5710 giây. Cùng câu ở hai vòng FP32 khác dài 2.3104 và 3.0302 giây.
+   Cell đó có peak process RSS 11.0809 GiB; hai cell FP32 còn lại khoảng 2.52 và 2.49 GiB.
+   Chưa chứng minh nguyên nhân hoặc quan hệ nhân quả giữa mẫu đó và peak RSS. Không xóa mẫu và không thay đổi bảng gốc.
+2. Piper-SeqIR FP32 r2, idx 332 có output 7.3491 giây; đã giữ lại và ghi trong duration-observations.json.
+3. Native RNG không được khóa trùng giữa FP32/INT8; thời lượng output có thể khác. Baseline INT8 có RTF thấp hơn nhưng mean latency cao hơn FP32.
+   Vì vậy không diễn giải mọi mức giảm RTF là cùng mức tăng tốc xử lý một waveform cố định.
+4. INT8 là lượng tử hóa chọn lọc enc_p/dp/flow; decoder và masked duration spline giữ floating-point. Không gọi là toàn mô hình INT8.
+5. RTF chỉ đo synchronous InferRequest.infer, chưa tính phonemization/frontend, load/compile, copy output hoặc ghi WAV.
+6. Suite lưu 36 pilot WAVs, không lưu toàn bộ timed WAVs. Chưa nghe hoặc chấm WER/UTMOS cho bản INT8 OpenVINO mới.
+   Báo cáo parity hiện có là FP32 OpenVINO so với ONNX Runtime với matched noise; không phải chứng nhận chất lượng INT8.
+7. Sensors chỉ lấy đầu/cuối cell (cao nhất ghi nhận 76 C); không có continuous throttle/frequency/swap trace để loại trừ mọi ảnh hưởng hệ thống.
+8. models.json chứa dòng trạng thái INT8 lúc tạo gói nguồn "not prepared". Trạng thái mới nằm trong work-n100-clean-.../preparation.json và kết quả từng cell.
+
+Không có file thiếu hoặc hash sai trong các mục kiểm bắt buộc của lượt timing này.
+Chưa có các evidence chất lượng/continuous telemetry nêu trên; không coi chúng là đã hoàn tất.
+Không chạy lại model, training, export, quantization, scoring hoặc benchmark trên PC. Không sửa evidence gốc, repo hoặc manuscript.
+Các JSON/CSV trong thư mục PC-VERIFICATION là bản kiểm và tính lại trên PC; original-summary-*.csv giữ nguyên bytes của bảng nguồn.
