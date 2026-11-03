@@ -1,0 +1,148 @@
+{
+  "created_utc": "2026-10-29T18:26:23.589237+00:00",
+  "model_id": "Piper_Low_no_VITS2_cpn",
+  "config_path": "configs/training/piper-low-no-vits2-cpn.yaml",
+  "config_sha256": "cd4f5176fa3c7f551c783c8fefd6d0a67ccca56833ca33d99c6928ba3c487d23",
+  "config": {
+    "data": {
+      "batch_size": 16,
+      "max_phoneme_ids": null,
+      "num_audio_samples": 5,
+      "num_workers": 1,
+      "sampler": "length_bucket"
+    },
+    "harness": {
+      "dp_health_gate": false,
+      "save_rng_state": true,
+      "skip_nonfinite_updates": false
+    },
+    "model": {
+      "filter_channels": 768,
+      "filter_length": 1024,
+      "hidden_channels": 192,
+      "hop_length": 256,
+      "inter_channels": 192,
+      "kernel_size": 3,
+      "mel_channels": 80,
+      "mel_fmax": null,
+      "mel_fmin": 0.0,
+      "n_heads": 2,
+      "n_layers": 6,
+      "p_dropout": 0.1,
+      "resblock": "2",
+      "resblock_dilation_sizes": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          12
+        ]
+      ],
+      "resblock_kernel_sizes": [
+        3,
+        5,
+        7
+      ],
+      "sample_rate": 16000,
+      "segment_size": 8192,
+      "upsample_initial_channel": 256,
+      "upsample_kernel_sizes": [
+        16,
+        16,
+        8
+      ],
+      "upsample_rates": [
+        8,
+        8,
+        4
+      ],
+      "use_bigvgan": false,
+      "use_f0": false,
+      "use_sdp": true,
+      "use_spectral_norm": false,
+      "use_vits2": false,
+      "win_length": 1024
+    },
+    "model_id": "Piper_Low_no_VITS2_cpn",
+    "optim": {
+      "betas": [
+        0.8,
+        0.99
+      ],
+      "c_kl": 1.0,
+      "c_mel": 45,
+      "eps": 1e-09,
+      "grad_clip": null,
+      "learning_rate": 0.0002,
+      "lr_decay": 0.999875
+    },
+    "trainer": {
+      "gradient_clip_val": null,
+      "precision": "bf16",
+      "seed": 1234
+    }
+  },
+  "split_sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d",
+  "split_sizes": {
+    "train": 12500,
+    "val": 100,
+    "test": 500
+  },
+  "dataset_jsonl_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+  "argv": [
+    "--model-id",
+    "Piper_Low_no_VITS2_cpn",
+    "--config",
+    "configs/training/piper-low-no-vits2-cpn.yaml",
+    "--run-dir",
+    "training_output/piper-low-no-vits2-cpn-2026-10-30",
+    "--dataset-dir",
+    "data/ljspeech-low-16000-2026-10-30/training_output/ljspeech/medium",
+    "--data-root",
+    "data/ljspeech-low-16000-2026-10-30",
+    "--split",
+    "results/manifests/canonical_split.json",
+    "--length-cache",
+    "data/ljspeech-low-16000-2026-10-30/training_output/ljspeech/medium/.spectrogram_lengths_cache.json",
+    "--accelerator",
+    "gpu",
+    "--devices",
+    "2",
+    "--strategy",
+    "ddp",
+    "--max_epochs",
+    "1500",
+    "--checkpoint-epochs",
+    "1"
+  ],
+  "resume": null,
+  "environment": {
+    "python": "3.10.20",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "torch": "2.13.0+cu130",
+    "torch_cuda": "13.0",
+    "cudnn": 92000,
+    "pytorch_lightning": "1.7.7",
+    "numpy": "1.26.4",
+    "cuda_available": true,
+    "gpus": [
+      "NVIDIA GeForce RTX 4070 Ti",
+      "NVIDIA GeForce RTX 4070 Ti"
+    ],
+    "bf16_supported": true,
+    "torch_num_threads": 12,
+    "repository_commit": "27ba3415930a281b29e7c1f38078d7b6424df8d0",
+    "repository_dirty": false,
+    "librosa": "0.11.0",
+    "torchmetrics": "0.11.4",
+    "cython": "3.2.9",
+    "scipy": "1.15.3",
+    "soundfile": "0.14.0"
+  }
+}
