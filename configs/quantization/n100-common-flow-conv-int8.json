@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "n100-common-flow-conv-int8-v1",
+  "status": "candidate_not_quantized_or_quality_validated",
+  "purpose": "Common six-model PTQ candidate preserving the encoder and duration path after reported clipped syllables in the existing selective INT8 demo.",
+  "target": "Intel N100 / Ubuntu / OpenVINO CPU",
+  "source_manifest": "results/edge-n100-openvino/2026-11-01/evidence/models.json",
+  "source_manifest_sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+  "model_ids": [
+    "baseline-resblock2", "parallel-ir", "sequential-ir",
+    "piper-no-vits2-cpn", "piper-parir-no-vits2-cpn", "piper-seqir-no-vits2-cpn"
+  ],
+  "selection": {
+    "onnx_op_types": ["Conv"],
+    "onnx_name_fullmatch": "/flow/flows\\.[0246]/(?:pre|post|enc/(?:in_layers|res_skip_layers)\\.[0-3])/Conv",
+    "expected_count_per_model": 40,
+    "require_identical_names_and_weight_shapes_across_models": true,
+    "require_constant_fp32_weights": true,
+    "openvino_op_types": ["Convolution"],
+    "resolve_from_graph_each_time": true
+  },
+  "keep_original_precision": {
+    "all_unselected_weighted_operations": true,
+    "subgraphs": ["/enc_p/", "/dp/", "/dec/", "attention inside /flow/"],
+    "other": [
+      "phoneme/relative embeddings", "normalization", "Softmax",
+      "duration spline and exp/ceil/clamp/alignment", "random noise generation",
+      "flow sigmoid/tanh/gating", "decoder upsampling and waveform output"
+    ],
+    "note": "Preserve integer shape/index/mask types; FP32 does not mean casting int64 inputs or shape operations to float. Retaining a nonlinear operation in FP32 does not undo quantization error from adjacent convolutions."
+  },
+  "proposed_nncf_settings": {
+    "method": "nncf.quantize",
+    "target_device": "CPU",
+    "preset": "MIXED",
+    "subset_size": 60,
+    "fast_bias_correction": true,
+    "calibration_file": "metadata/calibration60.candidate.jsonl",
+    "calibration_sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53",
+    "calibration_split": "canonical train only, checked against split and dataset rows",
+    "scales": [0.667, 1.0, 0.8],
+    "compress_to_fp16": false,
+    "note": "Keep the previous settings for the first scope ablation. Verify effective per-channel weight quantization and executed INT8 kernels; do not infer them solely from preset MIXED. This JSON is a protocol, not a drop-in argument for the existing suite."
+  },
+  "runtime": {
+    "device": "CPU", "PERFORMANCE_HINT": "LATENCY", "NUM_STREAMS": 1,
+    "INFERENCE_NUM_THREADS": 4, "INFERENCE_PRECISION_HINT": "f32", "EXECUTION_MODE_HINT": "ACCURACY"
+  },
+  "validation": {
+    "status": "proposed_acceptance_limits_not_measurements",
+    "all_six_must_pass_individually": true,
+    "selection_data": "canonical validation text; freeze IDs, normalizer, scorer and seeds before synthesis; do not tune on Harvard-720 or canonical test",
+    "comparison": "same text and explicit matched duration/acoustic noise, three fixed seeds; also check native deployment graphs separately",
+    "max_absolute_corpus_wer_increase": 0.01,
+    "max_absolute_macro_wer_increase": 0.01,
+    "max_mean_utmos_decrease": 0.10,
+    "require_same_output_lengths_with_matched_noise": true,
+    "no_new_reproducible_truncation_or_missing_phonemes_on_listening": true,
+    "max_mean_latency_ratio_to_same_session_fp32": 1.05,
+    "max_p95_latency_ratio_to_same_session_fp32": 1.05,
+    "max_peak_rss_ratio_to_same_session_fp32": 1.10,
+    "require_finite_non_silent_outputs_and_clean_calibration": true,
+    "record_uncertainty_and_all_failed_samples": true,
+    "note": "Limits are engineering proposals, not proof of perceptual equivalence or expected speedup. Report paired confidence intervals; an inconclusive interval does not certify equivalence. Quality failures reject promotion even if RTF improves."
+  },
+  "artifact_policy": {
+    "use_new_output_directory": true,
+    "overwrite_existing_results_or_demo_catalog": false,
+    "record_fp32_parent_ir_hashes_runtime_nodes_wavs_and_logs": true,
+    "promote_only_after_validation": true
+  }
+}
