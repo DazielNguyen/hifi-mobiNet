@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HiFi-MobiNet · Intel N100</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+  <header><span class="tag">HI-FI MOBINET / EDGE DEMO</span>
+    <h1>Giọng nói từ Intel N100</h1>
+    <p>Nhập văn bản và nghe trên máy tính. N100 tạo âm thanh bằng OpenVINO CPU.</p>
+  </header>
+  <p id="server" class="server" role="status">Đang kết nối máy chủ N100…</p>
+  <section class="panel">
+    <form id="generate">
+      <div class="choices">
+        <label>Model<select id="model" required disabled></select></label>
+        <label>Độ chính xác<select id="precision" disabled>
+          <option value="fp32">FP32</option><option value="int8">INT8 chọn lọc (thử nghiệm)</option>
+        </select></label>
+      </div>
+      <p id="int8-note" class="notice" hidden>INT8 áp dụng cho các phần đã chọn; decoder vẫn FP32. Đánh giá chất lượng INT8 còn chờ hoàn tất.</p>
+      <label for="text">Một câu tiếng Anh</label>
+      <textarea id="text" maxlength="200" rows="3" required>Today we are demonstrating speech synthesis on an Intel N100.</textarea>
+      <p class="hint">Tối đa 200 ký tự. Mỗi lần bấm sẽ tạo audio mới; lần đầu chọn model cần nạp và biên dịch.</p>
+      <button id="submit" disabled>Tạo giọng nói trên N100</button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+  <section id="result" class="panel" hidden>
+    <h2>Audio vừa tạo</h2><p id="identity"></p><p id="generated-text" class="quote"></p>
+    <audio id="audio" controls preload="metadata"></audio>
+    <div class="metrics">
+      <div><span>Inference trên N100</span><strong id="inference"></strong></div>
+      <div><span>Độ dài audio</span><strong id="duration"></strong></div>
+      <div><span>RTF câu này</span><strong id="rtf"></strong></div>
+      <div><span>Nạp + biên dịch</span><strong id="load"></strong></div>
+    </div>
+    <p class="hint">RTF = thời gian inference / độ dài audio. Số đo demo từng câu, chưa warm-up, không thay thế benchmark. Không tính mạng, tạo WAV hoặc phát audio.</p>
+    <div class="downloads"><a id="download-wav">Tải WAV</a><a id="download-record">Tải thông tin lần tạo</a></div>
+    <details><summary>Bằng chứng lần tạo trên N100</summary><pre id="record"></pre></details>
+  </section>
+  <details class="panel"><summary>Thông tin máy chủ</summary><pre id="server-record"></pre></details>
+  <footer>Text → LAN → N100 / OpenVINO CPU → WAV → trình duyệt / loa máy tính</footer>
+</main>
+</body>
+</html>

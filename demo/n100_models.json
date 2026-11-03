@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "source": "results/edge-n100-openvino/2026-11-01/evidence",
+  "expected_packages": {
+    "openvino": "2026.4.1",
+    "nncf": "3.4.0",
+    "numpy": "2.4.6",
+    "onnx": "1.23.2",
+    "onnxruntime": "1.31.1"
+  },
+  "manifest": {
+    "file": "models.json",
+    "sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3"
+  },
+  "harvard": {
+    "file": "metadata/harvard720.json",
+    "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272"
+  },
+  "models": [
+    {
+      "id": "baseline-resblock2",
+      "label": "HiFi-GAN ResBlock2",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+        "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+        "bytes": 867027556,
+        "epoch_zero_based": 1489,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/baseline-resblock2/preparation.json",
+        "sha256": "d4f0914f0b72fa6339fe51f45be106e254396e95c3b05e26fda7e2534c243683"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/baseline-resblock2/fp32.xml",
+            "sha256": "5cc1ca9c4922bc33fc31a6c62c2ff00236fd7a537cc1c11c6c07f13da5119523"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/baseline-resblock2/fp32.bin",
+            "sha256": "4b97f9978b88eb6594652e33812ba5220ac51ad2fd759f6b46352e9a3387e98d"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/baseline-resblock2/int8.xml",
+            "sha256": "3f82fbba62669f67957fe9c6625428134d2b2c0536e040e68f597a5e7e2cd729"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/baseline-resblock2/int8.bin",
+            "sha256": "dcfab5129ff698bf07642e2b93c228b4ffaccad738ec08520e02dcd6cd2a1f58"
+          }
+        ]
+      }
+    },
+    {
+      "id": "parallel-ir",
+      "label": "Parallel-IR",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1386-val_loss_mel=18.7681.ckpt",
+        "sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+        "bytes": 864465901,
+        "epoch_zero_based": 1386,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/parallel-ir/preparation.json",
+        "sha256": "75ed9f0d0cac4f6e5285c5ba26075fff6ddb18e67fa5d3ba100ac68321b40997"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/parallel-ir/fp32.xml",
+            "sha256": "81f8b5163ff761d792acc13602931afe45a790284122039405651b4784da0aff"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/parallel-ir/fp32.bin",
+            "sha256": "8ff3b9371fa807754c205f6173611c7cb157db67d5a8d2c3b0480b3baf32edfd"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/parallel-ir/int8.xml",
+            "sha256": "c79d734e6cf8094d37103acb73e92a8bb0d26abafca74969f90d73d7a16f7c5d"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/parallel-ir/int8.bin",
+            "sha256": "f2aff632672990e9808c42e1a6e467541b121d4d5a87479ed23da8878d4ebe6f"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sequential-ir",
+      "label": "Sequential-IR",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1442-val_loss_mel=19.0136.ckpt",
+        "sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+        "bytes": 863851145,
+        "epoch_zero_based": 1442,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/sequential-ir/preparation.json",
+        "sha256": "96e5e21462d17bd9497082607929cae009031e071361ca523c71d862df7b291d"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/sequential-ir/fp32.xml",
+            "sha256": "11d1e2c0a4e78a710c241e4e4523892a791d9a7461bfd20c80d346f8208ad38a"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/sequential-ir/fp32.bin",
+            "sha256": "40a7c7a33097bb472e2c70af37fe1eed92df3e5e62391e846d42b3e82109cf09"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/sequential-ir/int8.xml",
+            "sha256": "d9648bc80208e1ab879eeadf1e6fd639ca4143d412e522b461bd427f1a15de61"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/sequential-ir/int8.bin",
+            "sha256": "a3193566fd39a7454c2d70a93d3aa26cc884f0f01c4e84cd1754247b689acd9f"
+          }
+        ]
+      }
+    },
+    {
+      "id": "piper-no-vits2-cpn",
+      "label": "Piper_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1403-val_loss_mel=19.7719.ckpt",
+        "sha256": "2eeff5354c3320b12a288c0e52bdadbacce2c1ddaa14d5c739d1d4208b0f6003"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/preparation.json",
+        "sha256": "d528b4320ed64f513f72a2a1000714dd29e4f7bf7a28a8ae21efec02a8d10327"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/fp32.xml",
+            "sha256": "3e96ecbd21056cf70d1e3087cd1f0c9995533e1c9e9281274102f210d1cb9eb7"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/fp32.bin",
+            "sha256": "81ff5a884ef1da9405b08586b996f81fa850f7e32ee1c6b34731e119080cfc6d"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/int8.xml",
+            "sha256": "82d534dc786718df64caaf60cee821394bc9dcc33d73f7f94dba37b20e0dbbd7"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/int8.bin",
+            "sha256": "8d25e4d679d236c511229e52c95c4a30c93805f482e60e5998fe6d04a57cc8a2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "piper-parir-no-vits2-cpn",
+      "label": "Piper_ParIR_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1486-val_loss_mel=19.0069.ckpt",
+        "sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/preparation.json",
+        "sha256": "9621a43ee3e104f0d96879fb64569bbdc5179726e6ddfe87974902da1c38885e"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/fp32.xml",
+            "sha256": "9f7c2702ebc086c75b46524f1e991c1963c72facee63484440dbce3369c2e9bf"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/fp32.bin",
+            "sha256": "589ddba2f2f421a2bbe8126523983f643de5eba3d8d8270c2c66f603ac992b3e"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/int8.xml",
+            "sha256": "9a40d9679c84c114b79e234001b8d2d4688ae614b6112086e605acc8678baf96"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/int8.bin",
+            "sha256": "a6d8e2f42cca347cf86c22def5006639899842d3c4bbb84ce2f7729f9dd4d249"
+          }
+        ]
+      }
+    },
+    {
+      "id": "piper-seqir-no-vits2-cpn",
+      "label": "Piper_SeqIR_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1455-val_loss_mel=19.0332.ckpt",
+        "sha256": "cc1ba70d20471fe587d0099fc9d1c739bc0d8d3b08541450629eb8bb068c6637"
+      },
+      "quality_status": "INT8 listening/WER/UTMOS pending",
+      "preparation": {
+        "file": "work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/preparation.json",
+        "sha256": "3c374d43142d73cce184f3582fc8aa33740c1747789b541955008e019ae54d93"
+      },
+      "artifacts": {
+        "fp32": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/fp32.xml",
+            "sha256": "2625480b6259287ab47190854d9db39962c3649a3645a571f9a9ac9cf1cd6079"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/fp32.bin",
+            "sha256": "85a72425c27092695c3a2304743deb562867f68d076382dca5eb828da9539db5"
+          }
+        ],
+        "int8": [
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/int8.xml",
+            "sha256": "07f716362535c1cb6391c9ba92b972d1fab5b52919e2f1174cff7de9441b9b53"
+          },
+          {
+            "file": "work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/int8.bin",
+            "sha256": "0bf52ef417506b8e33f42b77782e989d50a5e6a50d59a27e41b4d4efc27f1d6d"
+          }
+        ]
+      }
+    }
+  ]
+}

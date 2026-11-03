@@ -15,6 +15,12 @@ production readiness are not established here. A scoped
 now records six internal models in FP32 and selective INT8, with raw timings,
 logs, retained duration outliers and explicit limits; INT8 quality remains pending.
 
+For a live LAN demonstration, the [N100 demo guide](demo/N100-README.vi.md)
+uses the six verified N100 model pairs: text entry and WAV playback in the PC
+browser, with inference on the N100 CPU. This separate app reuses existing IRs
+and records each generated request; target-device setup and playback must be
+checked on the N100 before presenting.
+
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. Original repository
 code and documentation owned by DazielNguyen are licensed under [MIT](LICENSE),

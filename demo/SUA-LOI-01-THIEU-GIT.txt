@@ -1,0 +1,25 @@
+SUA LOI BUOC 01: could not find git for clone of sonic-git-populate
+================================================================
+Chay tren TERMINAL N100. Can Internet de apt cai Git va build frontend.
+Copy nguyen khoi ben duoi, dan bang Ctrl+Shift+V, nhan Enter:
+
+sudo apt-get update &&
+sudo apt-get install --yes git &&
+cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" &&
+bash scripts/n100_demo/01-setup.sh
+
+Neu hoi sudo password: nhap mat khau Ubuntu. Khi go se khong hien ky tu.
+Khoi lenh dung ngay neu mot lenh that bai; cua so Terminal van mo.
+Chi khi thay BUOC 01 OK moi chay tiep BUOC 02:
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/02-check.sh
+
+Sau BUOC 02 OK, chay BUOC 03:
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/03-start.sh
+
+Cho N100 DEMO READY roi mo http://<IP-N100>:8501 tren trinh duyet PC.
+
+Co the dung khoi sua loi nay voi goi ZIP ban dau: chi cai Git vao Ubuntu,
+khong can thay script hoac sua SHA256SUMS cua goi tren N100.
+Log moi duoc luu trong ~/benchmarks/n100-demo-runs/.
