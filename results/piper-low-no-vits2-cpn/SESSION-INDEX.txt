@@ -1,0 +1,39 @@
+PIPER LOW — EVALUATION 2026-11-02
+
+Phiên hiện tại: fp32-evaluation/RESULTS.txt và fp32-evaluation/status.json.
+Các file này được controller cập nhật sau từng giai đoạn.
+
+Checkpoint được chọn sau 1.500 epoch:
+best-epoch=1351-val_loss_mel=19.1691.ckpt
+SHA-256: 7d34322f637e03eb1186fe8dd5681e1c5c0d81666d21398467f00ca441103e55
+Âm thanh Low được giữ nguyên sample rate 16.000 Hz.
+
+Phạm vi:
+- Harvard 720 câu: PyTorch FP32 và ONNX FP32, cùng frontend/scales/noise.
+- WER và CER (macro/corpus), UTMOSv2; chấm lại Medium trong cùng phiên.
+- ONNX Runtime CPU: 2/12 luồng, mỗi cấu hình 2 lượt, Low/Medium đảo thứ tự A/B.
+- RTF là đo trên PC Intel Core i7-14700 / WSL; chưa phải N100.
+- Không train High, không PTQ/INT8 trong phiên này. Human MOS vẫn chưa thực hiện.
+
+Lượt đầu (status.json ở thư mục này) DỪNG tại kiểm tra parity đầy đủ:
+- Export qua 13/13 ca parity ban đầu.
+- Toàn bộ 720 câu: hữu hạn, cùng độ dài với PyTorch, tái tạo reference 720/720.
+- 719/720 đạt ngưỡng NRMSE <= 0,001 và max absolute error <= 0,005.
+- idx 719: "When you hear the bell, come quickly."
+  NRMSE = 0,0010694584; max absolute error = 0,0010539144.
+- Kiểm tra riêng: ngay PyTorch 2 so với 12 luồng có NRMSE = 0,0014113898.
+  Fold weight norm không đổi output trong phép kiểm tra câu này.
+  Đây là bằng chứng độ nhạy số học; chưa đủ để tuyên bố mọi nguyên nhân đã được giải quyết.
+
+Phiên tiếp tục sử dụng lại đúng bytes WAV/graph đã tạo, kiểm lại hash.
+Ngưỡng parity không thay đổi; lượt đầu và lỗi được giữ nguyên.
+Số đo ONNX tiếp theo chỉ mang nhãn CHẨN ĐOÁN, không chứng nhận graph đạt parity.
+status hoàn tất nếu còn lỗi sẽ là completed_with_onnx_parity_failure.
+Điểm chất lượng chỉ có khi score_record.json/results.json tương ứng đã hoàn tất.
+
+Raw WAV/graph và log đầy đủ trong Ubuntu-24.04:
+/home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02
+/home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02-continued
+
+Checkpoint và dữ liệu training không bị sửa. Repo này nhận bản copy record/log;
+không thêm checkpoint hoặc WAV lớn vào Git. Không commit/push trong phiên eval.

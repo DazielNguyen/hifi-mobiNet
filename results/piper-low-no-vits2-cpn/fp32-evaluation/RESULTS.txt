@@ -1,0 +1,56 @@
+PIPER LOW - HARVARD720 / ONNX FP32
+Status: completed_with_onnx_parity_failure
+Current stage: None
+Raw artifacts (WSL): /home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02-continued
+Low PyTorch FP32 + ONNX FP32, Harvard720, WER/CER/UTMOSv2, PC/WSL timing; Medium control; ONNX numbers are diagnostic only: numerical parity gate FAILED
+ONNX parity: {"passed": false, "failed_ids": [719], "deployment_approved": false}
+Native Low WAV: 16000 Hz; Medium control WAV: 22050 Hz.
+RTF measurements: workstation CPU/WSL, not Intel N100.
+No INT8/PTQ or High training in this session. Human listening is still needed.
+
+06_timing_t2_A_low: completed
+06_timing_t2_A_medium: completed
+06_timing_t2_B_medium: completed
+06_timing_t2_B_low: completed
+06_timing_t12_A_low: completed
+06_timing_t12_A_medium: completed
+06_timing_t12_B_medium: completed
+06_timing_t12_B_low: completed
+07_score_low-pytorch: completed
+07_score_low-onnx: completed
+07_score_medium-control: completed
+08_compare_low-vs-medium: completed
+08_compare_onnx-vs-pytorch: completed
+
+pytorch:
+{
+  "n": 720,
+  "mean_utmosv2": 3.5509494367573,
+  "macro_wer": 0.07214726631393298,
+  "corpus_wer": 0.07018460466736329,
+  "sentences_wer_zero": 467,
+  "macro_cer": 0.032423494002503266,
+  "corpus_cer": 0.03185660897645223
+}
+
+onnx-fp32:
+{
+  "n": 720,
+  "mean_utmosv2": 3.553475038541688,
+  "macro_wer": 0.07214726631393298,
+  "corpus_wer": 0.07018460466736329,
+  "sentences_wer_zero": 467,
+  "macro_cer": 0.032455793744105337,
+  "corpus_cer": 0.03189289213018395
+}
+
+medium-control:
+{
+  "n": 720,
+  "mean_utmosv2": 3.510197503699197,
+  "macro_wer": 0.06119363275613275,
+  "corpus_wer": 0.05956112852664577,
+  "sentences_wer_zero": 502,
+  "macro_cer": 0.027518398211475326,
+  "corpus_cer": 0.02684953376147455
+}

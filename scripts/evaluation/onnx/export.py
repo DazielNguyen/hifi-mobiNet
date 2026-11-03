@@ -128,6 +128,7 @@ def main(argv=None) -> int:
         graph = onnx.load(deploy)
         onnx.helper.set_model_props(graph, {
             "label": a.label, "model_id": info["model_id"], "checkpoint_sha256": info["checkpoint_sha256"],
+            "sample_rate": str(info["sample_rate"]),
             "checkpoint_epoch_zero_based": str(info["checkpoint_epoch"]), "protocol": "docs/evaluation-onnx-ptq.md",
             "output_contract": "float32 [batch, 1, samples]", "precision": "FP32", "purpose": "deployment graph"})
         onnx.checker.check_model(graph, full_check=True)
@@ -194,7 +195,7 @@ def main(argv=None) -> int:
         for s in (samples[0], samples[359], samples[719]):
             x, xl, sc = tensors(s)
             wave = native.run(None, {"input": x.numpy(), "input_lengths": xl.numpy(), "scales": sc.numpy()})[0]
-            ok = wave.ndim == 3 and wave.shape[:2] == (1, 1) and wave.shape[2] > 4410 and bool(np.isfinite(wave).all()) \
+            ok = wave.ndim == 3 and wave.shape[:2] == (1, 1) and wave.shape[2] > int(0.2 * info["sample_rate"]) and bool(np.isfinite(wave).all()) \
                 and float(np.std(wave)) > 1e-6
             record["native_random_smoke"].append({"idx": s["idx"], "shape": list(wave.shape), "std": float(np.std(wave)),
                                                   "passed": ok})

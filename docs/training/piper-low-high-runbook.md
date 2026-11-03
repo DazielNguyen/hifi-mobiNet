@@ -1,4 +1,22 @@
-# Piper Low and High: Low approved after reboot
+# Piper Low and High: training and evaluation
+
+## Status on 2026-11-03
+
+Low completed 1,500 epochs and its Harvard-720 PyTorch evaluation. ONNX quality
+and CPU timing also completed, retaining a **719/720 numerical parity** result
+and diagnostic-only status; this is not an ONNX deployment approval. See the
+[completed Low results](../../results/piper-low-no-vits2-cpn/README.md).
+Human listening and Low INT8/N100 evaluation remain pending.
+
+After asking whether High had started, the user explicitly requested its
+launch ("cho chạy luôn"). Start the existing High plan on both GPUs, after
+committing reviewed changes and obtaining a fresh clean-tree preflight. The
+2026-10-30 identifiers below are preparation/run identifiers; actual start
+time belongs in the controller records. Use the existing environment and
+retain the unchanged High protocol. Its batch-16/GPU runtime fit must still
+be checked during startup; preserve any failed session without silently
+reducing batch size. The sections below retain the setup and reproduction
+instructions from October 30.
 
 Prepared on 2026-10-30 for comparison with `Piper_no_VITS2_cpn` (Medium)
 and the existing ParIR/SeqIR experiments. This source document records the
@@ -222,6 +240,7 @@ The user has requested full Low evaluation including ONNX before High.
 The training launcher does not perform those steps: they require a separate
 evaluation stage after checkpoint selection, following the existing corrected
 round-2 export/parity/scoring/timing protocol. Keep native 16 kHz audio and
-record scorer resampling. No evaluation or export has run yet. Human listening
+record scorer resampling. Evaluation and export are now recorded in the
+completed Low results linked above, including the remaining parity limitation. Human listening
 results must remain pending until actually collected; never mark them complete
 from an automated report.

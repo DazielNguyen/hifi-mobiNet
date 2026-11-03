@@ -1,0 +1,22 @@
+PIPER LOW - HARVARD720 / ONNX FP32
+Status: failed
+Current stage: 05_onnx_matched_noise_720
+Raw artifacts (WSL): /home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02
+Native Low WAV: 16000 Hz; Medium control WAV: 22050 Hz.
+RTF measurements: workstation CPU/WSL, not Intel N100.
+No INT8/PTQ or High training in this session. Human listening is still needed.
+
+01_low_pytorch: completed
+02_parameter_count: completed
+03_medium_pytorch_control: completed
+04_onnx_export_parity: completed
+05_onnx_matched_noise_720: completed
+
+Traceback (most recent call last):
+  File "/home/capstone/hifimobinet-train/hifi-mobiNet/scripts/evaluation/run_piper_low.py", line 202, in main
+    write(onnx_quality / "validation.json", check_synth(onnx_quality / "synth.json", manifest, 16000, matched=True))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/capstone/hifimobinet-train/hifi-mobiNet/scripts/evaluation/run_piper_low.py", line 71, in check_synth
+    raise ValueError(f"{wav}: ONNX parity / reference determinism failed")
+ValueError: training_output/piper-low-eval-2026-11-02/onnx-fp32/wavs/sample_0719.wav: ONNX parity / reference determinism failed
+

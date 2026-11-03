@@ -1,0 +1,180 @@
+{
+ "started_utc": "2026-11-02T15:56:26.310041+00:00",
+ "status": "failed",
+ "pid": 1701,
+ "cwd": "/home/capstone/hifimobinet-train/hifi-mobiNet",
+ "raw_artifacts": "/home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02",
+ "stages": [
+  {
+   "name": "01_low_pytorch",
+   "command": [
+    "/home/capstone/hifimobinet-train/venv/bin/python",
+    "scripts/evaluation/harvard/synthesize.py",
+    "--config",
+    "configs/training/piper-low-no-vits2-cpn.yaml",
+    "--checkpoint",
+    "training_output/piper-low-no-vits2-cpn-2026-10-30/checkpoints/best-epoch=1351-val_loss_mel=19.1691.ckpt",
+    "--manifest",
+    "results/manifests/harvard720.json",
+    "--wav-dir",
+    "training_output/piper-low-eval-2026-11-02/pytorch/wavs",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02/pytorch/synth.json"
+   ],
+   "started_utc": "2026-11-02T15:56:27.337764+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/01_low_pytorch.log",
+   "load_average_start": [
+    0.078125,
+    0.10009765625,
+    0.08984375
+   ],
+   "pid": 1705,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T15:57:30.960329+00:00",
+   "wall_time_s": 63.24050172499847,
+   "log_sha256": "15b9e4e1b04a67ede35024ade0a25084399f56b2d74091c52eed1d41914443b4"
+  },
+  {
+   "name": "02_parameter_count",
+   "command": [
+    "/home/capstone/hifimobinet-train/venv/bin/python",
+    "scripts/evaluation/count_parameters.py",
+    "--checkpoint",
+    "Piper_Low_no_VITS2_cpn=training_output/piper-low-no-vits2-cpn-2026-10-30/checkpoints/best-epoch=1351-val_loss_mel=19.1691.ckpt",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02/parameters.json"
+   ],
+   "started_utc": "2026-11-02T15:57:31.384269+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/02_parameter_count.log",
+   "load_average_start": [
+    7.75048828125,
+    2.322265625,
+    0.85791015625
+   ],
+   "pid": 14705,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T15:57:33.480812+00:00",
+   "wall_time_s": 1.708646447979845,
+   "log_sha256": "8aa112722e99ddc9c3cd3dda42237321950eea8a605ae5e8df29270bc98bcd37"
+  },
+  {
+   "name": "03_medium_pytorch_control",
+   "command": [
+    "/home/capstone/hifimobinet-train/venv/bin/python",
+    "scripts/evaluation/harvard/synthesize.py",
+    "--config",
+    "configs/training/piper-no-vits2-cpn.yaml",
+    "--checkpoint",
+    "training_output/piper-no-vits2-cpn/checkpoints/best-epoch=1403-val_loss_mel=19.7719.ckpt",
+    "--manifest",
+    "results/manifests/harvard720.json",
+    "--wav-dir",
+    "training_output/piper-low-eval-2026-11-02/medium-control/wavs",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02/medium-control/synth.json"
+   ],
+   "started_utc": "2026-11-02T15:57:33.883279+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/03_medium_pytorch_control.log",
+   "load_average_start": [
+    7.20947265625,
+    2.30029296875,
+    0.85888671875
+   ],
+   "pid": 14718,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T15:58:50.237248+00:00",
+   "wall_time_s": 75.94138575100806,
+   "log_sha256": "c35a7c0dde7cb8eb614c8b6558561d29f810d38b7ce0f7bbcca08bb923535d65"
+  },
+  {
+   "name": "04_onnx_export_parity",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/export.py",
+    "--label",
+    "piper-low-no-vits2-cpn",
+    "--config",
+    "configs/training/piper-low-no-vits2-cpn.yaml",
+    "--checkpoint",
+    "training_output/piper-low-no-vits2-cpn-2026-10-30/checkpoints/best-epoch=1351-val_loss_mel=19.1691.ckpt",
+    "--out-dir",
+    "training_output/piper-low-eval-2026-11-02/graphs"
+   ],
+   "started_utc": "2026-11-02T15:58:50.692831+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/04_onnx_export_parity.log",
+   "load_average_start": [
+    10.53515625,
+    4.3818359375,
+    1.697265625
+   ],
+   "pid": 27717,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T15:59:04.275613+00:00",
+   "wall_time_s": 13.120949089992791,
+   "log_sha256": "c00c3bd560458fa1c2706d8a2ed7e7c8405d6079af3428ea7e212be45ee16454"
+  },
+  {
+   "name": "05_onnx_matched_noise_720",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/synthesize.py",
+    "--precision",
+    "fp32",
+    "--config",
+    "configs/training/piper-low-no-vits2-cpn.yaml",
+    "--checkpoint",
+    "training_output/piper-low-no-vits2-cpn-2026-10-30/checkpoints/best-epoch=1351-val_loss_mel=19.1691.ckpt",
+    "--graph",
+    "training_output/piper-low-eval-2026-11-02/graphs/piper-low-no-vits2-cpn_fp32_matched_noise.onnx",
+    "--reference-synth",
+    "training_output/piper-low-eval-2026-11-02/pytorch/synth.json",
+    "--wav-dir",
+    "training_output/piper-low-eval-2026-11-02/onnx-fp32/wavs",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02/onnx-fp32/synth.json"
+   ],
+   "started_utc": "2026-11-02T15:59:04.708620+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/05_onnx_matched_noise_720.log",
+   "load_average_start": [
+    8.42236328125,
+    4.21533203125,
+    1.685546875
+   ],
+   "pid": 27748,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:01:05.139964+00:00",
+   "wall_time_s": 119.95872783998493,
+   "log_sha256": "e250778862463faeec2efa96e47c3358a54c99a02069de517ab981d5313f322d"
+  }
+ ],
+ "scope": "Low PyTorch FP32 + ONNX FP32, Harvard720, WER/CER/UTMOSv2, PC/WSL timing; Medium control",
+ "not_run": [
+  "INT8/PTQ",
+  "N100 benchmark",
+  "human MOS",
+  "Piper High training"
+ ],
+ "selected_checkpoint": {
+  "file": "best-epoch=1351-val_loss_mel=19.1691.ckpt",
+  "bytes": 845907083,
+  "sha256": "7d34322f637e03eb1186fe8dd5681e1c5c0d81666d21398467f00ca441103e55",
+  "epoch": 1351,
+  "global_step": 1062672,
+  "val_loss_mel": 19.16907501220703,
+  "selection_rule": "lowest validation val_loss_mel over all epochs (Config A rule; top-3 + last kept)",
+  "contents": "full Lightning training state; load with torch.load(weights_only=True)"
+ },
+ "current_stage": "05_onnx_matched_noise_720",
+ "finished_utc": "2026-11-02T16:01:05.650192+00:00",
+ "error": "Traceback (most recent call last):\n  File \"/home/capstone/hifimobinet-train/hifi-mobiNet/scripts/evaluation/run_piper_low.py\", line 202, in main\n    write(onnx_quality / \"validation.json\", check_synth(onnx_quality / \"synth.json\", manifest, 16000, matched=True))\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/capstone/hifimobinet-train/hifi-mobiNet/scripts/evaluation/run_piper_low.py\", line 71, in check_synth\n    raise ValueError(f\"{wav}: ONNX parity / reference determinism failed\")\nValueError: training_output/piper-low-eval-2026-11-02/onnx-fp32/wavs/sample_0719.wav: ONNX parity / reference determinism failed\n"
+}

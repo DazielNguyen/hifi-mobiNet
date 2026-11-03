@@ -1,0 +1,423 @@
+{
+ "started_utc": "2026-11-02T16:06:46.433347+00:00",
+ "status": "completed_with_onnx_parity_failure",
+ "pid": 40920,
+ "cwd": "/home/capstone/hifimobinet-train/hifi-mobiNet",
+ "raw_artifacts": "/home/capstone/hifimobinet-train/hifi-mobiNet/training_output/piper-low-eval-2026-11-02-continued",
+ "stages": [
+  {
+   "name": "06_timing_t2_A_low",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/piper-low-eval-2026-11-02-continued/graphs/piper-low-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "2",
+    "--round",
+    "A",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t2_A_low.json"
+   ],
+   "started_utc": "2026-11-02T16:06:47.587730+00:00",
+   "status": "completed",
+   "threads_env": 2,
+   "log": "logs/06_timing_t2_A_low.log",
+   "load_average_start": [
+    0.11865234375,
+    1.80126953125,
+    1.7060546875
+   ],
+   "pid": 40924,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:07:35.776766+00:00",
+   "wall_time_s": 47.694513880996965,
+   "log_sha256": "51d062344a0d5b5b3d09c2bea0801d1131fb0d130b52aaea8a7517e76da675c0"
+  },
+  {
+   "name": "06_timing_t2_A_medium",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "2",
+    "--round",
+    "A",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t2_A_medium.json"
+   ],
+   "started_utc": "2026-11-02T16:07:36.272666+00:00",
+   "status": "completed",
+   "threads_env": 2,
+   "log": "logs/06_timing_t2_A_medium.log",
+   "load_average_start": [
+    1.18505859375,
+    1.833984375,
+    1.7255859375
+   ],
+   "pid": 40930,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:08:40.772131+00:00",
+   "wall_time_s": 64.00617112102918,
+   "log_sha256": "50ce6e7b424a5f79c54ce6d372854fb2bb673bb2c0c126b18854d128c45842f5"
+  },
+  {
+   "name": "06_timing_t2_B_medium",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "2",
+    "--round",
+    "B",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t2_B_medium.json"
+   ],
+   "started_utc": "2026-11-02T16:08:41.343178+00:00",
+   "status": "completed",
+   "threads_env": 2,
+   "log": "logs/06_timing_t2_B_medium.log",
+   "load_average_start": [
+    1.75,
+    1.8701171875,
+    1.74609375
+   ],
+   "pid": 40939,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:09:45.850148+00:00",
+   "wall_time_s": 63.885263485019095,
+   "log_sha256": "3d94734eacde46bd04bd4155b8467828d6f4f677bf6d8d35a7d19861ea1cc07c"
+  },
+  {
+   "name": "06_timing_t2_B_low",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/piper-low-eval-2026-11-02-continued/graphs/piper-low-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "2",
+    "--round",
+    "B",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t2_B_low.json"
+   ],
+   "started_utc": "2026-11-02T16:09:46.454755+00:00",
+   "status": "completed",
+   "threads_env": 2,
+   "log": "logs/06_timing_t2_B_low.log",
+   "load_average_start": [
+    1.92626953125,
+    1.89794921875,
+    1.7646484375
+   ],
+   "pid": 40948,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:10:36.419904+00:00",
+   "wall_time_s": 49.333177005988546,
+   "log_sha256": "db9af399e7c394def192c914774cc566c5200281aa25ff4172dd6592ff9ff5b5"
+  },
+  {
+   "name": "06_timing_t12_A_low",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/piper-low-eval-2026-11-02-continued/graphs/piper-low-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "12",
+    "--round",
+    "A",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t12_A_low.json"
+   ],
+   "started_utc": "2026-11-02T16:10:37.037590+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/06_timing_t12_A_low.log",
+   "load_average_start": [
+    1.93212890625,
+    1.900390625,
+    1.7734375
+   ],
+   "pid": 40957,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:11:16.837516+00:00",
+   "wall_time_s": 39.17367905401625,
+   "log_sha256": "d703d5f3765721f18bb7ac808c1fc33d49817838698e1d2daac72a9c1dd559c0"
+  },
+  {
+   "name": "06_timing_t12_A_medium",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "12",
+    "--round",
+    "A",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t12_A_medium.json"
+   ],
+   "started_utc": "2026-11-02T16:11:17.483432+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/06_timing_t12_A_medium.log",
+   "load_average_start": [
+    6.3466796875,
+    3.00537109375,
+    2.14892578125
+   ],
+   "pid": 40993,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:12:08.090926+00:00",
+   "wall_time_s": 49.93823331402382,
+   "log_sha256": "1be137b62bf8cdfeb5277a88bc68f6219ca65a4580d8a90855f0e8cf00e1445c"
+  },
+  {
+   "name": "06_timing_t12_B_medium",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/onnx-ptq-v2/piper-no-vits2-cpn/piper-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "12",
+    "--round",
+    "B",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t12_B_medium.json"
+   ],
+   "started_utc": "2026-11-02T16:12:08.745010+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/06_timing_t12_B_medium.log",
+   "load_average_start": [
+    9.2080078125,
+    4.2646484375,
+    2.62158203125
+   ],
+   "pid": 41029,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:12:59.759855+00:00",
+   "wall_time_s": 50.33624840603443,
+   "log_sha256": "ff72b836f730781e3264d33190244b075a8bbb69559fb81eb2836f9b6e403434"
+  },
+  {
+   "name": "06_timing_t12_B_low",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/onnx/time_graphs.py",
+    "--graph",
+    "training_output/piper-low-eval-2026-11-02-continued/graphs/piper-low-no-vits2-cpn_fp32.onnx",
+    "--threads",
+    "12",
+    "--round",
+    "B",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/timing/t12_B_low.json"
+   ],
+   "started_utc": "2026-11-02T16:13:00.451540+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/06_timing_t12_B_low.log",
+   "load_average_start": [
+    10.50439453125,
+    5.4130859375,
+    3.107421875
+   ],
+   "pid": 41065,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:13:41.067737+00:00",
+   "wall_time_s": 39.883713010000065,
+   "log_sha256": "1773c71b4502c9b5431957f74c6938e43d35dcea901bf2d79444ebef963c21bc"
+  },
+  {
+   "name": "07_score_low-pytorch",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/harvard/score.py",
+    "--synth",
+    "training_output/piper-low-eval-2026-11-02-continued/pytorch/synth.json",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/pytorch/results.json",
+    "--record",
+    "training_output/piper-low-eval-2026-11-02-continued/pytorch/score_record.json",
+    "--cer",
+    "--progress",
+    "training_output/piper-low-eval-2026-11-02-continued/pytorch/score_progress.jsonl"
+   ],
+   "started_utc": "2026-11-02T16:13:41.768424+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/07_score_low-pytorch.log",
+   "load_average_start": [
+    11.234375,
+    6.240234375,
+    3.484375
+   ],
+   "pid": 41104,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T16:46:10.165509+00:00",
+   "wall_time_s": 1947.6655402450124,
+   "log_sha256": "3f5e524a6761d2d80ddaad1749220dc1a123d5307de46d828a01e7f2a0db1657"
+  },
+  {
+   "name": "07_score_low-onnx",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/harvard/score.py",
+    "--synth",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-fp32/synth.json",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-fp32/results.json",
+    "--record",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-fp32/score_record.json",
+    "--cer",
+    "--progress",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-fp32/score_progress.jsonl"
+   ],
+   "started_utc": "2026-11-02T16:46:10.892136+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/07_score_low-onnx.log",
+   "load_average_start": [
+    11.52880859375,
+    12.4404296875,
+    11.48095703125
+   ],
+   "pid": 54837,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T17:18:33.768418+00:00",
+   "wall_time_s": 1942.132031459012,
+   "log_sha256": "213fcaeee3390f6d675a843ccc95ff79559aef9f0eccac635028cc457a012c42"
+  },
+  {
+   "name": "07_score_medium-control",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/harvard/score.py",
+    "--synth",
+    "training_output/piper-low-eval-2026-11-02-continued/medium-control/synth.json",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/medium-control/results.json",
+    "--record",
+    "training_output/piper-low-eval-2026-11-02-continued/medium-control/score_record.json",
+    "--cer",
+    "--progress",
+    "training_output/piper-low-eval-2026-11-02-continued/medium-control/score_progress.jsonl"
+   ],
+   "started_utc": "2026-11-02T17:18:34.562778+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/07_score_medium-control.log",
+   "load_average_start": [
+    12.75390625,
+    12.2548828125,
+    12.1142578125
+   ],
+   "pid": 68564,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T17:50:53.132645+00:00",
+   "wall_time_s": 1937.7622404060094,
+   "log_sha256": "5c693bc214373d960285eb4f21eab812d03d55e8ebd7e4772de986b8e0cde8af"
+  },
+  {
+   "name": "08_compare_low-vs-medium",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/harvard/compare.py",
+    "--candidate",
+    "training_output/piper-low-eval-2026-11-02-continued/pytorch/results.json",
+    "--label",
+    "candidate",
+    "--no-historical",
+    "--extra-reference",
+    "reference=training_output/piper-low-eval-2026-11-02-continued/medium-control/results.json",
+    "--metrics",
+    "utmosv2,wer",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/low-vs-medium.json"
+   ],
+   "started_utc": "2026-11-02T17:50:53.969432+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/08_compare_low-vs-medium.log",
+   "load_average_start": [
+    11.1328125,
+    12.0048828125,
+    12.2373046875
+   ],
+   "pid": 82291,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T17:50:57.929734+00:00",
+   "wall_time_s": 3.0904134020092897,
+   "log_sha256": "e099a8f7fb8aeb90531412b2a3e95c53f4bb46e2aecb235bb57f139e2d713bf7"
+  },
+  {
+   "name": "08_compare_onnx-vs-pytorch",
+   "command": [
+    "/home/capstone/env/bin/python",
+    "scripts/evaluation/harvard/compare.py",
+    "--candidate",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-fp32/results.json",
+    "--label",
+    "candidate",
+    "--no-historical",
+    "--extra-reference",
+    "reference=training_output/piper-low-eval-2026-11-02-continued/pytorch/results.json",
+    "--metrics",
+    "utmosv2,wer",
+    "--output",
+    "training_output/piper-low-eval-2026-11-02-continued/onnx-vs-pytorch.json"
+   ],
+   "started_utc": "2026-11-02T17:50:58.766055+00:00",
+   "status": "completed",
+   "threads_env": 12,
+   "log": "logs/08_compare_onnx-vs-pytorch.log",
+   "load_average_start": [
+    10.3212890625,
+    11.82177734375,
+    12.1767578125
+   ],
+   "pid": 82315,
+   "exit_code": 0,
+   "finished_utc": "2026-11-02T17:51:02.726047+00:00",
+   "wall_time_s": 3.082901782996487,
+   "log_sha256": "5b14ed5324cf63785d638ea1ca714efd1157d97b890969dd460ac4b6edeed1d4"
+  }
+ ],
+ "scope": "Low PyTorch FP32 + ONNX FP32, Harvard720, WER/CER/UTMOSv2, PC/WSL timing; Medium control; ONNX numbers are diagnostic only: numerical parity gate FAILED",
+ "not_run": [
+  "INT8/PTQ",
+  "N100 benchmark",
+  "human MOS",
+  "Piper High training"
+ ],
+ "selected_checkpoint": {
+  "file": "best-epoch=1351-val_loss_mel=19.1691.ckpt",
+  "bytes": 845907083,
+  "sha256": "7d34322f637e03eb1186fe8dd5681e1c5c0d81666d21398467f00ca441103e55",
+  "epoch": 1351,
+  "global_step": 1062672,
+  "val_loss_mel": 19.16907501220703,
+  "selection_rule": "lowest validation val_loss_mel over all epochs (Config A rule; top-3 + last kept)",
+  "contents": "full Lightning training state; load with torch.load(weights_only=True)"
+ },
+ "reused_session": "training_output/piper-low-eval-2026-11-02",
+ "onnx_parity": {
+  "passed": false,
+  "failed_ids": [
+   719
+  ],
+  "deployment_approved": false
+ },
+ "current_stage": null,
+ "finished_utc": "2026-11-02T17:51:04.234934+00:00",
+ "note": "Measured metrics complete; human listening and N100 evaluation remain separate. High is not started."
+}

@@ -18,8 +18,28 @@ và script kiểm độc lập.
 | [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: sáu model, FP32/INT8 chọn lọc, timing từng câu và log |
 | [So sánh bảy model](#so-sánh-bảy-model) | một bảng gồm mọi metric của bảy model trên Harvard-720 |
 | [Kích thước model](#kích-thước-model) | `model_parameters.json` |
+| [Piper Low — đã hoàn tất eval](piper-low-no-vits2-cpn/README.vi.md) | Harvard-720, WER/CER/UTMOSv2, timing PC; ONNX 719/720 ca parity đạt, số đo ONNX chỉ dùng chẩn đoán. |
 
 Bản tổng quan về mọi bằng chứng SEQ/PAR và mức sẵn sàng cho paper journal nằm ở `docs/q2-readiness-seq-par.vi.md`.
+
+## Piper Low — kết quả mới hoàn tất
+
+Phiên hoàn tất ngày **03/11/2026 (UTC+7)**, đủ **720 câu Harvard**.
+Checkpoint: `best-epoch=1351-val_loss_mel=19.1691.ckpt`, chọn sau 1.500 epoch.
+
+| Model / runtime | UTMOSv2 dự đoán ↑ | Macro WER ↓ | Macro CER ↓ |
+|---|---:|---:|---:|
+| **Piper Low — PyTorch FP32, 16 kHz** | **3,5509** | **7,2147%** | **3,2423%** |
+| Piper Low — ONNX FP32, chẩn đoán | 3,5535 | 7,2147% | 3,2456% |
+| Piper Medium — PyTorch control cùng phiên | 3,5102 | 6,1194% | 2,7518% |
+
+Low có UTMOSv2 cao hơn nhưng WER/CER cũng cao hơn Medium; chưa thể kết luận
+tốt hơn ở mọi mặt. **ONNX chỉ đạt parity 719/720 câu**, nên chưa được duyệt
+triển khai. Timing trong phiên này đo trên **i7-14700 / WSL**, chưa phải N100.
+Chưa có kết quả Low INT8 hoặc human MOS.
+
+Xem [bảng đầy đủ, timing, protocol và giới hạn](piper-low-no-vits2-cpn/README.vi.md)
+hoặc [RESULTS.txt](piper-low-no-vits2-cpn/fp32-evaluation/RESULTS.txt).
 
 ## Kết quả lịch sử (thế hệ 1)
 
@@ -115,6 +135,12 @@ trong bảng gốc. Listening/WER/UTMOS của INT8 còn pending. Đây là infer
 trong power profile đã ghi; so sánh trong cùng phiên, tách khỏi PyTorch/ORT
 trên workstation bên dưới. Graph và pilot audio giữ local trong `.local/` của
 phiên đo, được Git bỏ qua và ghi rõ danh tính trong manifest.
+
+[Kiểm kê phạm vi PTQ sáu model, 02-11-2026](../docs/quantization/six-model-audit-2026-11-02/README.vi.md)
+đối chiếu sáu ONNX/IR theo hash, liệt kê từng Conv/ConvTranspose/MatMul và đề xuất
+cấu hình chung 40 Conv trong flow, giữ encoder, duration predictor và decoder
+FP32. Đây là kiểm tĩnh và protocol ứng viên; chưa có kết quả chất lượng/timing
+của cấu hình mới.
 
 ## Export ONNX và PTQ INT8
 

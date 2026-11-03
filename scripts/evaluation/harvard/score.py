@@ -4,7 +4,8 @@ Scoring code is the historical BanhmiTTS scripts/harvard/score.py (archived in t
 journal evidence package) with paths turned into arguments:
 
 - UTMOSv2 ``create_model(pretrained=True, device="cpu")``, one ``predict`` per WAV
-  on the SoundFile float32 waveform at 22,050 Hz (no extra seeding, as before);
+  on the native SoundFile float32 waveform (no extra seeding, as before);
+  the sample rate must match the synthesis record. UTMOS handles any resampling;
 - Whisper ``small`` on CPU, ``transcribe(<wav path>, language="en", fp16=False)``,
   other decoding arguments at their defaults, as before;
 - WER per sentence with JiWER: lowercase, remove punctuation, collapse spaces,
@@ -34,7 +35,17 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-SR = 22050
+def read_wave(path: Path, expected_sr: int):
+    """Reject mislabeled, empty, stereo or non-finite audio before a scorer sees it."""
+    import numpy as np
+    import soundfile as sf
+
+    wave, sr = sf.read(path, dtype="float32")
+    if sr != expected_sr:
+        raise ValueError(f"{path}: sample rate {sr} differs from synthesis {expected_sr}")
+    if wave.ndim != 1 or not wave.size or not np.isfinite(wave).all():
+        raise ValueError(f"{path}: expected nonempty finite mono audio")
+    return wave, sr
 
 
 def sha256(path: Path) -> str:
@@ -50,9 +61,13 @@ def main(argv=None) -> int:
     p.add_argument("--synth", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
     p.add_argument("--record", required=True, type=Path)
+    p.add_argument("--cer", action="store_true", help="also record character error rate with the same text normalization")
+    p.add_argument("--progress", type=Path, help="new JSONL file flushed after each sentence; never used as final results")
     a = p.parse_args(argv)
     if a.output.exists() or a.record.exists():
         p.error("output or record exists; choose new paths")
+    if a.progress and a.progress.exists():
+        p.error("progress file exists; choose a new path")
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
@@ -68,29 +83,45 @@ def main(argv=None) -> int:
 
     synth = json.loads(a.synth.read_text(encoding="utf-8"))
     rows_in = synth["rows"]
+    sample_rate = int(synth["protocol"]["sample_rate"])
     wav_dir = Path(synth["wav_dir"])  # relative paths resolve against the current directory, as at synthesis
     bad = [r["idx"] for r in rows_in if sha256(wav_dir / r["wav"]) != r["wav_sha256"]]
     if bad:
         raise SystemExit(f"WAV hashes differ from the synthesis record: {bad[:10]}")
 
+    whisper_weights = Path(os.getenv("XDG_CACHE_HOME", Path.home() / ".cache")) / "whisper" / "small.pt"
+    utmos_weights = _UTMOSV2_CHACHE / "models" / "fusion_stage3" / "fold0_s42_best_model.pth"
+    for weights in (whisper_weights, utmos_weights):
+        if not weights.is_file():
+            raise FileNotFoundError(f"offline scorer weights missing: {weights}")
     utmos_model = utmosv2.create_model(pretrained=True, device="cpu")
     asr = whisper.load_model("small", device="cpu")
     transform = jiwer.Compose([jiwer.ToLowerCase(), jiwer.RemovePunctuation(), jiwer.RemoveMultipleSpaces(),
                                jiwer.Strip(), jiwer.ReduceToListOfListOfWords()])
-    whisper_weights = Path(os.getenv("XDG_CACHE_HOME", Path.home() / ".cache")) / "whisper" / "small.pt"
-    utmos_weights = _UTMOSV2_CHACHE / "models" / "fusion_stage3" / "fold0_s42_best_model.pth"
+    char_transform = jiwer.Compose([jiwer.ToLowerCase(), jiwer.RemovePunctuation(), jiwer.RemoveMultipleSpaces(),
+                                    jiwer.Strip(), jiwer.ReduceToListOfListOfChars()]) if a.cer else None
+    if a.progress:
+        a.progress.parent.mkdir(parents=True, exist_ok=True)
+        a.progress.touch(exist_ok=False)
 
     results = []
     t_all = time.perf_counter()
     for i, s in enumerate(rows_in):
         wav_path = str(wav_dir / s["wav"])
-        wave, sr_read = sf.read(wav_path, dtype="float32")
-        assert sr_read == SR, sr_read
-        u2 = float(utmos_model.predict(data=wave, sr=SR, device="cpu"))
+        wave, sr_read = read_wave(Path(wav_path), sample_rate)
+        u2 = float(utmos_model.predict(data=wave, sr=sr_read, device="cpu"))
         hyp = asr.transcribe(wav_path, language="en", fp16=False)["text"]
         wer = jiwer.wer(s["text"], hyp, reference_transform=transform, hypothesis_transform=transform)
         results.append({**{k: s[k] for k in ("idx", "text", "synth_time_s", "audio_duration_s", "rtf")},
                         "asr_text": hyp, "utmosv2": u2, "wer": wer, "wav_sha256": s["wav_sha256"]})
+        if a.cer:
+            results[-1]["cer"] = jiwer.cer(s["text"], hyp, reference_transform=char_transform,
+                                           hypothesis_transform=char_transform)
+        if not all(np.isfinite(results[-1][k]) for k in ("utmosv2", "wer", "rtf")):
+            raise ValueError(f"sentence {s['idx']}: non-finite score")
+        if a.progress:
+            with a.progress.open("a", encoding="utf-8") as progress:
+                progress.write(json.dumps(results[-1], ensure_ascii=False, allow_nan=False) + "\n")
         if (i + 1) % 50 == 0 or i == len(rows_in) - 1:
             el = time.perf_counter() - t_all
             print(f"[score {i + 1}/{len(rows_in)}] {el / 60:.1f} min ETA {el / (i + 1) * (len(rows_in) - i - 1) / 60:.1f} min",
@@ -108,14 +139,32 @@ def main(argv=None) -> int:
             "jiwer": md.version("jiwer"),
             "wer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfWords",
             "hf_offline": True,
+            "source_sample_rate": sample_rate,
+            "utmos_input_sample_rate": sample_rate,
+            "utmos_internal_sample_rate": int(utmos_model._cfg.sr),
+            "resampling": "native WAV unchanged; UTMOS internal torchaudio Resample if rates differ; Whisper WAV loader to 16000 Hz",
+            "cer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfChars" if a.cer else None,
         },
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "torch": torch.__version__,
-                        "numpy": np.__version__, "soundfile": sf.__version__},
+                        "numpy": np.__version__, "soundfile": sf.__version__, "torch_threads": torch.get_num_threads()},
+        "script_sha256": sha256(Path(__file__)),
         "wall_time_s": time.perf_counter() - t_all,
         "results_file": a.output.name,
+        "summary": {
+            "n": len(results), "mean_utmosv2": float(np.mean([r["utmosv2"] for r in results])),
+            "macro_wer": float(np.mean([r["wer"] for r in results])),
+            "corpus_wer": jiwer.wer([r["text"] for r in results], [r["asr_text"] for r in results],
+                                    reference_transform=transform, hypothesis_transform=transform),
+            "sentences_wer_zero": sum(r["wer"] == 0 for r in results),
+        },
     }
+    if a.cer:
+        record["summary"].update(
+            macro_cer=float(np.mean([r["cer"] for r in results])),
+            corpus_cer=jiwer.cer([r["text"] for r in results], [r["asr_text"] for r in results],
+                                 reference_transform=char_transform, hypothesis_transform=char_transform))
     a.output.parent.mkdir(parents=True, exist_ok=True)
-    a.output.write_text(json.dumps(results, indent=1, ensure_ascii=False), encoding="utf-8")
+    a.output.write_text(json.dumps(results, indent=1, ensure_ascii=False, allow_nan=False), encoding="utf-8")
     record["results_sha256"] = sha256(a.output)
     a.record.parent.mkdir(parents=True, exist_ok=True)
     a.record.write_text(json.dumps(record, indent=1, ensure_ascii=False), encoding="utf-8")

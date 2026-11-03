@@ -1,0 +1,33 @@
+{
+ "utc": "2026-11-02T15:56:26.906691+00:00",
+ "checkpoint": "training_output/piper-low-no-vits2-cpn-2026-10-30/checkpoints/best-epoch=1351-val_loss_mel=19.1691.ckpt",
+ "checkpoint_sha256": "7d34322f637e03eb1186fe8dd5681e1c5c0d81666d21398467f00ca441103e55",
+ "scripts": {
+  "scripts/evaluation/run_piper_low.py": "6883b79cb5c774eb0ae2317da97d457a54eefcaa7ef5d33f53bfce3ed3ee60b1",
+  "scripts/evaluation/harvard/synthesize.py": "e25bdae2426f1c39a71214222e61f072a8b65690328d71ce51f47604a869c063",
+  "scripts/evaluation/harvard/compare.py": "d0716626d4397ef611d5ceb0ee840889029882d13ba798a72272080e36cb8123",
+  "scripts/evaluation/harvard/build_manifest.py": "51712b20a0f7db443cdd6bb32f13863c380f21f17f6c1370dc84370d9c02d2ee",
+  "scripts/evaluation/harvard/scorer_control.py": "a7274f5ad673bfc14f51cf07cc587e5774b6fae81b6d6a117834b52273ebef5d",
+  "scripts/evaluation/harvard/session_control.py": "07644143f8ed19a78ac07108e0797444c8582d5985d672cfffa5edb270426562",
+  "scripts/evaluation/harvard/dialect_check.py": "8d79528e21054e7cd6f987c7b8dd70ed93b577c348cd98c7e0697f40cf0cde95",
+  "scripts/evaluation/harvard/score.py": "f461bc0d048ac302f4ea8424af8ce279ff0692b0b3c86d16f01d393b243e6a93",
+  "scripts/evaluation/harvard/synthesize_piper.py": "13e60ead120193a61fa737c5dee9651688685b789876edb3b3f9e62277e54e19",
+  "scripts/evaluation/onnx/synthesize.py": "f0ac4be5dbccc04aa8246b4452be1fac35e9f64669c435581bdb413a58c447ca",
+  "scripts/evaluation/onnx/export.py": "b4cacf9e9dbd87494c608a5f62ca8faf2f2233b1e60f77edb9feeda8507ec24a",
+  "scripts/evaluation/onnx/time_graphs.py": "cf7e1b6d6c13e24a04a4b34345bd44a6d17e3eb1faad8894da355d36fcc4a6ec",
+  "scripts/evaluation/onnx/common.py": "23b512ffed5f928467605627e51878a4da43d0acb40836b79db39f8d8bf412c1",
+  "scripts/evaluation/onnx/profile_ops.py": "6f40593168c8113acb6e64330532ab6a8b8a11fd6d6a4253ffc2e64a0c4e8215",
+  "scripts/evaluation/onnx/quantize.py": "4e05f26e14163f724f3071ac1347adbae92fd909fa68fc9f5686749ede7cbd76",
+  "scripts/evaluation/onnx/summarize_timing.py": "86de26a2ab919098c5f36e6a3f5fa5e29b8f943d4d452787e3c90fb24b130d5d",
+  "scripts/evaluation/onnx/profile_graphs.py": "b91d357bd10afd184e659795229aaa9e6dd91b507e42e14b32c65108e149fdbc",
+  "scripts/evaluation/count_parameters.py": "3f43f1fd648cc01b3317b9e5bbb55759335b04b8ac523f5e15bcea4968c2b7b0"
+ },
+ "git_head": "27ba3415930a281b29e7c1f38078d7b6424df8d0",
+ "git_status": " M scripts/evaluation/harvard/score.py\n M scripts/evaluation/harvard/synthesize.py\n M scripts/evaluation/onnx/export.py\n?? scripts/evaluation/run_piper_low.py\n",
+ "environment_overrides": {
+  "OMP_NUM_THREADS": "12",
+  "MKL_NUM_THREADS": "12",
+  "HF_HUB_OFFLINE": "1",
+  "TRANSFORMERS_OFFLINE": "1"
+ }
+}

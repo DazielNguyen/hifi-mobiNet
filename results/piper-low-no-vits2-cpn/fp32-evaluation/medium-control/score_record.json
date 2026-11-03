@@ -1,0 +1,56 @@
+{
+ "created_utc": "2026-11-02T17:50:51.913228+00:00",
+ "synth_record": "synth.json",
+ "synth_record_sha256": "0bdcfccbf8ae9dd9ee9e578bd26fe23fb4836af2e88c373eee46554d37b1fada",
+ "model_id": "Piper_no_VITS2_cpn",
+ "checkpoint": "best-epoch=1403-val_loss_mel=19.7719.ckpt",
+ "checkpoint_sha256": "2eeff5354c3320b12a288c0e52bdadbacce2c1ddaa14d5c739d1d4208b0f6003",
+ "scorers": {
+  "utmosv2": {
+   "package": "1.3.1.dev0",
+   "config": "fusion_stage3",
+   "fold": 0,
+   "weights": "fold0_s42_best_model.pth",
+   "weights_sha256": "c8149d988e4bbf3f347e6966b5d769de347a5f8c59ffca1dc4bd4bf5b8585e57",
+   "repetitions_per_wav": 1,
+   "explicit_seed": null
+  },
+  "whisper": {
+   "package": "20250625",
+   "model": "small",
+   "weights_sha256": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794",
+   "language": "en",
+   "fp16": false,
+   "input": "WAV path (Whisper resamples to 16 kHz)"
+  },
+  "jiwer": "4.0.0",
+  "wer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfWords",
+  "hf_offline": true,
+  "source_sample_rate": 22050,
+  "utmos_input_sample_rate": 22050,
+  "utmos_internal_sample_rate": 16000,
+  "resampling": "native WAV unchanged; UTMOS internal torchaudio Resample if rates differ; Whisper WAV loader to 16000 Hz",
+  "cer_transform": "ToLowerCase, RemovePunctuation, RemoveMultipleSpaces, Strip, ReduceToListOfListOfChars"
+ },
+ "environment": {
+  "python": "3.10.20",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "torch": "2.13.0+cu130",
+  "numpy": "1.26.4",
+  "soundfile": "0.14.0",
+  "torch_threads": 12
+ },
+ "script_sha256": "f461bc0d048ac302f4ea8424af8ce279ff0692b0b3c86d16f01d393b243e6a93",
+ "wall_time_s": 1931.7566124549485,
+ "results_file": "results.json",
+ "summary": {
+  "n": 720,
+  "mean_utmosv2": 3.510197503699197,
+  "macro_wer": 0.06119363275613275,
+  "corpus_wer": 0.05956112852664577,
+  "sentences_wer_zero": 502,
+  "macro_cer": 0.027518398211475326,
+  "corpus_cer": 0.02684953376147455
+ },
+ "results_sha256": "004d3b2da8aed04175882b458d4f9206020c7c49dfc4839838b425e5c095d10c"
+}

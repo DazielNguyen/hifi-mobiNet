@@ -18,8 +18,28 @@ includes a complete per-file import manifest and a standalone verifier.
 | [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: six models, FP32/selective INT8, raw timings and logs |
 | [Seven-model comparison](#seven-model-comparison) | one table with every metric of the seven Harvard-720 models |
 | [Model size](#model-size) | `model_parameters.json` |
+| [Piper Low — evaluation completed](piper-low-no-vits2-cpn/README.md) | Harvard-720, WER/CER/UTMOSv2, workstation timing; ONNX passes 719/720 parity cases and remains diagnostic. |
 
 The overview of all SEQ/PAR evidence and its readiness for a journal paper is `docs/q2-readiness-seq-par.md`.
+
+## Piper Low — newly completed results
+
+Completed on **November 3, 2026 (UTC+7)**, covering **720 Harvard utterances**.
+Checkpoint: `best-epoch=1351-val_loss_mel=19.1691.ckpt`, selected after 1500 epochs.
+
+| Model / runtime | Predicted UTMOSv2 ↑ | Macro WER ↓ | Macro CER ↓ |
+|---|---:|---:|---:|
+| **Piper Low — PyTorch FP32, 16 kHz** | **3.5509** | **7.2147%** | **3.2423%** |
+| Piper Low — ONNX FP32, diagnostic | 3.5535 | 7.2147% | 3.2456% |
+| Piper Medium — same-session PyTorch control | 3.5102 | 6.1194% | 2.7518% |
+
+Low has higher predicted UTMOSv2 but also higher WER/CER than Medium; it is
+not uniformly better. **ONNX passes numerical parity for only 719/720 cases**
+and is not approved for deployment. Timing is on **i7-14700 / WSL**, not N100.
+Low INT8 and human MOS results remain pending.
+
+See [full tables, timing, protocol and limitations](piper-low-no-vits2-cpn/README.md)
+or [RESULTS.txt](piper-low-no-vits2-cpn/fp32-evaluation/RESULTS.txt).
 
 ## Historical results (Gen 1)
 
@@ -116,6 +136,12 @@ These are inference-only measurements under the recorded power profile; compare
 them within this session, separately from workstation PyTorch/ORT results below.
 Graphs and pilot audio are retained locally under the session's ignored `.local/`
 directory; their identities and exclusions from Git are explicit in its manifest.
+
+[Six-model quantization scope audit, 2026-11-02](../docs/quantization/six-model-audit-2026-11-02/README.vi.md)
+inspects the six hash-bound ONNX/IR graphs and lists every Conv/ConvTranspose/MatMul.
+It proposes a common 40-Conv flow-only candidate preserving the encoder, duration
+predictor and decoder in FP32. This is a static audit and an unvalidated protocol,
+not a new INT8 quality or timing result.
 
 ## ONNX export and INT8 PTQ
 

@@ -9,7 +9,7 @@ journal evidence package):
 - ``torch.manual_seed(1234)`` before every utterance, so each sample's noise does
   not depend on order;
 - the timed region is the forward call only; RTF = synthesis time / audio duration;
-- audio peak-normalised to int16 and written as mono 22,050 Hz PCM16 WAV.
+- audio peak-normalised to int16 and written as mono PCM16 WAV at the checkpoint's native sample rate.
 
 The module is built from the training config and the checkpoint's state dict is
 loaded strictly with ``torch.load(weights_only=True)``. Hyper-parameters stored in
@@ -105,6 +105,8 @@ def main(argv=None) -> int:
             audio = module(x, x_lengths, [NOISE_SCALE, LENGTH_SCALE, NOISE_SCALE_W])
         synth_time = time.perf_counter() - t0
         wave = audio.squeeze().numpy().astype("float32")
+        if wave.ndim != 1 or not wave.size or not np.isfinite(wave).all():
+            raise ValueError(f"sentence {s['idx']}: expected nonempty finite mono output")
         duration = len(wave) / sample_rate
         wav_path = a.wav_dir / f"sample_{i:04d}.wav"
         wavfile.write(str(wav_path), sample_rate, utils.audio_float_to_int16(wave))
