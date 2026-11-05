@@ -7,6 +7,7 @@ cáo cũ không mô tả code hiện hành.
 
 | Tài liệu | Vai trò |
 |---|---|
+| [Benchmark N100 common97, 05/11](../../results/edge-n100-openvino/2026-11-05-common97/README.vi.md) | 12.960 bản ghi timed; RTF giảm 12,73–13,88%; đã kiểm work N100: preparation/IR, cạnh FQ và 54 WAV, gồm 18 WAV INT8 >10 giây; chất lượng độc lập còn pending |
 | [Tích hợp common97, 05/11](piper-common97-integration-2026-11-05/README.vi.md) | Phạm vi INT8 đang dùng, kiểm thử code thực và cách cập nhật N100 |
 | [Nguyên nhân lỗi đuôi và cách sửa, 04/11](piper-ptq-tail-fix-2026-11-04/README.vi.md) | Báo cáo chính: CumSum FQ, can thiệp đối chứng, phổ WAV, kết quả cũ/mới |
 | [Kiểm kê ba cấu hình, 04/11](piper-three-configs-2026-11-04/README.vi.md) | Phạm vi kiến trúc, ứng viên quantization, inventory operator và weights |

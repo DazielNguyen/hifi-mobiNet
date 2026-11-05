@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "target": "Intel N100 / Ubuntu Linux / OpenVINO CPU",
+  "created_utc": "2026-10-31T02:36:51.758638+00:00",
+  "models": [
+    {
+      "id": "baseline-resblock2",
+      "label": "HiFi-GAN ResBlock2",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1489-val_loss_mel=19.7882.ckpt",
+        "sha256": "921b0f6d7bfc82e40a056bcf095ae11efeec576c3f21280eb9cd15712b0ad7b2",
+        "bytes": 867027556,
+        "epoch_zero_based": 1489,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "historical_quality_results_bound": false,
+      "fp32": {
+        "file": "models/baseline-resblock2/fp32.onnx",
+        "sha256": "fdfda3ac0ce86ca701a9dfdda7c6200b20bd1d83a6d6ef34015847600402ad6f"
+      },
+      "config": {
+        "file": "reference/configs/baseline-resblock2.json",
+        "sha256": "25fca48164177391f96bff94ac511beeda167c31e378fa26246f0c6b2d31bb68"
+      }
+    },
+    {
+      "id": "parallel-ir",
+      "label": "Parallel-IR",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1386-val_loss_mel=18.7681.ckpt",
+        "sha256": "7ab302dcd80af326b567423751847855c958d1ab9d2a269ba3f7ca46e8fad466",
+        "bytes": 864465901,
+        "epoch_zero_based": 1386,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "historical_quality_results_bound": false,
+      "fp32": {
+        "file": "models/parallel-ir/fp32.onnx",
+        "sha256": "14c9f547208403b4dc0248d08aaa1db6522dad93aa2731c72c59c0bbeae869e7"
+      },
+      "config": {
+        "file": "reference/configs/parallel-ir.json",
+        "sha256": "f199f3a57fd876ac6401eae67760e1d40ae02a6bdcb529148fe7b5a1d9e9b72e"
+      }
+    },
+    {
+      "id": "sequential-ir",
+      "label": "Sequential-IR",
+      "group": "historical Q05 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1442-val_loss_mel=19.0136.ckpt",
+        "sha256": "c4670261a9c775da54691ccccd6d6f20e10aed4aec99638eaa3125877917f385",
+        "bytes": 863851145,
+        "epoch_zero_based": 1442,
+        "selection_rule": "minimum recorded validation mel loss; full model-selection independence unresolved",
+        "url": null,
+        "sharing_rights": "author_permission_confirmed_license_and_storage_pending",
+        "load_policy": "Not loaded by this repository; no unsafe pickle deserialization"
+      },
+      "historical_quality_results_bound": false,
+      "fp32": {
+        "file": "models/sequential-ir/fp32.onnx",
+        "sha256": "4052629a2625085876ed8de922bc30e04ee9b35e06ca571126e4124d662a17d3"
+      },
+      "config": {
+        "file": "reference/configs/sequential-ir.json",
+        "sha256": "a7f2edc5a06e0a90d8d65118980e03ffb1c7343bd9bcb18e86ec4730cc5f3f96"
+      }
+    },
+    {
+      "id": "piper-no-vits2-cpn",
+      "label": "Piper_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1403-val_loss_mel=19.7719.ckpt",
+        "sha256": "2eeff5354c3320b12a288c0e52bdadbacce2c1ddaa14d5c739d1d4208b0f6003"
+      },
+      "fp32": {
+        "file": "models/piper-no-vits2-cpn/fp32.onnx",
+        "sha256": "b4a95a82a009bd8b88c979b9ce04a82f3bb8bc33c3ba143d33bdbbd01dc2f59c"
+      },
+      "config": {
+        "file": "reference/configs/training/piper-no-vits2-cpn.yaml",
+        "sha256": "2d9c1f47b35b17af9e7b262b995e8d19a82c9b6b444f5d440c7e3701f3d37135"
+      },
+      "export_record": {
+        "file": "reference/piper-no-vits2-cpn/export_record.json",
+        "sha256": "e8efc496f84c4ef1d27c861e48ae8e97cf600a421e0b6879fcae11c9d95cb42b"
+      }
+    },
+    {
+      "id": "piper-parir-no-vits2-cpn",
+      "label": "Piper_ParIR_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1486-val_loss_mel=19.0069.ckpt",
+        "sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee"
+      },
+      "fp32": {
+        "file": "models/piper-parir-no-vits2-cpn/fp32.onnx",
+        "sha256": "506e76dc26804fe2c90619e5e98b9d8e745020324d953f5c8efc6e01e8a7c353"
+      },
+      "config": {
+        "file": "reference/configs/training/piper-parir-no-vits2-cpn.yaml",
+        "sha256": "5e74ae0c5a65b1ee391623d42581605adeb8fae860b02f272e1823a08dbc6f47"
+      },
+      "export_record": {
+        "file": "reference/piper-parir-no-vits2-cpn/export_record.json",
+        "sha256": "4002f8cecac1120f0e00e3be314dacbbccda91157335a7df3a3b3701956d2b48"
+      }
+    },
+    {
+      "id": "piper-seqir-no-vits2-cpn",
+      "label": "Piper_SeqIR_no_VITS2_cpn",
+      "group": "Config A, round-2 FP32",
+      "sample_rate": 22050,
+      "checkpoint": {
+        "filename": "best-epoch=1455-val_loss_mel=19.0332.ckpt",
+        "sha256": "cc1ba70d20471fe587d0099fc9d1c739bc0d8d3b08541450629eb8bb068c6637"
+      },
+      "fp32": {
+        "file": "models/piper-seqir-no-vits2-cpn/fp32.onnx",
+        "sha256": "a8d18a9e583fba2480ca5c5166b45431eb372c0cde4f8074e7d5a0e3be7b8ad6"
+      },
+      "config": {
+        "file": "reference/configs/training/piper-seqir-no-vits2-cpn.yaml",
+        "sha256": "88e918674b169b366224145f4637d7d1854c6ff39ce44ac28817ff70f14d8aeb"
+      },
+      "export_record": {
+        "file": "reference/piper-seqir-no-vits2-cpn/export_record.json",
+        "sha256": "99132a12fe8115ebf2faa7c8915e98185f690e9a777a51929de539758f19a3eb"
+      }
+    }
+  ],
+  "harvard": {
+    "file": "metadata/harvard720.json",
+    "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272"
+  },
+  "split": {
+    "file": "metadata/canonical_split.json",
+    "sha256": "e678cf436075a10bb68c9a1b435f33c4a40ff1f095b7b78ac12f546c5f12ae9d"
+  },
+  "calibration": {
+    "file": "metadata/calibration60.candidate.jsonl",
+    "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53"
+  },
+  "calibration_dataset_rows": {
+    "file": "metadata/calibration_dataset_rows.jsonl",
+    "sha256": "ff9c08a738396824149547a4882dad2bbb681804949e9987695e06ac75b72bbd",
+    "derived_from_dataset_sha256": "f4a72ae0ed238dfdb3ca995b6678dfe33fe3b59297331d6551a4d6960102295b",
+    "source_rows": 13100
+  },
+  "int8": "not prepared; uniform selective NNCF calibration must run on N100",
+  "calibration_validation": {
+    "n": 60,
+    "train": 60,
+    "val": 0,
+    "test": 0,
+    "problems": [],
+    "passed": true
+  }
+}
