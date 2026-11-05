@@ -7,6 +7,7 @@ import hashlib
 import importlib.metadata as metadata
 import io
 import json
+import math
 import os
 import platform
 import socket
@@ -18,14 +19,18 @@ import wave
 from datetime import datetime, timezone
 from pathlib import Path
 
+from hifimobinet import common97
+
 ROOT = Path(__file__).resolve().parents[2]
-CATALOG = ROOT / "demo/n100_models.json"
+_active_catalog = ROOT / ".local/n100-common97-models.json"
+CATALOG = Path(os.environ.get("HIFIMOBINET_N100_CATALOG", str(
+    _active_catalog if _active_catalog.is_file() else ROOT / "demo/n100_models.json")))
 PACKAGE = "hifi-mobiNet-n100-openvino-2026-10-31"
 SCALES = [0.667, 1.0, 0.8]
 CONFIG = {"PERFORMANCE_HINT": "LATENCY", "NUM_STREAMS": 1,
           "INFERENCE_NUM_THREADS": 4, "INFERENCE_PRECISION_HINT": "f32",
           "EXECUTION_MODE_HINT": "ACCURACY"}
-MAX_TEXT = 200
+MAX_TEXT = 300  # Same limit as the shared phonemizer; includes the 289-char stress case.
 
 
 def sha(path):
@@ -101,22 +106,55 @@ def check_frontend(rows):
 
 
 def preflight(bundle, catalog=None):
+    catalog_from_file = catalog is None
     catalog = catalog or read(CATALOG)
     host = host_info()
     if host["packages"] != catalog["expected_packages"]:
         raise ValueError("N100 runtime versions differ from the verified measurement environment. "
-                         "Restore the recorded versions; do not prepare new models for this demo.")
+                         "Restore the recorded versions before preparing or serving common97.")
     verify_file(bundle, catalog["manifest"])
     rows = read(verify_file(bundle, catalog["harvard"]))
     for item in catalog["models"]:
         verify_file(bundle, item["preparation"])
-        for precision in ("fp32", "int8"):
+        if "int8" in item["artifacts"]:
+            check_common97_preparation(read(verify_file(bundle, item["int8_preparation"])), item)
+        for precision in item["artifacts"]:
             for artifact in item["artifacts"][precision]:
                 verify_file(bundle, artifact)
     return {"status": "ready", "checked_utc": utc(), "host": host,
-            "catalog_sha256": sha(CATALOG), "model_count": len(catalog["models"]),
+            "catalog_sha256": sha(CATALOG) if catalog_from_file else None, "model_count": len(catalog["models"]),
             "frontend": check_frontend(rows), "bundle": str(bundle),
             "inference_performed": False}
+
+
+def check_common97_preparation(prep, item):
+    if (item.get("int8_recipe") != common97.RECIPE or item["id"] not in common97.MODEL_IDS
+            or prep.get("status") != "prepared" or prep.get("policy") != common97.identity()
+            or prep.get("model", {}).get("id") != item["id"]
+            or prep.get("model", {}).get("checkpoint") != item["checkpoint"]
+            or prep.get("model", {}).get("sample_rate") != item["sample_rate"]
+            or not prep.get("graph_audit", {}).get("passed")
+            or prep.get("graph_audit", {}).get("fake_quantize_count") != 96
+            or not prep.get("runtime_audit", {}).get("passed")
+            or prep.get("runtime_audit", {}).get("int8_weighted_kernel_count") != 97
+            or prep.get("alignment_validation", {}).get("status") != "passed"):
+        raise ValueError("INT8 requires verified common97 preparation; legacy INT8 is disabled")
+    common97.check_source(item["id"], prep["model"]["fp32"]["sha256"])
+    regression = common97.policy_path().with_name("piper-common97-regression.json")
+    if (prep.get("regression_sha256") != sha(regression)
+            or prep.get("numeric_guard_sha256") != sha(Path(__file__).with_name("ptq_numeric_guard.py"))):
+        raise ValueError("common97 regression or numerical guard version mismatch")
+    cases = prep["alignment_validation"].get("cases", [])
+    expected_cases = {(r["id"], scale) for r in read(regression) for scale in (1.0, 1.3)}
+    if (len(cases) != len(expected_cases)
+            or {(c["case"], c["length_scale"]) for c in cases} != expected_cases
+            or any(c["min_coverage"] != 1 or c["max_coverage"] != 1 or c["zero_alignment_frames"] != 0
+                   or not math.isfinite(c["audio_seconds"]) or c["audio_seconds"] <= 0 for c in cases)
+            or max(c["audio_seconds"] for c in cases) <= 10):
+        raise ValueError("common97 long-text alignment regression incomplete")
+    expected = {f["sha256"] for f in prep["artifacts"]["int8"]["files"]}
+    if expected != {f["sha256"] for f in item["artifacts"]["int8"]}:
+        raise ValueError("common97 catalog artifacts differ from preparation")
 
 
 def precision_evidence(compiled, precision):
@@ -182,6 +220,7 @@ class Engine:
         self.bundle = Path(bundle).resolve()
         self.catalog = read(CATALOG)
         self.preflight = preflight(self.bundle, self.catalog)
+        self.preflight["catalog_sha256"] = sha(CATALOG)
         self.models = {m["id"]: m for m in self.catalog["models"]}
         import openvino as ov
         self.ov = ov
@@ -209,6 +248,7 @@ class Engine:
         weights = next(p for p in paths if p.suffix == ".bin")
         start = time.perf_counter()
         model = self.core.read_model(str(xml), str(weights))
+        graph_audit = common97.audit_graph(model, model_id) if precision == "int8" else None
         compiled = self.core.compile_model(model, "CPU", CONFIG)
         elapsed = time.perf_counter() - start
         devices = list(compiled.get_property("EXECUTION_DEVICES"))
@@ -219,12 +259,14 @@ class Engine:
         self.compiled = compiled
         self.request = compiled.create_infer_request()
         self.active = (model_id, precision)
-        self.execution = {"devices": devices}
+        self.execution = {"devices": devices, "graph_audit": graph_audit}
         return elapsed, True
 
     def synthesize(self, text, model_id, precision):
         if model_id not in self.models or precision not in ("fp32", "int8"):
             raise ValueError("Choose a listed model and precision")
+        if precision not in self.models[model_id]["artifacts"]:
+            raise ValueError("INT8 common97 is not prepared for this model; use FP32")
         if not isinstance(text, str) or not text.strip() or len(text) > MAX_TEXT:
             raise ValueError(f"Enter 1–{MAX_TEXT} characters of English text")
         import numpy as np
@@ -237,7 +279,9 @@ class Engine:
                   "text": text, "model_id": model_id, "precision": precision,
                   "sample_rate": item["sample_rate"], "host": self.preflight["host"],
                   "artifacts": item["artifacts"][precision], "checkpoint": item["checkpoint"],
-                  "preparation": item["preparation"], "config": CONFIG, "scales": SCALES,
+                  "preparation": item.get("int8_preparation", item["preparation"]) if precision == "int8" else item["preparation"],
+                  "quantization_recipe": item.get("int8_recipe") if precision == "int8" else None,
+                  "config": CONFIG, "scales": SCALES,
                   "quality_status": item["quality_status"], "benchmark": False,
                   "rng": "native graph RNG; waveform/duration may vary between requests",
                   "timed_region": "synchronous InferRequest.infer only; no warmup; excludes frontend, load/compile, output copy, WAV and network"}
@@ -260,6 +304,8 @@ class Engine:
             # Dynamic graphs have actual execution metadata after the first inference.
             if "precision" not in self.execution:
                 evidence = precision_evidence(self.compiled, precision)
+                if precision == "int8":
+                    common97.audit_runtime(evidence["nodes"], model_id)
                 runtime_file = f"runtime-{request_id}.json"
                 write_new(self.session / runtime_file, evidence)
                 self.execution["precision"] = {k: v for k, v in evidence.items() if k != "nodes"}

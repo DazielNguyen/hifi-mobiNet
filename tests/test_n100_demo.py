@@ -29,7 +29,8 @@ def test_catalog_matches_final_evidence():
     actual = demo.read(demo.CATALOG)
     assert actual == script("make_catalog").build_catalog()
     assert len(actual["models"]) == 6
-    assert sum(len(files) for m in actual["models"] for files in m["artifacts"].values()) == 24
+    assert sum(len(files) for m in actual["models"] for files in m["artifacts"].values()) == 12
+    assert all("int8" not in m["artifacts"] for m in actual["models"])
 
 
 def test_hash_guard_rejects_corruption_and_escape(tmp_path):
@@ -97,6 +98,9 @@ def test_wrong_executed_precision_rejected(precision, node_precision, name):
 def fake_engine(monkeypatch, tmp_path):
     catalog = demo.read(demo.CATALOG)
     for model in catalog["models"]:
+        if model["id"] in demo.common97.MODEL_IDS:
+            model["artifacts"]["int8"] = [{**f, "file": f["file"].replace("fp32", "int8")} for f in model["artifacts"]["fp32"]]
+            model["int8_recipe"] = demo.common97.RECIPE
         for files in model["artifacts"].values():
             for entry in files:
                 path = tmp_path / entry["file"]
@@ -109,6 +113,8 @@ def fake_engine(monkeypatch, tmp_path):
     monkeypatch.setattr(demo, "preflight", lambda *_: {"host": {
         "hostname": "fake-edge-n100", "pid": 123, "packages": {"openvino": "fake"}}})
     monkeypatch.setattr(frontend, "encode", lambda _: [1, 0, 5, 0, 2])
+    monkeypatch.setattr(demo.common97, "audit_graph", lambda *_: {"passed": True})
+    monkeypatch.setattr(demo.common97, "audit_runtime", lambda *_: {"passed": True})
 
     class Request:
         def __init__(self):
@@ -169,6 +175,27 @@ def test_fresh_inference_reuse_switch_and_saved_record(fake_engine):
     _, third = engine.synthesize("New text.", model, "int8")
     assert engine.core.compiles == 2 and engine.request.calls == 1
     assert third["execution"]["precision"]["int8_weighted_count"] == 1
+    assert third["quantization_recipe"] == demo.common97.RECIPE
+
+
+def test_unvalidated_model_has_no_int8_fallback(fake_engine):
+    with pytest.raises(ValueError, match="not prepared"):
+        fake_engine.synthesize("New sentence.", "parallel-ir", "int8")
+    assert fake_engine.core.compiles == 0
+
+
+def test_demo_accepts_long_regression_paragraph(fake_engine):
+    rows = demo.read(demo.common97.policy_path().with_name("piper-common97-regression.json"))
+    text = next(r["text"] for r in rows if r["id"] == "stress_300")
+    assert len(text) == 289 and len(text) <= demo.MAX_TEXT
+    _, record = fake_engine.synthesize(text, "piper-seqir-no-vits2-cpn", "int8")
+    assert record["text"] == text  # no sentence splitting or tail truncation
+
+
+def test_old_preparation_cannot_activate_int8():
+    item = demo.read(ROOT / "demo/n100_models.json")["models"][3]
+    with pytest.raises(ValueError, match="common97"):
+        demo.check_common97_preparation({"status": "prepared"}, item)
 
 
 def test_failure_and_concurrent_request_do_not_return_old_audio(fake_engine):
@@ -205,6 +232,18 @@ def test_bundle_roundtrip_is_code_only(tmp_path):
         for name in names:
             if name.endswith(".sh"):
                 assert b"\r" not in handle.read(name), "shell scripts must use LF"
+        handle.extractall(tmp_path / "unpacked")
+    import os
+    import subprocess
+    unpacked = tmp_path / "unpacked" / builder.NAME
+    env = {**os.environ, "PYTHONPATH": str(unpacked / "src"), "PYTHONDONTWRITEBYTECODE": "1"}
+    result = subprocess.run([sys.executable, "scripts/n100_demo/prepare_common97.py", "--help"],
+                            cwd=unpacked, env=env, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    result = subprocess.run([sys.executable, "-c", "from hifimobinet import common97; import json; print(json.dumps(common97.identity()))"],
+                            cwd=unpacked, env=env, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == demo.common97.identity()
 
 
 @pytest.fixture
@@ -226,6 +265,9 @@ def test_http_text_to_wav_and_provenance(http_server):
     status = json.loads(urlopen(http_server + "/api/status").read())
     assert status["server"]["host"]["hostname"] == "fake-edge-n100"
     assert len(status["models"]) == 6
+    for model in status["models"]:
+        expected = {"fp32", "int8"} if model["id"] in demo.common97.MODEL_IDS else {"fp32"}
+        assert set(model["precisions"]) == expected
     text = "A new sentence from the audience."
     request = Request(http_server + "/api/synthesize",
                       data=json.dumps({"text": text, "model_id": "piper-seqir-no-vits2-cpn", "precision": "fp32"}).encode(),

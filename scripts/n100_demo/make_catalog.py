@@ -1,4 +1,7 @@
-"""Derive demo artifact identities from the preserved final N100 evidence."""
+"""Derive FP32 defaults from preserved evidence; never activate legacy INT8.
+
+The common97 migration builds a separate local catalog after fresh validation.
+"""
 import hashlib
 import json
 from pathlib import Path
@@ -27,13 +30,13 @@ def build_catalog():
         expected = packages
         items.append({"id": model["id"], "label": model["label"], "group": model["group"],
                       "sample_rate": model["sample_rate"], "checkpoint": model["checkpoint"],
-                      "quality_status": prep["quality_status"],
+                      "quality_status": "Historical FP32; legacy INT8 disabled. Run common97 preparation for the three Piper models.",
                       "preparation": identity(EVIDENCE / relative, relative),
                       "artifacts": {precision: [{"file": f"{WORK}/{model['id']}/{f['file']}",
                                     "sha256": f["sha256"]} for f in prep["artifacts"][precision]["files"]]
-                                    for precision in ("fp32", "int8")}})
+                                    for precision in ("fp32",)}})
     assert len(items) == 6
-    return {"schema_version": 1, "source": "results/edge-n100-openvino/2026-11-01/evidence",
+    return {"schema_version": 2, "source": "results/edge-n100-openvino/2026-11-01/evidence",
             "expected_packages": expected,
             "manifest": identity(EVIDENCE / "models.json", "models.json"),
             "harvard": identity(EVIDENCE / "metadata/harvard720.json", "metadata/harvard720.json"),

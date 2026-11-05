@@ -19,13 +19,13 @@
       <div class="choices">
         <label>Model<select id="model" required disabled></select></label>
         <label>Độ chính xác<select id="precision" disabled>
-          <option value="fp32">FP32</option><option value="int8">INT8 chọn lọc (thử nghiệm)</option>
+          <option value="fp32">FP32</option><option value="int8" disabled>INT8 common97</option>
         </select></label>
       </div>
-      <p id="int8-note" class="notice" hidden>INT8 áp dụng cho các phần đã chọn; decoder vẫn FP32. Đánh giá chất lượng INT8 còn chờ hoàn tất.</p>
-      <label for="text">Một câu tiếng Anh</label>
-      <textarea id="text" maxlength="200" rows="3" required>Today we are demonstrating speech synthesis on an Intel N100.</textarea>
-      <p class="hint">Tối đa 200 ký tự. Mỗi lần bấm sẽ tạo audio mới; lần đầu chọn model cần nạp và biên dịch.</p>
+      <p id="int8-note" class="notice" hidden>INT8 common97 đã kiểm tra lỗi mất đuôi trên bộ câu thử; decoder vẫn FP32. Chất lượng trên câu mới cần tiếp tục đối chiếu với FP32.</p>
+      <label for="text">Văn bản tiếng Anh</label>
+      <textarea id="text" maxlength="300" rows="3" required>Today we are demonstrating speech synthesis on an Intel N100.</textarea>
+      <p class="hint">Tối đa 300 ký tự. INT8 chỉ mở khi model đã được chuẩn bị common97. Mỗi lần bấm tạo audio mới; lần đầu chọn model cần nạp và biên dịch.</p>
       <button id="submit" disabled>Tạo giọng nói trên N100</button>
       <p id="status" role="status" aria-live="polite"></p>
     </form>

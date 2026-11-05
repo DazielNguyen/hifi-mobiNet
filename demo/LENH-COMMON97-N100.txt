@@ -1,0 +1,59 @@
+CAP NHAT COMMON97 TREN N100 - DA CO MOI TRUONG VA BO MODEL CU
+==========================================================
+Khong tao venv moi. Khong can cai lai dependency. Chay tung khoi theo thu tu.
+Dung Ctrl+C de dung server demo CU truoc khi chay PTQ (tranh tranh chap CPU).
+Moi lenh bash la tien trinh con: loi khong tu dong dong Terminal cua ban.
+Model FP32 va evidence cu duoc giu nguyen; PTQ tao thu muc work-common97 moi.
+3 Piper: ResBlock2 / ParIR / SeqIR. Ba model Q05 chi con FP32 trong demo moi.
+
+01 - KIEM ZIP VA GIAI NEN
+Copy ZIP va .sha256 vao cung thu muc, mo Terminal o thu muc do:
+
+sha256sum -c hifi-mobiNet-n100-common97-2026-11-05.zip.sha256
+
+Chi khi bao OK: dung Files giai nen vao Home/benchmarks.
+Duong dan: ~/benchmarks/hifi-mobiNet-n100-common97-2026-11-05/
+Neu thu muc nay da co, giu ban cu rieng; khong giai nen de tron code.
+
+02 - TAO COMMON97 VA KIEM CA 3 MODEL (chay mot lan)
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/04-prepare-common97.sh
+
+Cho COMMON97 READY / BUOC COMMON97 OK.
+Buoc nay: hash FP32 -> parity -> 60 calibration train-only -> PTQ -> FQ audit
+-> 12 ca alignment/model (co cau >10s) -> runtime 97 INT8 kernels -> catalog.
+Phai du ca 3 model moi kich hoat catalog. That bai: giu log, khong chay lai
+lenh tren Terminal bang source; hay gui log de kiem tra.
+Khong dung lai graph INT8 cu; khong cat doan cuoi audio.
+
+03 - KIEM DEMO
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/02-check.sh
+
+Cho BUOC 02 OK.
+
+04 - MO SERVER MOI
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/03-start.sh
+
+Giu Terminal nay mo. PC mo http://<IPv4-N100>:8501 (vi du 192.168.1.3 neu chua doi).
+Tai lai trang. Chon Piper SeqIR/ParIR/ResBlock2 -> INT8 common97.
+Dan ca doan duoi (289 ky tu), tao WAV va nghe den cuoi. Chon FP32 de doi chieu.
+
+The engineer placed a small computer beside the microphone and asked it to read a complete paragraph. At first the voice was calm and clear, but the important part of this experiment is the final sentence, which should remain understandable until the very last word has been spoken aloud.
+
+Moi lan sinh luu WAV + JSON co quantization_recipe=piper-common97-v1, hash va runtime.
+Nhan Ctrl+C neu muon dung server. Lan sau chi can buoc 03 va 04.
+
+05 - BENCHMARK RTF MOI (TUY CHON, SAU KHI NGHE; DUNG SERVER TRUOC)
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/05-benchmark-common97.sh
+
+Chay 3 Piper x FP32/INT8 x 3 rounds x 720 cau, 4 threads. Luu thu muc moi.
+Khong gan ket qua N100 01/11 cho common97; day la phep do moi can chay tren N100.
+
+LOG / KET QUA
+~/benchmarks/n100-demo-runs/ : log prepare, check, server, WAV/JSON demo va benchmark.
+Bundle model cu / work-common97-<UTC>/ : IR moi, preparation.json, audit va WAV regression.
+Thu muc demo moi / .local/n100-common97-models.json : catalog active.
+Khong xoa IR/log cu; neu can rollback demo FP32, mo ban source moi va chon FP32.

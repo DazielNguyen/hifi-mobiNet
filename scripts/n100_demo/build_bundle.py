@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-NAME = "hifi-mobiNet-n100-lan-demo-2026-11-02"
+NAME = "hifi-mobiNet-n100-common97-2026-11-05"
 
 
 def digest(data):
@@ -20,6 +20,11 @@ def payload_files():
                 "demo/LENH-N100-LAN-DEMO.txt", "demo/SUA-LOI-01-THIEU-GIT.txt", "src/hifimobinet/__init__.py",
                 "src/hifimobinet/frontend.py", "src/hifimobinet/n100_demo.py", "src/hifimobinet/n100_server.py",
                 "demo/n100_web/index.html", "demo/n100_web/app.js", "demo/n100_web/style.css"]
+    relative += ["src/hifimobinet/common97.py", "src/hifimobinet/ptq_numeric_guard.py",
+                 "configs/quantization/piper-common97.json", "configs/quantization/piper-common97-regression.json",
+                 "scripts/n100_demo/prepare_common97.py", "demo/LENH-COMMON97-N100.txt",
+                 "scripts/evaluation/edge/openvino_suite.py", "scripts/evaluation/edge/onnx_reference.py",
+                 "scripts/evaluation/onnx/common.py"]
     relative += [p.relative_to(ROOT).as_posix() for p in (ROOT / "scripts/n100_demo").glob("*.sh")]
     relative += [p.relative_to(ROOT).as_posix() for p in (ROOT / "vendor/banhmi-phonemize").rglob("*")
                  if p.is_file() and (p.suffix in (".py", ".toml", ".cmake", ".cpp", ".hpp", ".md", ".txt", ".in")
@@ -51,6 +56,7 @@ def build(destination):
     archive_hash = digest(archive.read_bytes())
     Path(str(archive) + ".sha256").write_text(f"{archive_hash}  {archive.name}\n", encoding="ascii")
     (destination / "LENH-N100-LAN-DEMO.txt").write_bytes(payload["demo/LENH-N100-LAN-DEMO.txt"])
+    (destination / "LENH-COMMON97-N100.txt").write_bytes(payload["demo/LENH-COMMON97-N100.txt"])
     result = {"zip": archive.name, "bytes": archive.stat().st_size, "sha256": archive_hash,
               "payload_files": len(hashes), "checks": {"crc": True, "file_list": True,
               "source_copy_match": True, "extract_and_internal_hashes": True},

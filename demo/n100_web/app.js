@@ -1,6 +1,7 @@
 "use strict";
 const el = id => document.getElementById(id);
 const modelNames = new Map();
+const modelPrecisions = new Map();
 let objectUrls = [];
 
 function clearAudio() {
@@ -16,9 +17,14 @@ function blobUrl(blob) {
   objectUrls.push(url);
   return url;
 }
-el("precision").addEventListener("change", () => {
+function updatePrecision() {
+  const available = modelPrecisions.get(el("model").value) || ["fp32"];
+  el("precision").querySelector('[value="int8"]').disabled = !available.includes("int8");
+  if (!available.includes(el("precision").value)) el("precision").value = "fp32";
   el("int8-note").hidden = el("precision").value !== "int8";
-});
+}
+el("precision").addEventListener("change", updatePrecision);
+el("model").addEventListener("change", updatePrecision);
 el("generate").addEventListener("submit", async event => {
   event.preventDefault();
   clearAudio();
@@ -63,9 +69,11 @@ async function connect() {
     const data = await response.json();
     for (const model of data.models) {
       modelNames.set(model.id, model.label);
+      modelPrecisions.set(model.id, model.precisions);
       el("model").add(new Option(model.label, model.id));
     }
     el("model").value = "piper-seqir-no-vits2-cpn";
+    updatePrecision();
     const host = data.server.host;
     el("server").textContent = host.hostname + " · " + data.server.openvino_cpu + " · OpenVINO " + host.packages.openvino + " · CPU / 4 luồng";
     el("server-record").textContent = JSON.stringify(data.server, null, 2);

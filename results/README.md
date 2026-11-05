@@ -10,6 +10,13 @@ This folder holds every stored result of hifi-mobiNet's two generations of model
 Later measurement packages carry their own provenance records; the N100 session
 includes a complete per-file import manifest and a standalone verifier.
 
+**INT8 update, November 5:** preparation/demo code for the three Piper models
+now uses [common97](../docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
+to protect duration/alignment from activation quantization. The November 1
+N100 results below still describe the old graphs and are not common97 timing
+or quality results. New code passed 36 alignment cases on a PC/WSL CPU;
+deployment and fresh measurements on N100 remain necessary.
+
 | Section | What it covers |
 |---|---|
 | [Historical results](#historical-results-gen-1) | `historical/`, `prior_audit/`, `manifests/` |

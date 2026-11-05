@@ -94,6 +94,10 @@ def build(args):
 
     for filename in ("openvino_suite.py", "onnx_reference.py", "build_bundle.py", "requirements.txt", "README.vi.md"):
         include(repo / "scripts/evaluation/edge" / filename, filename, "N100 toolchain")
+    for filename in ("common97.py", "ptq_numeric_guard.py"):
+        include(repo / "src/hifimobinet" / filename, filename, "common97 implementation")
+    include(repo / "configs/quantization/piper-common97.json", "common97-policy.json", "common97 policy")
+    include(repo / "configs/quantization/piper-common97-regression.json", "piper-common97-regression.json", "alignment regression texts; never calibration")
     include(repo / "scripts/evaluation/onnx/common.py", "reference/scripts/evaluation/onnx/common.py", "unchanged parity/calibration helpers")
     include(repo / "tests/test_edge_openvino.py", "tests/test_edge_openvino.py", "portable tests, no model execution")
     include(repo / "models/manifest.json", "reference/models-manifest.json", "historical FP32 provenance")

@@ -1,6 +1,6 @@
 DEMO LAN: PC NHAP TEXT / PHAT WAV, N100 CHAY INFERENCE
 ===================================================
-Thuc hien 00 -> 01 -> 02 -> 03 tren Terminal N100. Buoc 04 tren trinh duyet PC.
+Thuc hien 00 -> 01 -> COMMON97 -> 02 -> 03 tren Terminal N100. Buoc 04 tren trinh duyet PC.
 Copy NGUYEN KHOI lenh, dan bang Ctrl+Shift+V vao Terminal, nhan Enter.
 Chi sang buoc tiep theo khi buoc hien tai thanh cong.
 Khong source script, khong can mo moi truong moi, khong chay lenh tren PC.
@@ -9,27 +9,34 @@ BUOC 00 - COPY VA KIEM ZIP (mot lan)
 Copy ZIP va .zip.sha256 cung thu muc tren N100.
 Mo Terminal tai thu muc chua ZIP va chay:
 
-sha256sum -c hifi-mobiNet-n100-lan-demo-2026-11-02.zip.sha256
+sha256sum -c hifi-mobiNet-n100-common97-2026-11-05.zip.sha256
 
 Phai bao OK. Dung Files giai nen thu muc ben trong ZIP vao Home/benchmarks.
-Duong dan dung: ~/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02/demo/n100_web/index.html
+Duong dan dung: ~/benchmarks/hifi-mobiNet-n100-common97-2026-11-05/demo/n100_web/index.html
 
 BUOC 01 - CAI GIAO DIEN VA FRONTEND (mot lan, can Internet)
 
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/01-setup.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/01-setup.sh
 
 Cho BUOC 01 OK. Neu bao loi: giu log, khong sang buoc 02/03.
 Neu hoi sudo password thi nhap mat khau Ubuntu; luc go khong hien ky tu.
 
+BUOC COMMON97 - CHUAN BI INT8 MOI (mot lan, sau buoc 01)
+
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/04-prepare-common97.sh
+
+Cho COMMON97 READY / BUOC COMMON97 OK. Neu loi, giu log va khong chay server INT8.
+Chi 3 model Piper duoc mo INT8 common97; 3 model Q05 van chi FP32.
+
 BUOC 02 - KIEM MODEL / MOI TRUONG / FRONTEND (truoc demo)
 
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/02-check.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/02-check.sh
 
 Cho BUOC 02 OK. Buoc nay chua chay inference.
 
 BUOC 03 - MO SERVER TREN N100
 
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/03-start.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/03-start.sh
 
 Cho N100 DEMO READY. Giu Terminal mo, server chay lien tuc.
 No in dia chi IP N100. Chon IPv4 LAN cung mang voi PC.
@@ -40,7 +47,8 @@ Mo Chrome/Edge/Firefox: http://<IPv4-hien-tai-cua-N100>:8501
 Vi du http://192.168.1.3:8501 CHI NEU IP N100 van la 192.168.1.3.
 Chon model -> FP32 -> nhap cau tieng Anh ngan -> Tao giong noi tren N100.
 Cho player xuat hien -> bam Play de nghe qua loa/tai nghe PC.
-Co the chon INT8 (thu nghiem); chat luong INT8 chua danh gia day du.
+Chon INT8 common97 cho 3 model Piper sau khi chuan bi thanh cong.
+Giu decoder FP32; bo cau regression da kiem alignment, chua thay the WER/MOS doc lap.
 Khong can sound card tai N100. Khong cai Python hay model tren PC.
 
 LOG: ~/benchmarks/n100-demo-runs/

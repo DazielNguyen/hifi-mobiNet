@@ -16,10 +16,14 @@ now records six internal models in FP32 and selective INT8, with raw timings,
 logs, retained duration outliers and explicit limits; INT8 quality remains pending.
 
 For a live LAN demonstration, the [N100 demo guide](demo/N100-README.vi.md)
-uses the six verified N100 model pairs: text entry and WAV playback in the PC
-browser, with inference on the N100 CPU. This separate app reuses existing IRs
-and records each generated request; target-device setup and playback must be
-checked on the N100 before presenting.
+uses six FP32 models and enables selective INT8 for the three Piper models
+only after fresh **common97** preparation: text entry and WAV playback in the PC
+browser, with inference on the N100 CPU. The old INT8 graphs are disabled in
+this demo because activation quantization leaked into duration/alignment.
+The [common97 integration report](docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
+records the fix, 36 CPU alignment checks and N100 update steps. Historical
+N100 timings remain tied to their original graphs; common97 needs new N100
+measurements and independent quality evaluation.
 
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. Original repository

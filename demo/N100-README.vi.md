@@ -12,8 +12,12 @@ PC: loa/tai nghe <-- WAV qua LAN ----- N100: đóng gói audio PCM16
 Đây là server riêng `hifimobinet.n100_server`, giao diện ở `demo/n100_web/`.
 App cũ `demo/streamlit_app.py`, pipeline
 training và bộ evidence đã lưu không bị thay đổi. Gói demo chỉ chứa code,
-frontend nguồn và danh mục SHA-256; dùng lại IR có sẵn trên N100, không export
-hoặc quantize lại và không mang checkpoint vào tiến trình demo.
+frontend nguồn và danh mục SHA-256. Bước chuẩn bị common97 làm lại INT8 từ FP32
+ONNX có sẵn trên N100; server chỉ inference từ IR đã kiểm, không tải checkpoint.
+
+**Cập nhật 05/11/2026:** dùng [lệnh nâng cấp common97](LENH-COMMON97-N100.txt)
+cho N100 đã có môi trường. Policy mới áp dụng cho ba Piper. Graph và evidence
+cũ được giữ nguyên. Kiểm thử CPU PC/WSL không thay thế RTF N100 mới.
 
 ## 1. Chuyển gói sang N100
 
@@ -21,14 +25,14 @@ Copy ZIP, `.zip.sha256` và `LENH-N100-LAN-DEMO.txt` qua ổ cứng cá nhân.
 Trong Files trên N100, đặt ZIP và `.sha256` cùng thư mục, mở Terminal tại đó:
 
 ```bash
-sha256sum -c hifi-mobiNet-n100-lan-demo-2026-11-02.zip.sha256
+sha256sum -c hifi-mobiNet-n100-common97-2026-11-05.zip.sha256
 ```
 
 Chỉ giải nén sau khi báo `OK`. Giải nén thư mục bên trong ZIP vào
 `~/benchmarks/` để có đường dẫn:
 
 ```text
-~/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02/demo/n100_web/index.html
+~/benchmarks/hifi-mobiNet-n100-common97-2026-11-05/demo/n100_web/index.html
 ```
 
 Các lệnh đầy đủ có trong [LENH-N100-LAN-DEMO.txt](LENH-N100-LAN-DEMO.txt).
@@ -38,7 +42,7 @@ tiếp. Không `source` các script; chạy bằng `bash` để lỗi không đ�
 ## 2. Cài phần giao diện một lần
 
 ```bash
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/01-setup.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/01-setup.sh
 ```
 
 Cần Internet nếu thiếu frontend để build
@@ -62,17 +66,32 @@ sonic-git-populate`, máy đang thiếu Git phục vụ build frontend. Script b
 Không cần thay file hoặc sửa `SHA256SUMS` trong gói đang dùng. Khối lệnh đầy đủ
 nằm trong [SUA-LOI-01-THIEU-GIT.txt](SUA-LOI-01-THIEU-GIT.txt).
 
+## 2b. Chuẩn bị common97 một lần
+
+Dừng server cũ bằng Ctrl+C để dành CPU cho PTQ. Dùng môi trường hiện có:
+
+```bash
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/04-prepare-common97.sh
+```
+
+Bước này dùng 60 dòng train-only, MIXED/CPU/fast bias correction, chọn 37 Conv
+encoder + 20 Conv SDP + 40 Conv flow và loại mọi computation khác. Kiểm 96 FQ
+đúng cạnh Conv, 97 kernel runtime và 12 ca alignment/model, có audio >10 giây,
+trước khi tạo `.local/n100-common97-models.json`. Nếu lỗi, giữ log và không
+kích hoạt catalog. Mỗi lần chuẩn bị dùng thư mục mới.
+
 ## 3. Kiểm tra trước buổi demo
 
 ```bash
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/02-check.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/02-check.sh
 ```
 
 Chờ `BUOC 02 OK`. Bước này kiểm tra **trên máy đang chạy**, không dựa vào dòng
 PASS cũ:
 
 - Linux, CPU Intel N100, phiên bản môi trường.
-- Manifest, sáu preparation records và 24 file XML/BIN đúng SHA-256.
+- Manifest, sáu preparation FP32 cũ, 12 file FP32 và 6 file INT8 common97 mới
+  cùng ba preparation mới, đúng SHA-256 (sau bước common97).
 - Frontend đang cài tạo đúng phoneme IDs cho cả 720 câu Harvard đã lưu.
 
 Đây là kiểm tra chuẩn bị, chưa chạy inference. App kiểm tra lại khi khởi tạo.
@@ -89,7 +108,10 @@ CPU execution và precision của kernel trước khi phát WAV.
     work-n100-clean-20261101T075458Z/<model-id>/
       preparation.json
       fp32.xml + fp32.bin
-      int8.xml + int8.bin
+      int8.xml + int8.bin  # lịch sử, bản demo mới không nạp
+    work-common97-<UTC>/<Piper-model-id>/
+      preparation.json + alignment-validation.json
+      int8.xml + int8.bin + WAV kiểm alignment
 ```
 
 Nếu đã chuyển cả bộ dữ liệu sang vị trí khác, đặt đường dẫn **thư mục chứa
@@ -99,13 +121,14 @@ models.json và work-n100-clean...** trước khi chạy các bước:
 export HIFIMOBINET_N100_BUNDLE="/duong/dan/thuc/den/thu-muc-bo-model"
 ```
 
-Không trỏ vào `work-n100` cũ hoặc các lần probe. Catalog chỉ chấp nhận kết quả
-final đã sửa masked duration spline, lưu trong evidence ngày 2026-11-01.
+Không trỏ vào thư mục work hoặc probe: dùng thư mục bundle cha. Catalog mặc
+định chỉ mở FP32. Catalog local common97 được tạo sau khi cả ba Piper vượt
+kiểm tra; mọi INT8 lịch sử đều bị từ chối.
 
 ## 4. Mở server và dùng trên PC
 
 ```bash
-cd "$HOME/benchmarks/hifi-mobiNet-n100-lan-demo-2026-11-02" && bash scripts/n100_demo/03-start.sh
+cd "$HOME/benchmarks/hifi-mobiNet-n100-common97-2026-11-05" && bash scripts/n100_demo/03-start.sh
 ```
 
 Giữ Terminal này mở và chờ `N100 DEMO READY`. Script in địa chỉ của N100. PC và N100 phải ở LAN có thể
@@ -122,7 +145,8 @@ Chọn model, để FP32 cho lần demo đầu, nhập một câu tiếng Anh ng
 **Tạo giọng nói trên N100**. Chờ audio xuất hiện, bấm nút **▶** trong player.
 Trình duyệt phát qua loa PC; app không cần thiết bị âm thanh tại N100.
 Có nút tải WAV và JSON ghi thông tin lần tạo. Có thể chọn INT8 để nghe thử,
-nhưng INT8 là chọn lọc, decoder vẫn FP32 và đánh giá chất lượng còn pending.
+với recipe common97 cho ba Piper. Decoder giữ FP32; 36 ca regression đã kiểm
+trên PC không thay thế quality set độc lập hoặc benchmark N100 mới.
 
 Nếu PC chưa mở được trang, thử `http://127.0.0.1:8501` ngay trên N100. Nếu
 trang local hoạt động, kiểm tra IP, cùng mạng, client isolation của router và
@@ -160,8 +184,9 @@ gửi được yêu cầu mới; điều đó không phải phép thử inferenc
 | Piper_ParIR_no_VITS2_cpn | 1486 | Config A, round 2 |
 | Piper_SeqIR_no_VITS2_cpn | 1455 | Config A, round 2 |
 
-Cả sáu có lựa chọn FP32 và selective INT8 v2 đã chuẩn bị trên N100. Piper Low
-và High không thuộc gói này. Exact identities nằm trong `n100_models.json`.
+Cả sáu có FP32. Chỉ ba Piper có INT8 common97 sau bước chuẩn bị; ba Q05 không
+được tự gán recipe chưa kiểm. Piper Low/High không thuộc gói này. Catalog nền
+là `demo/n100_models.json`; catalog active là `.local/n100-common97-models.json`.
 
 - CPU, batch 1, 4 inference threads, một stream, LATENCY, ACCURACY, FP32 hint;
   selective INT8 vẫn được kiểm tra bằng runtime kernel metadata.
@@ -174,7 +199,7 @@ và High không thuộc gói này. Exact identities nằm trong `n100_models.jso
   thể thay đổi khi cùng text và model; không hứa tương đương RNG giữa FP32/INT8.
 - Chỉ giữ một compiled model và xử lý một yêu cầu tại một thời điểm. Yêu cầu
   đồng thời bị báo bận. Đổi model sẽ giải phóng model cũ trước khi compile.
-- Tối đa 200 ký tự, frontend tối đa 800 IDs. Giới hạn phát audio 60 giây được
+- Tối đa 300 ký tự, frontend tối đa 800 IDs. Giới hạn phát audio 60 giây được
   kiểm tra **sau inference**, không bảo đảm giới hạn RAM/thời gian inference.
   Dùng một câu ngắn cho buổi demo; chưa thiết lập timeout cưỡng bức tiến trình.
 - WAV mono 22,050 Hz, PCM16 có peak scaling; waveform thô được kiểm tra finite
@@ -192,8 +217,10 @@ Kiểm thử trên PC dùng backend giả lập và audio tổng hợp để ki�
 text → inference → WAV, metrics, lỗi, UI và đóng gói. Chúng **không chứng minh**
 frontend Linux build thành công hay inference/audio qua LAN đã chạy thực trên
 N100. Phải hoàn tất bước 01–03 và thử một câu mới tại N100/PC để xác nhận các
-phần đó. Không có inference, export, PTQ hoặc benchmark mới được chạy trên PC
-để chuẩn bị gói demo.
+phần đó. Phiên tích hợp 05/11 đã chạy PTQ/parity/alignment thật cho ba Piper
+trên CPU PC/WSL; đây không phải RTF N100. Gói chuyển chỉ chứa code. Bước chuẩn
+bị chạy lại trên N100 và ghi evidence riêng. Benchmark tùy chọn dùng
+`bash scripts/n100_demo/05-benchmark-common97.sh` sau khi dừng server.
 
 Tham khảo API: [Python HTTP server](https://docs.python.org/3/library/http.server.html),
 [OpenVINO InferRequest](https://docs.openvino.ai/2026/api/ie_python_api/_autosummary/openvino.InferRequest.html).

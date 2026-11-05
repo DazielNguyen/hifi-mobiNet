@@ -1,7 +1,7 @@
 """Portable Intel N100 CPU/OpenVINO suite. No training or checkpoint loading.
 
 Run doctor, prepare, then run on the N100. Each command preserves its records.
-INT8 is a new, uniform NNCF experiment for all six models, not historical PTQ.
+INT8 uses common97 for the three validated Piper models. Historical results stay immutable.
 Heavy dependencies are imported only by the commands that need them.
 """
 from __future__ import annotations
@@ -22,6 +22,15 @@ import subprocess
 import sys
 import time
 import traceback
+
+try:
+    from hifimobinet import common97
+    from hifimobinet.ptq_numeric_guard import Recorder
+except ModuleNotFoundError as error:
+    if error.name != "hifimobinet":
+        raise
+    import common97
+    from ptq_numeric_guard import Recorder
 
 SCALES = [0.667, 1.0, 0.8]
 PARITY_IDS = [0, 1, 2, 59, 119, 179, 239, 299, 359, 419, 479, 599, 719]
@@ -216,7 +225,14 @@ def prepare(bundle, work, selected):
     import openvino as ov
     import onnx_reference as reference
     env = environment()
+    if env["packages"] != common97.policy()["runtime_versions"]:
+        raise ValueError("common97 requires the recorded runtime versions; see demo/n100_constraints.txt")
     data = manifest(bundle)
+    selected_ids = set(common97.MODEL_IDS) if selected in ("all", "piper") else {selected}
+    if not selected_ids.issubset(common97.MODEL_IDS):
+        raise ValueError("common97 is validated for the three Piper models only")
+    regression_path = common97.policy_path().with_name("piper-common97-regression.json")
+    regression = read(regression_path)
     rows = harvard_rows(bundle, data)
     cal = [json.loads(s) for s in verify_file(bundle, data["calibration"]).read_text().splitlines() if s.strip()]
     subset = [json.loads(s) for s in verify_file(bundle, data["calibration_dataset_rows"]).read_text().splitlines() if s.strip()]
@@ -226,12 +242,14 @@ def prepare(bundle, work, selected):
     work.mkdir(parents=True, exist_ok=True)
     core = ov.Core()
     for item in data["models"]:
-        if selected != "all" and item["id"] != selected:
+        if item["id"] not in selected_ids:
             continue
         output = work / item["id"]
         output.mkdir()  # never overwrite an earlier attempt
         record = {"status": "running", "started_utc": utc(), "environment": env, "model": item,
-                  "experiment": "new NNCF selective INT8, all six models; not historical ORT INT8",
+                  "experiment": "common97 Piper INT8; preserves duration/alignment and decoder",
+                  "policy": common97.identity(), "numeric_guard_sha256": sha(sys.modules[Recorder.__module__].__file__),
+                  "regression_sha256": sha(regression_path),
                   "calibration": check, "quality_status": "INT8 listening/WER/UTMOS pending",
                   "script_sha256": sha(__file__), "manifest_sha256": sha(bundle / "models.json"),
                   "rng": "Python/NumPy seed 1234; native OpenVINO graph RNG not forced; no byte reproducibility claim"}
@@ -239,25 +257,23 @@ def prepare(bundle, work, selected):
             random.seed(1234)
             np.random.seed(1234)
             source = verify_file(bundle, item["fp32"])
+            common97.check_source(item["id"], sha(source))
             record["fp32_parity"] = parity_check(bundle, source, rows, output, ov, core)
             model = core.read_model(str(source))
             ov.save_model(model, str(output / "fp32.xml"), compress_to_fp16=False)
-            weighted = {"Convolution", "GroupConvolution", "ConvolutionBackpropData", "GroupConvolutionBackpropData", "MatMul"}
-            allowed = [n.get_friendly_name() for n in model.get_ops()
-                       if n.get_type_name() in ("Convolution", "GroupConvolution")
-                       and any(s in n.get_friendly_name() for s in SCOPES)]
-            if not allowed:
-                raise ValueError("cannot identify enc_p/dp/flow Conv scope after conversion")
-            ignored = [n.get_friendly_name() for n in model.get_ops()
-                       if ("/dec/" in n.get_friendly_name() and n.get_type_name() not in ("Constant", "Parameter", "Result"))
-                       or (n.get_type_name() in weighted and n.get_friendly_name() not in allowed)]
+            selection = common97.scope(model, item["id"])
+            ignored = selection["ignored_nodes"]
             dataset = nncf.Dataset(cal, feeds)
-            record["quantization"] = {"subset_size": 60, "preset": "MIXED", "target_device": "CPU",
-                                      "fast_bias_correction": True, "allowed_convolutions": allowed, "ignored_nodes": ignored}
-            quantized = nncf.quantize(model, dataset, subset_size=60, preset=nncf.QuantizationPreset.MIXED,
+            record["quantization"] = selection
+            quantized = Recorder(output, np).guarded_call(nncf.quantize, model, dataset, subset_size=60, preset=nncf.QuantizationPreset.MIXED,
                                       target_device=nncf.TargetDevice.CPU, fast_bias_correction=True,
                                       ignored_scope=nncf.IgnoredScope(names=ignored))
             ov.save_model(quantized, str(output / "int8.xml"), compress_to_fp16=False)
+            # Audit the serialized deployment graph, not only the in-memory object.
+            quantized = core.read_model(str(output / "int8.xml"))
+            record["graph_audit"] = common97.audit_graph(quantized, item["id"])
+            record["alignment_validation"] = common97.validate_alignment(
+                quantized, core, config(4), regression, feeds, output, item["sample_rate"])
             record["artifacts"] = {}
             for precision in ("fp32", "int8"):
                 compiled = core.compile_model(core.read_model(str(output / f"{precision}.xml")), "CPU", config(4))
@@ -276,6 +292,7 @@ def prepare(bundle, work, selected):
                 write(output / f"{precision}_runtime_nodes.json", nodes)
                 check_runtime_precision(nodes, precision)
                 if precision == "int8":
+                    record["runtime_audit"] = common97.audit_runtime(nodes, item["id"])
                     kernels = int8_kernels(nodes)
                     if not kernels:
                         raise ValueError("no executed INT8 weighted kernel identified; cannot label this INT8 timing")
@@ -284,7 +301,8 @@ def prepare(bundle, work, selected):
                     record["int8_weighted_kernel_count"] = len(kernels)
                 record["artifacts"][precision] = {"files": [{"file": f"{precision}.{ext}", "sha256": sha(output / f"{precision}.{ext}")}
                                                                     for ext in ("xml", "bin")], "smoke": samples}
-            record.update(status="prepared", finished_utc=utc())
+            record.update(status="prepared", finished_utc=utc(),
+                          quality_status="common97 graph/runtime/alignment passed; independent WER/MOS and N100 RTF not certified by preparation")
         except BaseException:
             record.update(status="failed", error=traceback.format_exc(), finished_utc=utc())
             raise
@@ -301,6 +319,8 @@ def worker(args):
     item = next(m for m in data["models"] if m["id"] == args.model)
     prepared = args.work / args.model
     prep = read(prepared / "preparation.json")
+    if prep.get("policy") != common97.identity():
+        raise ValueError("legacy or changed PTQ policy: prepare common97 in a new directory")
     if (prep["status"] != "prepared" or prep["model"] != item
             or prep["environment"]["packages"] != env["packages"]
             or prep["script_sha256"] != sha(__file__) or prep["manifest_sha256"] != sha(args.bundle / "models.json")):
@@ -319,6 +339,8 @@ def worker(args):
         core = ov.Core()
         start = time.perf_counter()
         model = core.read_model(str(prepared / f"{args.precision}.xml"))
+        if args.precision == "int8":
+            common97.audit_graph(model, args.model)
         compiled = core.compile_model(model, "CPU", config(args.threads))
         record["load_and_compile_s"] = time.perf_counter() - start
         if {p.get_any_name() for p in compiled.inputs} != {"input", "input_lengths", "scales"} or len(compiled.outputs) != 1:
@@ -337,6 +359,8 @@ def worker(args):
         nodes = runtime_nodes(compiled)
         write(args.output / "runtime_nodes.json", nodes)
         check_runtime_precision(nodes, args.precision)
+        if args.precision == "int8":
+            common97.audit_runtime(nodes, args.model)
         measured = []
         with (args.output / "utterances.jsonl").open("x", encoding="utf-8") as stream:
             for idx in order:
@@ -368,9 +392,10 @@ def schedule(models, threads, rounds):
 def run_matrix(args):
     env = environment()
     data = manifest(args.bundle)
+    data["models"] = [m for m in data["models"] if m["id"] in common97.MODEL_IDS]
     for item in data["models"]:
         p = read(args.work / item["id"] / "preparation.json")
-        if (p["status"] != "prepared" or p["model"] != item
+        if (p.get("policy") != common97.identity() or p["status"] != "prepared" or p["model"] != item
                 or p["environment"]["packages"] != env["packages"]
                 or p["script_sha256"] != sha(__file__) or p["manifest_sha256"] != sha(args.bundle / "models.json")):
             raise ValueError(f"preparation incomplete or environment/source changed: {item['id']}")
@@ -400,8 +425,8 @@ def summarize(output):
     rounds = {j[0] for j in jobs}
     expected = {(r, m, p, t) for r in range(max(rounds) + 1) for m in models
                 for p in ("fp32", "int8") for t in threads}
-    if len(models) != 6 or not threads.issubset({1, 2, 4}) or {tuple(j) for j in jobs} != expected:
-        raise ValueError("incomplete six-model FP32/INT8 schedule")
+    if (len(models) != 6 and models != set(common97.MODEL_IDS)) or not threads.issubset({1, 2, 4}) or {tuple(j) for j in jobs} != expected:
+        raise ValueError("incomplete six-model historical or three-Piper common97 FP32/INT8 schedule")
     groups = {}
     identities = set()
     preparation_hashes = {}
@@ -449,7 +474,7 @@ def main(argv=None):
         if name in ("run", "worker", "summarize"):
             p.add_argument("--output", type=Path, required=True)
         if name == "prepare":
-            p.add_argument("--model", default="all")
+            p.add_argument("--model", default="piper", choices=("piper", "all", *common97.MODEL_IDS))
         if name == "run":
             p.add_argument("--threads", type=int, nargs="+", choices=(1, 2, 4), default=[4])
             p.add_argument("--rounds", type=int, default=3)
@@ -470,7 +495,7 @@ def main(argv=None):
             verify_file(args.bundle, item["fp32"])
         print("Six FP32 source hashes and evaluation/calibration metadata verified.")
     elif args.command == "prepare":
-        if args.model != "all" and args.model not in {m["id"] for m in manifest(args.bundle)["models"]}:
+        if args.model not in ("all", "piper") and args.model not in {m["id"] for m in manifest(args.bundle)["models"]}:
             parser.error("unknown model")
         prepare(args.bundle, args.work, args.model)
     elif args.command == "worker":

@@ -1,4 +1,9 @@
-# Đo sáu model trên Intel N100 / Ubuntu / OpenVINO CPU
+# Đo Piper common97 trên Intel N100 / Ubuntu / OpenVINO CPU
+
+**05/11/2026:** bundle vẫn lưu sáu nguồn FP32; `prepare` và `run` hiện chỉ chạy
+ba Piper đã kiểm common97. `--model all` là alias của `piper`. Ba Q05 không tự
+được chuyển sang recipe này. Results/evidence ngày 01/11 giữ nguyên. Để cập
+nhật demo đang dùng, xem `demo/LENH-COMMON97-N100.txt` trong repo.
 
 Đây là bộ scripts và **sáu graph FP32 có sẵn**, dùng nội bộ. Chưa có kết quả
 OpenVINO/N100 trong gói. Không cần checkpoint, PyTorch, training dataset hay audio cache.
@@ -44,8 +49,8 @@ set -o pipefail
 python openvino_suite.py doctor 2>&1 | tee doctor.log
 ```
 
-`requirements.txt` là danh sách đầu vào cho pip, chưa phải lockfile đã kiểm thử trên
-N100. Giữ nguyên environment-lock và versions cho cả sáu model. Scripts kiểm tra
+`requirements.txt` ghim bộ phiên bản trong nghiên cứu common97. Dùng lại môi
+trường N100 nếu đã khớp, không cần nâng hoặc cài lại. Scripts kiểm tra
 Linux/N100, dependencies và hashes; không tự cài, tự train hay tự khởi chạy High.
 Không dùng `AUTO`/GPU trong thí nghiệm CPU này. Chạy từ thư mục vừa giải nén.
 
@@ -59,13 +64,16 @@ Lệnh này thực sự convert sang IR, calibration/quantize và chạy parity/
 Nó kiểm tra FP32 giữa ONNX Runtime và OpenVINO trên 13 câu có cùng noise đầu vào
 (NRMSE ≤ 0,001; max absolute error ≤ 0,005), rồi lưu IR FP32 không nén FP16.
 
-INT8 là **thí nghiệm NNCF mới, riêng biệt** cho sáu model: Conv trong enc_p/dp/flow,
-decoder và các weighted operation khác được loại khỏi phạm vi quantize. Dùng 60
+INT8 dùng **piper-common97-v1**: 37 Conv encoder, 20 regular Conv SDP, 40 Conv
+main flow. Loại mọi computation khác, gồm GroupConv SDP, duration/alignment,
+spline, decoder và RNG/scales. Dùng 60
 câu train cố định, kiểm membership canonical split và đối chiếu phoneme IDs với
 60 dòng lấy từ dataset manifest nguồn; không dùng Harvard hay test set để calibration.
 Preset MIXED, CPU, fast bias correction; danh sách layer cụ thể được ghi lại.
 Đây là INT8 chọn lọc, còn phần FP32, không phải mọi operation đều INT8.
-Graph thực thi được kiểm tra để tránh gắn nhãn INT8 khi backend chỉ chạy FP32.
+Kiểm 96 FQ chỉ cấp activation cho Conv cho phép, đầy đủ 97 kernel INT8 đúng
+node và 12 ca alignment/model với length scale 1.0/1.3, có mẫu audio >10 giây.
+Numeric guard dừng khi overflow/invalid/divide-by-zero; không sửa audio để che lỗi.
 
 Không dùng graph INT8 lịch sử hay round 1 có lỗi flow weight norm. Không gộp các số
 NNCF mới với kết quả ORT PTQ round 2. Đây là thay đổi backend/quy trình quantization,
@@ -120,8 +128,8 @@ Kết quả: `summary_fp32.csv`, `summary_int8.csv`, `summary.json`; từng cell
 `utterances.jsonl`, `result.json`, runtime graph metadata và log. Có mean/median/p95
 RTF, duration-weighted RTF = tổng latency/tổng audio, latency, peak process RSS
 (bao gồm runtime/input/model, không phải riêng model). Ba round trên cùng 720 câu
-không được coi là 2.160 câu độc lập. Full matrix 4 luồng có 36 cell/25.920 lượt timed;
-1/2/4 luồng có 108 cell/77.760 lượt timed, chưa tính warm-up/prepare.
+không được coi là 2.160 câu độc lập. Ma trận ba Piper, 4 luồng có 18 cell/12.960
+lượt timed; 1/2/4 luồng có 54 cell/38.880 lượt timed, chưa tính warm-up/prepare.
 
 Run không ghi đè output có sẵn. Khi fail, giữ raw records/log; summary đầy đủ không
 được tạo nếu thiếu cell/câu. Sau khi hoàn tất có thể dựng lại bảng từ raw records:

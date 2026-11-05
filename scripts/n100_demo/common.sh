@@ -5,6 +5,8 @@ DEMO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 DEMO_PYTHON="${HIFIMOBINET_N100_PYTHON:-$HOME/venvs/openvino-n100/bin/python}"
 export PYTHONPATH="$DEMO_ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONDONTWRITEBYTECODE=1
+export NNCF_TELEMETRY_DISABLED=1
+export OPENVINO_TELEMETRY_DISABLED=1
 export HIFIMOBINET_N100_BUNDLE="${HIFIMOBINET_N100_BUNDLE:-$HOME/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31}"
 export HIFIMOBINET_N100_RUNS="${HIFIMOBINET_N100_RUNS:-$HOME/benchmarks/n100-demo-runs}"
 cd -- "$DEMO_ROOT"

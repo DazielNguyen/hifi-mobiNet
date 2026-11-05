@@ -1,0 +1,140 @@
+{
+  "status": "passed",
+  "host_scope": "PC/WSL CPU only; NOT an Intel N100 benchmark",
+  "production_ptq_function": "openvino_suite.prepare",
+  "host_override": "Only environment(require_target=False); graph/PTQ/checks unchanged. See code/run_integration_pc.py.",
+  "policy": {
+    "recipe": "piper-common97-v1",
+    "policy_sha256": "24d054a5d9ce0b10d3beaef47f264cb7d4885498c9d171c511b78c29d8de2833",
+    "implementation_sha256": "b7631750fb020eed1fe8aef84d985bcd684e6ca4539434e44fd331cf20cf4fba"
+  },
+  "models": [
+    {
+      "model": "piper-no-vits2-cpn",
+      "fp32_onnx_sha256": "b4a95a82a009bd8b88c979b9ce04a82f3bb8bc33c3ba143d33bdbbd01dc2f59c",
+      "source_hash_verified_again": true,
+      "parity_passed": 13,
+      "parity_total": 13,
+      "fq_count": 96,
+      "int8_kernel_count": 97,
+      "alignment_cases": 12,
+      "zero_alignment_frames": 0,
+      "min_audio_seconds": 3.622312925170068,
+      "max_audio_seconds": 21.408798185941045,
+      "generated_artifact_and_wav_hashes_verified": true,
+      "environment": {
+        "utc": "2026-11-05T01:20:10.453004+00:00",
+        "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "cpu_names": [
+          "Intel(R) Core(TM) i7-14700"
+        ],
+        "logical_cpus": 24,
+        "packages": {
+          "openvino": "2026.4.1",
+          "nncf": "3.4.0",
+          "numpy": "2.4.6",
+          "onnx": "1.23.2",
+          "onnxruntime": "1.31.1"
+        },
+        "load_average": [
+          2.806640625,
+          2.4326171875,
+          2.427734375
+        ],
+        "thermal_millidegrees_celsius": {},
+        "governors": {},
+        "validation_host_only": true,
+        "not_n100_benchmark": true
+      }
+    },
+    {
+      "model": "piper-parir-no-vits2-cpn",
+      "fp32_onnx_sha256": "506e76dc26804fe2c90619e5e98b9d8e745020324d953f5c8efc6e01e8a7c353",
+      "source_hash_verified_again": true,
+      "parity_passed": 13,
+      "parity_total": 13,
+      "fq_count": 96,
+      "int8_kernel_count": 97,
+      "alignment_cases": 12,
+      "zero_alignment_frames": 0,
+      "min_audio_seconds": 3.1811337868480725,
+      "max_audio_seconds": 22.128616780045352,
+      "generated_artifact_and_wav_hashes_verified": true,
+      "environment": {
+        "utc": "2026-11-05T01:20:10.453004+00:00",
+        "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "cpu_names": [
+          "Intel(R) Core(TM) i7-14700"
+        ],
+        "logical_cpus": 24,
+        "packages": {
+          "openvino": "2026.4.1",
+          "nncf": "3.4.0",
+          "numpy": "2.4.6",
+          "onnx": "1.23.2",
+          "onnxruntime": "1.31.1"
+        },
+        "load_average": [
+          2.806640625,
+          2.4326171875,
+          2.427734375
+        ],
+        "thermal_millidegrees_celsius": {},
+        "governors": {},
+        "validation_host_only": true,
+        "not_n100_benchmark": true
+      }
+    },
+    {
+      "model": "piper-seqir-no-vits2-cpn",
+      "fp32_onnx_sha256": "a8d18a9e583fba2480ca5c5166b45431eb372c0cde4f8074e7d5a0e3be7b8ad6",
+      "source_hash_verified_again": true,
+      "parity_passed": 13,
+      "parity_total": 13,
+      "fq_count": 96,
+      "int8_kernel_count": 97,
+      "alignment_cases": 12,
+      "zero_alignment_frames": 0,
+      "min_audio_seconds": 3.541043083900227,
+      "max_audio_seconds": 20.58448979591837,
+      "generated_artifact_and_wav_hashes_verified": true,
+      "environment": {
+        "utc": "2026-11-05T01:20:10.453004+00:00",
+        "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "python": "3.12.3",
+        "cpu_names": [
+          "Intel(R) Core(TM) i7-14700"
+        ],
+        "logical_cpus": 24,
+        "packages": {
+          "openvino": "2026.4.1",
+          "nncf": "3.4.0",
+          "numpy": "2.4.6",
+          "onnx": "1.23.2",
+          "onnxruntime": "1.31.1"
+        },
+        "load_average": [
+          2.806640625,
+          2.4326171875,
+          2.427734375
+        ],
+        "thermal_millidegrees_celsius": {},
+        "governors": {},
+        "validation_host_only": true,
+        "not_n100_benchmark": true
+      }
+    }
+  ],
+  "source_sha256": {
+    "src/hifimobinet/common97.py": "b7631750fb020eed1fe8aef84d985bcd684e6ca4539434e44fd331cf20cf4fba",
+    "src/hifimobinet/ptq_numeric_guard.py": "32811eeaca6784500f8406a80083f4afd18eee2a6a4bca5919d81a34e68914f0",
+    "scripts/evaluation/edge/openvino_suite.py": "7c064dcd88bd4727e781af34aa4c1a83365c878108dc3717540699c72a592323",
+    "configs/quantization/piper-common97.json": "24d054a5d9ce0b10d3beaef47f264cb7d4885498c9d171c511b78c29d8de2833",
+    "configs/quantization/piper-common97-regression.json": "a83f8fec8b088826438c373623353d73de0ea0eb8974a3d83060db39563317e4"
+  },
+  "model_weights_and_wavs_in_git": false,
+  "generated_files_local": ".local/common97-integration-20261105/work/",
+  "quality_limit": "Alignment, finite audio and listening regression; no new independent WER/MOS or N100 RTF claim."
+}

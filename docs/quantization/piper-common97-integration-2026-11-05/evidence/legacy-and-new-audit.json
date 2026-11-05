@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "utc": "2026-11-05T01:40:10.723244+00:00",
+  "inference_performed_by_this_audit": false,
+  "policy": {
+    "recipe": "piper-common97-v1",
+    "policy_sha256": "24d054a5d9ce0b10d3beaef47f264cb7d4885498c9d171c511b78c29d8de2833",
+    "implementation_sha256": "b7631750fb020eed1fe8aef84d985bcd684e6ca4539434e44fd331cf20cf4fba"
+  },
+  "models": [
+    {
+      "model": "piper-no-vits2-cpn",
+      "old_graph_sha256": "82d534dc786718df64caaf60cee821394bc9dcc33d73f7f94dba37b20e0dbbd7",
+      "old_fq_count": 448,
+      "old_rejected": "FQ outside selected Conv activation edges: /Cast_2/fq_output_0",
+      "new_graph_sha256": "fac8eb68d80bb651242c71acff2b57c5ed7629624784de6aac3fc7107c004692",
+      "new_fq_count": 96,
+      "new_audit_passed": true,
+      "demo_preparation_gate_passed": true
+    },
+    {
+      "model": "piper-parir-no-vits2-cpn",
+      "old_graph_sha256": "9a40d9679c84c114b79e234001b8d2d4688ae614b6112086e605acc8678baf96",
+      "old_fq_count": 448,
+      "old_rejected": "FQ outside selected Conv activation edges: /Cast_2/fq_output_0",
+      "new_graph_sha256": "300311cb17a257cd74e6c078c7144caa6c2fc47fc30f24f5072110bdf68f909d",
+      "new_fq_count": 96,
+      "new_audit_passed": true,
+      "demo_preparation_gate_passed": true
+    },
+    {
+      "model": "piper-seqir-no-vits2-cpn",
+      "old_graph_sha256": "07f716362535c1cb6391c9ba92b972d1fab5b52919e2f1174cff7de9441b9b53",
+      "old_fq_count": 448,
+      "old_rejected": "FQ outside selected Conv activation edges: /Cast_2/fq_output_0",
+      "new_graph_sha256": "533bb538b2aeb9b086efc63ebb4a27b11df04b1b20df840f2f2a2e91f1237b44",
+      "new_fq_count": 96,
+      "new_audit_passed": true,
+      "demo_preparation_gate_passed": true
+    }
+  ]
+}

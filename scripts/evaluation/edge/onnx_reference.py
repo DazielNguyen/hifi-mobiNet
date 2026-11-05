@@ -3,6 +3,8 @@ import importlib.util
 from pathlib import Path
 
 _path = Path(__file__).resolve().parent / "reference/scripts/evaluation/onnx/common.py"
+if not _path.is_file():
+    _path = Path(__file__).resolve().parents[1] / "onnx/common.py"
 _spec = importlib.util.spec_from_file_location("edge_project_onnx_common", _path)
 _module = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_module)

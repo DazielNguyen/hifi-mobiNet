@@ -39,7 +39,8 @@ def handler_for(engine):
             elif self.path == "/api/status":
                 self.send_json(200, {"server": engine.preflight,
                                     "models": [{"id": m["id"], "label": m["label"],
-                                                "sample_rate": m["sample_rate"]}
+                                                "sample_rate": m["sample_rate"],
+                                                "precisions": list(m["artifacts"]), "int8_recipe": m.get("int8_recipe")}
                                                for m in engine.models.values()]})
             elif self.path == "/favicon.ico":
                 self.send_bytes(204, b"", "image/x-icon")

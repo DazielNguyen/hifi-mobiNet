@@ -10,6 +10,12 @@ Thư mục này chứa mọi kết quả đã lưu của hai thế hệ model tr
 Các package đo về sau có provenance riêng; phiên N100 có manifest import từng file
 và script kiểm độc lập.
 
+**Cập nhật INT8 ngày 05/11:** code chuẩn bị/demo ba Piper chuyển sang
+[common97](../docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
+để ngăn quantizer làm hỏng duration/alignment ở đuôi câu. Kết quả N100 01/11
+bên dưới vẫn thuộc graph cũ; không dùng chúng làm RTF/chất lượng common97.
+Code mới đã đạt 36 ca alignment trên CPU PC/WSL; cần cập nhật và đo lại trên N100.
+
 | Mục | Nội dung |
 |---|---|
 | [Kết quả lịch sử](#kết-quả-lịch-sử-thế-hệ-1) | `historical/`, `prior_audit/`, `manifests/` |

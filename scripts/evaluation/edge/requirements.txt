@@ -1,7 +1,6 @@
-# Resolve once on Ubuntu/N100; save pip freeze and keep those versions for all six models.
-# This is an input list, not a tested lockfile. No torch/training environment is required.
-openvino>=2025.0
-nncf>=2.15
-onnx>=1.17
-onnxruntime>=1.20
-numpy>=1.26
+# common97 experiment runtime; reuse the existing N100 environment.
+openvino==2026.4.1
+nncf==3.4.0
+onnx==1.23.2
+onnxruntime==1.31.1
+numpy==2.4.6
