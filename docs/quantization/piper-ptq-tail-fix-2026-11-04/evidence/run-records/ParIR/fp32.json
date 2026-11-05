@@ -1,0 +1,107 @@
+{
+  "status": "audio_generated_quality_pending",
+  "historical_precision": "fp32",
+  "source_hashes": {
+    "/mnt/c/Users/duyng/OneDrive/Documents/Repository/FPT-Graduation-Project/hifi-mobiNet/results/edge-n100-openvino/2026-11-01/.local/originals/final/work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/fp32.xml": "9f7c2702ebc086c75b46524f1e991c1963c72facee63484440dbce3369c2e9bf",
+    "/mnt/c/Users/duyng/OneDrive/Documents/Repository/FPT-Graduation-Project/hifi-mobiNet/results/edge-n100-openvino/2026-11-01/.local/originals/final/work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/fp32.bin": "589ddba2f2f421a2bbe8126523983f643de5eba3d8d8270c2c66f603ac992b3e"
+  },
+  "only_graph_change": "Replace two Gaussian RNG outputs by explicit duration/acoustic inputs; preserve FQ nodes/ranges",
+  "replacements": [
+    {
+      "original_gaussian": "/dp/RandomNormalLike",
+      "shape_source": "/dp/ConstantOfShape",
+      "new_parameter": "/dp/RandomNormalLike_output_0"
+    },
+    {
+      "original_gaussian": "/RandomNormalLike",
+      "shape_source": "/Transpose_3",
+      "new_parameter": "noise_acoustic"
+    }
+  ],
+  "fake_quantize_count": 0,
+  "actual_int8_kernel_count": 0,
+  "paired_noise_parity_against_onnx_helper": [
+    {
+      "case": "reported",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "reported",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "first_sentence",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "first_sentence",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "second_sentence",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "second_sentence",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "long_a",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "long_a",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "long_b",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "long_b",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "stress_300",
+      "seed": 1234,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "case": "stress_300",
+      "seed": 5678,
+      "max_abs": 0.0,
+      "rmse": 0.0
+    }
+  ],
+  "config": {
+    "PERFORMANCE_HINT": "LATENCY",
+    "NUM_STREAMS": 1,
+    "INFERENCE_NUM_THREADS": 4,
+    "INFERENCE_PRECISION_HINT": "f32",
+    "EXECUTION_MODE_HINT": "ACCURACY"
+  },
+  "not_n100_benchmark": true,
+  "script_sha256": "9e021a05b9ec469cb1b17fde751c35069f1e27fddfaf0388e748dd3153d27c21",
+  "source_hashes_unchanged": true
+}

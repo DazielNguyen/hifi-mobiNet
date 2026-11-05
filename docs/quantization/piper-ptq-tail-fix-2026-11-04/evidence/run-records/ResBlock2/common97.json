@@ -1,0 +1,651 @@
+{
+  "status": "audio_generated_quality_pending",
+  "started_utc": "2026-11-04T12:32:55.872920+00:00",
+  "model": "piper-no-vits2-cpn",
+  "variant": {
+    "id": "common97",
+    "mask": 7
+  },
+  "source_sha256": "b4a95a82a009bd8b88c979b9ce04a82f3bb8bc33c3ba143d33bdbbd01dc2f59c",
+  "environment": {
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "cpu": ": Intel(R) Core(TM) i7-14700",
+    "python": "3.12.3",
+    "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+    "numpy": "2.4.6",
+    "nncf": "3.4.0"
+  },
+  "config": {
+    "PERFORMANCE_HINT": "LATENCY",
+    "NUM_STREAMS": 1,
+    "INFERENCE_NUM_THREADS": 4,
+    "INFERENCE_PRECISION_HINT": "f32",
+    "EXECUTION_MODE_HINT": "ACCURACY"
+  },
+  "not_n100_benchmark": true,
+  "script_sha256": "cf4ebd1e6b83a3606f60686f589cd2ad8a6730ded0315a3f1e0483619c98734d",
+  "input_texts_sha256": "6104a14251d0988ceaab2da33d1414a368315087143604ceebac96a809a8a28c",
+  "rng": "explicit paired duration/acoustic noise; same per-text seed across variants",
+  "noise_inputs": {
+    "duration_input": "/dp/RandomNormalLike_output_0",
+    "acoustic_input": "noise_acoustic",
+    "replaced_nodes": [
+      "/dp/RandomNormalLike",
+      "/RandomNormalLike"
+    ]
+  },
+  "calibration": {
+    "n": 60,
+    "train": 60,
+    "val": 0,
+    "test": 0,
+    "problems": [],
+    "passed": true
+  },
+  "quantization_s": 69.65255484601948,
+  "allowed_count": 97,
+  "compile_s": 6.3754996139905415,
+  "actual_int8_kernel_count": 97,
+  "actual_int8_kernels": [
+    {
+      "name": "/dp/flows.7/proj/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.7/proj/Conv/WithoutBiases,Multiply_381917,/dp/flows.7/proj/Conv"
+    },
+    {
+      "name": "/dp/flows.7/convs/convs_1x1.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.7/convs/convs_1x1.2/Conv/WithoutBiases,Multiply_381871,/dp/flows.7/convs/convs_1x1.2/Conv"
+    },
+    {
+      "name": "/dp/flows.7/convs/convs_1x1.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.7/convs/convs_1x1.1/Conv/WithoutBiases,Multiply_381825,/dp/flows.7/convs/convs_1x1.1/Conv"
+    },
+    {
+      "name": "/dp/flows.7/convs/convs_1x1.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.7/convs/convs_1x1.0/Conv/WithoutBiases,Multiply_381779,/dp/flows.7/convs/convs_1x1.0/Conv"
+    },
+    {
+      "name": "/dp/proj/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/proj/Conv/WithoutBiases,Multiply_381733,/dp/proj/Conv"
+    },
+    {
+      "name": "/dp/convs/convs_1x1.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/convs/convs_1x1.2/Conv/WithoutBiases,Multiply_381687,/dp/convs/convs_1x1.2/Conv"
+    },
+    {
+      "name": "/dp/convs/convs_1x1.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/convs/convs_1x1.1/Conv/WithoutBiases,Multiply_381641,/dp/convs/convs_1x1.1/Conv"
+    },
+    {
+      "name": "/dp/convs/convs_1x1.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/convs/convs_1x1.0/Conv/WithoutBiases,Multiply_381595,/dp/convs/convs_1x1.0/Conv"
+    },
+    {
+      "name": "/dp/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/pre/Conv/WithoutBiases,Multiply_381549,/dp/pre/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.5/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.5/conv_o/Conv/WithoutBiases,Multiply_381408,/enc_p/encoder/attn_layers.5/conv_o/Conv,/enc_p/encoder/Add_10"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.4/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.4/conv_o/Conv/WithoutBiases,Multiply_381134,/enc_p/encoder/attn_layers.4/conv_o/Conv,/enc_p/encoder/Add_8"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.3/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.3/conv_o/Conv/WithoutBiases,Multiply_380860,/enc_p/encoder/attn_layers.3/conv_o/Conv,/enc_p/encoder/Add_6"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.2/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.2/conv_o/Conv/WithoutBiases,Multiply_380586,/enc_p/encoder/attn_layers.2/conv_o/Conv,/enc_p/encoder/Add_4"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.1/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.1/conv_o/Conv/WithoutBiases,Multiply_380312,/enc_p/encoder/attn_layers.1/conv_o/Conv,/enc_p/encoder/Add_2"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.0/conv_o/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.0/conv_o/Conv/WithoutBiases,Multiply_380038,/enc_p/encoder/attn_layers.0/conv_o/Conv,/enc_p/encoder/Add"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.0/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.0/conv_q/Conv/WithoutBiases,Multiply_379905,/enc_p/encoder/attn_layers.0/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.0/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.0/conv_k/Conv/WithoutBiases,Multiply_379956,/enc_p/encoder/attn_layers.0/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.0/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.0/conv_v/Conv/WithoutBiases,Multiply_379992,/enc_p/encoder/attn_layers.0/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.0/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.0/conv_2/Conv/WithoutBiases,Multiply_380118,/enc_p/encoder/ffn_layers.0/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.0/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.0/conv_1/Conv/WithoutBiases,Multiply_380084,/enc_p/encoder/ffn_layers.0/conv_1/Conv,/enc_p/encoder/ffn_layers.0/Relu"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.1/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.1/conv_q/Conv/WithoutBiases,Multiply_380179,/enc_p/encoder/attn_layers.1/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.1/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.1/conv_k/Conv/WithoutBiases,Multiply_380230,/enc_p/encoder/attn_layers.1/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.1/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.1/conv_v/Conv/WithoutBiases,Multiply_380266,/enc_p/encoder/attn_layers.1/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.1/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.1/conv_2/Conv/WithoutBiases,Multiply_380392,/enc_p/encoder/ffn_layers.1/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.1/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.1/conv_1/Conv/WithoutBiases,Multiply_380358,/enc_p/encoder/ffn_layers.1/conv_1/Conv,/enc_p/encoder/ffn_layers.1/Relu"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.2/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.2/conv_q/Conv/WithoutBiases,Multiply_380453,/enc_p/encoder/attn_layers.2/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.2/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.2/conv_k/Conv/WithoutBiases,Multiply_380504,/enc_p/encoder/attn_layers.2/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.2/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.2/conv_v/Conv/WithoutBiases,Multiply_380540,/enc_p/encoder/attn_layers.2/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.2/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.2/conv_2/Conv/WithoutBiases,Multiply_380666,/enc_p/encoder/ffn_layers.2/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.2/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.2/conv_1/Conv/WithoutBiases,Multiply_380632,/enc_p/encoder/ffn_layers.2/conv_1/Conv,/enc_p/encoder/ffn_layers.2/Relu"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.3/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.3/conv_q/Conv/WithoutBiases,Multiply_380727,/enc_p/encoder/attn_layers.3/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.3/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.3/conv_k/Conv/WithoutBiases,Multiply_380778,/enc_p/encoder/attn_layers.3/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.3/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.3/conv_v/Conv/WithoutBiases,Multiply_380814,/enc_p/encoder/attn_layers.3/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.3/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.3/conv_2/Conv/WithoutBiases,Multiply_380940,/enc_p/encoder/ffn_layers.3/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.3/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.3/conv_1/Conv/WithoutBiases,Multiply_380906,/enc_p/encoder/ffn_layers.3/conv_1/Conv,/enc_p/encoder/ffn_layers.3/Relu"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.4/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.4/conv_q/Conv/WithoutBiases,Multiply_381001,/enc_p/encoder/attn_layers.4/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.4/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.4/conv_k/Conv/WithoutBiases,Multiply_381052,/enc_p/encoder/attn_layers.4/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.4/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.4/conv_v/Conv/WithoutBiases,Multiply_381088,/enc_p/encoder/attn_layers.4/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.4/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.4/conv_2/Conv/WithoutBiases,Multiply_381214,/enc_p/encoder/ffn_layers.4/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.4/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.4/conv_1/Conv/WithoutBiases,Multiply_381180,/enc_p/encoder/ffn_layers.4/conv_1/Conv,/enc_p/encoder/ffn_layers.4/Relu"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.5/conv_q/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.5/conv_q/Conv/WithoutBiases,Multiply_381275,/enc_p/encoder/attn_layers.5/conv_q/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.5/conv_k/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.5/conv_k/Conv/WithoutBiases,Multiply_381326,/enc_p/encoder/attn_layers.5/conv_k/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/attn_layers.5/conv_v/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/attn_layers.5/conv_v/Conv/WithoutBiases,Multiply_381362,/enc_p/encoder/attn_layers.5/conv_v/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.5/conv_2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.5/conv_2/Conv/WithoutBiases,Multiply_381488,/enc_p/encoder/ffn_layers.5/conv_2/Conv"
+    },
+    {
+      "name": "/enc_p/encoder/ffn_layers.5/conv_1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/encoder/ffn_layers.5/conv_1/Conv/WithoutBiases,Multiply_381454,/enc_p/encoder/ffn_layers.5/conv_1/Conv,/enc_p/encoder/ffn_layers.5/Relu"
+    },
+    {
+      "name": "/dp/flows.7/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.7/pre/Conv/WithoutBiases,Multiply_379832,/dp/flows.7/pre/Conv"
+    },
+    {
+      "name": "/dp/flows.5/proj/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.5/proj/Conv/WithoutBiases,Multiply_382191,/dp/flows.5/proj/Conv"
+    },
+    {
+      "name": "/dp/flows.5/convs/convs_1x1.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.5/convs/convs_1x1.2/Conv/WithoutBiases,Multiply_382145,/dp/flows.5/convs/convs_1x1.2/Conv"
+    },
+    {
+      "name": "/dp/flows.5/convs/convs_1x1.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.5/convs/convs_1x1.1/Conv/WithoutBiases,Multiply_382099,/dp/flows.5/convs/convs_1x1.1/Conv"
+    },
+    {
+      "name": "/dp/flows.5/convs/convs_1x1.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.5/convs/convs_1x1.0/Conv/WithoutBiases,Multiply_382053,/dp/flows.5/convs/convs_1x1.0/Conv"
+    },
+    {
+      "name": "/dp/flows.5/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.5/pre/Conv/WithoutBiases,Multiply_382007,/dp/flows.5/pre/Conv"
+    },
+    {
+      "name": "/dp/flows.3/proj/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.3/proj/Conv/WithoutBiases,Multiply_382465,/dp/flows.3/proj/Conv"
+    },
+    {
+      "name": "/dp/flows.3/convs/convs_1x1.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.3/convs/convs_1x1.2/Conv/WithoutBiases,Multiply_382419,/dp/flows.3/convs/convs_1x1.2/Conv"
+    },
+    {
+      "name": "/dp/flows.3/convs/convs_1x1.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.3/convs/convs_1x1.1/Conv/WithoutBiases,Multiply_382373,/dp/flows.3/convs/convs_1x1.1/Conv"
+    },
+    {
+      "name": "/dp/flows.3/convs/convs_1x1.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.3/convs/convs_1x1.0/Conv/WithoutBiases,Multiply_382327,/dp/flows.3/convs/convs_1x1.0/Conv"
+    },
+    {
+      "name": "/dp/flows.3/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/dp/flows.3/pre/Conv/WithoutBiases,Multiply_382281,/dp/flows.3/pre/Conv,/dp/flows.3/convs/Add"
+    },
+    {
+      "name": "/flow/flows.0/post/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/post/Conv/WithoutBiases,Multiply_384419,/flow/flows.0/post/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/res_skip_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/res_skip_layers.3/Conv/WithoutBiases,Multiply_384373,/flow/flows.0/enc/res_skip_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/in_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/in_layers.3/Conv/WithoutBiases,Multiply_384327,/flow/flows.0/enc/in_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/res_skip_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/res_skip_layers.2/Conv/WithoutBiases,Multiply_384281,/flow/flows.0/enc/res_skip_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/in_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/in_layers.2/Conv/WithoutBiases,Multiply_384235,/flow/flows.0/enc/in_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/res_skip_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/res_skip_layers.1/Conv/WithoutBiases,Multiply_384189,/flow/flows.0/enc/res_skip_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/in_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/in_layers.1/Conv/WithoutBiases,Multiply_384143,/flow/flows.0/enc/in_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/res_skip_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/res_skip_layers.0/Conv/WithoutBiases,Multiply_384097,/flow/flows.0/enc/res_skip_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.0/enc/in_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/enc/in_layers.0/Conv/WithoutBiases,Multiply_384051,/flow/flows.0/enc/in_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.0/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.0/pre/Conv/WithoutBiases,Multiply_384005,/flow/flows.0/pre/Conv"
+    },
+    {
+      "name": "/flow/flows.2/post/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/post/Conv/WithoutBiases,Multiply_383959,/flow/flows.2/post/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/res_skip_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/res_skip_layers.3/Conv/WithoutBiases,Multiply_383913,/flow/flows.2/enc/res_skip_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/in_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/in_layers.3/Conv/WithoutBiases,Multiply_383867,/flow/flows.2/enc/in_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/res_skip_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/res_skip_layers.2/Conv/WithoutBiases,Multiply_383821,/flow/flows.2/enc/res_skip_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/in_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/in_layers.2/Conv/WithoutBiases,Multiply_383775,/flow/flows.2/enc/in_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/res_skip_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/res_skip_layers.1/Conv/WithoutBiases,Multiply_383729,/flow/flows.2/enc/res_skip_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/in_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/in_layers.1/Conv/WithoutBiases,Multiply_383683,/flow/flows.2/enc/in_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/res_skip_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/res_skip_layers.0/Conv/WithoutBiases,Multiply_383637,/flow/flows.2/enc/res_skip_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.2/enc/in_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/enc/in_layers.0/Conv/WithoutBiases,Multiply_383591,/flow/flows.2/enc/in_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.2/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.2/pre/Conv/WithoutBiases,Multiply_383545,/flow/flows.2/pre/Conv"
+    },
+    {
+      "name": "/flow/flows.4/post/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/post/Conv/WithoutBiases,Multiply_383499,/flow/flows.4/post/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/res_skip_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/res_skip_layers.3/Conv/WithoutBiases,Multiply_383453,/flow/flows.4/enc/res_skip_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/in_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/in_layers.3/Conv/WithoutBiases,Multiply_383407,/flow/flows.4/enc/in_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/res_skip_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/res_skip_layers.2/Conv/WithoutBiases,Multiply_383361,/flow/flows.4/enc/res_skip_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/in_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/in_layers.2/Conv/WithoutBiases,Multiply_383315,/flow/flows.4/enc/in_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/res_skip_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/res_skip_layers.1/Conv/WithoutBiases,Multiply_383269,/flow/flows.4/enc/res_skip_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/in_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/in_layers.1/Conv/WithoutBiases,Multiply_383223,/flow/flows.4/enc/in_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/res_skip_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/res_skip_layers.0/Conv/WithoutBiases,Multiply_383177,/flow/flows.4/enc/res_skip_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.4/enc/in_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/enc/in_layers.0/Conv/WithoutBiases,Multiply_383131,/flow/flows.4/enc/in_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.4/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.4/pre/Conv/WithoutBiases,Multiply_383085,/flow/flows.4/pre/Conv"
+    },
+    {
+      "name": "/flow/flows.6/post/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/post/Conv/WithoutBiases,Multiply_383039,/flow/flows.6/post/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/res_skip_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/res_skip_layers.3/Conv/WithoutBiases,Multiply_382993,/flow/flows.6/enc/res_skip_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/in_layers.3/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/in_layers.3/Conv/WithoutBiases,Multiply_382947,/flow/flows.6/enc/in_layers.3/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/res_skip_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/res_skip_layers.2/Conv/WithoutBiases,Multiply_382901,/flow/flows.6/enc/res_skip_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/in_layers.2/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/in_layers.2/Conv/WithoutBiases,Multiply_382855,/flow/flows.6/enc/in_layers.2/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/res_skip_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/res_skip_layers.1/Conv/WithoutBiases,Multiply_382809,/flow/flows.6/enc/res_skip_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/in_layers.1/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/in_layers.1/Conv/WithoutBiases,Multiply_382763,/flow/flows.6/enc/in_layers.1/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/res_skip_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/res_skip_layers.0/Conv/WithoutBiases,Multiply_382717,/flow/flows.6/enc/res_skip_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.6/enc/in_layers.0/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/enc/in_layers.0/Conv/WithoutBiases,Multiply_382671,/flow/flows.6/enc/in_layers.0/Conv"
+    },
+    {
+      "name": "/flow/flows.6/pre/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/flow/flows.6/pre/Conv/WithoutBiases,Multiply_382625,/flow/flows.6/pre/Conv"
+    },
+    {
+      "name": "/enc_p/proj/Conv/WithoutBiases",
+      "layerType": "Convolution",
+      "runtimePrecision": "u8",
+      "originalLayersNames": "/enc_p/proj/Conv/WithoutBiases,Multiply_382579,/enc_p/proj/Conv"
+    }
+  ],
+  "artifacts": {
+    "first_sentence-s1234.wav": "50409f1bebbc959ea33702b1c5188baceae13482eeecabd335455e2f909805ac",
+    "first_sentence-s5678.wav": "936e3915fb5c992a903f32cc954b3c89e0fe4fe5414cfd31b25ad995196bcfe7",
+    "long_a-s1234.wav": "475b3c187da103e31079abe80b1a84f31a9e7f81292c28e3b859e91a8fe31b2b",
+    "long_a-s5678.wav": "07cf44ff95d53cc36b764c9cba06c40d83e147449bc06e6a1c1844538d6703c9",
+    "long_b-s1234.wav": "f37b916d3ae9ed49fad0b971b2971152977ce9825da209a92067a89604b9a875",
+    "long_b-s5678.wav": "adab34da71c44d2954896275affa936b058c1a5c7e7938aa0468ff842d7a6eb3",
+    "model.bin": "b2125d960a9abfb94adfbdcbeeb51594678b8eccae19fde830dbbc692821c770",
+    "model.xml": "bc13e7276003e679be8fdc7aa8fa9eabc36ae3c82bc6ec105fbd2c0b30e1162c",
+    "reported-s1234.wav": "14e1f2cdb1adfddbd400d8897adbd5e6db223842284bfc8f67caaac9c28a6f56",
+    "reported-s5678.wav": "b390ca10677395d44452d031eb1ff53114f61d00daed02f33c25976c2cb34b38",
+    "second_sentence-s1234.wav": "e5f669a11e882cdfd068da6f5d96f59c770703547d0c550bd0fcc7ce5127e364",
+    "second_sentence-s5678.wav": "4499290cc610dab85fce2e501fbec3526679fa27240bbeb3a889b4bdf068f7c9",
+    "stress_300-s1234.wav": "1381b5cc7b1752ab353e4edc728d964f253dd4f5efc32aab928448585df48b8a",
+    "stress_300-s5678.wav": "cf89632bd8db2ffcb3155b4d4412b479eadb70d609ff81fd726134d8a2d96568"
+  },
+  "source_hash_unchanged": true,
+  "finished_utc": "2026-11-04T12:34:43.843712+00:00"
+}

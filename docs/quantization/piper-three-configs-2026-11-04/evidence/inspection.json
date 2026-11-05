@@ -1,0 +1,464 @@
+{
+  "created_utc": "2026-11-04T08:33:51.047457+00:00",
+  "git_head": "021f9d1ad8a98c4f2e91f8db351f1eec1166102d",
+  "inspection_only": true,
+  "new_model_execution_or_conversion": false,
+  "python": "3.10.20",
+  "onnx_reader": "1.22.0",
+  "sources": [
+    {
+      "path": "configs/training/piper-no-vits2-cpn.yaml",
+      "sha256": "2d9c1f47b35b17af9e7b262b995e8d19a82c9b6b444f5d440c7e3701f3d37135",
+      "bytes": 2459
+    },
+    {
+      "path": "configs/training/piper-parir-no-vits2-cpn.yaml",
+      "sha256": "5e74ae0c5a65b1ee391623d42581605adeb8fae860b02f272e1823a08dbc6f47",
+      "bytes": 2664
+    },
+    {
+      "path": "configs/training/piper-seqir-no-vits2-cpn.yaml",
+      "sha256": "88e918674b169b366224145f4637d7d1854c6ff39ce44ac28817ff70f14d8aeb",
+      "bytes": 2662
+    },
+    {
+      "path": "src/hifimobinet/training/registry.py",
+      "sha256": "6398952c608f1c935d05e5dd39ca5fef9585dab5c3fdff27d9ed8ac50bdf3460",
+      "bytes": 2859
+    },
+    {
+      "path": "src/hifimobinet/training/vendor.py",
+      "sha256": "844d5b212942ad0fdf4899e1336a22bcc06631be0d29b52f5276721d80d15248",
+      "bytes": 2094
+    },
+    {
+      "path": "src/hifimobinet/training/config.py",
+      "sha256": "5608ee684ec3e07cd398aad09cc2ff47a834537cbeb6421f3ed3027d7f980ff1",
+      "bytes": 8015
+    },
+    {
+      "path": "src/hifimobinet/training/train.py",
+      "sha256": "8e7e208a84d10c82d78fdbafa2d11975f1261a7be15b97c57e97fc6a40b0c329",
+      "bytes": 8140
+    },
+    {
+      "path": "src/hifimobinet/training/piper_module.py",
+      "sha256": "9d74809fc9785a1ce749ab2770546a5ffccca240ab1c04a80b25d830fec8a3d2",
+      "bytes": 7171
+    },
+    {
+      "path": "src/hifimobinet/training/piper_ir_module.py",
+      "sha256": "888b5d639173cf7d9c28ca7f2e19bf05ff4029862bd1c1424ca4ff6d7e18fbbf",
+      "bytes": 4751
+    },
+    {
+      "path": "vendor/edgetts/vits/lightning.py",
+      "sha256": "2fd5985cd89b77f935a1b322c2b724c4a6aa85f718dc6365daf9a08818d3d359",
+      "bytes": 20799
+    },
+    {
+      "path": "vendor/edgetts/vits/models.py",
+      "sha256": "bf3ac6bc44089d668866a8d74af037f234a3c9ee61691d30e6c5f49dffb5cd46",
+      "bytes": 39768
+    },
+    {
+      "path": "vendor/edgetts/vits/modules.py",
+      "sha256": "1267104e686b0ec062f7ddd052ece5245b011e3cf2f468f204d70449f1fd7095",
+      "bytes": 18154
+    },
+    {
+      "path": "vendor/edgetts/vits/attentions.py",
+      "sha256": "c9cfd5885f3347ccfaf03ce9866555567dbb7fdc4aff9c22f12e084cb5d540bd",
+      "bytes": 15134
+    },
+    {
+      "path": "vendor/edgetts/vits/transforms.py",
+      "sha256": "2038349b8eb60efef6d43acb3be31f5a1251077c0055bd71d7f55e7e6715b5b6",
+      "bytes": 7532
+    },
+    {
+      "path": "vendor/edgetts/vits/commons.py",
+      "sha256": "26c0fc09d67765c618b9b621c3c4a8e61202073885942aca2ebbf594c0d10833",
+      "bytes": 4645
+    },
+    {
+      "path": "src/hifimobinet/architecture/vits/modules/generator.py",
+      "sha256": "f541d7446403909fa7ed7fcee4f43c307eae28db07a0716da9f43b3e9ba77472",
+      "bytes": 8766
+    },
+    {
+      "path": "src/hifimobinet/architecture/vits/utils/resblocks.py",
+      "sha256": "cb9875ea1cec5c2028013043b7922b147d724ad70e29b0e3139e331c5211da7f",
+      "bytes": 6374
+    },
+    {
+      "path": "src/hifimobinet/architecture/vits/utils/normalization.py",
+      "sha256": "18ba79b39a4c12c1c1cdb0b3c44192cb1c97cb3941d4ab0f16638aa6c482c20a",
+      "bytes": 3618
+    },
+    {
+      "path": "src/hifimobinet/architecture/vits/modules/discriminators.py",
+      "sha256": "09842a69a6068b9444195f8e00f3b95505b815f4f9293ff720c3cc3694230f5d",
+      "bytes": 6924
+    },
+    {
+      "path": "scripts/evaluation/onnx/common.py",
+      "sha256": "23b512ffed5f928467605627e51878a4da43d0acb40836b79db39f8d8bf412c1",
+      "bytes": 17521
+    },
+    {
+      "path": "scripts/evaluation/onnx/export.py",
+      "sha256": "b4cacf9e9dbd87494c608a5f62ca8faf2f2233b1e60f77edb9feeda8507ec24a",
+      "bytes": 13517
+    },
+    {
+      "path": "demo/n100_models.json",
+      "sha256": "fb4c0b09ac6c389e3d3b00cbf6c2ec119aa323f2ebb240a223a2127fa8326a72",
+      "bytes": 10478
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/models.json",
+      "sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+      "bytes": 6982
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/openvino_suite.py",
+      "sha256": "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf",
+      "bytes": 27700
+    },
+    {
+      "path": "docs/plan-onnx-ptq-v2.vi.md",
+      "sha256": "9319db320c1ac67fdab1c23e185f901b62494d3f18514de393cb5c0b87bf1e7c",
+      "bytes": 8101
+    }
+  ],
+  "inspection_script": {
+    "path": "docs/quantization/piper-three-configs-2026-11-04/inspect_graphs.py",
+    "sha256": "5a695c01cd2e1f15a54e85b1156f4127e3f883054cf69852dbfe85f2279db8d1",
+    "bytes": 10318
+  },
+  "models": [
+    {
+      "id": "piper-no-vits2-cpn",
+      "checkpoint_provenance_only": {
+        "filename": "best-epoch=1403-val_loss_mel=19.7719.ckpt",
+        "sha256": "2eeff5354c3320b12a288c0e52bdadbacce2c1ddaa14d5c739d1d4208b0f6003"
+      },
+      "graph": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/models/piper-no-vits2-cpn/fp32.onnx",
+        "sha256": "b4a95a82a009bd8b88c979b9ce04a82f3bb8bc33c3ba143d33bdbbd01dc2f59c",
+        "bytes": 63469330
+      },
+      "export_config": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/reference/configs/training/piper-no-vits2-cpn.yaml",
+        "sha256": "2d9c1f47b35b17af9e7b262b995e8d19a82c9b6b444f5d440c7e3701f3d37135",
+        "bytes": 2459
+      },
+      "current_config_matches_export_config": true,
+      "onnx_checker": "passed_static_only",
+      "onnx_nodes": 6101,
+      "op_counts": {
+        "Add": 207,
+        "And": 3,
+        "Cast": 143,
+        "Ceil": 1,
+        "Clip": 6,
+        "Concat": 227,
+        "Constant": 2485,
+        "ConstantOfShape": 170,
+        "Conv": 129,
+        "ConvTranspose": 3,
+        "CumSum": 7,
+        "Div": 45,
+        "Equal": 65,
+        "Erf": 24,
+        "Exp": 7,
+        "Expand": 90,
+        "Gather": 199,
+        "GatherElements": 21,
+        "GatherND": 15,
+        "GreaterOrEqual": 6,
+        "Identity": 31,
+        "IsNaN": 2,
+        "LayerNormalization": 36,
+        "LeakyRelu": 16,
+        "Less": 3,
+        "LessOrEqual": 3,
+        "MatMul": 26,
+        "Mul": 292,
+        "Neg": 10,
+        "NonZero": 21,
+        "Not": 3,
+        "Pad": 58,
+        "Pow": 3,
+        "RandomNormalLike": 2,
+        "Range": 39,
+        "ReduceMax": 1,
+        "ReduceSum": 4,
+        "Relu": 6,
+        "Reshape": 235,
+        "ScatterND": 30,
+        "Shape": 351,
+        "Sigmoid": 16,
+        "Slice": 267,
+        "Softmax": 12,
+        "Softplus": 3,
+        "Split": 9,
+        "Sqrt": 3,
+        "Squeeze": 13,
+        "Sub": 108,
+        "Tanh": 17,
+        "Transpose": 184,
+        "Unsqueeze": 372,
+        "Where": 72
+      },
+      "graph_inputs": [
+        "input",
+        "input_lengths",
+        "scales"
+      ],
+      "quantized_or_weight_norm_ops": {
+        "ReduceL2": 0,
+        "QuantizeLinear": 0,
+        "DequantizeLinear": 0,
+        "QLinearConv": 0
+      },
+      "historical_preparation": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/preparation.json",
+        "sha256": "d528b4320ed64f513f72a2a1000714dd29e4f7bf7a28a8ae21efec02a8d10327",
+        "bytes": 96409
+      },
+      "historical_runtime_metadata": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/int8_runtime_nodes.json",
+        "sha256": "57b1052d56dc24a0b1d30b71b4849d0861a4c5177b984dadc7002b57935d12c6",
+        "bytes": 746641
+      },
+      "historical_weighted_kernels_by_module_precision": {
+        "alignment_or_other/f32": 5,
+        "dec/f32": 20,
+        "dp/f32": 12,
+        "dp/int8": 20,
+        "enc_p/f32": 24,
+        "enc_p/int8": 37,
+        "flow/int8": 40
+      }
+    },
+    {
+      "id": "piper-parir-no-vits2-cpn",
+      "checkpoint_provenance_only": {
+        "filename": "best-epoch=1486-val_loss_mel=19.0069.ckpt",
+        "sha256": "d57f6abb589a28db83dc60d4f2b7d0c0c4a5a16db9ae124e12f40870d31c97ee"
+      },
+      "graph": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/models/piper-parir-no-vits2-cpn/fp32.onnx",
+        "sha256": "506e76dc26804fe2c90619e5e98b9d8e745020324d953f5c8efc6e01e8a7c353",
+        "bytes": 61487365
+      },
+      "export_config": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/reference/configs/training/piper-parir-no-vits2-cpn.yaml",
+        "sha256": "5e74ae0c5a65b1ee391623d42581605adeb8fae860b02f272e1823a08dbc6f47",
+        "bytes": 2664
+      },
+      "current_config_matches_export_config": true,
+      "onnx_checker": "passed_static_only",
+      "onnx_nodes": 6465,
+      "op_counts": {
+        "Abs": 44,
+        "Add": 220,
+        "And": 3,
+        "Cast": 143,
+        "Ceil": 1,
+        "Clip": 50,
+        "Concat": 227,
+        "Constant": 2617,
+        "ConstantOfShape": 170,
+        "Conv": 138,
+        "ConvTranspose": 3,
+        "CumSum": 7,
+        "Div": 45,
+        "Equal": 65,
+        "Erf": 24,
+        "Exp": 7,
+        "Expand": 90,
+        "Gather": 199,
+        "GatherElements": 21,
+        "GatherND": 15,
+        "GreaterOrEqual": 6,
+        "Identity": 37,
+        "IsNaN": 2,
+        "LayerNormalization": 36,
+        "Less": 3,
+        "LessOrEqual": 3,
+        "MatMul": 26,
+        "Mul": 358,
+        "Neg": 10,
+        "NonZero": 21,
+        "Not": 3,
+        "Pad": 58,
+        "Pow": 25,
+        "RandomNormalLike": 2,
+        "Range": 39,
+        "Reciprocal": 22,
+        "ReduceMax": 1,
+        "ReduceSum": 4,
+        "Relu": 6,
+        "Reshape": 235,
+        "ScatterND": 30,
+        "Shape": 351,
+        "Sigmoid": 16,
+        "Sin": 22,
+        "Slice": 267,
+        "Softmax": 12,
+        "Softplus": 3,
+        "Split": 9,
+        "Sqrt": 3,
+        "Squeeze": 13,
+        "Sub": 108,
+        "Tanh": 17,
+        "Transpose": 184,
+        "Unsqueeze": 372,
+        "Where": 72
+      },
+      "graph_inputs": [
+        "input",
+        "input_lengths",
+        "scales"
+      ],
+      "quantized_or_weight_norm_ops": {
+        "ReduceL2": 0,
+        "QuantizeLinear": 0,
+        "DequantizeLinear": 0,
+        "QLinearConv": 0
+      },
+      "historical_preparation": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/preparation.json",
+        "sha256": "9621a43ee3e104f0d96879fb64569bbdc5179726e6ddfe87974902da1c38885e",
+        "bytes": 105717
+      },
+      "historical_runtime_metadata": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/int8_runtime_nodes.json",
+        "sha256": "fb28bafb184c5620334c5fa616416339d5876913085c2789710a6928bea4399c",
+        "bytes": 782704
+      },
+      "historical_weighted_kernels_by_module_precision": {
+        "alignment_or_other/f32": 5,
+        "dec/f32": 29,
+        "dp/f32": 12,
+        "dp/int8": 20,
+        "enc_p/f32": 24,
+        "enc_p/int8": 37,
+        "flow/int8": 40
+      }
+    },
+    {
+      "id": "piper-seqir-no-vits2-cpn",
+      "checkpoint_provenance_only": {
+        "filename": "best-epoch=1455-val_loss_mel=19.0332.ckpt",
+        "sha256": "cc1ba70d20471fe587d0099fc9d1c739bc0d8d3b08541450629eb8bb068c6637"
+      },
+      "graph": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/models/piper-seqir-no-vits2-cpn/fp32.onnx",
+        "sha256": "a8d18a9e583fba2480ca5c5166b45431eb372c0cde4f8074e7d5a0e3be7b8ad6",
+        "bytes": 61283108
+      },
+      "export_config": {
+        "path": "results/edge-n100-openvino/2026-11-01/.local/originals/final/reference/configs/training/piper-seqir-no-vits2-cpn.yaml",
+        "sha256": "88e918674b169b366224145f4637d7d1854c6ff39ce44ac28817ff70f14d8aeb",
+        "bytes": 2662
+      },
+      "current_config_matches_export_config": true,
+      "onnx_checker": "passed_static_only",
+      "onnx_nodes": 6333,
+      "op_counts": {
+        "Abs": 32,
+        "Add": 205,
+        "And": 3,
+        "Cast": 143,
+        "Ceil": 1,
+        "Clip": 38,
+        "Concat": 227,
+        "Constant": 2578,
+        "ConstantOfShape": 170,
+        "Conv": 129,
+        "ConvTranspose": 3,
+        "CumSum": 7,
+        "Div": 42,
+        "Equal": 65,
+        "Erf": 24,
+        "Exp": 7,
+        "Expand": 90,
+        "Gather": 199,
+        "GatherElements": 21,
+        "GatherND": 15,
+        "GreaterOrEqual": 6,
+        "Identity": 31,
+        "IsNaN": 2,
+        "LayerNormalization": 36,
+        "Less": 3,
+        "LessOrEqual": 3,
+        "MatMul": 26,
+        "Mul": 340,
+        "Neg": 10,
+        "NonZero": 21,
+        "Not": 3,
+        "Pad": 58,
+        "Pow": 19,
+        "RandomNormalLike": 2,
+        "Range": 39,
+        "Reciprocal": 16,
+        "ReduceMax": 1,
+        "ReduceSum": 4,
+        "Relu": 6,
+        "Reshape": 235,
+        "ScatterND": 30,
+        "Shape": 351,
+        "Sigmoid": 16,
+        "Sin": 16,
+        "Slice": 267,
+        "Softmax": 12,
+        "Softplus": 3,
+        "Split": 9,
+        "Sqrt": 3,
+        "Squeeze": 13,
+        "Sub": 108,
+        "Tanh": 17,
+        "Transpose": 184,
+        "Unsqueeze": 372,
+        "Where": 72
+      },
+      "graph_inputs": [
+        "input",
+        "input_lengths",
+        "scales"
+      ],
+      "quantized_or_weight_norm_ops": {
+        "ReduceL2": 0,
+        "QuantizeLinear": 0,
+        "DequantizeLinear": 0,
+        "QLinearConv": 0
+      },
+      "historical_preparation": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/preparation.json",
+        "sha256": "3c374d43142d73cce184f3582fc8aa33740c1747789b541955008e019ae54d93",
+        "bytes": 102027
+      },
+      "historical_runtime_metadata": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/int8_runtime_nodes.json",
+        "sha256": "cb6128c602bddd9ca47aa1b70a602edb3be3a0b8cfad860663f6715b14bffa82",
+        "bytes": 766911
+      },
+      "historical_weighted_kernels_by_module_precision": {
+        "alignment_or_other/f32": 5,
+        "dec/f32": 20,
+        "dp/f32": 12,
+        "dp/int8": 20,
+        "enc_p/f32": 24,
+        "enc_p/int8": 37,
+        "flow/int8": 40
+      }
+    }
+  ],
+  "read_sources_unchanged_after_inspection": true,
+  "weighted_operator_rows": 483,
+  "initializer_rows": 1141
+}

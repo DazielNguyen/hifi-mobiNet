@@ -1,0 +1,34 @@
+{
+  "status": "audio_generated_quality_pending",
+  "historical_precision": "fp32",
+  "source_hashes": {
+    "/mnt/c/Users/duyng/OneDrive/Documents/Repository/FPT-Graduation-Project/hifi-mobiNet/results/edge-n100-openvino/2026-11-01/.local/originals/final/work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/fp32.xml": "3e96ecbd21056cf70d1e3087cd1f0c9995533e1c9e9281274102f210d1cb9eb7",
+    "/mnt/c/Users/duyng/OneDrive/Documents/Repository/FPT-Graduation-Project/hifi-mobiNet/results/edge-n100-openvino/2026-11-01/.local/originals/final/work-n100-clean-20261101T075458Z/piper-no-vits2-cpn/fp32.bin": "81ff5a884ef1da9405b08586b996f81fa850f7e32ee1c6b34731e119080cfc6d"
+  },
+  "only_graph_change": "Replace two Gaussian RNG outputs by explicit duration/acoustic inputs; preserve FQ nodes/ranges",
+  "replacements": [
+    {
+      "original_gaussian": "/dp/RandomNormalLike",
+      "shape_source": "/dp/ConstantOfShape",
+      "new_parameter": "/dp/RandomNormalLike_output_0"
+    },
+    {
+      "original_gaussian": "/RandomNormalLike",
+      "shape_source": "/Transpose_3",
+      "new_parameter": "noise_acoustic"
+    }
+  ],
+  "fake_quantize_count": 0,
+  "actual_int8_kernel_count": 0,
+  "paired_noise_parity_against_onnx_helper": [],
+  "config": {
+    "PERFORMANCE_HINT": "LATENCY",
+    "NUM_STREAMS": 1,
+    "INFERENCE_NUM_THREADS": 4,
+    "INFERENCE_PRECISION_HINT": "f32",
+    "EXECUTION_MODE_HINT": "ACCURACY"
+  },
+  "not_n100_benchmark": true,
+  "script_sha256": "9e021a05b9ec469cb1b17fde751c35069f1e27fddfaf0388e748dd3153d27c21",
+  "source_hashes_unchanged": true
+}

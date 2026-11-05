@@ -1,0 +1,34 @@
+{
+  "sample_rate": 22050,
+  "n_fft": 1024,
+  "hop_length": 256,
+  "window": "periodic Hann",
+  "magnitude_scale": "2*abs(rfft(windowed_frame))/sum(window)",
+  "figure_db_range": [
+    -85,
+    -5
+  ],
+  "frequency_band_metrics_hz": [
+    80,
+    10000
+  ],
+  "high_band_hz": [
+    4000,
+    10000
+  ],
+  "active_frame_min_rms_dbfs": -50,
+  "head_seconds": [
+    0.5,
+    5.5
+  ],
+  "tail_seconds": [
+    8,
+    14
+  ],
+  "no_time_warp_or_waveform_subtraction": true,
+  "source_wavs_individually_peak_normalized": true,
+  "python": "3.12.3",
+  "numpy": "2.4.6",
+  "scipy": "1.18.1",
+  "matplotlib": "3.11.2"
+}

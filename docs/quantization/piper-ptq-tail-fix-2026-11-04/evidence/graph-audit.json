@@ -1,0 +1,3844 @@
+[
+  {
+    "directory": "common97-native-v1/piper-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "common97-native-v1/piper-parir-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "common97-native-v1/piper-seqir-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "common97-paired-v1/piper-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "common97-paired-v1/piper-parir-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "common97-paired-v1/piper-seqir-no-vits2-cpn/common97",
+    "fq_count": 96,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-no-vits2-cpn/native_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather",
+          "/Gather_1",
+          "/Gather_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.332414627075195,
+          0.0,
+          20.332414627075195
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/Unsqueeze_3",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.6/enc/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-no-vits2-cpn/paired_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.332414627075195,
+          0.0,
+          20.332414627075195
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-no-vits2-cpn/paired_original_trace",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.332414627075195,
+          0.0,
+          20.332414627075195
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          557.8833618164062,
+          0.0,
+          557.8833618164062
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-parir-no-vits2-cpn/native_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather",
+          "/Gather_2",
+          "/Gather_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          19.651939392089844,
+          0.0,
+          19.651939392089844
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-parir-no-vits2-cpn/paired_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          19.651939392089844,
+          0.0,
+          19.651939392089844
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-parir-no-vits2-cpn/paired_original_trace",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          19.651939392089844,
+          0.0,
+          19.651939392089844
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          568.9833374023438,
+          0.0,
+          568.9833374023438
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-seqir-no-vits2-cpn/native_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_1",
+          "/Gather_2",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.113861083984375,
+          0.0,
+          20.113861083984375
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-seqir-no-vits2-cpn/paired_bypass_cumsum",
+    "fq_count": 447,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.113861083984375,
+          0.0,
+          20.113861083984375
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "cumsum-causal-v1/piper-seqir-no-vits2-cpn/paired_original_trace",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.113861083984375,
+          0.0,
+          20.113861083984375
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          560.5166625976562,
+          0.0,
+          560.5166625976562
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-no-vits2-cpn/alignment_matmul_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-no-vits2-cpn/attention_matmul_only",
+    "fq_count": 30,
+    "int8_kernel_count_all_weighted_types": 1,
+    "int8_kernel_types": {
+      "MatMul": 1
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 25,
+      "MatMul:u8": 1,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-no-vits2-cpn/decoder_prepost_only",
+    "fq_count": 2,
+    "int8_kernel_count_all_weighted_types": 2,
+    "int8_kernel_types": {
+      "Convolution": 2
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 127,
+      "MatMul:f32": 26,
+      "Convolution:u8": 2,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-no-vits2-cpn/prior_projection_only",
+    "fq_count": 1,
+    "int8_kernel_count_all_weighted_types": 1,
+    "int8_kernel_types": {
+      "Convolution": 1
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 128,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 1
+    }
+  },
+  {
+    "directory": "extra-v1/piper-parir-no-vits2-cpn/alignment_matmul_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-parir-no-vits2-cpn/attention_matmul_only",
+    "fq_count": 30,
+    "int8_kernel_count_all_weighted_types": 1,
+    "int8_kernel_types": {
+      "MatMul": 1
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 25,
+      "MatMul:u8": 1,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-parir-no-vits2-cpn/decoder_prepost_only",
+    "fq_count": 2,
+    "int8_kernel_count_all_weighted_types": 2,
+    "int8_kernel_types": {
+      "Convolution": 2
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 136,
+      "MatMul:f32": 26,
+      "Convolution:u8": 2,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-parir-no-vits2-cpn/prior_projection_only",
+    "fq_count": 1,
+    "int8_kernel_count_all_weighted_types": 1,
+    "int8_kernel_types": {
+      "Convolution": 1
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 137,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 1
+    }
+  },
+  {
+    "directory": "extra-v1/piper-seqir-no-vits2-cpn/alignment_matmul_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-seqir-no-vits2-cpn/attention_matmul_only",
+    "fq_count": 30,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-seqir-no-vits2-cpn/decoder_prepost_only",
+    "fq_count": 2,
+    "int8_kernel_count_all_weighted_types": 2,
+    "int8_kernel_types": {
+      "Convolution": 2
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 127,
+      "MatMul:f32": 26,
+      "Convolution:u8": 2,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "extra-v1/piper-seqir-no-vits2-cpn/prior_projection_only",
+    "fq_count": 1,
+    "int8_kernel_count_all_weighted_types": 1,
+    "int8_kernel_types": {
+      "Convolution": 1
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 128,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 1
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_D",
+    "fq_count": 44,
+    "int8_kernel_count_all_weighted_types": 20,
+    "int8_kernel_types": {
+      "Convolution": 20
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 20,
+      "Convolution:f32": 109,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_DF",
+    "fq_count": 84,
+    "int8_kernel_count_all_weighted_types": 60,
+    "int8_kernel_types": {
+      "Convolution": 60
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 60,
+      "Convolution:f32": 69,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_DFG",
+    "fq_count": 101,
+    "int8_kernel_count_all_weighted_types": 80,
+    "int8_kernel_types": {
+      "Convolution": 80
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 80,
+      "Convolution:f32": 49,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_DG",
+    "fq_count": 61,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 40,
+      "Convolution:f32": 89,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_E",
+    "fq_count": 37,
+    "int8_kernel_count_all_weighted_types": 37,
+    "int8_kernel_types": {
+      "Convolution": 37
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 92,
+      "Convolution:u8": 37,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_ED",
+    "fq_count": 80,
+    "int8_kernel_count_all_weighted_types": 57,
+    "int8_kernel_types": {
+      "Convolution": 57
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 57,
+      "Convolution:f32": 72,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 137,
+    "int8_kernel_count_all_weighted_types": 117,
+    "int8_kernel_types": {
+      "Convolution": 117
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 117,
+      "Convolution:f32": 12,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EDG",
+    "fq_count": 97,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 77,
+      "Convolution:f32": 52,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 52,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EFG",
+    "fq_count": 94,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 32,
+      "Convolution:u8": 97,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_EG",
+    "fq_count": 54,
+    "int8_kernel_count_all_weighted_types": 57,
+    "int8_kernel_types": {
+      "Convolution": 57
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 72,
+      "Convolution:u8": 57,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_F",
+    "fq_count": 40,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 89,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 40
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_FG",
+    "fq_count": 57,
+    "int8_kernel_count_all_weighted_types": 60,
+    "int8_kernel_types": {
+      "Convolution": 60
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 69,
+      "MatMul:f32": 26,
+      "Convolution:u8": 60,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/blocks_G",
+    "fq_count": 17,
+    "int8_kernel_count_all_weighted_types": 20,
+    "int8_kernel_types": {
+      "Convolution": 20
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 109,
+      "MatMul:f32": 26,
+      "Convolution:u8": 20,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/decoder_internal_only",
+    "fq_count": 12,
+    "int8_kernel_count_all_weighted_types": 18,
+    "int8_kernel_types": {
+      "Convolution": 18
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 111,
+      "MatMul:f32": 26,
+      "Convolution:u8": 18,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/decoder_upsampling_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/encoder_attention_only",
+    "fq_count": 24,
+    "int8_kernel_count_all_weighted_types": 24,
+    "int8_kernel_types": {
+      "Convolution": 24
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 105,
+      "Convolution:u8": 24,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/encoder_no_prior",
+    "fq_count": 36,
+    "int8_kernel_count_all_weighted_types": 36,
+    "int8_kernel_types": {
+      "Convolution": 36
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 93,
+      "Convolution:u8": 36,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/flow_prepost_only",
+    "fq_count": 8,
+    "int8_kernel_count_all_weighted_types": 8,
+    "int8_kernel_types": {
+      "Convolution": 8
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 121,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 8
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/flow_wavenet_only",
+    "fq_count": 32,
+    "int8_kernel_count_all_weighted_types": 32,
+    "int8_kernel_types": {
+      "Convolution": 32
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 97,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 32
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-no-vits2-cpn/legacy_recipe_new",
+    "fq_count": 451,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.459754943847656,
+          0.0,
+          20.459754943847656
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          554.0499877929688,
+          0.0,
+          554.0499877929688
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_D",
+    "fq_count": 44,
+    "int8_kernel_count_all_weighted_types": 20,
+    "int8_kernel_types": {
+      "Convolution": 20
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 20,
+      "Convolution:f32": 118,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_DF",
+    "fq_count": 84,
+    "int8_kernel_count_all_weighted_types": 60,
+    "int8_kernel_types": {
+      "Convolution": 60
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 60,
+      "Convolution:f32": 78,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_DFG",
+    "fq_count": 125,
+    "int8_kernel_count_all_weighted_types": 80,
+    "int8_kernel_types": {
+      "Convolution": 80
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 80,
+      "Convolution:f32": 58,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_DG",
+    "fq_count": 85,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 40,
+      "Convolution:f32": 98,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_E",
+    "fq_count": 37,
+    "int8_kernel_count_all_weighted_types": 37,
+    "int8_kernel_types": {
+      "Convolution": 37
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 101,
+      "Convolution:u8": 37,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_ED",
+    "fq_count": 80,
+    "int8_kernel_count_all_weighted_types": 57,
+    "int8_kernel_types": {
+      "Convolution": 57
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 57,
+      "Convolution:f32": 81,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 161,
+    "int8_kernel_count_all_weighted_types": 117,
+    "int8_kernel_types": {
+      "Convolution": 117
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 117,
+      "Convolution:f32": 21,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EDG",
+    "fq_count": 121,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 77,
+      "Convolution:f32": 61,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 61,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EFG",
+    "fq_count": 118,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 41,
+      "Convolution:u8": 97,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_EG",
+    "fq_count": 78,
+    "int8_kernel_count_all_weighted_types": 57,
+    "int8_kernel_types": {
+      "Convolution": 57
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 81,
+      "Convolution:u8": 57,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_F",
+    "fq_count": 40,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 98,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 40
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_FG",
+    "fq_count": 81,
+    "int8_kernel_count_all_weighted_types": 60,
+    "int8_kernel_types": {
+      "Convolution": 60
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 78,
+      "MatMul:f32": 26,
+      "Convolution:u8": 60,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/blocks_G",
+    "fq_count": 41,
+    "int8_kernel_count_all_weighted_types": 20,
+    "int8_kernel_types": {
+      "Convolution": 20
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 118,
+      "MatMul:f32": 26,
+      "Convolution:u8": 20,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/decoder_depthwise_only",
+    "fq_count": 18,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/decoder_internal_only",
+    "fq_count": 36,
+    "int8_kernel_count_all_weighted_types": 18,
+    "int8_kernel_types": {
+      "Convolution": 18
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 120,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 18
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/decoder_pointwise_only",
+    "fq_count": 18,
+    "int8_kernel_count_all_weighted_types": 18,
+    "int8_kernel_types": {
+      "Convolution": 18
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 120,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 18
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/decoder_upsampling_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/encoder_attention_only",
+    "fq_count": 24,
+    "int8_kernel_count_all_weighted_types": 24,
+    "int8_kernel_types": {
+      "Convolution": 24
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 114,
+      "Convolution:u8": 24,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/encoder_no_prior",
+    "fq_count": 36,
+    "int8_kernel_count_all_weighted_types": 36,
+    "int8_kernel_types": {
+      "Convolution": 36
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 102,
+      "Convolution:u8": 36,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/flow_prepost_only",
+    "fq_count": 8,
+    "int8_kernel_count_all_weighted_types": 8,
+    "int8_kernel_types": {
+      "Convolution": 8
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 130,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 8
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/flow_wavenet_only",
+    "fq_count": 32,
+    "int8_kernel_count_all_weighted_types": 32,
+    "int8_kernel_types": {
+      "Convolution": 32
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 106,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 32
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-parir-no-vits2-cpn/legacy_recipe_new",
+    "fq_count": 451,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather",
+          "/Gather_2",
+          "/Gather_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          15.670000076293945,
+          0.0,
+          15.670000076293945
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          556.433349609375,
+          0.0,
+          556.433349609375
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_D",
+    "fq_count": 44,
+    "int8_kernel_count_all_weighted_types": 20,
+    "int8_kernel_types": {
+      "Convolution": 20
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 20,
+      "Convolution:f32": 109,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_DF",
+    "fq_count": 84,
+    "int8_kernel_count_all_weighted_types": 60,
+    "int8_kernel_types": {
+      "Convolution": 60
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 60,
+      "Convolution:f32": 69,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_DFG",
+    "fq_count": 113,
+    "int8_kernel_count_all_weighted_types": 74,
+    "int8_kernel_types": {
+      "Convolution": 74
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 74,
+      "Convolution:f32": 55,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_DG",
+    "fq_count": 73,
+    "int8_kernel_count_all_weighted_types": 34,
+    "int8_kernel_types": {
+      "Convolution": 34
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 34,
+      "Convolution:f32": 95,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_E",
+    "fq_count": 37,
+    "int8_kernel_count_all_weighted_types": 37,
+    "int8_kernel_types": {
+      "Convolution": 37
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 92,
+      "Convolution:u8": 37,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_ED",
+    "fq_count": 80,
+    "int8_kernel_count_all_weighted_types": 57,
+    "int8_kernel_types": {
+      "Convolution": 57
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 57,
+      "Convolution:f32": 72,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 149,
+    "int8_kernel_count_all_weighted_types": 111,
+    "int8_kernel_types": {
+      "Convolution": 111
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 111,
+      "Convolution:f32": 18,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EDG",
+    "fq_count": 109,
+    "int8_kernel_count_all_weighted_types": 71,
+    "int8_kernel_types": {
+      "Convolution": 71
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 71,
+      "Convolution:f32": 58,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 52,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EFG",
+    "fq_count": 106,
+    "int8_kernel_count_all_weighted_types": 91,
+    "int8_kernel_types": {
+      "Convolution": 91
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 38,
+      "Convolution:u8": 91,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_EG",
+    "fq_count": 66,
+    "int8_kernel_count_all_weighted_types": 51,
+    "int8_kernel_types": {
+      "Convolution": 51
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 78,
+      "Convolution:u8": 51,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_F",
+    "fq_count": 40,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 89,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 40
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_FG",
+    "fq_count": 69,
+    "int8_kernel_count_all_weighted_types": 54,
+    "int8_kernel_types": {
+      "Convolution": 54
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 75,
+      "MatMul:f32": 26,
+      "Convolution:u8": 54,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/blocks_G",
+    "fq_count": 29,
+    "int8_kernel_count_all_weighted_types": 14,
+    "int8_kernel_types": {
+      "Convolution": 14
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 115,
+      "MatMul:f32": 26,
+      "Convolution:u8": 14,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/decoder_depthwise_only",
+    "fq_count": 12,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/decoder_internal_only",
+    "fq_count": 24,
+    "int8_kernel_count_all_weighted_types": 12,
+    "int8_kernel_types": {
+      "Convolution": 12
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 117,
+      "MatMul:f32": 26,
+      "Convolution:u8": 12,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/decoder_pointwise_only",
+    "fq_count": 12,
+    "int8_kernel_count_all_weighted_types": 12,
+    "int8_kernel_types": {
+      "Convolution": 12
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 117,
+      "MatMul:f32": 26,
+      "Convolution:u8": 12,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/decoder_upsampling_only",
+    "fq_count": 3,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/encoder_attention_only",
+    "fq_count": 24,
+    "int8_kernel_count_all_weighted_types": 24,
+    "int8_kernel_types": {
+      "Convolution": 24
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 105,
+      "Convolution:u8": 24,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/encoder_no_prior",
+    "fq_count": 36,
+    "int8_kernel_count_all_weighted_types": 36,
+    "int8_kernel_types": {
+      "Convolution": 36
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 93,
+      "Convolution:u8": 36,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/flow_prepost_only",
+    "fq_count": 8,
+    "int8_kernel_count_all_weighted_types": 8,
+    "int8_kernel_types": {
+      "Convolution": 8
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 121,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 8
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/flow_wavenet_only",
+    "fq_count": 32,
+    "int8_kernel_count_all_weighted_types": 32,
+    "int8_kernel_types": {
+      "Convolution": 32
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 97,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 32
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "full-v1/piper-seqir-no-vits2-cpn/legacy_recipe_new",
+    "fq_count": 451,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather",
+          "/Gather_2",
+          "/Gather_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          17.823198318481445,
+          0.0,
+          17.823198318481445
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          548.4500122070312,
+          0.0,
+          548.4500122070312
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v1/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {}
+  },
+  {
+    "directory": "legacy-paired-v2/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-no-vits2-cpn/int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_1",
+          "/Gather",
+          "/Gather_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.332414627075195,
+          0.0,
+          20.332414627075195
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.2/Mul",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_2",
+          "/Unsqueeze_3",
+          "/Mul_7",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.6/Mul",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.4/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.2/Mul_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.4/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          557.8833618164062,
+          0.0,
+          557.8833618164062
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-parir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-parir-no-vits2-cpn/int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather_1",
+          "/Gather"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          19.651939392089844,
+          0.0,
+          19.651939392089844
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          568.9833374023438,
+          0.0,
+          568.9833374023438
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "legacy-paired-v3/piper-seqir-no-vits2-cpn/int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_1",
+          "/Gather",
+          "/Gather_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.113861083984375,
+          0.0,
+          20.113861083984375
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          560.5166625976562,
+          0.0,
+          560.5166625976562
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 137,
+    "int8_kernel_count_all_weighted_types": 117,
+    "int8_kernel_types": {
+      "Convolution": 117
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 117,
+      "Convolution:f32": 12,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 52,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-parir-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-parir-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 161,
+    "int8_kernel_count_all_weighted_types": 117,
+    "int8_kernel_types": {
+      "Convolution": 117
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 117,
+      "Convolution:f32": 21,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-parir-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 61,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-seqir-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-seqir-no-vits2-cpn/blocks_EDFG",
+    "fq_count": 149,
+    "int8_kernel_count_all_weighted_types": 111,
+    "int8_kernel_types": {
+      "Convolution": 111
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 111,
+      "Convolution:f32": 18,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-candidates-v1/piper-seqir-no-vits2-cpn/blocks_EF",
+    "fq_count": 77,
+    "int8_kernel_count_all_weighted_types": 77,
+    "int8_kernel_types": {
+      "Convolution": 77
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 52,
+      "Convolution:u8": 77,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-no-vits2-cpn/historical_int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_1",
+          "/Gather",
+          "/Gather_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.332414627075195,
+          0.0,
+          20.332414627075195
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          557.8833618164062,
+          0.0,
+          557.8833618164062
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -5.464174270629883,
+          6.147195816040039,
+          -5.464174270629883,
+          6.147195816040039
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-parir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 138,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-parir-no-vits2-cpn/historical_int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather_2",
+          "/Gather",
+          "/Gather_1"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          19.651939392089844,
+          0.0,
+          19.651939392089844
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul",
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          568.9833374023438,
+          0.0,
+          568.9833374023438
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -1.912109136581421,
+          2.151122808456421,
+          -1.912109136581421,
+          2.151122808456421
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 41,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "native-v1/piper-seqir-no-vits2-cpn/historical_int8",
+    "fq_count": 448,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [
+      {
+        "name": "scales/fq_output_0",
+        "input": "scales",
+        "consumers": [
+          "/Gather",
+          "/Gather_1",
+          "/Gather_2"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/Exp/fq_output_0",
+        "input": "/Exp",
+        "consumers": [
+          "/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          20.113861083984375,
+          0.0,
+          20.113861083984375
+        ]
+      },
+      {
+        "name": "/Cast_2/fq_output_0",
+        "input": "/Cast_2",
+        "consumers": [
+          "/flow/flows.2/enc/Mul_1",
+          "/flow/flows.2/enc/Mul_2",
+          "/flow/flows.2/enc/Mul_3",
+          "/flow/flows.2/Mul_1",
+          "/flow/flows.2/Mul_3",
+          "/Unsqueeze_3",
+          "/flow/flows.0/Mul",
+          "/flow/flows.6/Mul",
+          "/flow/flows.0/enc/Mul",
+          "/flow/flows.6/enc/Mul",
+          "/flow/flows.0/enc/Mul_1",
+          "/flow/flows.6/enc/Mul_1",
+          "/flow/flows.0/enc/Mul_2",
+          "/flow/flows.6/enc/Mul_2",
+          "/flow/flows.0/enc/Mul_3",
+          "/flow/flows.6/enc/Mul_3",
+          "/flow/flows.0/Mul_1",
+          "/flow/flows.6/Mul_1",
+          "/flow/flows.0/Mul_3",
+          "/flow/flows.6/Mul_3",
+          "/Mul_7",
+          "/flow/flows.4/Mul",
+          "/flow/flows.4/enc/Mul",
+          "/flow/flows.4/enc/Mul_1",
+          "/flow/flows.4/enc/Mul_2",
+          "/flow/flows.4/enc/Mul_3",
+          "/flow/flows.4/Mul_1",
+          "/flow/flows.4/Mul_3",
+          "/flow/flows.2/Mul",
+          "/flow/flows.2/enc/Mul"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0008000135421753,
+          0.0,
+          1.0008000135421753
+        ]
+      },
+      {
+        "name": "/CumSum/fq_output_0",
+        "input": "/CumSum",
+        "consumers": [
+          "/Reshape"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          560.5166625976562,
+          0.0,
+          560.5166625976562
+        ]
+      },
+      {
+        "name": "/Sub/fq_output_0",
+        "input": "/Sub",
+        "consumers": [
+          "/Unsqueeze_10"
+        ],
+        "levels": 256,
+        "ranges": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "/MatMul/fq_output_0",
+        "input": "/MatMul",
+        "consumers": [
+          "/Transpose_3"
+        ],
+        "levels": 256,
+        "ranges": [
+          -4.754952907562256,
+          4.792393684387207,
+          -4.754952907562256,
+          4.792393684387207
+        ]
+      }
+    ],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "pilot-v1/piper-seqir-no-vits2-cpn/blocks_EDF",
+    "fq_count": 120,
+    "int8_kernel_count_all_weighted_types": 97,
+    "int8_kernel_types": {
+      "Convolution": 97
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:u8": 97,
+      "Convolution:f32": 32,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "pilot-v1/piper-seqir-no-vits2-cpn/blocks_F",
+    "fq_count": 40,
+    "int8_kernel_count_all_weighted_types": 40,
+    "int8_kernel_types": {
+      "Convolution": 40
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 89,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3,
+      "Convolution:u8": 40
+    }
+  },
+  {
+    "directory": "pilot-v1/piper-seqir-no-vits2-cpn/blocks_G",
+    "fq_count": 29,
+    "int8_kernel_count_all_weighted_types": 14,
+    "int8_kernel_types": {
+      "Convolution": 14
+    },
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 115,
+      "MatMul:f32": 26,
+      "Convolution:u8": 14,
+      "Deconvolution:f32": 3
+    }
+  },
+  {
+    "directory": "pilot-v1/piper-seqir-no-vits2-cpn/fp32",
+    "fq_count": 0,
+    "int8_kernel_count_all_weighted_types": 0,
+    "int8_kernel_types": {},
+    "protected_alignment_fq": [],
+    "runtime_weighted_precisions": {
+      "Convolution:f32": 129,
+      "MatMul:f32": 26,
+      "Deconvolution:f32": 3
+    }
+  }
+]

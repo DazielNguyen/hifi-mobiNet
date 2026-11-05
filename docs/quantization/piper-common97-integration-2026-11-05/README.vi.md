@@ -5,6 +5,9 @@ model Piper_no_VITS2_cpn (ResBlock2), Piper_ParIR_no_VITS2_cpn và
 Piper_SeqIR_no_VITS2_cpn. Code chuẩn bị INT8 và demo đã chuyển sang common97;
 thiết bị N100 cần nhận gói source mới và chạy bước chuẩn bị để dùng graph mới.
 
+Xem [báo cáo nguyên nhân và phổ đối chiếu cũ/mới](../piper-ptq-tail-fix-2026-11-04/README.vi.md)
+và [danh mục hồ sơ, phạm vi file Git/local](../README.vi.md).
+
 ## 1. Lỗi cũ và thay đổi được chốt
 
 [Code lịch sử](../../../results/edge-n100-openvino/2026-11-01/evidence/openvino_suite.py)

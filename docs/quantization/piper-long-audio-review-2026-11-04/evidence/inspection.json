@@ -1,0 +1,506 @@
+{
+  "analysis_utc": "2026-11-04T11:16:03.026058+00:00",
+  "method": "PCM/SciPy signal analysis and fresh parsing of existing records; no model execution",
+  "python": "3.13.9",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "user_association": {
+    "model": "SeqIR",
+    "text": "Can a compact speech system make a long sentence sound natural? Listen carefully, then compare the four recordings.",
+    "ptq_file": "demo_ptq.wav",
+    "fp32_file": "demo_fp32_seq.wav",
+    "association_source": "user reply; session JSON not yet supplied"
+  },
+  "user_reported_affected_models": [
+    "SeqIR",
+    "ParIR"
+  ],
+  "parir_paired_wavs_supplied": false,
+  "audio": {
+    "source": {
+      "path": "C:\\Users\\duyng\\Downloads\\demo_ptq.wav",
+      "bytes": 355884,
+      "sha256": "2f6c47a65721a9fefeda7bc700004c5c3c43ccc29dd910198a0d966b60fd6932"
+    },
+    "sample_rate": 22050,
+    "samples": 177920,
+    "channels": 1,
+    "pcm_bits": 16,
+    "seconds": 8.068934240362811,
+    "seconds_after_8": 0.06893424036281104,
+    "sample_min": -20456,
+    "sample_max": 32767,
+    "near_full_scale_samples": 1,
+    "near_full_scale_is_not_proof_of_model_clipping": true,
+    "whole_signal": {
+      "rms_dbfs": -21.594197859170613,
+      "peak_abs_pcm_normalized": 0.999969482421875,
+      "zero_crossing_fraction": 0.17441082739898492,
+      "spectral_flatness_above_80hz": 0.24199668877170766,
+      "power_fraction_above_4000hz": 0.275587125654818,
+      "power_fraction_below_1000hz": 0.6191821114390738,
+      "power_fraction_1000_4000hz": 0.10523076290610829,
+      "near_full_scale_fraction": 5.620503597122302e-06
+    },
+    "segments": [
+      {
+        "start_s": 0,
+        "end_s": 4,
+        "rms_dbfs": -20.01164464913738,
+        "peak_abs_pcm_normalized": 0.999969482421875,
+        "zero_crossing_fraction": 0.2342090046372408,
+        "spectral_flatness_above_80hz": 0.28580322283998333,
+        "power_fraction_above_4000hz": 0.3633416721682728,
+        "power_fraction_below_1000hz": 0.5193577810601391,
+        "power_fraction_1000_4000hz": 0.11730054677158806,
+        "near_full_scale_fraction": 1.1337868480725624e-05
+      },
+      {
+        "start_s": 4,
+        "end_s": 8,
+        "rms_dbfs": -24.032586896206286,
+        "peak_abs_pcm_normalized": 0.6937255859375,
+        "zero_crossing_fraction": 0.11632784952210343,
+        "spectral_flatness_above_80hz": 0.08418466953332346,
+        "power_fraction_above_4000hz": 0.05555622430446408,
+        "power_fraction_below_1000hz": 0.868848673756145,
+        "power_fraction_1000_4000hz": 0.07559510193939085,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 0,
+        "end_s": 6.4,
+        "rms_dbfs": -20.93176674613253,
+        "peak_abs_pcm_normalized": 0.999969482421875,
+        "zero_crossing_fraction": 0.19664963612270495,
+        "spectral_flatness_above_80hz": 0.25622426828561906,
+        "power_fraction_above_4000hz": 0.29762698688211353,
+        "power_fraction_below_1000hz": 0.5913111339665491,
+        "power_fraction_1000_4000hz": 0.11106187915133772,
+        "near_full_scale_fraction": 7.086167800453515e-06
+      },
+      {
+        "start_s": 6.4,
+        "end_s": 8,
+        "rms_dbfs": -25.960101784122635,
+        "peak_abs_pcm_normalized": 0.32769775390625,
+        "zero_crossing_fraction": 0.0897417727259843,
+        "spectral_flatness_above_80hz": 0.014711080856055153,
+        "power_fraction_above_4000hz": 0.008384554513020642,
+        "power_fraction_below_1000hz": 0.9597170785545965,
+        "power_fraction_1000_4000hz": 0.03189836693238278,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 7.5,
+        "end_s": 8,
+        "rms_dbfs": -28.2607696153395,
+        "peak_abs_pcm_normalized": 0.266937255859375,
+        "zero_crossing_fraction": 0.07556240928882438,
+        "spectral_flatness_above_80hz": 0.009814202061018625,
+        "power_fraction_above_4000hz": 0.01285510225796999,
+        "power_fraction_below_1000hz": 0.9582292401253529,
+        "power_fraction_1000_4000hz": 0.028915657616677175,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 8,
+        "end_s": 8.068934240362811,
+        "rms_dbfs": -25.377105434552952,
+        "peak_abs_pcm_normalized": 0.318878173828125,
+        "zero_crossing_fraction": 0.07509881422924901,
+        "spectral_flatness_above_80hz": 0.0059782336097321965,
+        "power_fraction_above_4000hz": 0.005125822204497438,
+        "power_fraction_below_1000hz": 0.8361484266997826,
+        "power_fraction_1000_4000hz": 0.15872575109571987,
+        "near_full_scale_fraction": 0.0
+      }
+    ],
+    "segment_selection_note": "6.4 s was selected by visual inspection of the supplied PTQ spectrogram; not a validated change-point detector",
+    "precision_verified_from_session_json": false,
+    "listening_assessment": "not performed",
+    "conclusion": "One WAV cannot establish a systematic duration-dependent failure threshold."
+  },
+  "fp32_reference": {
+    "source": {
+      "path": "C:\\Users\\duyng\\Downloads\\demo_fp32_seq.wav",
+      "bytes": 355884,
+      "sha256": "2f6ac7cc1713e12357cf3a11d23eed01ae3f999d10e459199c6b58a1a54fc31a"
+    },
+    "sample_rate": 22050,
+    "samples": 177920,
+    "channels": 1,
+    "pcm_bits": 16,
+    "seconds": 8.068934240362811,
+    "seconds_after_8": 0.06893424036281104,
+    "sample_min": -32767,
+    "sample_max": 28993,
+    "near_full_scale_samples": 1,
+    "near_full_scale_is_not_proof_of_model_clipping": true,
+    "whole_signal": {
+      "rms_dbfs": -18.697791737504495,
+      "peak_abs_pcm_normalized": 0.999969482421875,
+      "zero_crossing_fraction": 0.19277873639127918,
+      "spectral_flatness_above_80hz": 0.19917207783923946,
+      "power_fraction_above_4000hz": 0.2591521619970015,
+      "power_fraction_below_1000hz": 0.6663447736133126,
+      "power_fraction_1000_4000hz": 0.07450306438968601,
+      "near_full_scale_fraction": 5.620503597122302e-06
+    },
+    "segments": [
+      {
+        "start_s": 0,
+        "end_s": 4,
+        "rms_dbfs": -18.454504400817743,
+        "peak_abs_pcm_normalized": 0.821685791015625,
+        "zero_crossing_fraction": 0.22935634190863843,
+        "spectral_flatness_above_80hz": 0.2531363132844085,
+        "power_fraction_above_4000hz": 0.36251105078811946,
+        "power_fraction_below_1000hz": 0.5474188795175448,
+        "power_fraction_1000_4000hz": 0.09007006969433576,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 4,
+        "end_s": 8,
+        "rms_dbfs": -18.876844940189592,
+        "peak_abs_pcm_normalized": 0.999969482421875,
+        "zero_crossing_fraction": 0.15256408802820895,
+        "spectral_flatness_above_80hz": 0.12436211426849242,
+        "power_fraction_above_4000hz": 0.1468830994028541,
+        "power_fraction_below_1000hz": 0.7948415882257918,
+        "power_fraction_1000_4000hz": 0.05827531237135412,
+        "near_full_scale_fraction": 1.1337868480725624e-05
+      },
+      {
+        "start_s": 0,
+        "end_s": 6.4,
+        "rms_dbfs": -18.735794431840354,
+        "peak_abs_pcm_normalized": 0.999969482421875,
+        "zero_crossing_fraction": 0.19019409151141944,
+        "spectral_flatness_above_80hz": 0.22054579851902945,
+        "power_fraction_above_4000hz": 0.307473340300899,
+        "power_fraction_below_1000hz": 0.6111028868903674,
+        "power_fraction_1000_4000hz": 0.0814237728087336,
+        "near_full_scale_fraction": 7.086167800453515e-06
+      },
+      {
+        "start_s": 6.4,
+        "end_s": 8,
+        "rms_dbfs": -18.37193449437064,
+        "peak_abs_pcm_normalized": 0.589813232421875,
+        "zero_crossing_fraction": 0.19402477394483972,
+        "spectral_flatness_above_80hz": 0.09505725316924352,
+        "power_fraction_above_4000hz": 0.08088510576663822,
+        "power_fraction_below_1000hz": 0.8696480091528541,
+        "power_fraction_1000_4000hz": 0.04946688508050745,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 7.5,
+        "end_s": 8,
+        "rms_dbfs": -22.051710296002614,
+        "peak_abs_pcm_normalized": 0.492645263671875,
+        "zero_crossing_fraction": 0.2831095791001451,
+        "spectral_flatness_above_80hz": 0.21566916466924438,
+        "power_fraction_above_4000hz": 0.5912295983605246,
+        "power_fraction_below_1000hz": 0.3821455364978867,
+        "power_fraction_1000_4000hz": 0.026624865141588815,
+        "near_full_scale_fraction": 0.0
+      },
+      {
+        "start_s": 8,
+        "end_s": 8.068934240362811,
+        "rms_dbfs": -53.28317896632859,
+        "peak_abs_pcm_normalized": 0.0089111328125,
+        "zero_crossing_fraction": 0.4044795783926219,
+        "spectral_flatness_above_80hz": 0.08073519541719702,
+        "power_fraction_above_4000hz": 0.8877183558114319,
+        "power_fraction_below_1000hz": 0.09415766825252157,
+        "power_fraction_1000_4000hz": 0.018123975936046526,
+        "near_full_scale_fraction": 0.0
+      }
+    ],
+    "segment_selection_note": "6.4 s was selected by visual inspection of the supplied PTQ spectrogram; not a validated change-point detector",
+    "precision_verified_from_session_json": false,
+    "listening_assessment": "not performed",
+    "conclusion": "One WAV cannot establish a systematic duration-dependent failure threshold."
+  },
+  "paired_comparison": {
+    "same_sample_rate": true,
+    "same_sample_count": true,
+    "duration_difference_s": 0.0,
+    "samplewise_error_not_computed": "Native graph RNG and phoneme timing need not be matched"
+  },
+  "historical_durations": [
+    {
+      "model": "piper-parir-no-vits2-cpn",
+      "precision": "fp32",
+      "measurement_count": 2160,
+      "unique_utterance_ids": 720,
+      "min_s": 1.7066666666666668,
+      "median_s": 2.6238548752834467,
+      "p95_s": 3.2856235827664397,
+      "max_s": 4.20281179138322,
+      "count_above_8_s": 0,
+      "count_above_10_s": 0,
+      "quality_assessment": "Timing records only, not speech quality certification",
+      "inputs": [
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110564,
+          "sha256": "ab733a7eedc15c3d941c161555e07465aa14cbf306e23ea200c6f8b755e21146"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110511,
+          "sha256": "2f16afc527f81e97d5b93e0f0643fd49996f8620c55ac74d1fe6c9175a3cbb9a"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110580,
+          "sha256": "03138d9e9cba626d6ffe2468d9205a5e43fc82f6edd6cb9e8fefd63e121d5c51"
+        }
+      ]
+    },
+    {
+      "model": "piper-parir-no-vits2-cpn",
+      "precision": "int8",
+      "measurement_count": 2160,
+      "unique_utterance_ids": 720,
+      "min_s": 1.6370068027210884,
+      "median_s": 2.6238548752834467,
+      "p95_s": 3.2624036281179136,
+      "max_s": 4.3769614512471655,
+      "count_above_8_s": 0,
+      "count_above_10_s": 0,
+      "quality_assessment": "Timing records only, not speech quality certification",
+      "inputs": [
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110631,
+          "sha256": "79fecbea2942211589eb74852536caedfa0f6e9ebe9f6cdc1c174525407cbe61"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110614,
+          "sha256": "207a7dedf4da011acb4a75a052e4b50f7d7853ee94ef08230af3feab1b58e3f2"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110621,
+          "sha256": "2e4ae7e12329572936abd7100f70a80bb0d13e321a961a41ff93db784098c2bd"
+        }
+      ]
+    },
+    {
+      "model": "piper-seqir-no-vits2-cpn",
+      "precision": "fp32",
+      "measurement_count": 2160,
+      "unique_utterance_ids": 720,
+      "min_s": 1.5905668934240362,
+      "median_s": 2.5541950113378684,
+      "p95_s": 3.1811337868480725,
+      "max_s": 7.349115646258503,
+      "count_above_8_s": 0,
+      "count_above_10_s": 0,
+      "quality_assessment": "Timing records only, not speech quality certification",
+      "inputs": [
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110683,
+          "sha256": "dfda702ea581aa61fd2f3ddf3706929b62f16807883adceea2dbd3c1564933af"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110715,
+          "sha256": "778ed5ed5a3d1ad1f14651beb321753ff1e5829c6f621a201d9430e28d94f061"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+          "bytes": 110672,
+          "sha256": "3d1519ee8c2620d2f606d31a5ae02726a4b678760178fc1e73ec25fbd82b7850"
+        }
+      ]
+    },
+    {
+      "model": "piper-seqir-no-vits2-cpn",
+      "precision": "int8",
+      "measurement_count": 2160,
+      "unique_utterance_ids": 720,
+      "min_s": 1.6021768707482993,
+      "median_s": 2.5658049886621317,
+      "p95_s": 3.1579138321995464,
+      "max_s": 3.81968253968254,
+      "count_above_8_s": 0,
+      "count_above_10_s": 0,
+      "quality_assessment": "Timing records only, not speech quality certification",
+      "inputs": [
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110671,
+          "sha256": "06228946f4f1ae71eb95f1cd79aeb623e51e0157eb8f701158f26bf15efeabb7"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110618,
+          "sha256": "c87c70a7c9bf0fc7388477b4788799cae41fad5da9b7a7aa514df2bd2e0d057a"
+        },
+        {
+          "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+          "bytes": 110660,
+          "sha256": "4c840a049e0442b8e70bd0a328e3ce9e1fdb9c36e5ae96afc34442de4eafbf14"
+        }
+      ]
+    }
+  ],
+  "phoneme_id_lengths": {
+    "calibration": {
+      "rows": 60,
+      "min_ids": 43,
+      "median_ids": 233.0,
+      "max_ids": 359,
+      "generated_audio_durations": "not inferred from token lengths",
+      "source": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/metadata/calibration60.candidate.jsonl",
+        "bytes": 83876,
+        "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53"
+      }
+    },
+    "harvard": {
+      "rows": 720,
+      "min_ids": 59,
+      "median_ids": 86.0,
+      "max_ids": 117,
+      "generated_audio_durations": "not inferred from token lengths",
+      "source": {
+        "path": "results/edge-n100-openvino/2026-11-01/evidence/metadata/harvard720.json",
+        "bytes": 802421,
+        "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272"
+      }
+    }
+  },
+  "input_sources": [
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110564,
+      "sha256": "ab733a7eedc15c3d941c161555e07465aa14cbf306e23ea200c6f8b755e21146"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110511,
+      "sha256": "2f16afc527f81e97d5b93e0f0643fd49996f8620c55ac74d1fe6c9175a3cbb9a"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-parir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110580,
+      "sha256": "03138d9e9cba626d6ffe2468d9205a5e43fc82f6edd6cb9e8fefd63e121d5c51"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110631,
+      "sha256": "79fecbea2942211589eb74852536caedfa0f6e9ebe9f6cdc1c174525407cbe61"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110614,
+      "sha256": "207a7dedf4da011acb4a75a052e4b50f7d7853ee94ef08230af3feab1b58e3f2"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-parir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110621,
+      "sha256": "2e4ae7e12329572936abd7100f70a80bb0d13e321a961a41ff93db784098c2bd"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110683,
+      "sha256": "dfda702ea581aa61fd2f3ddf3706929b62f16807883adceea2dbd3c1564933af"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110715,
+      "sha256": "778ed5ed5a3d1ad1f14651beb321753ff1e5829c6f621a201d9430e28d94f061"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-seqir-no-vits2-cpn_fp32_t4/utterances.jsonl",
+      "bytes": 110672,
+      "sha256": "3d1519ee8c2620d2f606d31a5ae02726a4b678760178fc1e73ec25fbd82b7850"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r0_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110671,
+      "sha256": "06228946f4f1ae71eb95f1cd79aeb623e51e0157eb8f701158f26bf15efeabb7"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r1_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110618,
+      "sha256": "c87c70a7c9bf0fc7388477b4788799cae41fad5da9b7a7aa514df2bd2e0d057a"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/results-n100-t4-20261101T080423Z/r2_piper-seqir-no-vits2-cpn_int8_t4/utterances.jsonl",
+      "bytes": 110660,
+      "sha256": "4c840a049e0442b8e70bd0a328e3ce9e1fdb9c36e5ae96afc34442de4eafbf14"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/metadata/calibration60.candidate.jsonl",
+      "bytes": 83876,
+      "sha256": "e4de2ad4a2ed68b917cccb5149d151e004b775e4cf7d35f4d6d9a11bd7c40f53"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/metadata/harvard720.json",
+      "bytes": 802421,
+      "sha256": "bdaf43e33d3a435eebb95d36d350d24d4406fc65affa16ee69c58b623402e272"
+    },
+    {
+      "path": "src/hifimobinet/n100_demo.py",
+      "bytes": 14483,
+      "sha256": "1b12916f350f55ff976ed7dc3d064d7ef9b3ed1d884f4e5a76c7957ec1566733"
+    },
+    {
+      "path": "src/hifimobinet/n100_server.py",
+      "bytes": 4929,
+      "sha256": "9d0c0026a65f89408ba041f3e3e781d906e703b9232ff2b338571df932dbb572"
+    },
+    {
+      "path": "src/hifimobinet/frontend.py",
+      "bytes": 1645,
+      "sha256": "5eff2b82cdbc8b6fd0e620c028817797473d118b65b0338c4aafd156151f742e"
+    },
+    {
+      "path": "demo/n100_web/app.js",
+      "bytes": 3386,
+      "sha256": "130ccb5e49e54e49f1e2a1554850d9b1fc17ce3c88bba980895a3e0e7c6fec64"
+    },
+    {
+      "path": "demo/n100_models.json",
+      "bytes": 10478,
+      "sha256": "fb4c0b09ac6c389e3d3b00cbf6c2ec119aa323f2ebb240a223a2127fa8326a72"
+    },
+    {
+      "path": "scripts/evaluation/onnx/common.py",
+      "bytes": 17521,
+      "sha256": "23b512ffed5f928467605627e51878a4da43d0acb40836b79db39f8d8bf412c1"
+    },
+    {
+      "path": "vendor/edgetts/vits/models.py",
+      "bytes": 39768,
+      "sha256": "bf3ac6bc44089d668866a8d74af037f234a3c9ee61691d30e6c5f49dffb5cd46"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/openvino_suite.py",
+      "bytes": 27700,
+      "sha256": "fb20086c7907a7730fd3e3446544c6c816809c88b2164e640e1b10882af902cf"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-parir-no-vits2-cpn/preparation.json",
+      "bytes": 105717,
+      "sha256": "9621a43ee3e104f0d96879fb64569bbdc5179726e6ddfe87974902da1c38885e"
+    },
+    {
+      "path": "results/edge-n100-openvino/2026-11-01/evidence/work-n100-clean-20261101T075458Z/piper-seqir-no-vits2-cpn/preparation.json",
+      "bytes": 102027,
+      "sha256": "3c374d43142d73cce184f3582fc8aa33740c1747789b541955008e019ae54d93"
+    }
+  ],
+  "source_hashes_unchanged_after_analysis": true
+}
