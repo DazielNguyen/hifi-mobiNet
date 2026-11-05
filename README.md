@@ -21,9 +21,14 @@ only after fresh **common97** preparation: text entry and WAV playback in the PC
 browser, with inference on the N100 CPU. The old INT8 graphs are disabled in
 this demo because activation quantization leaked into duration/alignment.
 The [common97 integration report](docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
-records the fix, 36 CPU alignment checks and N100 update steps. Historical
-N100 timings remain tied to their original graphs; common97 needs new N100
-measurements and independent quality evaluation.
+records the fix, 36 CPU alignment checks and N100 update steps. The new
+[November 5 common97 benchmark](results/edge-n100-openvino/2026-11-05-common97/README.md)
+verifies 12,960 N100 timing observations for three Piper models: INT8 reduces
+duration-weighted RTF by 12.73–13.88% versus FP32 in that session. The received
+runtime records contain 97 selected INT8 kernels/model. The supplemental N100
+work directory now verifies preparation/IR hashes, 96 FQ edges per model and
+54 WAV files (18 INT8 alignment WAVs over 10 s); independent quality evaluation remains pending.
+Historical timings remain tied to their original graphs.
 
 The author has authorized public code publication at [DazielNguyen/hifi-mobiNet](https://github.com/DazielNguyen/hifi-mobiNet)
 and confirmed permission to share journal-related artifacts. Original repository

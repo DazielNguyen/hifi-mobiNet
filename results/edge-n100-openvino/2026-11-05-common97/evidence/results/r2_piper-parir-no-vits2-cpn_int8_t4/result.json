@@ -1,0 +1,119 @@
+{
+  "status": "measured",
+  "model_id": "piper-parir-no-vits2-cpn",
+  "precision": "int8",
+  "threads": 4,
+  "round": 2,
+  "environment_start": {
+    "utc": "2026-11-05T08:25:00.085120+00:00",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "load_average": [
+      4.00439453125,
+      3.9267578125,
+      3.484375
+    ],
+    "thermal_millidegrees_celsius": {
+      "/sys/class/thermal/thermal_zone0/temp": "27800",
+      "/sys/class/thermal/thermal_zone1/temp": "61000"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "preparation_sha256": "de2b9e89774b4f9c6bb7f28f78393160a10ad4ddbe8077ab3f87f91bb94b4bef",
+  "sample_rate": 22050,
+  "manifest_sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+  "script_sha256": "7c064dcd88bd4727e781af34aa4c1a83365c878108dc3717540699c72a592323",
+  "quality_status": "common97 graph/runtime/alignment passed; independent WER/MOS and N100 RTF not certified by preparation",
+  "protocol": {
+    "batch": 1,
+    "device": "CPU",
+    "scales": [
+      0.667,
+      1.0,
+      0.8
+    ],
+    "warmup_calls": 10,
+    "timed_region": "synchronous InferRequest.infer only; output copy/check/write excluded",
+    "native_random": true,
+    "cross_runtime_RNG_equivalence": false,
+    "configuration": {
+      "PERFORMANCE_HINT": "LATENCY",
+      "NUM_STREAMS": 1,
+      "INFERENCE_NUM_THREADS": 4,
+      "INFERENCE_PRECISION_HINT": "f32",
+      "EXECUTION_MODE_HINT": "ACCURACY"
+    }
+  },
+  "load_and_compile_s": 3.0544038029993317,
+  "warmup_indices": [
+    39,
+    402,
+    395,
+    42,
+    288,
+    311,
+    626,
+    271,
+    348,
+    572
+  ],
+  "summary": {
+    "n": 720,
+    "mean_rtf": 0.05593514786872206,
+    "median_rtf": 0.0551603508478338,
+    "p95_rtf": 0.061448349257189165,
+    "duration_weighted_rtf": 0.055866278740582996,
+    "mean_latency_s": 0.14590577298055554,
+    "p95_latency_s": 0.186101047,
+    "total_inference_s": 105.052156546,
+    "total_audio_s": 1880.4215873015874
+  },
+  "environment_end": {
+    "utc": "2026-11-05T08:26:50.281179+00:00",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "load_average": [
+      4.0,
+      3.953125,
+      3.54833984375
+    ],
+    "thermal_millidegrees_celsius": {
+      "/sys/class/thermal/thermal_zone0/temp": "27800",
+      "/sys/class/thermal/thermal_zone1/temp": "72000"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "peak_process_rss_bytes": 1190477824
+}

@@ -1,0 +1,223 @@
+{
+  "status": "received_timing_and_preparations_verified",
+  "received_files": 77,
+  "received_bytes": 14530595,
+  "reference_files": 11,
+  "supplemental_received_files": 21,
+  "preparation_log": {
+    "status": "log_reports_success_work_evidence_received_separately",
+    "source_directory": "20261105T073706Z-common97.6nBwhE",
+    "path": "preparation-evidence/prepare-common97.log",
+    "size_bytes": 367051,
+    "sha256": "f060621b424a26c47d7d4eaf8d01859e38a05ae790f1345ea2fd7c7e63b34b6f",
+    "calibration_blocks_completed_60_of_60": 3,
+    "success_marker": "COMMON97 READY: three Piper models prepared and local catalog activated.",
+    "numeric_warning_or_error_lines": [],
+    "reported_n100_paths": {
+      "Catalog": "/home/capstone/benchmarks/hifi-mobiNet-n100-common97-2026-11-05/.local/n100-common97-models.json",
+      "Evidence/WAVs": "/home/capstone/benchmarks/hifi-mobiNet-n100-openvino-2026-10-31/hifi-mobiNet-n100-openvino-2026-10-31/work-common97-20261105T073706Z"
+    },
+    "benchmark_artifact_binding": "checked separately through received preparation hashes; log alone has no measured-artifact hashes"
+  },
+  "demo_startup": {
+    "status": "readiness_records_consistent_inference_not_performed",
+    "received_files": 4,
+    "received_bytes": 3552,
+    "source_directories": [
+      "20261105T074110Z-check.8oqXmf",
+      "20261105T074122Z-server.CkuEHv",
+      "20261105T074123Z-a3c2e898"
+    ],
+    "doctor_checked_utc": "2026-11-05T07:41:11.324941+00:00",
+    "server_checked_utc": "2026-11-05T07:41:23.116754+00:00",
+    "catalog_sha256": "d2f9895b90882430984ce9cb9751324a382bffbc4a60bf0fb0448db02c5e9f42",
+    "catalog_bytes_received": true,
+    "catalog_entry_count": 6,
+    "frontend": {
+      "matched": 720,
+      "total": 720,
+      "language": "en-us",
+      "version": "1.0.0",
+      "python_module_sha256": "ed2042cccc15d7c04add586a694c453564493fabc9f2e3b05df1fd1822610a5d",
+      "native_module_sha256": "8ceafb6375fb17d9d745af5b0c9d4c643bd1f2879a2ed1ddd9cb67b28568cb51"
+    },
+    "demo_source_sha256": "6d30e6386afbed272c02d3ec175ac7b9814dbfd2f02dc2b8be3090ef9ccfd03b",
+    "environment_matches_benchmark": true,
+    "inference_performed": false,
+    "synthesis_json_or_wav_received": false,
+    "limitations": [
+      "Frontend binary bytes were not received. The catalog was received and its bindings are checked separately.",
+      "The six catalog entries comprise six historical FP32 selections and three common97 INT8 selections.",
+      "No synthesis records/audio are provided by the startup files; readiness is not an inference-quality result."
+    ]
+  },
+  "work_metadata": {
+    "status": "archived_preparations_bound_to_benchmark",
+    "received_metadata_files": 15,
+    "external_work_files": 84,
+    "external_work_bytes": 478136232,
+    "preparation_sha256": {
+      "piper-no-vits2-cpn": "3ab33aaaaaa2929924b12ca7d42a0077f7b1af392a0feee316047f261888bb2a",
+      "piper-parir-no-vits2-cpn": "de2b9e89774b4f9c6bb7f28f78393160a10ad4ddbe8077ab3f87f91bb94b4bef",
+      "piper-seqir-no-vits2-cpn": "73649d5281de8553ca345c1931e88dd5a3663bde067d58521b92892f693cdefd"
+    },
+    "external_artifact_audit": "verification/work-verification.json",
+    "external_artifact_audit_sha256": "538f13aecd77ae9ab86cbbb9cc1b1b5bacd6f277c91254a60c520b161fcac7b5",
+    "external_bytes_rehashed_by_this_command": false,
+    "repeat_external_check": "verify_work.py --source <received-work-directory>"
+  },
+  "catalog": {
+    "status": "catalog_bound_to_demo_startup_and_measured_int8",
+    "path": "catalog-evidence/n100-common97-models.json",
+    "sha256": "d2f9895b90882430984ce9cb9751324a382bffbc4a60bf0fb0448db02c5e9f42",
+    "size_bytes": 10760,
+    "catalog_entries": 6,
+    "fp32_entries": 6,
+    "common97_int8_entries": 3,
+    "activated_utc": "2026-11-05T07:40:35.325686+00:00",
+    "models": [
+      {
+        "model": "piper-no-vits2-cpn",
+        "int8_preparation_sha256": "3ab33aaaaaa2929924b12ca7d42a0077f7b1af392a0feee316047f261888bb2a",
+        "int8_ir_files_bound": 2,
+        "fp32_demo_hash_equals_benchmark": {
+          "xml": false,
+          "bin": true
+        }
+      },
+      {
+        "model": "piper-parir-no-vits2-cpn",
+        "int8_preparation_sha256": "de2b9e89774b4f9c6bb7f28f78393160a10ad4ddbe8077ab3f87f91bb94b4bef",
+        "int8_ir_files_bound": 2,
+        "fp32_demo_hash_equals_benchmark": {
+          "xml": false,
+          "bin": true
+        }
+      },
+      {
+        "model": "piper-seqir-no-vits2-cpn",
+        "int8_preparation_sha256": "73649d5281de8553ca345c1931e88dd5a3663bde067d58521b92892f693cdefd",
+        "int8_ir_files_bound": 2,
+        "fp32_demo_hash_equals_benchmark": {
+          "xml": false,
+          "bin": true
+        }
+      }
+    ],
+    "limitations": [
+      "Historical FP32 catalog XML hashes differ from the November 5 measured FP32 XML hashes; matching BIN hashes alone do not establish identical graphs.",
+      "Catalog bindings establish selected artifacts at recorded startup, not a particular generated demo WAV or current live server state."
+    ]
+  },
+  "cells": 18,
+  "timed_observations": 12960,
+  "unique_texts": 720,
+  "summary_source_hashes_checked": 36,
+  "empty_worker_logs": 18,
+  "runtime_audits_passed": 18,
+  "preparation_hashes_verified": {
+    "piper-no-vits2-cpn": "3ab33aaaaaa2929924b12ca7d42a0077f7b1af392a0feee316047f261888bb2a",
+    "piper-parir-no-vits2-cpn": "de2b9e89774b4f9c6bb7f28f78393160a10ad4ddbe8077ab3f87f91bb94b4bef",
+    "piper-seqir-no-vits2-cpn": "73649d5281de8553ca345c1931e88dd5a3663bde067d58521b92892f693cdefd"
+  },
+  "script_sha256": "7c064dcd88bd4727e781af34aa4c1a83365c878108dc3717540699c72a592323",
+  "manifest_sha256": "2d3e3f413713a50c058b88a2d792ed1a6d0351a797891e6943d11d85508df5f3",
+  "environment": {
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "cpu_names": [
+      "Intel(R) N100"
+    ],
+    "logical_cpus": 4,
+    "packages": {
+      "openvino": "2026.4.1",
+      "nncf": "3.4.0",
+      "numpy": "2.4.6",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1"
+    },
+    "governors": {
+      "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "powersave",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "powersave"
+    }
+  },
+  "start_utc": "2026-11-05T07:53:23.042081+00:00",
+  "end_utc": "2026-11-05T08:26:50.281179+00:00",
+  "start_utc_plus_07": "2026-11-05T14:53:23.042081+07:00",
+  "end_utc_plus_07": "2026-11-05T15:26:50.281179+07:00",
+  "elapsed_wall_seconds": 2007.239098,
+  "max_boundary_temperature_celsius": 72.0,
+  "minimum_audio_seconds": 1.4628571428571429,
+  "maximum_audio_seconds": 4.20281179138322,
+  "audio_over_10_seconds": 0,
+  "maximum_rtf": 0.12903020283539873,
+  "rtf_at_least_1": 0,
+  "minimum_peak_abs": 0.23572751879692078,
+  "maximum_peak_abs": 0.8494505882263184,
+  "peak_above_1": 0,
+  "longest_observations": [
+    {
+      "cell": "r2_piper-parir-no-vits2-cpn_fp32_t4",
+      "idx": 631,
+      "latency_s": 0.288855588,
+      "samples": 92672,
+      "audio_seconds": 4.20281179138322,
+      "peak_abs": 0.4937683939933777,
+      "rtf": 0.06872912762646755
+    },
+    {
+      "cell": "r2_piper-seqir-no-vits2-cpn_int8_t4",
+      "idx": 270,
+      "latency_s": 0.224889303,
+      "samples": 90368,
+      "audio_seconds": 4.098321995464852,
+      "peak_abs": 0.4541969299316406,
+      "rtf": 0.05487350755964501
+    },
+    {
+      "cell": "r0_piper-parir-no-vits2-cpn_fp32_t4",
+      "idx": 572,
+      "latency_s": 0.273041616,
+      "samples": 88832,
+      "audio_seconds": 4.028662131519274,
+      "peak_abs": 0.41984519362449646,
+      "rtf": 0.06777476171649856
+    },
+    {
+      "cell": "r1_piper-seqir-no-vits2-cpn_int8_t4",
+      "idx": 270,
+      "latency_s": 0.199682562,
+      "samples": 88832,
+      "audio_seconds": 4.028662131519274,
+      "peak_abs": 0.4217783510684967,
+      "rtf": 0.04956547744168768
+    },
+    {
+      "cell": "r0_piper-parir-no-vits2-cpn_fp32_t4",
+      "idx": 631,
+      "latency_s": 0.26120139,
+      "samples": 88064,
+      "audio_seconds": 3.9938321995464854,
+      "peak_abs": 0.5098732709884644,
+      "rtf": 0.06540119287677143
+    },
+    {
+      "cell": "r2_piper-seqir-no-vits2-cpn_fp32_t4",
+      "idx": 572,
+      "latency_s": 0.219808343,
+      "samples": 88064,
+      "audio_seconds": 3.9938321995464854,
+      "peak_abs": 0.3863866329193115,
+      "rtf": 0.05503694998126362
+    }
+  ],
+  "limitations": [
+    "Original deployment ONNX/checkpoints are not in this work delivery. The three matched-validation ONNX files are auxiliary models, not the original deployment source.",
+    "Timed WAVs were not saved by the benchmark. The 54 received preparation WAVs are a separate validation set. Independent WER/CER/UTMOS/human MOS and perceptual assessment of the N100 INT8 outputs remain pending.",
+    "Complete pip environment lock, frontend binary bytes, power profile/EPP, continuous frequency/temperature trace and process inventory were not received. Catalog bytes now match doctor/server SHA-256 and bind three INT8 entries to measured common97 work. Startup records report frontend 720/720 but inference_performed is false; no demo synthesis records were provided. Historical FP32 catalog entries are distinct from the newly measured FP32 IR.",
+    "No external full transfer checksum was supplied. Benchmark hashes now bind all three preparations, 12 IR XML/BIN files and 36 alignment WAVs. Other source bytes have import hashes; 18 smoke WAV dimensions match recorded outputs.",
+    "Parity and coverage records are consistent but raw paired parity arrays/internal coverage tensors are absent. No inference was rerun during this verification."
+  ]
+}

@@ -14,14 +14,21 @@ và script kiểm độc lập.
 [common97](../docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
 để ngăn quantizer làm hỏng duration/alignment ở đuôi câu. Kết quả N100 01/11
 bên dưới vẫn thuộc graph cũ; không dùng chúng làm RTF/chất lượng common97.
-Code mới đã đạt 36 ca alignment trên CPU PC/WSL; cần cập nhật và đo lại trên N100.
+[Phiên N100 mới ngày 05/11](edge-n100-openvino/2026-11-05-common97/README.vi.md)
+đã có 12.960 bản ghi timing được kiểm lại: common97 giảm RTF trọng số thời lượng
+12,73–13,88% so với FP32 cùng phiên. Đã nhận work N100 và kiểm hash preparation/IR,
+96 cạnh FQ/model cùng 54 WAV; đánh giá chất lượng độc lập vẫn pending.
+Đã bổ sung log chuẩn bị và bốn file check/server: frontend báo 720/720,
+nhưng startup records ghi chưa inference. Catalog thực tế đã khớp hash của cả
+hai record và ba mục INT8 đã benchmark; đường FP32 demo giữ work lịch sử,
+có hash XML khác FP32 benchmark mới.
 
 | Mục | Nội dung |
 |---|---|
 | [Kết quả lịch sử](#kết-quả-lịch-sử-thế-hệ-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [Phép đo mới](#phép-đo-mới-thế-hệ-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
 | [Export ONNX và PTQ INT8](#export-onnx-và-ptq-int8) | `piper-ir-onnx-ptq-v2/` (hiện hành), `piper-ir-onnx-ptq/` cùng các bản ghi ONNX, PTQ và QAT lịch sử |
-| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: sáu model, FP32/INT8 chọn lọc, timing từng câu và log |
+| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `2026-11-05-common97/`: timing mới ba Piper; `2026-11-01/`: phiên sáu model lịch sử; evidence và log riêng |
 | [So sánh bảy model](#so-sánh-bảy-model) | một bảng gồm mọi metric của bảy model trên Harvard-720 |
 | [Kích thước model](#kích-thước-model) | `model_parameters.json` |
 | [Piper Low — đã hoàn tất eval](piper-low-no-vits2-cpn/README.vi.md) | Harvard-720, WER/CER/UTMOSv2, timing PC; ONNX 719/720 ca parity đạt, số đo ONNX chỉ dùng chẩn đoán. |
@@ -125,6 +132,30 @@ Nhập ngày 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`). Byt
 Cột RTF lấy từ một phiên duy nhất và chỉ so sánh được trong nội bộ phiên đó. Ở phiên này control chậm hơn 1,21 lần so với phiên riêng ngày 2026-10-10 (0.0421), nên không thể đặt giá trị đó, hay bảng RTF lịch sử, cạnh các giá trị này.
 
 ## Intel N100 / OpenVINO CPU
+
+### Common97 — ngày 05/11/2026
+
+[README tiếng Việt](edge-n100-openvino/2026-11-05-common97/README.vi.md) ·
+[English](edge-n100-openvino/2026-11-05-common97/README.md)
+
+Ba Piper × FP32/INT8 chọn lọc × ba vòng Harvard-720, bốn threads:
+18 cell / 12.960 bản ghi timed, đã tính lại độc lập từ file nhận về.
+RTF chính = tổng thời gian inference / tổng thời lượng audio thực sinh.
+
+| Model | RTF FP32 | RTF INT8 common97 | RTF giảm | Mean latency FP32 / INT8 (ms) |
+|---|---:|---:|---:|---:|
+| Piper ResBlock2 | 0,06473 | 0,05649 | 12,73% | 164,81 / 144,13 |
+| Piper ParIR | 0,06549 | 0,05663 | 13,53% | 172,83 / 147,83 |
+| Piper SeqIR | 0,05317 | 0,04579 | 13,88% | 136,63 / 118,08 |
+
+Cả chín runtime inventory INT8 đều có đúng 97 Conv được chọn; weighted kernels
+của decoder giữ FP32. Đã nhận và kiểm preparation, IR và 54 WAV của N100, gồm
+18 WAV alignment INT8 >10 giây. Audio timed vẫn chỉ dài 1,463–4,203 giây.
+Kiểm hash/graph/WAV không thay thế nghe đánh giá đuôi câu hoặc WER/MOS. Native RNG không khóa giống
+nhau. Tách timing này khỏi graph cũ và điểm chất lượng trên workstation.
+Lần import không chạy thêm model.
+
+### Phiên lịch sử — ngày 01/11/2026
 
 [README tiếng Việt](edge-n100-openvino/2026-11-01/README.vi.md) ·
 [English](edge-n100-openvino/2026-11-01/README.md)

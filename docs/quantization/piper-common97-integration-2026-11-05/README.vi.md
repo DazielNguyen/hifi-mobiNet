@@ -5,6 +5,31 @@ model Piper_no_VITS2_cpn (ResBlock2), Piper_ParIR_no_VITS2_cpn và
 Piper_SeqIR_no_VITS2_cpn. Code chuẩn bị INT8 và demo đã chuyển sang common97;
 thiết bị N100 cần nhận gói source mới và chạy bước chuẩn bị để dùng graph mới.
 
+**Cập nhật kết quả N100 ngày 05/11:** đã nhận và kiểm độc lập
+[benchmark common97](../../../results/edge-n100-openvino/2026-11-05-common97/README.vi.md)
+gồm 18 cell / 12.960 bản ghi. RTF INT8 ResBlock2 / ParIR / SeqIR lần lượt
+0,05649 / 0,05663 / 0,04579, giảm 12,73% / 13,53% / 13,88% so với FP32
+cùng phiên. Runtime records phủ đúng 97 Conv/model. Đã nhận đúng work N100:
+84 file, preparation khớp hash benchmark, 12 XML/BIN khớp hash preparation,
+96 FQ/model được kiểm trực tiếp chỉ nối vào Conv đã chọn; 54 WAV đọc đủ và đúng
+số mẫu. Có 18 WAV alignment INT8 >10 giây; dài nhất ResBlock2/ParIR/SeqIR lần lượt
+23,452 / 21,513 / 22,291 giây. Đây là evidence N100 riêng với kiểm thử PC bên dưới;
+chưa đánh giá WER/CER/UTMOS/MOS hay nghe chấm chất lượng trong lần kiểm artifact.
+
+Đã nhận bổ sung [log chuẩn bị N100](../../../results/edge-n100-openvino/2026-11-05-common97/preparation-evidence/prepare-common97.log):
+ba lượt calibration đủ 60/60 và dòng `COMMON97 READY`. Log chỉ tới
+`work-common97-20261105T073706Z`; thư mục này nay đã được copy về và kiểm thực tế
+bằng [verify_work.py](../../../results/edge-n100-openvino/2026-11-05-common97/verify_work.py), không chạy lại PTQ/inference.
+
+Đã nhận thêm [bốn file check/server](../../../results/edge-n100-openvino/2026-11-05-common97/demo-evidence/)
+ngày 05/11: frontend báo khớp 720/720, doctor và server cùng catalog hash,
+môi trường khớp benchmark; source hash server khớp code demo hiện tại.
+Các record ghi `inference_performed: false`, chưa có WAV/JSON từng lần sinh,
+nên không thay thế evidence của từng lần sinh demo. Catalog demo đã nhận và kiểm
+ngày 06/11: hash khớp doctor/server, ba mục INT8 khớp preparation/IR đã benchmark.
+FP32 demo vẫn trỏ work lịch sử, khác hash XML so với FP32 benchmark mới.
+Record parity/coverage trong work nhất quán nhưng không có tensor gốc để tái tính.
+
 Xem [báo cáo nguyên nhân và phổ đối chiếu cũ/mới](../piper-ptq-tail-fix-2026-11-04/README.vi.md)
 và [danh mục hồ sơ, phạm vi file Git/local](../README.vi.md).
 

@@ -14,15 +14,21 @@ includes a complete per-file import manifest and a standalone verifier.
 now uses [common97](../docs/quantization/piper-common97-integration-2026-11-05/README.vi.md)
 to protect duration/alignment from activation quantization. The November 1
 N100 results below still describe the old graphs and are not common97 timing
-or quality results. New code passed 36 alignment cases on a PC/WSL CPU;
-deployment and fresh measurements on N100 remain necessary.
+or quality results. The [new November 5 N100 benchmark](edge-n100-openvino/2026-11-05-common97/README.md)
+now verifies 12,960 timing observations: common97 reduces duration-weighted
+RTF by 12.73–13.88% versus same-session FP32. The N100 work delivery now verifies
+preparation/IR hashes, 96 FQ edges per model and 54 WAV files; independent quality evaluation remains pending.
+The preparation log and four demo check/server files are now included. Startup
+records report frontend 720/720 but no inference. The active catalog now matches
+both startup hashes and all three measured INT8 selections; FP32 demo selections
+retain the historical work directory and are distinct from benchmark FP32 XML.
 
 | Section | What it covers |
 |---|---|
 | [Historical results](#historical-results-gen-1) | `historical/`, `prior_audit/`, `manifests/` |
 | [New measurements](#new-measurements-gen-2-pytorch) | `piper-no-vits2-cpn/`, `piper-parir-no-vits2-cpn/`, `piper-seqir-no-vits2-cpn/`, `piper-ir-timing-session/` |
 | [ONNX export and INT8 PTQ](#onnx-export-and-int8-ptq) | `piper-ir-onnx-ptq-v2/` (current), `piper-ir-onnx-ptq/` and the historical ONNX, PTQ and QAT records |
-| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `edge-n100-openvino/2026-11-01/`: six models, FP32/selective INT8, raw timings and logs |
+| [Intel N100 / OpenVINO CPU](#intel-n100--openvino-cpu) | `2026-11-05-common97/`: new three-Piper timing; `2026-11-01/`: six-model historical session; separate evidence and logs |
 | [Seven-model comparison](#seven-model-comparison) | one table with every metric of the seven Harvard-720 models |
 | [Model size](#model-size) | `model_parameters.json` |
 | [Piper Low — evaluation completed](piper-low-no-vits2-cpn/README.md) | Harvard-720, WER/CER/UTMOSv2, workstation timing; ONNX passes 719/720 parity cases and remains diagnostic. |
@@ -126,6 +132,31 @@ Imported on 2026-10-22 (`docs/evidence/historical-import-2026-10-22.json`). Resu
 The RTF column comes from one session and is comparable only within it. The control ran 1.21× slower there than in its own 2026-10-10 session (0.0421), so neither that value nor the historical RTF table can be set beside these values.
 
 ## Intel N100 / OpenVINO CPU
+
+### Common97 — November 5, 2026
+
+[Session README](edge-n100-openvino/2026-11-05-common97/README.md) ·
+[Tiếng Việt](edge-n100-openvino/2026-11-05-common97/README.vi.md)
+
+Three Piper models × FP32/selective INT8 × three Harvard-720 rounds, 4 threads:
+18 cells / 12,960 timed observations, independently recomputed from the received
+files. Primary RTF is total inference time / total generated audio duration.
+
+| Model | FP32 RTF | common97 INT8 RTF | RTF reduction | Mean latency FP32 / INT8 (ms) |
+|---|---:|---:|---:|---:|
+| Piper ResBlock2 | 0.06473 | 0.05649 | 12.73% | 164.81 / 144.13 |
+| Piper ParIR | 0.06549 | 0.05663 | 13.53% | 172.83 / 147.83 |
+| Piper SeqIR | 0.05317 | 0.04579 | 13.88% | 136.63 / 118.08 |
+
+The nine INT8 runtime inventories have 97 selected Conv kernels each; decoder
+weighted kernels remain FP32. Received N100 preparations, IR and 54 WAVs are now
+checked, including 18 INT8 alignment WAVs longer than 10 s. Timed audio still
+spans only 1.463–4.203 seconds. Hash/static graph/WAV checks do not certify
+perceptual tail quality or WER/MOS. Native RNG
+is not matched. Keep these timings separate from the old graphs and from
+workstation quality scores. No new model execution was needed for this import.
+
+### Historical session — November 1, 2026
 
 [Session README](edge-n100-openvino/2026-11-01/README.md) ·
 [Tiếng Việt](edge-n100-openvino/2026-11-01/README.vi.md)
